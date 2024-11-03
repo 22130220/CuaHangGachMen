@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 :root {
     --mauChu1:#000;
@@ -90,6 +91,25 @@ a {
 
 .break-all {
     word-break: break-all; /* Cắt từng từ */
+}
+
+/* ScrollTop*/
+.scrollTop{
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 10px 15px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 5px;
+  border-radius: 1px solid #fff;
+  cursor: pointer;
+  transition: all 0.5s ease 0s;
+}
+
+.scrollTop:hover{
+  background-color: #f7f7f7;
+  color: #000;
 }
 
 /* Header */
