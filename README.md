@@ -1,3 +1,5 @@
-# CuaHangGachMen
-Đây là đường dẫn đến website của chúng tôi
-https://billycandance.github.io/CuaHangGachMen/
+# Đồ Án Cửa Hàng Bán Gạch Men
+### Thành Viên Thực Hiện
+1. Tạ Hoàng Phúc 22130220
+2. Đặng Anh Nguyên 22130188
+3. Bùi Việt Tiến
