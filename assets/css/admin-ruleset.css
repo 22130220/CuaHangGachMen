@@ -1,0 +1,27 @@
+.admin-container{
+    display: grid;
+    height: 100vh;
+    width: 100%;
+    margin: 0 auto;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 60px auto;
+    grid-template-areas: 
+    "sidebar header"
+    "sidebar content"
+    "sidebar content"
+}
+
+.header-grid{
+    grid-area: header;
+    padding: 10px;
+}
+
+.sidebar-grid{
+    grid-area: sidebar;
+    padding: 10px;
+}
+
+.content-grid{
+    grid-area: content;
+    padding: 10px; 
+}
