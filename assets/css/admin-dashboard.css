@@ -1,0 +1,20 @@
+.header{
+    background-color: aqua;
+    color: white;
+}
+
+.sidebar{
+    background-color: blue;
+    color: white;
+}
+
+.content{
+    background-color: whitesmoke;
+    color: black;
+}
+
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
