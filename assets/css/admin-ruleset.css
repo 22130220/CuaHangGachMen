@@ -37,9 +37,25 @@
     text-align: left;
     align-content: center;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-icon{
+    margin-right: 0.6rem;
 }
 
 .sidebar-button:hover{
     background-color: aqua; 
     font-size: 20px;
+}
+
+.icon-hover{
+    border-radius: 5px;
+    transition: 0.25s ease;
+}
+
+.icon-hover:hover{
+    background-color: bisque;
+    transform: scale(1.1);
 }
