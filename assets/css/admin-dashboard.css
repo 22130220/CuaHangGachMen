@@ -1,11 +1,16 @@
 .header{
     background-color: aqua;
     color: white;
+    display: flex; 
+    flex-direction: row;
 }
 
 .sidebar{
     background-color: blue;
     color: white;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
 }
 
 .content{
@@ -18,3 +23,46 @@
     justify-content: center;
     align-items: center;
 }
+
+.header .search-func{
+    flex: 60%;
+}
+
+.header .acount-info{
+    flex: 30%;
+    display: flex;
+    flex-direction: row;
+}
+
+.account-label{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: center;
+}
+
+.text-name{
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.text-permission{
+    font-size: 1.6rem;
+    font-weight: lighter;
+}
+
+
+.header .signout{
+    flex: 10%;
+    display: flex;
+    align-items: center;
+}
+
+.logout-icon{
+    width: 50px;
+    height: 100%;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
