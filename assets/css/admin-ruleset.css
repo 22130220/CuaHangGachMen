@@ -3,17 +3,17 @@
     height: 100vh;
     width: 100%;
     margin: 0 auto;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1fr 5fr;
     grid-template-rows: 60px auto;
     grid-template-areas: 
     "sidebar header"
-    "sidebar content"
     "sidebar content"
 }
 
 .header-grid{
     grid-area: header;
     padding: 10px;
+    overflow: auto;
 }
 
 .sidebar-grid{
@@ -24,6 +24,7 @@
 .content-grid{
     grid-area: content;
     padding: 10px; 
+    overflow-y: auto;
 }
 
 .sidebar-button{
@@ -59,3 +60,13 @@
     background-color: bisque;
     transform: scale(1.1);
 }
+
+.dashboard-grid{
+    display: grid;
+    width: 100%;
+    margin: 0 auto;
+    grid-template-columns: 1fr 1fr 1fr; 
+    grid-auto-rows: 150px;
+    gap: 15px;
+}
+
