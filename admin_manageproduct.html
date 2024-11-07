@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+
+    <!-- Thêm favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/icons/logo2_no_text.svg">
+
+
+    <!-- Nhúng phông chữ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"
+        integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Kiểu CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/grid-layout.css">
+    <link rel="stylesheet" href="./assets/css/admin-ruleset.css">
+    <link rel="stylesheet" href="./assets/css/admin-manageproduct.css">
+
+    <!-- Thêm Datatable-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+
+    <style>
+        div.container {
+            max-width: 1200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container grid-layout">
+        <div class="header grid-item header-grid">
+            <div class="search-func">
+                <div class="search-bar">
+                    <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+
+                </div>
+            </div>
+            <div class="acount-info">
+                <i class="fa-regular fa-circle-user fa-2x"></i>
+                <div class="account-label">
+                    <p class="text text-name"> Tạ Hoàng Phúc</p>
+                    <p class="text text-permission"> Admin</p>
+                </div>
+            </div>
+            <div class="signout">
+                <div class="logout-icon icon-hover">
+                    <i class="fa-solid fa-arrow-right-from-bracket fa-2x"></i>
+                </div>
+            </div>
+
+        </div>
+        <div class="sidebar grid-item sidebar-grid">
+            <div class="logo">
+                <img src="./assets/icons/logo2.svg" alt="">
+            </div>
+            <a href="#" class="sidebar-button .has-icon">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-house-user"></i>
+                </div>
+                <p class="text">
+                    Home
+                </p>
+            </a>
+            <a href="#" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <p class="text">
+                    Thêm Admin
+                </p>
+            </a>
+            <a href="#" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-table-list"></i>
+                </div>
+                <p class="text">
+                    Quản lý sản phẩm
+                </p>
+            </a>
+            <a href="#" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-regular fa-square-plus"></i>
+                </div>
+                <p class="text">
+                   Thêm sản phẩm 
+                </p>
+            </a>
+            <a href="#" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-regular fa-square-minus"></i>
+                </div>
+                <p class="text">
+                    Xoá sản phâm 
+                </p>
+            </a>
+            <a href="#" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-arrow-down-up-across-line"></i>
+                </div>
+                <p class="text">
+                    Quản lý đơn hàng
+                </p>
+            </a>
+            <a href="#" class="item5 sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-user-tag"></i>
+                </div>
+                <p class="text">
+                    Quản lý khách hàng
+                </p>
+            </a>
+
+        </div>
+        <div class="content grid-item content-grid">
+            <div class="main-grid">
+                <nav class="navbar tag-line _4c _1r">
+                    <div class="nav-back-prev">
+                        <div class="back-button button "></div>
+                        <div class="breadcumb">
+                            <a href="#">Quản lý sản phẩm</a>
+                        </div>
+                    </div>
+                    <div class="funcproduct">
+                        <a href="#" class="new button bg_green f-cl-white">New</a>
+                        <a href="#" class="modify button bg_blue f-cl-white">Modify</a>
+                        <a href="#" class="remove button bg_red f-cl-white">Remove</a>
+                        <a href="#" class="select button bg_black f-cl-white">Select</a>
+                    </div>
+                </nav>
+                <div class="product-table table _4c _6r">
+                    <table id="example" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Mã sản phẩm</th>
+                                <th>Tên Sản phẩm</th>
+                                <th>Danh mục</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày nhập</th>
+                                <th>Giá bán (VND)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-data"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                // Hàm tạo dữ liệu ngẫu nhiên
+                function generateRandomData() {
+                    const categories = ["Gạch lát nền", "Gạch ốp tường", "Gạch trang trí", "Gạch chống trơn"];
+                    const statusOptions = ["Còn hàng", "Hết hàng", "Sắp có hàng"];
+                    const data = [];
+
+                    for (let i = 1; i <= 200; i++) {
+                        const productCode = "SP" + String(i).padStart(3, '0');
+                        const productName = "Gạch men " + i;
+                        const category = categories[Math.floor(Math.random() * categories.length)];
+                        const status = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+                        const date = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
+                        const formattedDate = date.toISOString().split('T')[0];
+                        const price = (Math.floor(Math.random() * 500) + 50) * 1000;
+
+                        data.push([
+                            productCode,
+                            productName,
+                            category,
+                            status,
+                            formattedDate,
+                            price.toLocaleString('vi-VN') + " VND"
+                        ]);
+                    }
+                    return data;
+                }
+
+                // Thêm dữ liệu vào bảng
+                const table = $('#example').DataTable({
+                    data: generateRandomData(),
+                    columns: [
+                        { title: "Mã sản phẩm" },
+                        { title: "Tên Sản phẩm" },
+                        { title: "Danh mục" },
+                        { title: "Trạng thái" },
+                        { title: "Ngày nhập" },
+                        { title: "Giá bán (VND)" }
+                    ],
+                    pageLength: 10,
+                    language: {
+                        lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
+                        zeroRecords: "Không tìm thấy kết quả",
+                        info: "Hiển thị trang _PAGE_ của _PAGES_",
+                        infoEmpty: "Không có dữ liệu",
+                        infoFiltered: "(lọc từ _MAX_ tổng mục)"
+                    }
+                });
+            });
+        </script>
+        <script src="./assets/js/TriggerSubmenu.js"></script>
+</body>
+
+</html>
