@@ -14,10 +14,22 @@
 }
 
 .table {
+    overflow: auto;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tag-line{
+    display: flex;
+    border-left: rgb(205, 205, 168) solid 10px;
+    background-color: #f4f6f9;
+    padding: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .header{
@@ -34,6 +46,7 @@
     flex-direction: column;
     row-gap: 10px;
 }
+
 
 .content{
     background-color: whitesmoke;
@@ -155,7 +168,7 @@
     width: 100%;
     margin: 0 auto;
     grid-template-columns: 1fr 1fr 1fr 1fr; 
-    grid-auto-rows: 150px;
+    grid-auto-rows: 75px; 
     gap: 2.6rem;
 }
 
@@ -171,6 +184,34 @@
     grid-row: span 3; 
 }
 
+._4r{
+    grid-row: span 4; 
+}
+
+._5r{
+    grid-row: span 5; 
+}
+
+._6r{
+    grid-row: span 6; 
+}
+
+._7r{
+    grid-row: span 7; 
+}
+
+._8r{
+    grid-row: span 8; 
+}
+
+._9r{
+    grid-row: span 9; 
+}
+
+._10r{
+    grid-row: span 10; 
+}
+
 ._1c{
     grid-column: span 1;
 }
@@ -181,4 +222,48 @@
 
 ._3c{
     grid-column: span 3;
+}
+
+._4c{
+    grid-column: span 4;
+}
+
+.bg_red{
+    background-color: red;
+}
+
+.bg_green{
+    background-color: green;
+}
+
+.bg_yellow{
+    background-color: yellow;
+}
+
+.bg_blue{
+    background-color: blue;
+}
+
+.bg_black{
+    background-color: black;
+}
+
+.bg_white{
+    background-color: white;
+}
+
+.f-cl-black{
+    color: black;
+}
+
+.f-cl-white{
+    color: white;
+}
+
+.button{
+    display: flex;
+    width: 3rem;
+    height: 1.5rem;
+    align-items: center;
+    justify-content: center;
 }
