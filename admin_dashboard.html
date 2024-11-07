@@ -1,41 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Admin Login</title>
-       
-        <!-- Reset CSS -->
-        <link rel="stylesheet" href="./assets/css/reset.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
 
-        <!-- Thêm favicon -->
-        <link rel="icon" type="image/x-icon" href="./assets/icons/logo2_no_text.svg">
-       
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="./assets/css/reset.css" />
 
-        <!-- Nhúng phông chữ -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-        
-         <!-- Font Awesome-->
-       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js" integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Thêm favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/icons/logo2_no_text.svg">
 
-        <!-- Kiểu CSS -->
-        <link rel="stylesheet" href="./assets/css/style.css" />
-        <link rel="stylesheet" href="./assets/css/grid-layout.css">
-        <link rel="stylesheet" href="./assets/css/admin-ruleset.css">
-        <link rel="stylesheet" href="./assets/css/admin-dashboard.css">
+
+    <!-- Nhúng phông chữ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"
+        integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Kiểu CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/grid-layout.css">
+    <link rel="stylesheet" href="./assets/css/admin-ruleset.css">
+    <link rel="stylesheet" href="./assets/css/admin-dashboard.css">
 </head>
+
 <body>
     <div class="admin-container grid-layout">
         <div class="header grid-item header-grid">
             <div class="search-func">
-                    <div class="search-bar">
-                        <input type="text" placeholder="Tìm kiếm sản phẩm..." />
-                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <div class="search-bar">
+                    <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
 
-                    </div>
+                </div>
             </div>
             <div class="acount-info">
                 <i class="fa-regular fa-circle-user fa-2x"></i>
@@ -53,9 +61,9 @@
         </div>
         <div class="sidebar grid-item sidebar-grid">
             <div class="logo">
-                <img src="./assets/icons/logo2_2.svg" alt="">
+                <img src="./assets/icons/logo2.svg" alt="">
             </div>
-            <a href="#" class="item1 sidebar-button .has-icon">
+            <a href="#" class="sidebar-button .has-icon">
                 <div class="sidebar-icon">
                     <i class="fa-solid fa-house-user"></i>
                 </div>
@@ -63,7 +71,7 @@
                     Home
                 </p>
             </a>
-            <a href="#" class="item2 sidebar-button">
+            <a href="#" class="sidebar-button">
                 <div class="sidebar-icon">
                     <i class="fa-regular fa-user"></i>
                 </div>
@@ -71,45 +79,127 @@
                     Thêm Admin
                 </p>
             </a>
-            <a href="#" class="item4 sidebar-button">
+            <a href="#" class="sidebar-button">
                 <div class="sidebar-icon">
-                <i class="fa-solid fa-table-list"></i>
+                    <i class="fa-solid fa-table-list"></i>
                 </div>
                 <p class="text">
-                    Quản lý sản phẩm 
+                    Quản lý sản phẩm
                 </p>
             </a>
-            <a href="#" class="item3 sidebar-button">
+            <a href="#" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-regular fa-square-plus"></i>
+                </div>
+                <p class="text">
+                   Thêm sản phẩm 
+                </p>
+            </a>
+            <a href="#" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-regular fa-square-minus"></i>
+                </div>
+                <p class="text">
+                    Xoá sản phâm 
+                </p>
+            </a>
+            <a href="#" class="sidebar-button">
                 <div class="sidebar-icon">
                     <i class="fa-solid fa-arrow-down-up-across-line"></i>
                 </div>
                 <p class="text">
-                    Quản lý đơn hàng 
+                    Quản lý đơn hàng
                 </p>
             </a>
-            <a href="#" class="item3 sidebar-button">
+            <a href="#" class="item5 sidebar-button">
                 <div class="sidebar-icon">
                     <i class="fa-solid fa-user-tag"></i>
                 </div>
                 <p class="text">
-                    Quản lý khách hàng 
+                    Quản lý khách hàng
                 </p>
             </a>
 
         </div>
         <div class="content grid-item content-grid">
-            <div class="dashboard-grid">
-                <div class="card _1c _1r">Tổng doanh thu</div>
-                <div class="card _1c _1r">Số lượng khách hàng</div>
-                <div class="card _1c _1r">Tổng Sản phẩm</div>
-                <div class="card _1c _1r">Giao dịch</div>
-                <div class="table _3c _3r">Tình trạng đơn hàng</div>
-                <div class="chart _1c _3r">Bán ế quá</div>
-                <div class="table _2c _2r">Khách hàng mới</div>
-                <div class="table _2c _2r">Sản phẩm hết hàng</div>
+            <div class="main-grid">
+                <div class="card _1c _2r"><p class="text_entry_title">Tổng doanh thu</p></div>
+                <div class="card _1c _2r"><p class="text_entry_title">Số lượng khách hàng</p></div>
+                <div class="card _1c _2r"><p class="text_entry_title">Tổng Sản phẩm</p></div>
+                <div class="card _1c _2r"><p class="text_entry_title">Giao dịch</p></div>
+                <div class="table _3c _5r">
+                    <p class="text_entry_title">Tình trạng đơn hàng</p>
+                    <div class="fui-table-ui-basic-linh table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Amount</th>
+                                    <th>Value</th>
+                                    <th>Strategy A</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td class="pcs">457</td>
+                                    <td class="cur">6535178</td>
+                                    <td class="per">50,71</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td class="pcs">457</td>
+                                    <td class="cur">6535178</td>
+                                    <td class="per">50,71</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td class="pcs">457</td>
+                                    <td class="cur">6535178</td>
+                                    <td class="per">50,71</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td class="pcs">457</td>
+                                    <td class="cur">6535178</td>
+                                    <td class="per">50,71</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td class="pcs">457</td>
+                                    <td class="cur">6535178</td>
+                                    <td class="per">50,71</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td class="pcs">457</td>
+                                    <td class="cur">6535178</td>
+                                    <td class="per">50,71</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td class="pcs">457</td>
+                                    <td class="cur">6535178</td>
+                                    <td class="per">50,71</td>
+                                </tr>
+                                <tr>
+                                    <td>Company Name</td>
+                                    <td class="pcs">457</td>
+                                    <td class="cur">6535178</td>
+                                    <td class="per">50,71</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+                <div class="chart _1c _5r"><p class="text_entry_title">Bán ế quá</p></div>
+                <div class="table _2c _4r"><p class="text_entry_title">Khách hàng mới</p></div>
+                <div class="table _2c _4r"><p class="text_entry_title">Sản phẩm hết hàng</p></div>
 
             </div>
         </div>
     </div>
 </body>
+
 </html>
