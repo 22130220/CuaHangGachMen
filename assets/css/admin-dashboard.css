@@ -1,90 +1,72 @@
-.header{
-    background-color: aqua;
-    color: white;
-    display: flex; 
-    flex-direction: row;
-}
 
-.sidebar{
-    background-color: blue;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    row-gap: 10px;
-}
 
-.content{
-    background-color: whitesmoke;
-    color: black;
-}
 
-.logo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.header .search-func{
-    flex: 60%;
-}
-
-.header .acount-info{
-    flex: 30%;
-    display: flex;
-    flex-direction: row;
-}
-
-.account-label{
-    display: flex;
-    flex-direction: column;
+/* Reset css */
+* {
+    box-sizing: border-box;
+  }
+  
+  ul,
+  li {
+    list-style: none;
+    list-style-type: none;
+  }
+  
+  ul {
+    padding: 0;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  /* End reset css */
+  /* ********************** Table wrap ********************** */
+  .table-wrap {
+    color: #333;
+    font-size: 14px;
+  }
+  
+  /* ********************** End table wrap ********************** */
+  /* ********************** Table common ********************** */
+  table {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  }
+  table .pcs::after {
+    content: " pcs";
+  }
+  table .cur::before {
+    content: "$";
+  }
+  table .per::after {
+    content: "%";
+  }
+  table thead th {
     text-align: left;
-    justify-content: center;
-}
+    padding-block: 8px;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #ececec;
+  }
+  table tbody tr:not(:last-child) td {
+    border-bottom: 1px solid #ececec;
+  }
+  table th,
+  table td {
+    padding: 16px;
+  }
+  table td {
+    vertical-align: middle;
+  }
+  
+  /* ********************** End table common ********************** */
 
-.text-name{
-    font-size: 1.6rem;
+.text_entry_title{
+    font-size: 2rem;
     font-weight: bold;
 }
-
-.text-permission{
-    font-size: 1.6rem;
-    font-weight: lighter;
-}
-
-
-.header .signout{
-    flex: 10%;
-    display: flex;
-    align-items: center;
-}
-
-.logout-icon{
-    width: 50px;
-    height: 100%;
-    display: flex;
-    align-items: center; 
-    justify-content: center;
-}
-
-.card{
-    background-color: #f4f6f9;
-    text-align: center;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.chart {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.table {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+  
+  
 

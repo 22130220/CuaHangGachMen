@@ -1,3 +1,92 @@
+.card{
+    background-color: #f4f6f9;
+    text-align: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header{
+    background-color: aqua;
+    color: white;
+    display: flex; 
+    flex-direction: row;
+}
+
+.sidebar{
+    background-color: blue;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.content{
+    background-color: whitesmoke;
+    color: black;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+}
+
+.header .search-func{
+    flex: 60%;
+}
+
+.header .acount-info{
+    flex: 30%;
+    display: flex;
+    flex-direction: row;
+}
+
+.account-label{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: center;
+}
+
+.text-name{
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.text-permission{
+    font-size: 1.6rem;
+    font-weight: lighter;
+}
+
+
+.header .signout{
+    flex: 10%;
+    display: flex;
+    align-items: center;
+}
+
+.logout-icon{
+    width: 50px;
+    height: 100%;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
 .admin-container{
     display: grid;
     height: 100vh;
@@ -30,7 +119,7 @@
 .sidebar-button{
     width: 100%;
     height: 50px;
-    font-size: 18px;
+    font-size: 1.6rem;
     font-weight: bolder; 
     padding: 5px;
     border-radius: 5px;
@@ -48,11 +137,11 @@
 
 .sidebar-button:hover{
     background-color: aqua; 
-    font-size: 20px;
+    font-size: 2rem;
 }
 
 .icon-hover{
-    border-radius: 5px;
+    border-radius: 0.5rem;
     transition: 0.25s ease;
 }
 
@@ -61,7 +150,7 @@
     transform: scale(1.1);
 }
 
-.dashboard-grid{
+.main-grid{
     display: grid;
     width: 100%;
     margin: 0 auto;
