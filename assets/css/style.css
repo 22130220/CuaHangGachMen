@@ -64,12 +64,13 @@ a {
 }
 
 .heading.lv1 {
-  font-size: 5.8rem;
+  font-size: 4rem;
   line-height: 1.17; /* 117.241% */
 }
 .heading.lv2 {
-  font-size: 3.8rem;
+  font-size: 2.5rem;
   line-height: 1.26; /* 126.316% */
+  
 }
 
 .main-content {
