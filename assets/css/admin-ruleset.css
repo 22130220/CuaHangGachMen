@@ -1,23 +1,27 @@
 .card{
     background-color: #f4f6f9;
-    text-align: center;
-    padding: 20px;
+    padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+.card-white{
+     background-color: #fff;
+     padding: 1rem;
+     border-radius: 0.8rem;
+ }
 
 .chart {
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
+    padding: 2rem;
+    border-radius: 0.8rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .table {
     overflow: auto;
     background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
+    padding: 2rem;
+    border-radius: 0.8rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -28,20 +32,20 @@
     padding: 1rem;
     align-items: center;
     justify-content: space-between;
-    border-radius: 8px;
+    border-radius: 0.8rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .header{
-    background-color: aqua;
+    background-color: #2e2100ff;
     color: white;
     display: flex; 
     flex-direction: row;
 }
 
 .sidebar{
-    background-color: blue;
-    color: white;
+    background-color: #fff;
+    color: black;
     display: flex;
     flex-direction: column;
     row-gap: 10px;
@@ -49,7 +53,7 @@
 
 
 .content{
-    background-color: whitesmoke;
+    background-color: #FCF8F3;
     color: black;
 }
 
@@ -90,6 +94,7 @@
     flex: 10%;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .logout-icon{
@@ -108,7 +113,7 @@
     grid-template-columns: 1fr 5fr;
     grid-template-rows: 60px auto;
     grid-template-areas: 
-    "sidebar header"
+    "header header"
     "sidebar content"
 }
 
@@ -132,7 +137,7 @@
 .sidebar-button{
     width: 100%;
     height: 50px;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: bolder; 
     padding: 5px;
     border-radius: 5px;
@@ -150,7 +155,7 @@
 
 .sidebar-button:hover{
     background-color: aqua; 
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 .icon-hover{
@@ -168,7 +173,7 @@
     width: 100%;
     margin: 0 auto;
     grid-template-columns: 1fr 1fr 1fr 1fr; 
-    grid-auto-rows: 75px; 
+    grid-auto-rows: auto;
     gap: 2.6rem;
 }
 
@@ -263,8 +268,79 @@
 .button{
     border-radius: 0.5rem;
     display: flex;
-    width: 3rem;
-    height: 1.5rem;
+    padding: 1rem;
     align-items: center;
     justify-content: center;
+}
+
+.f-bold{
+    font-weight: bold;
+}
+
+.f-regular{
+    font-weight: normal;
+}
+
+.f-light{
+    font-weight: lighter;
+}
+
+.f-s-12{
+    font-size: 1.2rem;
+}
+
+.f-s-14{
+    font-size: 1.4rem;
+}
+
+.f-s-18{
+    font-size: 1.8rem;
+}
+
+.f-s-25{
+    font-size: 2.5rem;
+}
+
+.breadcumb{
+    display: flex;
+    flex-direction: row;
+}
+
+.nav-back-prev{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.funcproduct{
+    display: flex;
+    flex-direction: row;
+    gap: 1.6rem;
+}
+
+.flex-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.gap-6{
+    gap: 0.6rem;
+}
+
+.gap-10{
+    gap: 1rem;
+}
+
+.gap-20{
+    gap: 2rem;
+}
+
+.border-bottom{
+    padding-bottom: 0.8rem;
+    border-bottom: 0.2rem solid #e4e4e4;
 }
