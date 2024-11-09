@@ -1,24 +1,3 @@
-.breadcumb{
-    display: flex;
-    flex-direction: row;
-}
 
-.nav-back-prev{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.funcproduct{
-    display: flex;
-    flex-direction: row;
-    gap: 1.6rem;
-}
-
-.new, .modify, .remove, .select{
-    width: 8rem;
-    height: 4rem;
-    font-weight: bold;
-}
 
 
