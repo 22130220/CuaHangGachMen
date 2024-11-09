@@ -1,0 +1,315 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* ====================== Img Upload Box ====================== */
+.fui-upload-img-list .image-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(106px, 1fr));
+    gap: 10px;
+}
+.fui-upload-img-list .image-item {
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+.fui-upload-img-list .image-item.upload-box {
+    border: 1px dashed #cfcfcf;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.fui-upload-img-list .image-item.upload-box.isDragover, .fui-upload-img-list .image-item.upload-box:hover {
+    border-color: #307dca;
+}
+.fui-upload-img-list .image-item.upload-box label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 6px;
+    background-color: #f8f8f8;
+}
+.fui-upload-img-list .image-item.upload-box label.disabled {
+    pointer-events: none;
+}
+.fui-upload-img-list .image-item.upload-box svg {
+    width: 28px;
+    height: 28px;
+}
+.fui-upload-img-list .image-item.upload-box svg path {
+    fill: #a3a3a3;
+}
+.fui-upload-img-list .image-item.upload-box h3 {
+    font-size: 14px;
+    color: #313030;
+}
+.fui-upload-img-list .image-item.img-box {
+    position: relative;
+    padding: 5.58%;
+    border: 1px solid #cfcfcf;
+    background-color: #f8f8f8;
+    cursor: pointer;
+}
+.fui-upload-img-list .image-item.img-box img {
+    border-radius: 6px;
+}
+.fui-upload-img-list .image-item.img-box:hover .img-options {
+    z-index: 1;
+    opacity: 1;
+    visibility: visible;
+}
+.fui-upload-img-list .image-item.img-box .img-options {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: all 0.25s ease-out;
+    z-index: -1;
+    opacity: 0;
+    visibility: hidden;
+}
+.fui-upload-img-list .image-item.img-box .img-options ul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 0;
+}
+.fui-upload-img-list .image-item.img-box .img-options ul li {
+    opacity: 0.8;
+    width: 16%;
+    height: 16%;
+    transition: all 0.3s ease;
+}
+.fui-upload-img-list .image-item.img-box .img-options ul li.img-cancel {
+    width: calc(16% - 4px);
+    height: calc(16% - 4px);
+    margin-bottom: -2px;
+}
+.fui-upload-img-list .image-item.img-box .img-options ul li:first-child {
+    margin-bottom: -3px;
+}
+.fui-upload-img-list .image-item.img-box .img-options ul li:hover {
+    opacity: 1;
+}
+.fui-upload-img-list .image-item.img-box .img-options ul li svg {
+    width: 100%;
+    height: 100%;
+}
+.fui-upload-img-list .image-item.img-box .img-options ul li svg path {
+    fill: white;
+}
+.fui-upload-img-list .image-item .progress-upload-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+.fui-upload-img-list .image-item .progress-upload-completed {
+    text-align: center;
+}
+.fui-upload-img-list .image-item .progress-upload-completed svg {
+    margin: auto;
+    width: 30px;
+    height: 30px;
+    color: #16a34a;
+    margin-bottom: 8px;
+}
+.fui-upload-img-list .image-item .progress-upload-text {
+    font-size: 14px;
+    color: #696969;
+    text-align: center;
+}
+.fui-upload-img-list .image-item .progress-upload-bar {
+    position: relative;
+    width: 90%;
+    height: 3px;
+    background-color: #ebebeb;
+    border-radius: 50px;
+    overflow: hidden;
+}
+.fui-upload-img-list .image-item .progress-upload-bar span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: #307dca;
+}
+.fui-upload-img-list button {
+    margin-top: 20px;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: white;
+    background-color: #307dca;
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    cursor: pointer;
+}
+.fui-upload-img-list button:hover {
+    opacity: 0.6;
+}
+.fui-upload-img-list button.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+/* ====================== End Img Upload Box ====================== */
+
+/* ====================== Resize Img ====================== */
+.wrapImgResize {
+    overflow: hidden;
+    position: relative;
+    display: block;
+}
+.wrapImgResize video,
+.wrapImgResize iframe,
+.wrapImgResize img {
+    object-fit: cover;
+    width: 101%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-height: 101%;
+    max-height: 101%;
+    user-select: none;
+}
+.wrapImgResize.img16And9 {
+    padding-top: 56.25%;
+}
+.wrapImgResize.imgSquare {
+    padding-top: 100%;
+}
+.wrapImgResize.img9And16 {
+    padding-top: 177%;
+}
+.wrapImgResize.img3And4 {
+    padding-top: 133.33333333%;
+}
+.wrapImgResize.imgSpecial1 {
+    padding-top: 126%;
+}
+/* ====================== End Resize Img ====================== */
+
+/* ====================== Overlay ====================== */
+.overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+.overlay.type2 {
+    display: block;
+}
+/* ====================== End Overlay ====================== */
+
+/* ====================== Modal ====================== */
+.overlay .modal {
+    position: relative;
+    min-width: 400px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+.overlay .modal.modal-view-img {
+    position: relative;
+    transition: transform 0.4s ease, opacity 0.4s linear;
+    transform: scale(0);
+    opacity: 0;
+    margin: auto;
+    max-height: calc(100vh - 200px);
+    overflow: hidden;
+    display: flex;
+}
+.overlay .modal.modal-view-img .modal-inner {
+    width: 100%;
+    overflow: hidden;
+}
+.overlay .modal.modal-view-img h3 {
+    text-align: left;
+    font-size: 16px;
+    color: #5f5f5f;
+    width: calc(100% - 40px);
+    text-transform: capitalize;
+}
+.overlay .modal.modal-view-img img {
+    width: 100%;
+    object-fit: contain;
+}
+.overlay .modal.modal-view-img.is-open {
+    transform: scale(1);
+    opacity: 1;
+}
+.overlay .modal-close {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+}
+.overlay .modal-close:hover svg path {
+    fill: #df0606;
+}
+.overlay .modal-close svg {
+    width: 20px;
+    height: 20px;
+}
+.overlay .modal-close svg path {
+    transition: all 0.3s linear;
+    fill: #a3a3a3;
+}
+.overlay .modal-inner > h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.overlay .modal-inner > p {
+    width: 80%;
+    margin: auto;
+    line-height: 1.2;
+}
+.overlay .modal-btn {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+.overlay .modal-btn button {
+    border-radius: 4px;
+    padding: 4px 40px;
+    background-color: #307dca;
+    color: white;
+}
+.overlay .modal-btn button.btn-destroy {
+    background-color: #df0606;
+}
+/* ====================== End Modal ====================== */
