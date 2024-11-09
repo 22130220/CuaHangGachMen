@@ -152,28 +152,20 @@
                         <a href="#" class="new button bg_green f-cl-white">New</a>
                         <a href="#" class="modify button bg_blue f-cl-white">Modify</a>
                         <a href="#" class="remove button bg_red f-cl-white">Remove</a>
-                        <a href="#" class="select button bg_black f-cl-white">Select</a>
+                        <a href="#" class="select button bg_black f-cl-white">Select all</a>
+
                     </div>
                 </nav>
                 <div class="product-table table _4c _6r">
                     <table id="example" class="display" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Mã sản phẩm</th>
-                                <th>Tên Sản phẩm</th>
-                                <th>Danh mục</th>
-                                <th>Trạng thái</th>
-                                <th>Ngày nhập</th>
-                                <th>Giá bán (VND)</th>
-                            </tr>
-                        </thead>
                         <tbody id="table-data"></tbody>
                     </table>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script>
+    <script>
             $(document).ready(function () {
                 // Hàm tạo dữ liệu ngẫu nhiên
                 function generateRandomData() {
@@ -182,6 +174,7 @@
                     const data = [];
 
                     for (let i = 1; i <= 200; i++) {
+                        const checkBox = "<input type=\"checkbox\"></input>";
                         const productCode = "SP" + String(i).padStart(3, '0');
                         const productName = "Gạch men " + i;
                         const category = categories[Math.floor(Math.random() * categories.length)];
@@ -189,14 +182,17 @@
                         const date = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
                         const formattedDate = date.toISOString().split('T')[0];
                         const price = (Math.floor(Math.random() * 500) + 50) * 1000;
+                        const modifyRecord = " <a href=\"#\">Chỉnh sửa</a>" + "<a href=\"#\">Xoá</a>";
 
                         data.push([
+                            checkBox,
                             productCode,
                             productName,
                             category,
                             status,
                             formattedDate,
-                            price.toLocaleString('vi-VN') + " VND"
+                            price.toLocaleString('vi-VN') + " VND",
+                            modifyRecord,
                         ]);
                     }
                     return data;
@@ -206,12 +202,14 @@
                 const table = $('#example').DataTable({
                     data: generateRandomData(),
                     columns: [
+                        { title: " " },
                         { title: "Mã sản phẩm" },
                         { title: "Tên Sản phẩm" },
                         { title: "Danh mục" },
                         { title: "Trạng thái" },
                         { title: "Ngày nhập" },
-                        { title: "Giá bán (VND)" }
+                        { title: "Giá bán (VND)" },
+                        { title: "Chỉnh sửa" }
                     ],
                     pageLength: 10,
                     language: {
@@ -224,7 +222,6 @@
                 });
             });
         </script>
-        <script src="./assets/js/TriggerSubmenu.js"></script>
 </body>
 
 </html>
