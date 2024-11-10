@@ -1,0 +1,40 @@
+.fui-input-label-animation {
+    display: inline-block;
+    position: relative;
+}
+.fui-input-label-animation .form-input {
+    border: 1px solid #9ca3af;
+    border-radius: 6px;
+    width: 100%;
+    padding: 15px;
+    transition: 0.25s ease;
+}
+.fui-input-label-animation .form-input:not(:placeholder-shown) + .form-label,
+.fui-input-label-animation .form-input:focus + .form-label {
+    top: 0;
+    padding: 0 10px;
+    display: inline-block;
+    left: 11px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.fui-input-label-animation .form-input:focus {
+    border-color: #1dc071;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+.fui-input-label-animation .form-input:focus + .form-label {
+    color: #1dc071;
+}
+.fui-input-label-animation .form-label {
+    position: absolute;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 21px;
+    user-select: none;
+    color: #9ca3af;
+    pointer-events: none;
+    background-color: #fff;
+    transition: 0.25s ease;
+}
