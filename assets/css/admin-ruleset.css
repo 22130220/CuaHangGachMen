@@ -299,12 +299,20 @@
     font-size: 1.4rem;
 }
 
+.f-s-16{
+    font-size: 1.6rem;
+}
+
 .f-s-18{
     font-size: 1.8rem;
 }
 
 .f-s-25{
     font-size: 2.5rem;
+}
+
+.f-s-30{
+    font-size: 3rem;
 }
 
 .breadcumb{

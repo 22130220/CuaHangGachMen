@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+
+    <!-- Thêm favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/icons/logo2_no_text.svg">
+
+
+    <!-- Nhúng phông chữ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet">
+
+    <!-- Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"
+            integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Kiểu CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/admin-ruleset.css">
+    <link rel="stylesheet" href="./assets/css/basicinput.css">
+    <link rel="stylesheet" href="./assets/css/UploadImg.css">
+    <link rel="stylesheet" href="./assets/css/InputViaIcon.css">
+    <link rel="stylesheet" href="./assets/css/admin-login.css">
+    <link rel="stylesheet" href="./assets/css/navbar-basic.css">
+    <link rel="stylesheet" href="assets/css/input-anim.css">
+
+</head>
+<body>
+   <div class="login-header">
+        <div class="container">
+         <div class="child-container">
+             <nav class="fui-navbar-basic fui-navbar">
+                 <a href="#" class="logo">
+                     <img src="./assets/icons/logo2.svg" alt="Fast UI"/>
+                 </a>
+                 <ul class="nav-list">
+                     <li class="nav-item">
+                         <a href="#" title="Trang chủ" class="nav-link">Trang Chủ</a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="#" title="Giới Thiệu" class="nav-link">Giới Thiệu</a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="#" title="Liên Hệ" class="nav-link">Liên Hệ</a>
+                     </li>
+                 </ul>
+             </nav>
+         </div>
+        </div>
+   </div>
+        <div class="login-form">
+            <div class="alpha">
+                <div class="login-icon">
+                    <i class="fa-solid fa-user-tie log-i"></i>
+                </div>
+            </div>
+            <div class="omega">
+                <form action="" class="form">
+                    <p class="login-title-text f-s-30 f-cl-black f-regular">
+                        Xin Chào
+                        <i class="fa-regular fa-hand fa-rotate-by" style="--fa-rotate-angle: 45deg;"></i>
+                    </p>
+                    <p class="login-text f-s-16 f-cl-black f-regular">
+                        Sử dụng tài khoản quản trị viên để đăng nhập
+                    </p>
+                    <div class="fui-input-label-animation form-input-custom">
+                        <input type="text" class="form-input " id="username" placeholder=" " required>
+                        <label for="username" class="form-label">Username</label>
+                    </div>
+                    <div class="fui-input-label-animation form-input-custom">
+                        <input type="password" class="form-input form-input-custom" id="password" placeholder=" " required>
+                        <label for="password" class="form-label">Password</label>
+                    </div>
+                    <div class="login-button">
+                        <button class="btn">Đăng nhập</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+</body>
+</html>
