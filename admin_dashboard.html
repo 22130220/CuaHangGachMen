@@ -32,17 +32,33 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="stylesheet" href="./assets/css/grid-layout.css">
     <link rel="stylesheet" href="./assets/css/admin-ruleset.css">
+    <link rel="stylesheet" href="./assets/css/InputViaIcon.css">
     <link rel="stylesheet" href="./assets/css/admin-dashboard.css">
 </head>
 
 <body>
     <div class="admin-container grid-layout">
         <div class="header grid-item header-grid">
+            <div class="logo">
+                <img src="./assets/icons/logo_2_white.svg" alt="">
+            </div>
             <div class="search-func">
-                <div class="search-bar">
-                    <input type="text" placeholder="Tìm kiếm sản phẩm..." />
-                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
-
+                <div class="fui-input-with-icon">
+                    <input class="input" type="text" placeholder="fastui@gmail.com" />
+                    <span class="icon f-s-12">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                </div>
+            </div>
+            <div class="signout">
+                <div class="logout-icon icon-hover">
+                    <i class="fa-solid fa-table-list fa-2x"></i>
+                </div>
+                <div class="logout-icon icon-hover">
+                    <i class="fa-regular fa-bell fa-2x"></i>
+                </div>
+                <div class="logout-icon icon-hover">
+                    <i class="fa-solid fa-arrow-right-from-bracket fa-2x"></i>
                 </div>
             </div>
             <div class="acount-info">
@@ -52,17 +68,9 @@
                     <p class="text text-permission"> Admin</p>
                 </div>
             </div>
-            <div class="signout">
-                <div class="logout-icon icon-hover">
-                    <i class="fa-solid fa-arrow-right-from-bracket fa-2x"></i>
-                </div>
-            </div>
 
         </div>
         <div class="sidebar grid-item sidebar-grid">
-            <div class="logo">
-                <img src="./assets/icons/logo2.svg" alt="">
-            </div>
             <a href="#" class="sidebar-button .has-icon">
                 <div class="sidebar-icon">
                     <i class="fa-solid fa-house-user"></i>
