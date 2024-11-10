@@ -2,7 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Be Vietnam Pro", sans-serif;
 }
 
 body {
@@ -16,6 +16,38 @@ a {
     text-decoration: none;
     color: inherit;
   }
+ 
+
+   /* Thanh header */
+header {
+    background-color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+/* Logo */
+.logo img {
+    width: 150px;
+}
+
+/* Mục lục */
+.breadcrumb {
+    margin: 10px 0;
+    padding: 0;
+    font-size: 16px;
+    text-align: center;
+    
+}
+
+.breadcrumb a {
+    color: #333;
+    text-decoration: none;
+    margin-right: 5px;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
 
  
 .container {
