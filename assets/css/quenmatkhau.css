@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: "Be Vietnam Pro", sans-serif;
 }
 
 body {
@@ -11,9 +11,46 @@ body {
     background-color: #fff;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+  }
+ 
+
+   /* Thanh header */
+header {
+    background-color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+/* Logo */
+.logo img {
+    width: 200px;
+}
+
+/* Mục lục */
+.breadcrumb {
+    margin: 20px 0;
+    padding: 0;
+    font-size: 16px;
+    text-align: center;
+    
+}
+
+.breadcrumb a {
+    color: #333;
+    text-decoration: none;
+    margin-right: 5px;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
 .forgot-password-container {
     margin: 0 auto;
-    margin-top: 200px;
+    margin-top: 75px;
     text-align: center;
     max-width: 500px;
     width: 100%;
@@ -72,4 +109,20 @@ button {
 
 button:hover {
     background-color: #555;
+}
+.login-text {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+}
+
+.login-text a {
+    color: #333;
+    text-decoration: none;
+   
+}
+
+.login-text a:hover {
+    color: #555;
 }
