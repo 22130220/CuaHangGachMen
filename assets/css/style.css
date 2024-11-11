@@ -57,7 +57,7 @@ a {
   cursor: pointer;
 }
 .heading {
-  font-family: var(--font-heading);
+
   color: #171100;
   font-weight: 700;
   letter-spacing: -0.02em;
