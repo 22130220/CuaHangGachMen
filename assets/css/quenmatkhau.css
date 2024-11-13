@@ -48,6 +48,11 @@ header {
     text-decoration: underline;
 }
 
+
+.forgot-password-container {
+    margin: 0 auto;
+    margin-top: 200px;
+}
 .forgot-password-container {
     margin: 0 auto;
     margin-top: 75px;
@@ -110,6 +115,7 @@ button {
 button:hover {
     background-color: #555;
 }
+
 .login-text {
     margin-top: 10px;
     font-size: 14px;
@@ -126,3 +132,4 @@ button:hover {
 .login-text a:hover {
     color: #555;
 }
+

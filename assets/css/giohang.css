@@ -1,0 +1,197 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: "Be Vietnam Pro", sans-serif;
+    background-color: #f9f9f9;
+  }
+  
+  .container {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Thanh header */
+  .header {
+    background-color: #fff;
+    padding: 20px 20px;
+    text-align: center;
+  }
+  
+  /* Logo */
+  .logo img {
+    width: 150px;
+  }
+  
+  
+  header {
+    position: relative;
+    text-align: center;
+    color: #333;
+    padding: 40px 20px;
+    background-image: url('/assets/img/cart-img.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    color: #fff;
+  }
+  
+  header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+  }
+  
+  header h1 {
+    position: relative;
+    font-size: 2.5rem;
+    font-weight: 700;
+    z-index: 1;
+  }
+  
+  header p {
+    position: relative;
+    font-size: 1rem;
+    color: #ddd;
+    margin-top: 10px;
+    z-index: 1;
+  }
+  
+  .cart {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+  }
+  
+  .cart-items {
+    width: 65%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cart-items table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .cart-items th,
+  .cart-items td {
+    padding: 15px;
+    font-size: 1rem;
+    color: #555;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .cart-items th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+    color: #666;
+  }
+  
+  .product-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .product-info img {
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
+    border-radius: 8px;
+  }
+  
+  .cart-totals {
+    width: 30%;
+    background-color: #F9F1E7;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .cart-totals h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .totals {
+    margin-bottom: 20px;
+  }
+  
+  .totals div {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 1.1rem;
+    color: #555;
+  }
+  
+  .total span {
+    font-weight: bold;
+    
+  }
+  
+  button {
+    background-color: #2e2100ff;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  button:hover {
+    background-color: #c24d00;
+  }
+  
+  footer {
+    background-color: #FAF3EA;
+    padding: 20px 0;
+    margin-top: 40px;
+  }
+  
+  .info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .info-item {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .info-item p:first-child {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .info-item p:nth-child(2) {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
