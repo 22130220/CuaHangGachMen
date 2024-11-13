@@ -42,24 +42,81 @@
         <link rel="stylesheet" href="./assets/css/style.css" />
         <link rel="stylesheet" href="./assets/css/banner.css" />
         <link rel="stylesheet" href="./assets/css/danhmucgachmen.css" />
-        <link rel="stylesheet" href="./assets/css/popular.css">
-        <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css">
+        <link rel="stylesheet" href="./assets/css/popular.css" />
+        <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css" />
     </head>
     <body>
         <div class="button-container">
             <!-- Contact button -->
-            <div class="contact-button1 contact">
-              <i class="fas fa-comment"></i>
-              <span>Liên hệ</span>
+            <div class="contact-button1 contact" id="lienhe">
+                <i class="fas fa-comment"></i>
+                <span>Liên hệ</span>
+
+                <!-- Thông tin liên hệ ẩn -->
+                <div class="contact-info" id="contact-info">
+                    <p>📞 Số điện thoại: <strong>0376272024</strong></p>
+                    <p>📧 Email: <strong>cuahanggachmen@gmail.com</strong></p>
+                </div>
             </div>
-          
+
+            <script src="./assets/js/lienhe.js"></script>
+
             <!-- Messenger button -->
-            <div class="contact-button2 messenger">
-              <i class="fab fa-facebook-messenger"></i>
+            <div class="contact-button2 messenger" id="messenger">
+                <i class="fab fa-facebook-messenger"></i>
+
+                <!-- Hộp thoại chat hiện lên khi click hoặc hover -->
+                <div class="chat-box" id="chat-box">
+                    <div class="chat-header">
+                        <img
+                            src="./assets/icons/logo2_no_text.svg"
+                            alt="Logo"
+                            class="chat-logo"
+                        />
+                        <div class="chat-title">
+                            <p>Cửa hàng gạch men</p>
+                            <small
+                                >Chúng tôi thường phản hồi sau vài phút</small
+                            >
+                        </div>
+                    </div>
+                    <div class="chat-content">
+                        <!-- Tin nhắn của bot -->
+                        <div class="bot-message">
+                            <img
+                                src="./assets/icons/logo2_no_text.svg"
+                                alt="Bot Logo"
+                                class="bot-logo"
+                            />
+                            <p>Bạn cần shop hỗ trợ gì ạ?</p>
+                        </div>
+
+                        <!-- Tin nhắn của người dùng -->
+                        <div class="user-message">
+                            <p>
+                                Tư vấn giúp tôi loại gạch men nào vừa xịn và
+                                chất lượng
+                            </p>
+                            <img
+                                src="data:image/png;base64,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"
+                                alt="User Logo"
+                                class="user-logo"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="chat-input">
+                        <input type="text" placeholder="Write a message" />
+                        <button type="button">
+                            <i class="fa fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
-          
-           
-          </div>
+
+            <script src="./assets/js/chat.js"></script>
+        </div>
+
         <div onclick="scrollToTop()" class="scrollTop">
             <i class="fa-solid fa-arrow-up"></i>
         </div>
@@ -115,15 +172,39 @@
 
                     <!-- Hành động -->
                     <div class="action">
-                        <a href="login.html" class="btn sign-up-btn">Đăng Nhập</a>
+                        <a href="login.html" class="btn sign-up-btn"
+                            >Đăng Nhập</a
+                        >
                     </div>
 
                     <!-- Cart Button -->
                     <a href="./giohang.html" class="cart-button">
-                        <svg class="icon" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M10 20C10 21.6569 8.65685 23 7 23C5.34315 23 4 21.6569 4 20C4 18.3431 5.34315 17 7 17C8.65685 17 10 18.3431 10 20ZM8 20C8 20.5523 7.55228 21 7 21C6.44772 21 6 20.5523 6 20C6 19.4477 6.44772 19 7 19C7.55228 19 8 19.4477 8 20Z" fill="#2e2100ff"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20 20C20 21.6569 18.6569 23 17 23C15.3431 23 14 21.6569 14 20C14 18.3431 15.3431 17 17 17C18.6569 17 20 18.3431 20 20ZM18 20C18 20.5523 17.5523 21 17 21C16.4477 21 16 20.5523 16 20C16 19.4477 16.4477 19 17 19C17.5523 19 18 19.4477 18 20Z" fill="#2e2100ff"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M2.10557 2.55276C2.35256 2.05878 2.95323 1.85856 3.44721 2.10555L4.45072 2.6073C5.37999 3.07193 6.0027 3.98429 6.09676 5.01898L6.1446 5.54524C6.16801 5.80278 6.38394 5.99997 6.64255 5.99997H19.8355C21.581 5.99997 22.7892 7.74341 22.1763 9.37778L20.423 14.0533C19.9839 15.2243 18.8645 16 17.614 16H7.82643C6.27482 16 4.97922 14.8168 4.83875 13.2716L4.10497 5.20005C4.07362 4.85515 3.86605 4.55103 3.55629 4.39616L2.55278 3.8944C2.05881 3.64741 1.85858 3.04674 2.10557 2.55276ZM6.91527 7.99997C6.62126 7.99997 6.39071 8.25243 6.41733 8.54524L6.83053 13.0905C6.87736 13.6056 7.30922 14 7.82643 14H17.614C18.0308 14 18.404 13.7414 18.5503 13.3511L20.3037 8.67554C20.4262 8.34866 20.1846 7.99997 19.8355 7.99997H6.91527Z" fill="#2e2100ff"/>
+                        <svg
+                            class="icon"
+                            width="30"
+                            height="30"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M10 20C10 21.6569 8.65685 23 7 23C5.34315 23 4 21.6569 4 20C4 18.3431 5.34315 17 7 17C8.65685 17 10 18.3431 10 20ZM8 20C8 20.5523 7.55228 21 7 21C6.44772 21 6 20.5523 6 20C6 19.4477 6.44772 19 7 19C7.55228 19 8 19.4477 8 20Z"
+                                fill="#2e2100ff"
+                            />
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M20 20C20 21.6569 18.6569 23 17 23C15.3431 23 14 21.6569 14 20C14 18.3431 15.3431 17 17 17C18.6569 17 20 18.3431 20 20ZM18 20C18 20.5523 17.5523 21 17 21C16.4477 21 16 20.5523 16 20C16 19.4477 16.4477 19 17 19C17.5523 19 18 19.4477 18 20Z"
+                                fill="#2e2100ff"
+                            />
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M2.10557 2.55276C2.35256 2.05878 2.95323 1.85856 3.44721 2.10555L4.45072 2.6073C5.37999 3.07193 6.0027 3.98429 6.09676 5.01898L6.1446 5.54524C6.16801 5.80278 6.38394 5.99997 6.64255 5.99997H19.8355C21.581 5.99997 22.7892 7.74341 22.1763 9.37778L20.423 14.0533C19.9839 15.2243 18.8645 16 17.614 16H7.82643C6.27482 16 4.97922 14.8168 4.83875 13.2716L4.10497 5.20005C4.07362 4.85515 3.86605 4.55103 3.55629 4.39616L2.55278 3.8944C2.05881 3.64741 1.85858 3.04674 2.10557 2.55276ZM6.91527 7.99997C6.62126 7.99997 6.39071 8.25243 6.41733 8.54524L6.83053 13.0905C6.87736 13.6056 7.30922 14 7.82643 14H17.614C18.0308 14 18.404 13.7414 18.5503 13.3511L20.3037 8.67554C20.4262 8.34866 20.1846 7.99997 19.8355 7.99997H6.91527Z"
+                                fill="#2e2100ff"
+                            />
                         </svg>
                     </a>
                 </div>
@@ -197,7 +278,6 @@
             <div class="main-content">
                 <div class="blog-top">
                     <h2 class="heading lv2">DANH MỤC GẠCH MEN</h2>
-                   
                 </div>
 
                 <div class="blog-list">
@@ -381,9 +461,10 @@
                                 >Top loại gạch men đẹp chất lượng</span
                             >
                             <h3 class="title">
-                                <a href="#!"> <br />ĐANG CẬP NHẬT LOẠI MỚI...</a>
+                                <a href="#!">
+                                    <br />ĐANG CẬP NHẬT LOẠI MỚI...</a
+                                >
                             </h3>
-                            
                         </div>
                     </div>
                     <button class="arrow right" onclick="nextPage()">❯</button>
@@ -398,21 +479,18 @@
             </div>
         </div>
 
-
-          <!-- Popular -->
-          <div class="popular" id="popular">
+        <!-- Popular -->
+        <div class="popular" id="popular">
             <div class="main-content">
                 <div class="popular-top">
                     <div class="info">
-                        <h2 class="heading lv2">MỘT SỐ MẪU GẠCH PHỔ BIẾN BÁN CHẠY</h2>
-                        
+                        <h2 class="heading lv2">
+                            MỘT SỐ MẪU GẠCH PHỔ BIẾN BÁN CHẠY
+                        </h2>
                     </div>
-                 
                 </div>
 
-               
                 <div class="course-list">
-                    
                     <!-- Course item 1 -->
                     <div class="course-item">
                         <a href="#!">
@@ -425,11 +503,8 @@
                         <div class="info">
                             <div class="head">
                                 <div class="title">
-                                    <a
-                                        href="#!"
-                                        class="line-clamp break-all"
-                                    >
-                                    Gạch lát sàn BAMBU BB65 
+                                    <a href="#!" class="line-clamp break-all">
+                                        Gạch lát sàn BAMBU BB65
                                     </a>
                                 </div>
                                 <div class="rating">
@@ -442,14 +517,18 @@
                                 </div>
                             </div>
                             <p class="desc line-clamp line-2 break-all">
-                                Kích thước 600×600 mm - Bề mặt mài bóng <br> Loại gạch Pocerlain
+                                Kích thước 600×600 mm - Bề mặt mài bóng <br />
+                                Loại gạch Pocerlain
                             </p>
                             <div class="foot">
                                 <span class="price">50.000₫</span>
-                                <a href=""><i class="fa-solid fa-cart-plus" style="font-size: 30px;"></i></a>
-                                <button class="btn book-btn">
-                                    Book Now
-                                </button>
+                                <a href=""
+                                    ><i
+                                        class="fa-solid fa-cart-plus"
+                                        style="font-size: 30px"
+                                    ></i
+                                ></a>
+                                <button class="btn book-btn">Book Now</button>
                             </div>
                         </div>
                     </div>
@@ -466,11 +545,9 @@
                         <div class="info">
                             <div class="head">
                                 <div class="title">
-                                    <a
-                                        href="#!"
-                                        class="line-clamp break-all"
-                                        >Gạch lát sàn BAMBU BB66 </a
-                                    >
+                                    <a href="#!" class="line-clamp break-all"
+                                        >Gạch lát sàn BAMBU BB66
+                                    </a>
                                 </div>
                                 <div class="rating">
                                     <img
@@ -482,14 +559,18 @@
                                 </div>
                             </div>
                             <p class="desc line-clamp line-2 break-all">
-                                Kích thước 600×600 mm - Bề mặt mài bóng <br> Loại gạch Pocerlain
+                                Kích thước 600×600 mm - Bề mặt mài bóng <br />
+                                Loại gạch Pocerlain
                             </p>
                             <div class="foot">
                                 <span class="price">50.000₫</span>
-                                <a href=""><i class="fa-solid fa-cart-plus" style="font-size: 30px;"></i></a>
-                                <button class="btn book-btn">
-                                    Book Now
-                                </button>
+                                <a href=""
+                                    ><i
+                                        class="fa-solid fa-cart-plus"
+                                        style="font-size: 30px"
+                                    ></i
+                                ></a>
+                                <button class="btn book-btn">Book Now</button>
                             </div>
                         </div>
                     </div>
@@ -506,11 +587,9 @@
                         <div class="info">
                             <div class="head">
                                 <div class="title">
-                                    <a
-                                        href="#!"
-                                        class="line-clamp break-all"
-                                        >Gạch lát sàn BAMBU BB67 </a
-                                    >
+                                    <a href="#!" class="line-clamp break-all"
+                                        >Gạch lát sàn BAMBU BB67
+                                    </a>
                                 </div>
                                 <div class="rating">
                                     <img
@@ -522,14 +601,18 @@
                                 </div>
                             </div>
                             <p class="desc line-clamp line-2 break-all">
-                                Kích thước 600×600 mm - Bề mặt mài bóng <br> Loại gạch Pocerlain
+                                Kích thước 600×600 mm - Bề mặt mài bóng <br />
+                                Loại gạch Pocerlain
                             </p>
                             <div class="foot">
                                 <span class="price">50.000₫</span>
-                                <a href=""><i class="fa-solid fa-cart-plus" style="font-size: 30px;"></i></a>
-                                <button class="btn book-btn">
-                                    Book Now
-                                </button>
+                                <a href=""
+                                    ><i
+                                        class="fa-solid fa-cart-plus"
+                                        style="font-size: 30px"
+                                    ></i
+                                ></a>
+                                <button class="btn book-btn">Book Now</button>
                             </div>
                         </div>
                     </div>
@@ -548,11 +631,8 @@
                         <div class="info">
                             <div class="head">
                                 <div class="title">
-                                    <a
-                                        href="#!"
-                                        class="line-clamp break-all"
-                                    >
-                                    Gạch ốp lát EPEDA E601201
+                                    <a href="#!" class="line-clamp break-all">
+                                        Gạch ốp lát EPEDA E601201
                                     </a>
                                 </div>
                                 <div class="rating">
@@ -565,14 +645,18 @@
                                 </div>
                             </div>
                             <p class="desc line-clamp line-2 break-all">
-                                Kích thước 600×1200 mm - Bề mặt mài bóng <br> Loại gạch Granite
+                                Kích thước 600×1200 mm - Bề mặt mài bóng <br />
+                                Loại gạch Granite
                             </p>
                             <div class="foot">
                                 <span class="price">50.000₫</span>
-                                <a href=""><i class="fa-solid fa-cart-plus" style="font-size: 30px;"></i></a>
-                                <button class="btn book-btn">
-                                    Book Now
-                                </button>
+                                <a href=""
+                                    ><i
+                                        class="fa-solid fa-cart-plus"
+                                        style="font-size: 30px"
+                                    ></i
+                                ></a>
+                                <button class="btn book-btn">Book Now</button>
                             </div>
                         </div>
                     </div>
@@ -589,9 +673,7 @@
                         <div class="info">
                             <div class="head">
                                 <div class="title">
-                                    <a
-                                        href="#!"
-                                        class="line-clamp break-all"
+                                    <a href="#!" class="line-clamp break-all"
                                         >Gạch ốp lát EPEDA E601202</a
                                     >
                                 </div>
@@ -605,14 +687,18 @@
                                 </div>
                             </div>
                             <p class="desc line-clamp line-2 break-all">
-                                Kích thước 600×1200 mm - Bề mặt mài bóng <br> Loại gạch Granite
+                                Kích thước 600×1200 mm - Bề mặt mài bóng <br />
+                                Loại gạch Granite
                             </p>
                             <div class="foot">
                                 <span class="price">50.000₫</span>
-                                <a href=""><i class="fa-solid fa-cart-plus" style="font-size: 30px;"></i></a>
-                                <button class="btn book-btn">
-                                    Book Now
-                                </button>
+                                <a href=""
+                                    ><i
+                                        class="fa-solid fa-cart-plus"
+                                        style="font-size: 30px"
+                                    ></i
+                                ></a>
+                                <button class="btn book-btn">Book Now</button>
                             </div>
                         </div>
                     </div>
@@ -629,9 +715,7 @@
                         <div class="info">
                             <div class="head">
                                 <div class="title">
-                                    <a
-                                        href="#!"
-                                        class="line-clamp break-all"
+                                    <a href="#!" class="line-clamp break-all"
                                         >Gạch ốp lát EPEDA E601203</a
                                     >
                                 </div>
@@ -645,24 +729,33 @@
                                 </div>
                             </div>
                             <p class="desc line-clamp line-2 break-all">
-                                Kích thước 600×1200 mm - Bề mặt mài bóng <br> Loại gạch Granite
+                                Kích thước 600×1200 mm - Bề mặt mài bóng <br />
+                                Loại gạch Granite
                             </p>
                             <div class="foot">
                                 <span class="price">50.000₫</span>
-                                <a href=""><i class="fa-solid fa-cart-plus" style="font-size: 30px;"></i></a>
-                                <button class="btn book-btn">
-                                    Book Now
-                                </button>
+                                <a href=""
+                                    ><i
+                                        class="fa-solid fa-cart-plus"
+                                        style="font-size: 30px"
+                                    ></i
+                                ></a>
+                                <button class="btn book-btn">Book Now</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <a href="#!" style="display: inline-block; margin-top: 20px; margin-left: 10px;">
+                <a
+                    href="#!"
+                    style="
+                        display: inline-block;
+                        margin-top: 20px;
+                        margin-left: 10px;
+                    "
+                >
                     <span class="desc">-> Xem thêm tại đây... </span>
                 </a>
-               
-
             </div>
         </div>
 
