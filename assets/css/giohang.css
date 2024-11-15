@@ -50,7 +50,7 @@
     text-align: center;
     color: #333;
     padding: 40px 20px;
-    background-image: url('/assets/img/cart-img.svg');
+    background-image: url('./assets/img/cart-img.svg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
