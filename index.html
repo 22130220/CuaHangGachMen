@@ -47,73 +47,53 @@
     </head>
     <body>
         <div class="button-container">
-            <!-- Contact button -->
-            <div class="contact-button1 contact" id="lienhe">
-                <i class="fas fa-comment"></i>
-                <span>Liên hệ</span>
-
-                <!-- Thông tin liên hệ ẩn -->
-                <div class="contact-info" id="contact-info">
-                    <p>📞 Số điện thoại: <strong>0376272024</strong></p>
-                    <p>📧 Email: <strong>cuahanggachmen@gmail.com</strong></p>
-                </div>
-            </div>
-
-            <script src="./assets/js/lienhe.js"></script>
+           
 
             <!-- Messenger button -->
             <div class="contact-button2 messenger" id="messenger">
-                <i class="fab fa-facebook-messenger"></i>
+                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 15.9013V18.9951L12.0622 16.0038L12.5913 15.9951C14.6952 15.9607 16.5886 15.7488 18.0044 15.5334C18.8979 15.3975 19.5187 14.7739 19.6536 13.9909C19.8406 12.9049 20 11.5289 20 10C20 8.47108 19.8406 7.09512 19.6536 6.00907C19.5187 5.22608 18.8979 4.60252 18.0044 4.46657C16.4559 4.23096 14.3383 4 12 4C9.66167 4 7.54408 4.23096 5.99562 4.46657C5.10214 4.60252 4.4813 5.22608 4.34643 6.00907C4.15936 7.09512 4 8.47108 4 10C4 11.5289 4.15936 12.9049 4.34643 13.9909C4.46355 14.6709 4.93854 15.2158 5.63108 15.4461L7 15.9013ZM2.37546 5.66957C2.66565 3.98488 4.00472 2.74648 5.69477 2.48932C7.31411 2.24293 9.53559 2 12 2C14.4644 2 16.6859 2.24293 18.3052 2.48932C19.9953 2.74648 21.3344 3.98488 21.6245 5.66957C21.8268 6.84372 22 8.33525 22 10C22 11.6647 21.8268 13.1563 21.6245 14.3304C21.3344 16.0151 19.9953 17.2535 18.3052 17.5107C16.8238 17.7361 14.8384 17.9586 12.6241 17.9949L6.50873 21.6085C5.84211 22.0024 5 21.5219 5 20.7476V17.344C3.64656 16.8939 2.62456 15.7766 2.37546 14.3304C2.17321 13.1563 2 11.6647 2 10C2 8.33525 2.17321 6.84372 2.37546 5.66957Z" fill="currentColor"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M7 7C6.44772 7 6 7.44772 6 8C6 8.55228 6.44772 9 7 9H17C17.5523 9 18 8.55228 18 8C18 7.44772 17.5523 7 17 7H7ZM7 11C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11C11.5523 13 12 12.5523 12 12C12 11.4477 11.5523 11 11 11H7Z" fill="currentColor"/>
+                    </svg>
+
 
                 <!-- Hộp thoại chat hiện lên khi click hoặc hover -->
                 <div class="chat-box" id="chat-box">
-                    <div class="chat-header">
-                        <img
-                            src="./assets/icons/logo2_no_text.svg"
-                            alt="Logo"
-                            class="chat-logo"
-                        />
-                        <div class="chat-title">
-                            <p>Cửa hàng gạch men</p>
-                            <small
-                                >Chúng tôi thường phản hồi sau vài phút</small
-                            >
-                        </div>
-                    </div>
-                    <div class="chat-content">
-                        <!-- Tin nhắn của bot -->
-                        <div class="bot-message">
-                            <img
-                                src="./assets/icons/logo2_no_text.svg"
-                                alt="Bot Logo"
-                                class="bot-logo"
-                            />
-                            <p>Bạn cần shop hỗ trợ gì ạ?</p>
-                        </div>
-
-                        <!-- Tin nhắn của người dùng -->
-                        <div class="user-message">
-                            <p>
-                                Tư vấn giúp tôi loại gạch men nào vừa xịn và
-                                chất lượng
-                            </p>
-                            <img
-                                src="data:image/png;base64,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"
-                                alt="User Logo"
-                                class="user-logo"
-                            />
-                        </div>
-                    </div>
-
-                    <div class="chat-input">
-                        <input type="text" placeholder="Write a message" />
-                        <button type="button">
-                            <i class="fa fa-paper-plane"></i>
-                        </button>
-                    </div>
+                   <!-- Header -->
+        <div class="chat-header">
+            <div class="chat-avatar">
+                <img src="./assets/icons/logo2_no_text.svg" alt="Avatar">
+            </div>
+            <div class="chat-title">
+                <h3>Hỗ Trợ Khách Hàng</h3>
+                <p>Đang trực tuyến</p>
+            </div>
+            <button id="chat-close" class="chat-close">×</button>
+        </div>
+        
+        <!-- Messages -->
+        <div id="chat-messages" class="chat-messages">
+            <div class="message bot">
+                <img src="./assets/icons/logo2_no_text.svg" alt="Bot Avatar">
+                <div class="message-content">
+                    <p>Chào bạn! Mình có thể giúp gì cho bạn?</p>
+                    <span>10:00 AM</span>
                 </div>
             </div>
-
+            <div class="message user">
+                <img src="./assets/icons/logo2_no_text.svg" alt="" style="display: none;">
+               
+            </div>
+        </div>
+        
+        <!-- Input -->
+        <div class="chat-input">
+            <textarea id="user-input" placeholder="Nhập tin nhắn..."></textarea>
+            <button id="send-btn">Gửi</button>
+        </div>
+                </div>
+            </div>
+            <script src="./assets/js/chatbox.js"></script>
             <script src="./assets/js/chat.js"></script>
         </div>
 
@@ -140,6 +120,8 @@
                 </div>
             </div>
         </div>
+
+        
         <!-- Đầu trang -->
         <header class="header fixed">
             <div class="main-content">
