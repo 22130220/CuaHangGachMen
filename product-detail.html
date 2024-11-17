@@ -171,23 +171,83 @@
                     <div class="des-title">Thông tin sản phẩm</div>
                     <div class="product-contain">
                         <div class="product-info-list">
-                            <ul>
-                                <li class="desciption func-item">Mô tả</li>
-                                <li class="spec func-item">Thông số</li>
+                            <ul id="all-func">
+                                <li class="desciption func-item" id="des" onclick="activateDesInfo(this)">Mô tả</li>
+                                <li class="spec func-item" id="spec" onclick="activateDesInfo(this)">Thông số</li>
                             </ul>
                         </div>
-                        <div class="content des-content">
-                            <p class="des-title-label" >
-                                Ý tưởng thiết kế
-                            </p>
-                            <p class="des-detail">
-                                Noble được tạo ra dành cho những người trân trọng vẻ đẹp tinh tế và sự hoàn hảo trong từng chi tiết. Chúng tôi hiểu rằng ngôi nhà không chỉ là nơi để ở, mà còn là nơi thể hiện cá tính và phong cách sống của bạn.
-                                Với Noble, bạn có thể tạo nên một không gian sống độc đáo, phản ánh gu thẩm mỹ riêng biệt. Từ phòng khách sang trọng đến phòng tắm thư giãn, Noble đều mang đến sự hài hòa và tinh tế giúp bạn tận hưởng cuộc sống một cách trọn vẹn nhất.
-                                Các mẫu gạch mang họa tiết của 2 loại vân đá (Marble và Travertine), kết hợp màu sắc thanh lịch, sang trọng, thể hiện sự đẳng cấp và hiện đại của chủ nhân ngôi nhà.
-                            </p>
-                        </div>
-                    </div>
+                        <div class="product-content" id="product-content">
+                            <div class="content des-content" id="des-content">
+                                <p class="des-title-label" >
+                                    Ý tưởng thiết kế
+                                </p>
+                                <p class="des-detail">
+                                    The handmade-look Riad White ceramic wall tile adds a charming, artisanal-style design element to your space. Moroccan-inspired, the 4" x 4" gloss-finish tile features a blend of creamy white tones and high color variation with uneven edges and surface texture, mimicking that of authentic handmade zellige tile.
+                                </p>
+                                <p class="des-title-label" >
+                                    Tính năng nổi bật
+                                </p>
+                                <p class="des-detail">
+                                    BST sử dụng công nghệ mực Rocker Ink – một loại ứng dụng công nghệ kỹ thuật số để tạo ra hiệu ứng chạm khắc sắc nét và tinh tế. mang thiên nhiên chân thực vào cuộc sống. Công nghệ hiện đại này tạo nên bề mặt tương phản ấn tượng giữa mặt phẳng và chi tiết trang trí, các đường nét chất liệu vân đá được lún sâu trên bề mặt gạch. Tương phản giữa bề mặt men Mờ với hiệu ứng Bóng phản chiếu ánh sáng, giúp các hoa văn trang trí, bề mặt đá sống động và chân thực như bề mặt tự nhiên. Đây được xem là một công nghệ kết nối Gốm sứ truyền thống với Gốm sứ hiện đại bằng cách tạo nên những bản khắc Laser thực sự trên Gạch. Kết cấu vi mô độ nét và độ sâu chưa từng thấy trước đây. Hiệu ứng mực Rocker In không chỉ mang lại hiệu ứng thị giác chân thực, sinh động, mà bề mặt còn Tính năng nổi bật lún 3D có thể cảm nhận khi sờ chạm, mô phỏng bề mặt tự nhiên một cách hoàn hảo nhất.
+                                </p>
+                            </div>
+                            <div class="content spec-content" id="spec-content">
+                                <div class="spec-label">
+                                    <p class="spec-title">Kiểu mẫu</p>
+                                    <div class="spec-grid">
+                                        <div class="spec-item">
+                                            <p class="main-spec-title">Màu sắc</p>
+                                            <p class="main-spec-info">trắng</p>
+                                        </div>
+                                        <div class="spec-item">
+                                            <p class="main-spec-title">Độ dày</p>
+                                            <p class="main-spec-info">10mm</p>
+                                        </div>
+                                        <div class="spec-item">
+                                            <p class="main-spec-title">Hoa văn</p>
+                                            <p class="main-spec-info">Vân đá</p>
+                                        </div>
+                                        <div class="spec-item">
+                                            <p class="main-spec-title">Kích thước</p>
+                                            <p class="main-spec-info">300mm x 600mm</p>
+                                        </div>
 
+                                    </div>
+                                </div>
+                                <div class="spec-label">
+                                    <p class="spec-title">Kiểu mẫu</p>
+                                    <div class="spec-grid">
+                                        <div class="spec-item">
+                                            <p class="main-spec-title">Màu sắc</p>
+                                            <p class="main-spec-info">trắng</p>
+                                        </div>
+                                        <div class="spec-item">
+                                            <p class="main-spec-title">Độ dày</p>
+                                            <p class="main-spec-info">10mm</p>
+                                        </div>
+                                        <div class="spec-item">
+                                            <p class="main-spec-title">Hoa văn</p>
+                                            <p class="main-spec-info">Vân đá</p>
+                                        </div>
+                                        <div class="spec-item">
+                                            <p class="main-spec-title">Kích thước</p>
+                                            <p class="main-spec-info">300mm x 600mm</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                </div>
+
+                <div class="like like-grid">
+                    <div class="like-title">Có thể bạn cũng thích</div>
+                    <div class="like-info">
+
+                    </div>
+                    <div class="like-count"></div>
                 </div>
             </div>
 
@@ -227,5 +287,23 @@
 
 
     </script>
+        <script>
+            function activateDesInfo(button){
+                const des = button.id;
+                const elements = document.getElementById('product-content').children;
+                Array.from(elements).forEach(element => {
+                    const id = element.id.split('-');
+                    if(id[0] === des) {
+                        element.style.display = 'flex';
+                        document.getElementById(id[0]).style.borderBottom = '1px solid #000';
+
+                    } else {
+                        element.style.display = 'none';
+                        document.getElementById(id[0]).style.borderBottom = 'none';
+                    }
+                });
+            }
+
+        </script>
 </body>
 </html>
