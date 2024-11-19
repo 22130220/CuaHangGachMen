@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <link rel="stylesheet" href="./assets/css/hoso.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="small-profile">
+            <div class="avatar">
+              <img src="https://png.pngtree.com/png-clipart/20191122/original/pngtree-user-icon-isolated-on-abstract-background-png-image_5192004.jpg" alt="Avatar">
+            </div>
+            <div class="info">
+              <span class="username">nguyennganh8...</span>
+              <a href="#" class="edit-profile">
+                <span class="edit-icon"></span>
+                Sửa Hồ Sơ
+              </a>
+            </div>
+          </div>
+       
+      <ul>
+        <li ><b>Tài Khoản Của Tôi</b></li>
+        <li class="active">Hồ Sơ</li>
+        
+        
+       
+        
+        <hr>
+        
+        <li>Đơn Mua</li>
+       
+      </ul>
+    </aside>
+
+    <!-- Main Profile Section -->
+    <main class="profile">
+      <h2>Hồ Sơ Của Tôi</h2>
+      <p>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
+      <div class="content">
+        <!-- Form Section -->
+        <form>
+          <div class="form-group">
+            <label for="username">Tên đăng nhập</label>
+            <input type="text" id="username" value="nguyennganh829" disabled>
+          </div>
+          <div class="form-group">
+            <label for="name">Tên</label>
+            <input type="text" id="name" value="ngân">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" value="ng*******@gmail.com" disabled>
+            
+          </div>
+          <div class="form-group">
+            <label for="phone">Số điện thoại</label>
+            <input type="text" id="phone" placeholder="Thêm">
+            
+          </div>
+          <div class="form-group radio-group">
+            <label>Giới tính</label>
+            <div class="radio-options">
+              <label><input type="radio" name="gender" value="male" /> Nam</label>
+              <label><input type="radio" name="gender" value="female" checked /> Nữ</label>
+              <label><input type="radio" name="gender" value="other" /> Khác</label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="birthday">Ngày sinh</label>
+            <input type="date" id="birthday" value="2000-05-20">
+          </div>
+          <button type="submit" class="save-btn">Lưu</button>
+        </form>
+
+        <!-- Upload Photo Section -->
+        <div class="upload-photo">
+          <div class="photo-preview">
+            <img id="preview" 
+            src="https://png.pngtree.com/png-clipart/20191122/original/pngtree-user-icon-isolated-on-abstract-background-png-image_5192004.jpg"
+            
+            alt="" />
+          </div>
+          <label class="upload-btn">
+            Chọn Ảnh
+            <input type="file" id="fileInput" accept="image/*">
+          </label>
+          <p>Dung lượng file tối đa 1 MB<br>Định dạng: JPEG, PNG</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file && file.size <= 1048576) { // Kiểm tra kích thước file (1MB)
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('preview').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Vui lòng chọn file dưới 1MB!');
+      }
+    });
+  </script>
+</body>
+</html>

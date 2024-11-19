@@ -47,6 +47,7 @@
   .duongdanvahinhthucgiao{
     background-color: #fcf8f3;
     padding: 15px;
+    margin-bottom: 10px;
   }
   
 
@@ -247,6 +248,10 @@ input[type="number"] {
     font-weight: bold;
     margin-left: 20px;
     white-space: nowrap;
+    display: inline-block;
+    margin-top: 15px;
+    
+    
   }
   
   /* Ghi chú đơn hàng */
