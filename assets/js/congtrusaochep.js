@@ -45,7 +45,7 @@ document.querySelectorAll('.btn-remove').forEach(button => {
 // Xử lý sao chép mã giảm giá
 document.querySelectorAll('.btn-copy').forEach(button => {
     button.addEventListener('click', () => {
-        const voucherCode = button.closest('.voucher-card').querySelector('.voucher-info b').textContent;
+        const voucherCode = button.closest('.voucher-card').querySelector('.voucher-info b.a').textContent;
 
         navigator.clipboard.writeText(voucherCode).then(() => {
             alert(`Đã sao chép mã: ${voucherCode}`);
