@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="./assets/css/popular.css">
     <link rel="stylesheet" href="./assets/css/product-detail.css">
     <link rel="stylesheet" href="./assets/css/breadcrumb.css">
+    <link rel="stylesheet" href="./assets/css/product-card.css">
 </head>
 <body>
     <div class="breadcumb">
@@ -93,6 +94,7 @@
                 </div>
                 <div class="product-img img-grid">
                     <div class="column">
+
                         <div id="slide-wrapper">
                             <img id="slideLeft" class="arrow" src="./assets/img/arrow-left.png">
 
@@ -244,10 +246,106 @@
 
                 <div class="like like-grid">
                     <div class="like-title">Có thể bạn cũng thích</div>
-                    <div class="like-info">
-
+                    <div class="like-slider" id="like-slider">
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/feature-3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
+                                <div class="card-price"> $5.97/Sq.Ft.</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/feature-1.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
+                                <div class="card-price"> $5.97/Sq.Ft.</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/feature-2.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
+                                <div class="card-price"> $5.97/Sq.Ft.</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/feedback-avatar.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
+                                <div class="card-price"> $5.97/Sq.Ft.</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/course-2.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
+                                <div class="card-price"> $5.97/Sq.Ft.</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/blog-1.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
+                                <div class="card-price"> $5.97/Sq.Ft.</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachlatsanphobien2.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
+                                <div class="card-price"> $5.97/Sq.Ft.</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachlatsanphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
+                                <div class="card-price"> $5.97/Sq.Ft.</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title">
+                                    <span>Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</span>
+                                    </div>
+                                <div class="card-price"> $5.97/Sq.Ft.</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="like-count"></div>
+                    <button class="like-slider-prev like-slider-btn" onclick="scrollToItemNextSmooth(1)">
+                        <img src="./assets/img/arrow-left.png" alt="">
+                    </button>
+                    <button class="like-slider-next like-slider-btn" onclick="scrollToItemPrevSmooth(1)">
+                        <img src="./assets/img/arrow-right.png" alt="">
+                    </button>
                 </div>
             </div>
 
@@ -278,11 +376,11 @@
         let buttonLeft = document.getElementById('slideLeft');
 
         buttonLeft.addEventListener('click', function(){
-            document.getElementById('slider').scrollTop -= 180
+            document.getElementById('slider').scrollLeft -= 180
         })
 
         buttonRight.addEventListener('click', function(){
-            document.getElementById('slider').scrollY -= 180
+            document.getElementById('slider').scrollLeft += 180
         })
 
 
@@ -304,6 +402,23 @@
                 });
             }
 
+        </script>
+        <script>
+            function scrollToItemNextSmooth(index) {
+                const items = document.querySelectorAll('.like-slider > div');
+                if (items[index]) {
+                    const targetPosition = items[index].offsetLeft;
+                    document.getElementById('like-slider').scrollLeft -= targetPosition;
+                }
+            }
+
+            function scrollToItemPrevSmooth(index) {
+                const items = document.querySelectorAll('.like-slider > div');
+                if (items[index]) {
+                    const targetPosition = items[index].offsetLeft;
+                    document.getElementById('like-slider').scrollLeft += targetPosition;
+                }
+            }
         </script>
 </body>
 </html>
