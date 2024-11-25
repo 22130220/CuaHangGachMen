@@ -60,7 +60,23 @@
 }
 
 .buy-now{
+    padding: 1rem 0.8rem;
+    border-radius: 0.5rem;
+    background-color: #fffcf4;
+    color: #2e2100ff;
+    font-family: "Be Vietnam Pro", sans-serif;
+    width: 13rem;
+    height: 4rem;
+    transition: 0.25s ease;
+    outline: none;
+    border: 0.1rem solid #2e2100ff;
+}
 
+.buy-now:hover {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+    background-color: #2e2100ff;
+    color: #fffcf4;
+    cursor: pointer;
 }
 
 .product-card:hover{

@@ -34,9 +34,10 @@
     background-color: #1dc071;
     border-color: #fff;
 }
-.fui-checkbox-custom .input-checkbox:checked + .check-icon {
+.fui-checkbox-custom .input-checkbox:checked + .check-icon{
     display: block;
 }
+
 .fui-checkbox-custom .check-icon {
     width: var(--fui-checkbox-size);
     height: var(--fui-checkbox-size);
