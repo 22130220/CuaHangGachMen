@@ -49,11 +49,55 @@
 </head>
 <body>
     <div class="main-content">
+        <div class="fui-basic-breadcrumb breadcrumb-style">
+            <ul class="breadcrumb-list">
+                <li class="breadcrumb-item">
+                    <a href="#" class="breadcrumb-link">
+                        Home
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                    >
+                        <path
+                                fill="currentColor"
+                                fill-rule="evenodd"
+                                d="M9.793 7.793a1 1 0 000 1.414L12.586 12l-2.793 2.793a1 1 0 101.414 1.414l3.5-3.5a1 1 0 000-1.414l-3.5-3.5a1 1 0 00-1.414 0z"
+                                clip-rule="evenodd"
+                        ></path>
+                    </svg>
+                    <a href="#" class="breadcrumb-link">template</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                    >
+                        <path
+                                fill="currentColor"
+                                fill-rule="evenodd"
+                                d="M9.793 7.793a1 1 0 000 1.414L12.586 12l-2.793 2.793a1 1 0 101.414 1.414l3.5-3.5a1 1 0 000-1.414l-3.5-3.5a1 1 0 00-1.414 0z"
+                                clip-rule="evenodd"
+                        ></path>
+                    </svg>
+                    <a href="#" class="breadcrumb-link">Fast UI</a>
+                </li>
+            </ul>
+        </div>
         <div class="list-product-grid">
             <div class="filter-panel">
                 <div class="panel-title bg-brown cl-white s-16 bold"> LOẠI SẢN PHẨM</div>
                 <div class="panel-title bg-white cl-brown s-16 normal"> Kích thước</div>
                 <div class="panel-list bg-yellow cl-brown">
+
                     <div class="filter-item">
                         <div class="fui-checkbox-custom">
                             <div class="input-wrap">
@@ -110,7 +154,6 @@
                 </div>
                 <div class="panel-title bg-white cl-brown s-16 normal"> Nhà máy sản xuất</div>
                 <div class="panel-list bg-yellow cl-brown">
-                    <div class="list-horizontal">
                         <div class="filter-item">
                             <div class="fui-checkbox-custom">
                                 <div class="input-wrap">
@@ -210,7 +253,6 @@
                                 <label class="label s-12 cl-brown" for="check">Gạch ốp lát Trung Đô</label>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
             <div class="ls-product">
@@ -228,7 +270,11 @@
                         <label for="sort">
                             Sắp xếp theo
                         </label>
-                        <select name="sort" id="sort"></select>
+                        <select name="sort" id="sort">
+                            <option value="new">Mới cập nhật</option>
+                            <option value="asc">Giá tăng dần</option>
+                            <option value="desc">Giá giảm dần</option>
+                        </select>
                     </div>
                 </div>
                 <div class="product-list">
