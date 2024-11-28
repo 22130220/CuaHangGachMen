@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="./assets/css/admin-ruleset.css">
     <link rel="stylesheet" href="./assets/css/InputViaIcon.css">
     <link rel="stylesheet" href="./assets/css/admin-dashboard.css">
+    <link rel="stylesheet" href="./assets/css/notification.css">
 </head>
 
 <body>
@@ -54,7 +55,7 @@
                 <div class="logout-icon icon-hover">
                     <i class="fa-solid fa-table-list fa-2x"></i>
                 </div>
-                <div class="logout-icon icon-hover">
+                <div class="logout-icon icon-hover" onclick="toggleNotifi()">
                     <i class="fa-regular fa-bell fa-2x"></i>
                 </div>
                 <div class="logout-icon icon-hover">
@@ -254,11 +255,40 @@
                         <p class="text_entry_title">Bán ế</p>
                         <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>
                     </div>
+
                 </div>
                 <div class="table _2c _4r">
                     <div class="title-icon">
                         <p class="text_entry_title">Khách hàng mới</p>
                         <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>
+                    </div>
+                    <div class="fui-table-ui-basic-linh table-wrap">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Tên người dùng</th>
+                                <th>Ngày tạo</th>
+                                <th>Tình trạng</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Đinh Thi</td>
+                                <td>22-11-2024</td>
+                                <td>Online</td>
+                            </tr>
+                            <tr>
+                                <td>Nhật</td>
+                                <td>25-11-2024</td>
+                                <td>Offline</td>
+                            </tr>
+                            <tr>
+                                <td>Nghi</td>
+                                <td>27-11-2024</td>
+                                <td>Online</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="table _2c _4r">
@@ -266,11 +296,62 @@
                         <p class="text_entry_title">Sản phẩm hết hàng</p>
                         <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>
                     </div>
+                    <div class="fui-table-ui-basic-linh table-wrap">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Mã Sản phẩm</th>
+                                <th>Loại Sản phẩm</th>
+                                <th>Ngày hết</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>432524</td>
+                                <td>Gạch ốp caitlyn</td>
+                                <td>31-10-2024</td>
+                            </tr>
+                            <tr>
+                                <td>54324</td>
+                                <td>Gạch ốp ceramic</td>
+                                <td>30-10-2024</td>
+                            </tr>
+                            <tr>
+                                <td>432523</td>
+                                <td>Gạch bóng</td>
+                                <td>12-10-2024</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
             </div>
         </div>
+        <div class="notifi-box" id="box">
+            <h2>Có <span>3 thông báo mới</span></h2>
+            <div class="notifi-item">
+                <i class="fa-solid fa-user-tag fa-2x"></i>
+                <div class="text">
+                    <h4>Có 4 khách hàng mới</h4>
+                </div>
+            </div>
+            <div class="notifi-item">
+                <i class="fa-solid fa-bookmark fa-2x"></i>
+                <div class="text">
+                    <h4>Đã có thêm 4 đơn đặt hàng mới</h4>
+                </div>
+            </div>
+            <div class="notifi-item">
+                <i class="fa-solid fa-thumbs-up fa-2x"></i>
+                <div class="text">
+                    <h4>Hôm qua làm việc tốt lắm</h4>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script src="./assets/js/notification.js"></script>
 </body>
 
 </html>
