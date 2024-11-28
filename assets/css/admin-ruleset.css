@@ -372,3 +372,20 @@
     padding-bottom: 0.8rem;
     border-bottom: 0.2rem solid #e4e4e4;
 }
+
+.title-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.1rem solid #e4e4e4;
+    padding-bottom: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.content-entry {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.5rem;
+}
