@@ -35,14 +35,21 @@
     border-radius: 4px;
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.15), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
   }
+  /*
   table .pcs::after {
     content: " pcs";
   }
+   */
   table .cur::before {
-    content: "$";
+    /*content: "$"; */
   }
+
+table .cur::after {
+  content: "vnđ";
+}
+
   table .per::after {
-    content: "%";
+    /* content: "%"; */
   }
   table thead th {
     text-align: left;
@@ -64,7 +71,7 @@
   /* ********************** End table common ********************** */
 
 .text_entry_title{
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: bold;
 }
   
