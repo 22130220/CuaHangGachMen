@@ -1,0 +1,58 @@
+.fui-accordion-HL1 {
+    width: 100%;
+    background: #fff;
+    margin: 0 15px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+}
+.fui-accordion-HL1 .wrapBox {
+    margin: 10px 0;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: rgba(29, 192, 113, 0.1);
+}
+.fui-accordion-HL1 .wrapBox.open {
+    padding-bottom: 13px;
+}
+.fui-accordion-HL1 .wrapBox.open .boxTitle {
+    min-height: 35px;
+}
+.fui-accordion-HL1 .wrapBox .boxTitle {
+    display: flex;
+    min-height: 50px;
+    padding: 13px 20px;
+    cursor: pointer;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s linear;
+}
+.fui-accordion-HL1 .wrapBox .boxTitle .title {
+    flex: 1;
+    font-weight: 600;
+    color: #52525b;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+.fui-accordion-HL1 .icon {
+    color: #52525b;
+}
+.fui-accordion-HL1 .icon-plus, .fui-accordion-HL1 .icon-minus {
+    display: none;
+}
+.fui-accordion-HL1 .icon-plus.active, .fui-accordion-HL1 .icon-minus.active {
+    display: block;
+}
+.fui-accordion-HL1 .wrapBox .boxContent {
+    height: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #52525b;
+    font-weight: 400;
+    padding: 0 20px 0;
+    transition: all 0.3s linear;
+}
