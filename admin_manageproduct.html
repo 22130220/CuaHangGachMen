@@ -34,6 +34,9 @@
     <link rel="stylesheet" href="./assets/css/basicinput.css">
     <link rel="stylesheet" href="./assets/css/InputViaIcon.css">
     <link rel="stylesheet" href="./assets/css/admin-manageproduct.css">
+    <link rel="stylesheet" href="./assets/css/notification.css">
+    <link rel="stylesheet" href="./assets/css/arccordion.css">
+    <link rel="stylesheet" href="./assets/css/product-detail.css">
 
     <!-- Thêm Datatable-->
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
@@ -72,7 +75,7 @@
                 <div class="logout-icon icon-hover">
                     <i class="fa-solid fa-table-list fa-2x"></i>
                 </div>
-                <div class="logout-icon icon-hover">
+                <div class="logout-icon icon-hover" onclick="toggleNotifi()">
                     <i class="fa-regular fa-bell fa-2x"></i>
                 </div>
                 <div class="logout-icon icon-hover">
@@ -166,7 +169,182 @@
                 </div>
             </div>
         </div>
+        <div class="notifi-box" id="box">
+            <h2>Có <span>3 thông báo mới</span></h2>
+            <div class="notifi-item">
+                <i class="fa-solid fa-user-tag fa-2x"></i>
+                <div class="text">
+                    <h4>Có 4 khách hàng mới</h4>
+                </div>
+            </div>
+            <div class="notifi-item">
+                <i class="fa-solid fa-bookmark fa-2x"></i>
+                <div class="text">
+                    <h4>Đã có thêm 4 đơn đặt hàng mới</h4>
+                </div>
+            </div>
+            <div class="notifi-item">
+                <i class="fa-solid fa-thumbs-up fa-2x"></i>
+                <div class="text">
+                    <h4>Hôm qua làm việc tốt lắm</h4>
+                </div>
+            </div>
+        </div>
+        <div class="modify-item" id="show_content">
+            <div class="title-icon">
+                <p class="text_entry_title"> Gạch men</p>
+                <i class="fa-solid fa-xmark fa-lg" onclick="exitModifyItem()"></i>
+            </div>
+
+            <div class="fui-accordion-HL1">
+                <div class="wrapBox">
+                    <div class="boxTitle">
+                        <span class="title">Thông tin sản phẩm</span>
+                        <div class="boxIcon">
+  <span class="icon icon-plus">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
+      </svg></span><span class="icon icon-minus">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
+      </svg></span></div>
+                    </div>
+                    <div class="boxContent">
+                        <form action="" class="main-grid">
+                            <div class="product-name _2c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="productname" class="f-bold f-s-14 f-cl-black">Tên sản phẩm</label>
+                                    <input type="text" name="name" placeholder="Gạch ốp Catalyn 25in x 25in" class="input f-s-14" id="productname" autocomplete="off" readonly/>
+                                </div>
+                            </div>
+                            <div class="poduct-id _2c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="productid" class="f-bold f-s-14 f-cl-black">Mã sản phẩm</label>
+                                    <input type="text" name="name" placeholder="324513" class="input f-s-14" id="productid" autocomplete="off" readonly/>
+                                </div>
+                            </div>
+                            <div class="poduct-quantity _3c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="producttag" class="f-bold f-s-14 f-cl-black">Thẻ sản phẩm</label>
+                                    <input type="text" name="name" placeholder="Gạch ốp tường" class="input f-s-14" id="producttag" autocomplete="off" readonly/>
+                                </div>
+                            </div>
+                            <div class="poduct-quantity _1c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="productquantity" class="f-bold f-s-14 f-cl-black">Số lượng</label>
+                                    <input type="text" name="name" placeholder="23" class="input f-s-14" id="productquantity" autocomplete="off" readonly/>
+                                </div>
+                            </div>
+                            <div class="poduct-madewhere _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="poductmadewhere" class="f-bold f-s-14 f-cl-black"> Nơi sản xuất</label>
+                                    <input type="text" name="name" placeholder="Việt Nam" class="input f-s-14" id="poductmadewhere" autocomplete="off" readonly/>
+                                </div>
+                            </div>
+                            <div class="poduct-form _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="productform" class="f-bold f-s-14 f-cl-black"> Loại sản phẩm</label>
+                                    <input type="text" name="name" placeholder="Gạch Ốp lát tường" class="input f-s-14" id="productform" autocomplete="off" readonly/>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div class="wrapBox">
+                    <div class="boxTitle"><span class="title">Mô tả sản phẩm</span>
+                        <div class="boxIcon"><span class="icon icon-plus">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
+              </svg></span><span class="icon icon-minus">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
+              </svg></span></div>
+                    </div>
+                    <div class="boxContent">
+                        BST sử dụng công nghệ mực Rocker Ink – một loại ứng dụng công nghệ kỹ thuật số để tạo ra hiệu ứng chạm khắc sắc nét và tinh tế. mang thiên nhiên chân thực vào cuộc sống. Công nghệ hiện đại này tạo nên bề mặt tương phản ấn tượng giữa mặt phẳng và chi tiết trang trí, các đường nét chất liệu vân đá được lún sâu trên bề mặt gạch. Tương phản giữa bề mặt men Mờ với hiệu ứng Bóng phản chiếu ánh sáng, giúp các hoa văn trang trí, bề mặt đá sống động và chân thực như bề mặt tự nhiên. Đây được xem là một công nghệ kết nối Gốm sứ truyền thống với Gốm sứ hiện đại bằng cách tạo nên những bản khắc Laser thực sự trên Gạch. Kết cấu vi mô độ nét và độ sâu chưa từng thấy trước đây. Hiệu ứng mực Rocker In không chỉ mang lại hiệu ứng thị giác chân thực, sinh động, mà bề mặt còn Tính năng nổi bật lún 3D có thể cảm nhận khi sờ chạm, mô phỏng bề mặt tự nhiên một cách hoàn hảo nhất.
+                    </div>
+                </div>
+                <div class="wrapBox">
+                    <div class="boxTitle"><span class="title">Thông số</span>
+                        <div class="boxIcon"><span class="icon icon-plus">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
+              </svg></span><span class="icon icon-minus">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
+              </svg></span></div>
+                    </div>
+                    <div class="boxContent">
+                            <div class="spec-label">
+                                <p class="spec-title">Kiểu mẫu</p>
+                                <div class="spec-grid">
+                                    <div class="spec-item">
+                                        <p class="main-spec-title">Màu sắc</p>
+                                        <p class="main-spec-info">trắng</p>
+                                    </div>
+                                    <div class="spec-item">
+                                        <p class="main-spec-title">Độ dày</p>
+                                        <p class="main-spec-info">10mm</p>
+                                    </div>
+                                    <div class="spec-item">
+                                        <p class="main-spec-title">Hoa văn</p>
+                                        <p class="main-spec-info">Vân đá</p>
+                                    </div>
+                                    <div class="spec-item">
+                                        <p class="main-spec-title">Kích thước</p>
+                                        <p class="main-spec-info">300mm x 600mm</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="spec-label">
+                                <p class="spec-title">Kiểu mẫu</p>
+                                <div class="spec-grid">
+                                    <div class="spec-item">
+                                        <p class="main-spec-title">Màu sắc</p>
+                                        <p class="main-spec-info">trắng</p>
+                                    </div>
+                                    <div class="spec-item">
+                                        <p class="main-spec-title">Độ dày</p>
+                                        <p class="main-spec-info">10mm</p>
+                                    </div>
+                                    <div class="spec-item">
+                                        <p class="main-spec-title">Hoa văn</p>
+                                        <p class="main-spec-info">Vân đá</p>
+                                    </div>
+                                    <div class="spec-item">
+                                        <p class="main-spec-title">Kích thước</p>
+                                        <p class="main-spec-info">300mm x 600mm</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="wrapBox">
+                    <div class="boxTitle"><span class="title">Lượt xem, đánh giá</span>
+                        <div class="boxIcon"><span class="icon icon-plus">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
+              </svg></span><span class="icon icon-minus">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
+              </svg></span></div>
+                    </div>
+                    <div class="boxContent">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus nobis
+                        ut perspiciatis minima quidem nisi, obcaecati, delectus consequatur
+                        fuga nostrum iusto ipsam ducimus quibusdam possimus. Maiores non enim
+                        numquam voluptatem?
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <script src="./assets/js/notification.js"></script>
+    <script src="./assets/js/accordion.js"></script>
+    <script src="./assets/js/exitfFunc.js"></script>
 
     <script>
             $(document).ready(function () {
@@ -178,7 +356,7 @@
 
                     for (let i = 1; i <= 200; i++) {
                         const checkBox = "<input type=\"checkbox\"></input>";
-                        const productCode = "SP" + String(i).padStart(3, '0');
+                        const productCode = "<a onclick='showModifyItem()'> SP" + String(i).padStart(3, '0')  + "</a>";
                         const productName = "Gạch men " + i;
                         const category = categories[Math.floor(Math.random() * categories.length)];
                         const status = statusOptions[Math.floor(Math.random() * statusOptions.length)];
