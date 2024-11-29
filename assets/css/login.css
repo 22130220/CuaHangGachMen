@@ -57,7 +57,7 @@ header {
 
 .welcome {
     font-size: 35px; /* Tăng kích thước font chữ cho giống hình */
-    font-weight: 250; /* Đặt độ mảnh cho chữ */
+    font-weight: 400; /* Đặt độ mảnh cho chữ */
    
     line-height: 1; /* Đảm bảo chữ nằm trên một dòng */
   
