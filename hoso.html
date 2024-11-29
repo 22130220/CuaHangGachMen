@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css">
     <link rel="stylesheet" href="./assets/css/giohang.css">
+    <link rel="stylesheet" href="./assets/css/dropdown_user_menu.css">
      <!-- Thêm favicon -->
      <link
      rel="icon"
@@ -46,7 +47,7 @@
   <div class="main-content">
       <div class="body">
           <!-- Logo -->
-          <a href="./index.html">
+          <a href="./home.html">
               <img
                   src="./assets/icons/logo2.svg"
                   alt="Logo"
@@ -60,11 +61,18 @@
               <i class="fa-solid fa-magnifying-glass search-icon"></i>
           </div>
 
-          <!-- Hành động -->
-          <div class="action">
-              <a href="login.html" class="btn sign-up-btn"
-                  >Đăng Nhập</a
-              >
+          <div class="user-menu">
+            <div class="user-info">
+              <img src="https://vcdn1-giadinh.vnecdn.net/2022/05/03/gai-beo-1-2-6866-1651575364.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=DpsrLTd56Z7lc77C9uK-yA" alt="Avatar" class="avatar">
+              <span class="username">Trương Diễm</span>
+            </div>
+            <div class="dropdown">
+              <ul>
+                <li><a href="./hoso.html">Tài khoản của tôi</a></li>
+                <li><a href="./lichsudonhangthanhcong.html">Đơn mua</a></li>
+                <li><a href="./index.html">Đăng xuất</a></li>
+              </ul>
+            </div>
           </div>
 
           <!-- Cart Button -->
@@ -107,10 +115,10 @@
     <aside class="sidebar">
         <div class="small-profile">
             <div class="avatar">
-              <img src="https://png.pngtree.com/png-clipart/20191122/original/pngtree-user-icon-isolated-on-abstract-background-png-image_5192004.jpg" alt="Avatar">
+              <img src="https://vcdn1-giadinh.vnecdn.net/2022/05/03/gai-beo-1-2-6866-1651575364.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=DpsrLTd56Z7lc77C9uK-yA" alt="Avatar">
             </div>
             <div class="info">
-              <span class="username">nguyennganh8...</span>
+              <span class="username">truongdiem123</span>
               <a href="#" class="edit-profile">
                 <span class="edit-icon"></span>
                 Sửa Hồ Sơ
@@ -128,6 +136,8 @@
         <hr>
         
         <a href="./lichsudonhangthanhcong.html"><li>Đơn Mua</li></a>
+        <hr>
+        <a href="./home.html"><li>Quay về trang chủ</li></a>
        
       </ul>
     </aside>
@@ -141,19 +151,20 @@
         <form>
           <div class="form-group">
             <label for="username">Tên đăng nhập</label>
-            <input type="text" id="username" value="nguyennganh829" disabled>
+            <input type="text" id="username" value="truongdiem123" disabled>
           </div>
           <div class="form-group">
             <label for="matkhau">Mật khẩu</label>
-            <input type="password" id="matkhau" value="nguyennguyen" disabled>
+            <input type="password" id="matkhau" value="diemdiem" disabled>
+           
           </div>
           <div class="form-group">
             <label for="name">Tên</label>
-            <input type="text" id="name" value="ngân">
+            <input type="text" id="name" value="Trương Diễm">
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" value="ng*******@gmail.com" disabled>
+            <input type="email" id="email" value="diemtruong@gmail.com" disabled>
             
           </div>
           <div class="form-group">
@@ -186,12 +197,12 @@
         <div class="upload-photo">
           <div class="photo-preview">
             <img id="preview" 
-            src="https://png.pngtree.com/png-clipart/20191122/original/pngtree-user-icon-isolated-on-abstract-background-png-image_5192004.jpg"
+            src="https://vcdn1-giadinh.vnecdn.net/2022/05/03/gai-beo-1-2-6866-1651575364.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=DpsrLTd56Z7lc77C9uK-yA"
             
             alt="" />
           </div>
           <label class="upload-btn">
-            Chọn Ảnh
+            Đổi Ảnh
             <input type="file" id="fileInput" accept="image/*">
           </label>
           <p>Dung lượng file tối đa 1 MB<br>Định dạng: JPEG, PNG</p>

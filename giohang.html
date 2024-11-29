@@ -183,7 +183,22 @@
         </div>
         <p>Phí vận chuyển sẽ được tính ở trang Thanh toán.</p>
         <p>Mã giảm giá được nhập ở trang Thanh toán.</p>
-        <a href="./delivery_information.html"><button class="btn-checkout">Thanh toán</button></a>
+        <a href="#!" onclick="checkLogin()"><button class="btn-checkout">Thanh toán</button></a>
+
+        <script>
+            function checkLogin() {
+              // Hiển thị hộp thoại xác nhận yêu cầu đăng nhập
+              let userConfirmed = confirm("Bạn cần đăng nhập để tiếp tục thanh toán. Bạn có muốn đăng nhập không?");
+          
+              if (userConfirmed) {
+                // Nếu người dùng chọn 'Yes', chuyển hướng đến trang login.html
+                window.location.href = "./login.html";
+              } else {
+                // Nếu người dùng chọn 'No', quay lại trang hiện tại
+                window.history.back();
+              }
+            }
+          </script>
 
         <!-- Vouchers -->
         <div class="vouchers">
