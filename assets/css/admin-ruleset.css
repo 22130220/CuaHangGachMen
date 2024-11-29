@@ -121,7 +121,8 @@
     grid-template-rows: 60px auto;
     grid-template-areas: 
     "header header"
-    "sidebar content"
+    "sidebar content";
+    position: relative;
 }
 
 .header-grid{
@@ -381,6 +382,12 @@
     border-bottom: 0.1rem solid #e4e4e4;
     padding-bottom: 0.8rem;
     margin-bottom: 1rem;
+    width: 100%;
+}
+
+.text_entry_title{
+    font-size: 1.8rem;
+    font-weight: bold;
 }
 
 .content-entry {
@@ -388,4 +395,22 @@
     flex-direction: row;
     align-items: baseline;
     gap: 0.5rem;
+}
+
+.modify-item {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+    border: 1px solid white;
+    width: 100rem;
+    height: 90vh;
+    padding: 2rem;
+    transform: translate(-50%, -50%);
+    border-radius: 0.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
