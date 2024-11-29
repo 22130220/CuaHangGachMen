@@ -27,6 +27,7 @@
     border-radius: 0.8rem;
     margin: 4rem auto;
     overflow: hidden;
+    
   }
   
   /* Hồ sơ nhỏ trong Sidebar */
@@ -259,5 +260,9 @@
   .upload-photo p {
     font-size: 1.2rem; /* 12px */
     color: #666;
+  }
+
+  header{
+    margin-bottom: 30px;
   }
   
