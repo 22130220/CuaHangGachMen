@@ -19,8 +19,10 @@ body, html {
 }
 
 .error-message .error-image {
-    width: 600px; /* Điều chỉnh kích thước hình ảnh */
-    height: auto;
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 50%;
     margin-bottom: 20px;
     
 }
