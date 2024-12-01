@@ -63,10 +63,16 @@ const Accorder = function () {
             // refresh các accordion
             accordion.changeAccordion(false);
 
-            accordion.title?.addEventListener("click", () => {
+            accordion.iconPlus?.addEventListener("click", () => {
                 accordion.changeAccordion();
 
               //  this.clearItemRemaining(index)
+            })
+
+            accordion.iconMinus?.addEventListener("click", () => {
+                accordion.changeAccordion();
+
+                //  this.clearItemRemaining(index)
             })
 
         });
