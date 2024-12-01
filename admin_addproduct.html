@@ -176,82 +176,174 @@
             </div>
             <div class="card _3c _10r">
                 <form action="" class="main-grid">
-                    <div class="product-name _2c">
+                    <div class="product-name _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productname" class="f-bold f-s-14 f-cl-black">Tên sản phẩm</label>
-                            <input type="text" name="name" placeholder="Nhập tên sản phẩm" class="input f-s-14" id="productname" autocomplete="off"/>
-                        </div>
-                    </div>
-                    <div class="poduct-id _2c">
-                        <div class="fui-basic-input flex-column gap-6">
-                            <label for="productid" class="f-bold f-s-14 f-cl-black">Mã sản phẩm</label>
-                            <input type="text" name="name" placeholder="Nhập mã sản phẩm" class="input f-s-14" id="productid" autocomplete="off"/>
+                            <input type="text" name="name" placeholder="Nhập tên sản phẩm" class="input input-bordered f-s-14" id="productname" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="poduct-quantity _3c">
                         <div class="fui-basic-input flex-column gap-6">
-                            <label for="producttag" class="f-bold f-s-14 f-cl-black">Thẻ sản phẩm</label>
-                            <input type="text" name="name" placeholder="Nhập thẻ" class="input f-s-14" id="producttag" autocomplete="off"/>
+                            <label for="producttag" class="f-bold f-s-14 f-cl-black">Kích thước</label>
+                            <input type="text" name="name" placeholder="Nhập thẻ" class="input input-bordered f-s-14" id="producttag" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="poduct-quantity _1c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productquantity" class="f-bold f-s-14 f-cl-black">Số lượng</label>
-                            <input type="text" name="name" placeholder="Nhập số lượng" class="input f-s-14" id="productquantity" autocomplete="off"/>
+                            <input type="text" name="name" placeholder="Nhập số lượng" class="input input-bordered f-s-14" id="productquantity" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="poduct-madewhere _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="poductmadewhere" class="f-bold f-s-14 f-cl-black"> Nơi sản xuất</label>
-                            <input type="text" name="name" placeholder="Nhập nơi xuất" class="input f-s-14" id="poductmadewhere" autocomplete="off"/>
+                            <select name="" id="poductmadewhere" class="input input-bordered f-s-14">
+                                <option value="0"></option>
+                                <option value="1">Việt Nam</option>
+                                <option value="2">Trung Quốc</option>
+                                <option value="3">Châu Âu</option>
+                            </select>
                         </div>
                     </div>
                     <div class="poduct-form _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productform" class="f-bold f-s-14 f-cl-black"> Loại sản phẩm</label>
-                            <input type="text" name="name" placeholder="" class="input f-s-14" id="productform" autocomplete="off"/>
+                            <select name="" id="productform" class="input input-bordered f-s-14">
+                                <option value="0"></option>
+                                <option value="1">Gạch Lát Nền</option>
+                                <option value="2">Gạch Ốp Tường</option>
+                                <option value="3">Gạch Men</option>
+                                <option value="4">Gạch lau sàn</option>
+                            </select>
                         </div>
                     </div>
                     <div class="poduct-description _4c">
-                        <div id="editor">
-                            <p>Mô tả sản phẩm</p>
+                        <div class="flex-column gap-6">
+                            <label for="editor" class="f-bold f-s-14 f-cl-black">
+                                Mô tả sản phẩm
+                            </label>
+                            <textarea class="editor-label" name="editor" id="editor" cols="30" rows="10"></textarea>
                         </div>
                     </div>
-                    <div class="poduct-img _4c">
-                        <div class="fui-upload-img-list">
-                            <div class="image-wrap">
-                                <ul class="image-list">
-                                    <li class="image-item upload-box">
-                                        <div class="wrapImgResize imgSquare">
-                                            <label htmlFor="uploadImages">
-                                                <input type="file" id="uploadImages" accept="image/*" multiple hidden />
-                                                <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="24"
-                                                        height="24"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                            fill="currentColor"
-                                                            fill-rule="evenodd"
-                                                            d="M8.999 10.04a1 1 0 01-.946 1.052c-.752.04-1.349.089-1.814.138-.626.066-1.006.45-1.07 1.003C5.08 13.027 5 14.228 5 16c0 1.772.079 2.973.17 3.767.063.554.442.937 1.067 1.003C7.33 20.885 9.139 21 12 21c2.86 0 4.67-.115 5.763-.23.625-.066 1.004-.45 1.067-1.003.091-.794.17-1.995.17-3.767 0-1.772-.079-2.973-.17-3.767-.063-.553-.443-.937-1.068-1.003a35.394 35.394 0 00-1.815-.138 1 1 0 01.106-1.997c.783.041 1.414.093 1.918.146 1.485.157 2.669 1.21 2.846 2.765.102.886.183 2.165.183 3.994 0 1.828-.081 3.108-.183 3.994-.177 1.554-1.358 2.608-2.844 2.765-1.181.124-3.062.241-5.973.241-2.91 0-4.792-.117-5.973-.241-1.485-.157-2.667-1.21-2.844-2.765C3.08 19.108 3 17.828 3 16c0-1.829.081-3.108.183-3.994.177-1.555 1.361-2.608 2.846-2.765a37.358 37.358 0 011.918-.146 1 1 0 011.052.945z"
-                                                            clip-rule="evenodd"
-                                                    ></path>
-                                                    <path
-                                                            fill="currentColor"
-                                                            fill-rule="evenodd"
-                                                            d="M9.207 6.207a1 1 0 01-1.414-1.414l3.5-3.5a1 1 0 011.414 0l3.5 3.5a1 1 0 01-1.414 1.414L13 4.414V14a1 1 0 11-2 0V4.414L9.207 6.207z"
-                                                            clip-rule="evenodd"
-                                                    ></path>
-                                                </svg>
-                                                <h3>Upload</h3>
-                                            </label>
-                                        </div>
-                                    </li>
-                                </ul>
+                    <div class="poduct-img-thumb _4c">
+                        <div class="flex-column gap-6">
+                            <p class="f-bold f-s-14 f-cl-black">Chọn ảnh đại diện</p>
+                            <div id="thumbnail" class="upload-area-container">
+                                <div class="upload-area">
+                                    <label class="custom-file-upload">
+                                        Chọn ảnh
+                                        <input type="file" accept="image/*" multiple style="display: none;">
+                                    </label>
+                                    <div class="image-preview"></div>
+                                </div>
                             </div>
-                            <button>Tải lên</button>
+                        </div>
+                    </div>
+                    <div class="poduct-img-thumb _4c">
+                        <div class="flex-column gap-6">
+                            <p class="f-bold f-s-14 f-cl-black">Ảnh của từng loại màu</p>
+                            <div class="fui-accordion-HL1">
+                                <div class="wrapBox">
+                                    <div class="boxTitle">
+                                        <span class="title">
+                                            <div class="fui-basic-input flex-column gap-6">
+                                             <select name="" id="corlor1" class="input f-s-14 accordion-input">
+                                                 <option value="0"></option>
+                                                <option value="1">Xanh ngọc</option>
+                                                <option value="2">Trắng</option>
+                                                <option value="3">Cam</option>
+                                            </select>
+
+                                        </div>
+                                    </span>
+                                        <div class="boxIcon"><span class="icon icon-plus">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
+              </svg></span><span class="icon icon-minus">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
+              </svg></span></div>
+                                    </div>
+                                    <div class="boxContent">
+                                        <div id="area1" class="upload-area-container">
+                                            <div class="upload-area">
+                                                <label class="custom-file-upload">
+                                                    Chọn ảnh
+                                                    <input type="file" accept="image/*" multiple style="display: none;">
+                                                </label>
+                                                <div class="image-preview"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="wrapBox">
+                                    <div class="boxTitle"><span class="title">
+                                        <div class="fui-basic-input flex-column gap-6">
+                                             <select name="" id="corlor2" class="input f-s-14 accordion-input">
+                                                 <option value="0"></option>
+                                                <option value="1">Xanh ngọc</option>
+                                                <option value="2">Trắng</option>
+                                                <option value="3">Cam</option>
+                                            </select>
+
+                                        </div>
+                                    </span>
+                                        <div class="boxIcon"><span class="icon icon-plus">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
+              </svg></span><span class="icon icon-minus">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
+              </svg></span></div>
+                                    </div>
+                                    <div class="boxContent">
+                                        <div id="area2" class="upload-area-container">
+                                            <div class="upload-area">
+                                                <label class="custom-file-upload">
+                                                    Chọn ảnh
+                                                    <input type="file" accept="image/*" multiple style="display: none;">
+                                                </label>
+                                                <div class="image-preview"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="wrapBox">
+                                    <div class="boxTitle"><span class="title">
+                                        <div class="fui-basic-input flex-column gap-6">
+                                             <select name="" id="corlor3" class="input f-s-14 accordion-input">
+                                                 <option value="0"></option>
+                                                <option value="1">Xanh ngọc</option>
+                                                <option value="2">Trắng</option>
+                                                <option value="3">Cam</option>
+                                            </select>
+
+                                        </div>
+                                    </span>
+                                        <div class="boxIcon"><span class="icon icon-plus">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
+              </svg></span><span class="icon icon-minus">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
+              </svg></span></div>
+                                    </div>
+                                    <div class="boxContent">
+                                        <div id="area3" class="upload-area-container">
+                                            <div class="upload-area">
+                                                <label class="custom-file-upload">
+                                                    Chọn ảnh
+                                                    <input type="file" accept="image/*" multiple style="display: none;">
+                                                </label>
+                                                <div class="image-preview"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -284,29 +376,8 @@
 
 </div>
 <script src="./assets/js/notification.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.umd.js"></script>
-
-<script>
-    const {
-        ClassicEditor,
-        Essentials,
-        Bold,
-        Italic,
-        Font,
-        Paragraph
-    } = CKEDITOR;
-
-    ClassicEditor
-        .create( document.querySelector( '#editor' ), {
-            plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
-            toolbar: [
-                'undo', 'redo', '|', 'bold', 'italic', '|',
-                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
-            ]
-        } )
-        .then( /* ... */ )
-        .catch( /* ... */ );
-</script>
+<script src="./assets/js/img-uploading.js"></script>
+<script src="./assets/js/accordion.js"></script>
 </body>
 
 </html>
