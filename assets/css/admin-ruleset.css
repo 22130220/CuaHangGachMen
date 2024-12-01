@@ -417,4 +417,11 @@
     overflow-x: hidden;
 }
 
+.editor-label {
+    border-radius: 0.5rem;
+    font-family: "Be Vietnam Pro", sans-serif;
+    padding: 1rem 1rem;
+    width: 100%;
+}
+
 

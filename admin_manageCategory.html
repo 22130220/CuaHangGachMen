@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý sản phẩm</title>
+
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+
+    <!-- Thêm favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/icons/logo2_no_text.svg">
+
+
+    <!-- Nhúng phông chữ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"
+        integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Kiểu CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/admin-ruleset.css">
+    <link rel="stylesheet" href="./assets/css/basicinput.css">
+    <link rel="stylesheet" href="./assets/css/InputViaIcon.css">
+    <link rel="stylesheet" href="./assets/css/admin-manageproduct.css">
+    <link rel="stylesheet" href="./assets/css/notification.css">
+    <link rel="stylesheet" href="./assets/css/arccordion.css">
+    <link rel="stylesheet" href="./assets/css/product-detail.css">
+
+    <!-- Thêm Datatable-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+
+    <style>
+        div.container {
+            max-width: 1200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container grid-layout">
+        <div class="header grid-item header-grid">
+            <div class="logo">
+                <img src="./assets/icons/logo_2_white.svg" alt="">
+            </div>
+            <div class="search-func">
+                <div class="fui-input-with-icon">
+                    <input class="input" type="text" placeholder="fastui@gmail.com" />
+                    <span class="icon f-s-12">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                </div>
+            </div>
+            <div class="signout">
+                <div class="logout-icon icon-hover">
+                    <i class="fa-solid fa-table-list fa-2x"></i>
+                </div>
+                <div class="logout-icon icon-hover" onclick="toggleNotifi()">
+                    <i class="fa-regular fa-bell fa-2x"></i>
+                </div>
+                <div class="logout-icon icon-hover">
+                    <i class="fa-solid fa-arrow-right-from-bracket fa-2x"></i>
+                </div>
+            </div>
+            <div class="acount-info">
+                <i class="fa-regular fa-circle-user fa-2x"></i>
+                <div class="account-label">
+                    <p class="text text-name"> Tạ Hoàng Phúc</p>
+                    <p class="text text-permission"> Admin</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="sidebar grid-item sidebar-grid">
+            <a href="admin_dashboard.html" class="sidebar-button .has-icon">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-house-user"></i>
+                </div>
+                <p class="text">
+                    Dashboard
+                </p>
+            </a>
+            <a href="admin_manageproduct.html" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-table-list"></i>
+                </div>
+                <p class="text">
+                    Quản lý sản phẩm
+                </p>
+            </a>
+            <a href="admin_addproduct.html" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-regular fa-square-plus"></i>
+                </div>
+                <p class="text">
+                   Thêm sản phẩm 
+                </p>
+            </a>
+            <a href="#" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-regular fa-square-minus"></i>
+                </div>
+                <p class="text">
+                    Xoá sản phẩm
+                </p>
+            </a>
+            <a href="#" class="sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-arrow-down-up-across-line"></i>
+                </div>
+                <p class="text">
+                    Quản lý đơn hàng
+                </p>
+            </a>
+            <a href="#" class="item5 sidebar-button">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-user-tag"></i>
+                </div>
+                <p class="text">
+                    Quản lý khách hàng
+                </p>
+            </a>
+
+        </div>
+        <div class="content grid-item content-grid">
+            <div class="main-grid">
+                <nav class="navbar tag-line _4c _1r">
+                    <div class="nav-back-prev">
+                        <div class="back-button button "></div>
+                        <div class="breadcumb">
+                            <div class="breadcumb-icon f-s-25">
+                                <i class="fa-solid fa-table-list"></i>
+                            </div>
+                            <a href="#" class="f-bold f-s-25 breadcumb-text">Quản lý danh mục</a>
+                        </div>
+                    </div>
+                    <div class="funcproduct">
+                        <div class="button bg_green f-cl-white" onclick="showModifyItem()">Thêm mới</div>
+                        <a href="#" class="button bg_black f-cl-white">Chọn tất cả</a>
+
+                    </div>
+                </nav>
+                <div class="product-table table _4c _6r">
+                    <table id="example" class="display" style="width:100%">
+                        <tbody id="table-data"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="notifi-box" id="box">
+            <h2>Có <span>3 thông báo mới</span></h2>
+            <div class="notifi-item">
+                <i class="fa-solid fa-user-tag fa-2x"></i>
+                <div class="text">
+                    <h4>Có 4 khách hàng mới</h4>
+                </div>
+            </div>
+            <div class="notifi-item">
+                <i class="fa-solid fa-bookmark fa-2x"></i>
+                <div class="text">
+                    <h4>Đã có thêm 4 đơn đặt hàng mới</h4>
+                </div>
+            </div>
+            <div class="notifi-item">
+                <i class="fa-solid fa-thumbs-up fa-2x"></i>
+                <div class="text">
+                    <h4>Hôm qua làm việc tốt lắm</h4>
+                </div>
+            </div>
+        </div>
+        <div class="modify-item" id="show_content">
+            <div class="title-icon">
+                <p class="text_entry_title"> Thêm danh mục</p>
+                <i class="fa-solid fa-xmark fa-lg" onclick="exitModifyItem()"></i>
+            </div>
+            <form action="" class="main-grid">
+                <div class="product-name _4c">
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label for="categoryname" class="f-bold f-s-14 f-cl-black">Tên danh mục</label>
+                        <input type="text" name="name" placeholder="" class="input input-bordered f-s-14" id="categoryname" autocomplete="off"/>
+                    </div>
+                </div>
+                <div class="flex-column gap-6 _4c">
+                    <label for="editor" class="f-bold f-s-14 f-cl-black">
+                        Mô tả sản phẩm
+                    </label>
+                    <textarea class="editor-label" name="editor" id="editor" cols="30" rows="10"></textarea>
+                </div>
+                <div class="poduct-material _4c">
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label for="status" class="f-bold f-s-14 f-cl-black"> Trạng thái</label>
+                        <select name="" id="status" class="input input-bordered f-s-14">
+                            <option value="1">Hiển thị</option>
+                            <option value="2">Ẩn</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="_1c">
+                    <div class="button bg_green f-cl-white" onclick="exitModifyItem()">Thêm</div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="./assets/js/notification.js"></script>
+    <script src="./assets/js/accordion.js"></script>
+    <script src="./assets/js/exitfFunc.js"></script>
+
+    <script>
+            $(document).ready(function () {
+                // Hàm tạo dữ liệu ngẫu nhiên
+                function generateRandomData() {
+                    const categories = ["Gạch lát nền", "Gạch ốp tường", "Gạch trang trí", "Gạch chống trơn"];
+                    const statusOptions = ["Hiển thị", "Ẩn"];
+                    const data = [];
+
+                    for (let i = 1; i <= 10; i++) {
+                        const checkBox = "<input type=\"checkbox\"></input>";
+                        const code = i;
+                        const categoryName = categories[Math.floor(Math.random() * categories.length)];
+                        const des = "Lorem ipsum dolor sit amet, consectetur .";
+                        const status = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+                        const date = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
+                        const updateDate = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
+                        const formattedDate = date.toISOString().split('T')[0];
+                        const updateTime = updateDate.toISOString().split('T')[0];
+                        const modifyRecord = "<div onclick='showModifyItem()'>Chỉnh sửa</div>" + "<a href=\"#\">Xoá</a>";
+
+                        data.push([
+                            checkBox,
+                            code,
+                            categoryName,
+                            des,
+                            status,
+                            formattedDate,
+                          //  updateTime,
+                            modifyRecord,
+                        ]);
+                    }
+                    return data;
+                }
+
+                // Thêm dữ liệu vào bảng
+                const table = $('#example').DataTable({
+                    data: generateRandomData(),
+                    columns: [
+                        { title: " " },
+                        { title: "Mã danh mục" },
+                        { title: "Tên danh mục" },
+                        { title: "Mô tả" },
+                        { title: "Trạng thái" },
+                        { title: "Ngày tạo" },
+                   //     { title: "Ngày sửa" },
+                        { title: "Chỉnh sửa" }
+                    ],
+                    pageLength: 10,
+                    language: {
+                        lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
+                        zeroRecords: "Không tìm thấy kết quả",
+                        info: "Hiển thị trang _PAGE_ của _PAGES_",
+                        infoEmpty: "Không có dữ liệu",
+                        infoFiltered: "(lọc từ _MAX_ tổng mục)"
+                    }
+                });
+            });
+        </script>
+</body>
+
+</html>
