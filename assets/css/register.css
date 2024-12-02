@@ -111,7 +111,7 @@ header {
 }
 
 .right-section h2 {
-    margin-top: 50px;
+    margin-top: 5px;
     font-size: 24px;
     display: flex;
     align-items: center;
@@ -173,3 +173,40 @@ header {
 .login-text a:hover {
     color: #555;
 }
+
+
+.radio-group { display: grid;  align-items: center; gap: 1rem; 
+margin-left: 5px;
+
+}  
+.form-group { display: grid; grid-template-columns: 15rem auto; /* Label chiếm cố định, input chiếm phần còn lại */ align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+
+.radio-options {
+    display: flex;
+    align-items: center;
+    gap: 2rem; /* Khoảng cách giữa các radio buttons */
+  }
+  
+  .radio-options label {
+    display: flex;
+    align-items: center;
+
+    
+    gap: 0.5rem; /* Khoảng cách giữa nút radio và text */
+    
+  }
+
+  .radio-options label input{
+    margin-top: 15px;
+  }
+
+  #birthday{
+    margin-top: 15px;
+  }
+
+  .ckc{
+    margin-top: -30px;
+  }
+  
+  
+  
