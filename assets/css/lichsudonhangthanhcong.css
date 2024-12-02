@@ -125,10 +125,10 @@ justify-content: space-around;
   }
 
   .danhmucdautien .DH{
-   background-color: #555;
+   background-color: #2e2100ff;
     color: white;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 30px;
    
 
 
@@ -189,13 +189,19 @@ object-fit: cover;
   .mualaine{
     
     margin-bottom: 10px;
+    
   
   }
   .mualai{
     
-    padding: 5px;
-    border: 1px solid green;
+    padding: 10px;
+   
+    border-radius: 20px;
+    color: #fff;
+    background-color: #2e2100ff;
   }
+
+  
 
 
 
