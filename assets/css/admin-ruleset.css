@@ -424,4 +424,13 @@
     width: 100%;
 }
 
+.table-icon-label{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+
+}
+
 
