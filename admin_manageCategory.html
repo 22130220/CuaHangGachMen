@@ -149,7 +149,7 @@
                         <div class="back-button button "></div>
                         <div class="breadcumb">
                             <div class="breadcumb-icon f-s-25">
-                                <i class="fa-solid fa-table-list"></i>
+                                <i class="fa-solid fa-layer-group"></i>
                             </div>
                             <a href="#" class="f-bold f-s-25 breadcumb-text">Quản lý danh mục</a>
                         </div>
@@ -188,7 +188,7 @@
                 </div>
             </div>
         </div>
-        <div class="modify-item" id="show_content">
+        <div class="modify-item-sm" id="show_content">
             <div class="title-icon">
                 <p class="text_entry_title"> Thêm danh mục</p>
                 <i class="fa-solid fa-xmark fa-lg" onclick="exitModifyItem()"></i>
@@ -243,8 +243,7 @@
                         const updateDate = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
                         const formattedDate = date.toISOString().split('T')[0];
                         const updateTime = updateDate.toISOString().split('T')[0];
-                        const modifyRecord = "<div onclick='showModifyItem()'>Chỉnh sửa</div>" + "<a href=\"#\">Xoá</a>";
-
+                        const modifyRecord = " <div class='table-icon-label'>  <a href=\"#\" onclick='showModifyItem()'><i class=\"fa-solid fa-note-sticky\"></i></a>" + "<a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>";
                         data.push([
                             checkBox,
                             code,
