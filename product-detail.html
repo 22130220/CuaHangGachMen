@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cửa hàng gạch men</title>
+    <title>Gạch 80X80 Catalan 80112</title>
 
     <!-- Reset CSS -->
     <link rel="stylesheet" href="./assets/css/reset.css" />
@@ -220,7 +220,7 @@
             <div class="fui-basic-breadcrumb breadcrumb-style">
                 <ul class="breadcrumb-list">
                     <li class="breadcrumb-item">
-                        <a href="#" class="breadcrumb-link">
+                        <a href="index.html" class="breadcrumb-link">
                             Trang chủ
                         </a>
                     </li>
@@ -239,7 +239,7 @@
                                     clip-rule="evenodd"
                             ></path>
                         </svg>
-                        <a href="#" class="breadcrumb-link">Danh mục gạch men</a>
+                        <a href="list_product.html" class="breadcrumb-link">Danh mục gạch men</a>
                     </li>
                     <li class="breadcrumb-item">
                         <svg
@@ -256,7 +256,7 @@
                                     clip-rule="evenodd"
                             ></path>
                         </svg>
-                        <a href="#" class="breadcrumb-link">Gạch men Catalan</a>
+                        <a href="list_product.html" class="breadcrumb-link">Gạch men Catalan</a>
                     </li>
                     <li class="breadcrumb-item">
                         <svg
@@ -273,7 +273,7 @@
                                     clip-rule="evenodd"
                             ></path>
                         </svg>
-                        <a href="#" class="breadcrumb-link">Gạch 80X80 Catalan 80112</a>
+                        <a href="product-detail.html" class="breadcrumb-link">Gạch 80X80 Catalan 80112</a>
                     </li>
                 </ul>
             </div>
@@ -284,17 +284,14 @@
 
                         <div id="slide-wrapper">
                             <div id="slider">
-                                <img class="thumbnail active" src="./assets/img/shoe1.jpg">
-                                <img class="thumbnail" src="./assets/img/shoe2.jpg">
-                                <img class="thumbnail" src="./assets/img/shoe3.jpg">
-
-                                <img class="thumbnail" src="./assets/img/preset1.png">
-                                <img class="thumbnail" src="./assets/img/preset2.jpg">
-                                <img class="thumbnail" src="./assets/img/preset3.jpg">
-                                <img class="thumbnail" src="./assets/img/preset4.jpg">
+                                <img class="thumbnail active" src="./assets/img/gt04.webp">
+                                <img class="thumbnail" src="./assets/img/loaigach1.jpg">
+                                <img class="thumbnail" src="./assets/img/gachlatsanphobien3.jpg">
+                                <img class="thumbnail" src="./assets/img/gachoptuongphobien2.jpg">
+                                <img class="thumbnail" src="./assets/img/gachlatsanphobien3.jpg">
                             </div>
                         </div>
-                        <img id=featured src="./assets/img/shoe1.jpg">
+                        <img id=featured src="./assets/img/gt04.webp">
                     </div>
                 </div>
                 <div class="sumarize-info sumarize-grid">
@@ -322,16 +319,16 @@
                         <p class="color">Màu sắc</p>
                         <div class="card-color-container">
                             <div class="card-color color-active">
-                                <img src="./assets/img/ceramic-india-1-1.jpg" alt="" class="img-color">
-                                <div class="color-name">Đỏ</div>
+                                <img src="./assets/img/loaigach4.jpg" alt="" class="img-color">
+                                <div class="color-name">Xám</div>
                             </div>
                             <div class="card-color">
-                                <img src="./assets/img/blog-3.jpg" alt="" class="img-color">
-                                <div class="color-name">Xanh</div>
+                                <img src="./assets/img/ceramic-india-1-1.jpg" alt="" class="img-color">
+                                <div class="color-name">Trắng</div>
                             </div>
                             <div class="card-color" >
-                                <img src="./assets/img/course-1.jpg" alt="" class="img-color">
-                                <div class="color-name">Trắng</div>
+                                <img src="./assets/img/gt02.webp" alt="" class="img-color">
+                                <div class="color-name">Nâu</div>
                             </div>
                         </div>
                     </div>
@@ -359,6 +356,7 @@
                             <ul id="all-func">
                                 <li class="desciption func-item" id="des" onclick="activateDesInfo(this)">Mô tả</li>
                                 <li class="spec func-item" id="spec" onclick="activateDesInfo(this)">Thông số</li>
+                                <li class="spec func-item" id="review" onclick="activateDesInfo(this)">Bình luận</li>
                             </ul>
                         </div>
                         <div class="product-content" id="product-content">
@@ -421,6 +419,32 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="content-detail review-content" id="review-content">
+                                <div class="comment-section">
+                                    <div class="comments">
+                                        <!-- Bình luận mẫu -->
+                                        <div class="comment">
+                                            <img src="./assets/img/blog-1.jpg" alt="Avatar" class="avatar">
+                                            <div class="comment-content">
+                                                <p class="username">Teo123</p>
+                                                <p class="content">Sản phẩm đẹp quá</p>
+                                            </div>
+                                        </div>
+                                        <div class="comment">
+                                            <img src="./assets/img/feedback-avatar.jpg" alt="Avatar" class="avatar">
+                                            <div class="comment-content">
+                                                <p class="username">k1mSaChi</p>
+                                                <p class="content">Very good</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <form class="comment-form">
+                                        <textarea id="comment-input" placeholder="Viết bình luận của bạn..." required></textarea>
+                                        <button class="button-review" type="submit">Gửi</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
 
 
@@ -432,80 +456,10 @@
                         <div class="like-item">
                             <div class="product-card">
                                 <div class="card-img">
-                                    <img src="./assets/img/feature-3.jpg" alt="">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
                                 </div>
-                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
-                                <div class="card-price"> $5.97/Sq.Ft.</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/feature-1.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
-                                <div class="card-price"> $5.97/Sq.Ft.</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/feature-2.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
-                                <div class="card-price"> $5.97/Sq.Ft.</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/feedback-avatar.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
-                                <div class="card-price"> $5.97/Sq.Ft.</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/course-2.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
-                                <div class="card-price"> $5.97/Sq.Ft.</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/blog-1.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
-                                <div class="card-price"> $5.97/Sq.Ft.</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachlatsanphobien2.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
-                                <div class="card-price"> $5.97/Sq.Ft.</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachlatsanphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</div>
-                                <div class="card-price"> $5.97/Sq.Ft.</div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
                                 <button class="add-cart-button">Thêm vào giỏ</button>
                             </div>
                         </div>
@@ -514,13 +468,142 @@
                                 <div class="card-img">
                                     <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
                                 </div>
-                                <div class="card-title">
-                                    <span>Tribeca Basalt Porcelain Wall Tile - 2.5 x 10 in.</span>
-                                    </div>
-                                <div class="card-price"> $5.97/Sq.Ft.</div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
                                 <button class="add-cart-button">Thêm vào giỏ</button>
                             </div>
                         </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                        <div class="like-item">
+                            <div class="product-card">
+                                <div class="card-img">
+                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                                </div>
+                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
+                                <div class="card-price"> 750.000đ/1 hộp</div>
+                                <button class="add-cart-button">Thêm vào giỏ</button>
+                            </div>
+                        </div>
+
                     </div>
                     <button class="like-slider-prev like-slider-btn" onclick="scrollToItemNextSmooth(1)">
                         <img src="./assets/img/arrow-left.png" alt="">
