@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     grid-column-gap: 2rem;
-    grid-row-gap: 5rem;
+    grid-row-gap: 2rem;
     grid-template-areas:
     "breadcrumbs breadcrumbs"
     "img cartinfo"
@@ -469,4 +469,9 @@
     border: none;
     background-color: #2e2100ff;
     color: var(--mauchudao1);
+}
+
+.breadcrumb-style {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
