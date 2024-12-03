@@ -155,10 +155,8 @@
                         </div>
                     </div>
                     <div class="funcproduct">
-                        <a href="admin_addproduct.html" class="button bg_green f-cl-white">New</a>
-                        <a href="#" class="button bg_blue f-cl-white">Modify</a>
-                        <a href="#" class="button bg_red f-cl-white">Remove</a>
-                        <a href="#" class="button bg_black f-cl-white">Select all</a>
+                        <a href="admin_addproduct.html" class="button bg_green f-cl-white">Thêm mới</a>
+                        <a href="#" class="button bg_black f-cl-white">Chọn tất cả</a>
 
                     </div>
                 </nav>
@@ -229,6 +227,12 @@
                                     <input type="text" name="name" placeholder="23" class="input input-bordered f-s-14" id="productquantity" autocomplete="off" readonly/>
                                 </div>
                             </div>
+                            <div class="poduct-price _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="productprice" class="f-bold f-s-14 f-cl-black"> Giá sản phẩm (1 hộp)</label>
+                                    <input type="text" name="name" placeholder="340.000 vnđ" class="input input-bordered f-s-14" id="productprice" autocomplete="off" readonly/>
+                                </div>
+                            </div>
                             <div class="poduct-madewhere _4c">
                                 <div class="fui-basic-input flex-column gap-6">
                                     <label for="poductmadewhere" class="f-bold f-s-14 f-cl-black"> Nơi sản xuất</label>
@@ -239,6 +243,20 @@
                                 <div class="fui-basic-input flex-column gap-6">
                                     <label for="productform" class="f-bold f-s-14 f-cl-black"> Loại sản phẩm</label>
                                     <input type="text" name="name" placeholder="Gạch Ốp lát tường" class="input input-bordered f-s-14" id="productform" autocomplete="off" readonly/>
+                                </div>
+                            </div>
+
+                            <div class="poduct-material _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="productmaterial" class="f-bold f-s-14 f-cl-black"> Chất liệu</label>
+                                    <input type="text" name="name" placeholder="Gốm" class="input input-bordered f-s-14" id="productmaterial" autocomplete="off" readonly/>
+                                </div>
+                            </div>
+
+                            <div class="poduct-material _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="productmanufacturer" class="f-bold f-s-14 f-cl-black"> Nhà Cung Cấp</label>
+                                    <input type="text" name="name" placeholder="Catalyn" class="input input-bordered f-s-14" id="productmanufacturer" autocomplete="off" readonly/>
                                 </div>
                             </div>
 
@@ -350,15 +368,14 @@
 
                     for (let i = 1; i <= 200; i++) {
                         const checkBox = "<input type=\"checkbox\"></input>";
-                        const productCode = "<a onclick='showModifyItem()'> SP" + String(i).padStart(3, '0')  + "</a>";
+                        const productCode = "<a onclick='showModifyItem()'>" + i + "</a>";
                         const productName = "Gạch men " + i;
                         const category = categories[Math.floor(Math.random() * categories.length)];
                         const status = statusOptions[Math.floor(Math.random() * statusOptions.length)];
                         const date = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
                         const formattedDate = date.toISOString().split('T')[0];
                         const price = (Math.floor(Math.random() * 500) + 50) * 1000;
-                        const modifyRecord = " <a href=\"#\">Chỉnh sửa</a>" + "<a href=\"#\">Xoá</a>";
-
+                        const modifyRecord = " <div class='table-icon-label'>  <a href=\"#\"><i class=\"fa-solid fa-note-sticky\"></i></a>" + "<a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>";
                         data.push([
                             checkBox,
                             productCode,
@@ -375,15 +392,19 @@
 
                 // Thêm dữ liệu vào bảng
                 const table = $('#example').DataTable({
+                    columnDefs: [
+                        { targets: '_all', className: 'text-left' }
+                    ],
                     data: generateRandomData(),
+
                     columns: [
                         { title: " " },
-                        { title: "Mã sản phẩm" },
+                        { title: "ID" },
                         { title: "Tên Sản phẩm" },
                         { title: "Danh mục" },
-                        { title: "Trạng thái" },
+                        { title: "Tồn kho" },
                         { title: "Ngày nhập" },
-                        { title: "Giá bán (VND)" },
+                        { title: "Giá bán (1 hộp)" },
                         { title: "Chỉnh sửa" }
                     ],
                     pageLength: 10,

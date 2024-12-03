@@ -149,7 +149,7 @@
                     <div class="back-button button "></div>
                     <div class="breadcumb">
                         <div class="breadcumb-icon f-s-25">
-                            <i class="fa-solid fa-table-list"></i>
+                            <i class="fa-solid fa-circle-info"></i>
                         </div>
                         <a href="#" class="f-bold f-s-25 breadcumb-text">Quản lý thành phần</a>
                     </div>
@@ -206,32 +206,16 @@
             </div>
         </div>
     </div>
-    <div class="modify-item" id="show_content">
+    <div class="modify-item-sm" id="show_content">
         <div class="title-icon">
-            <p class="text_entry_title"> Gạch men</p>
+            <p class="text_entry_title"></p>
             <i class="fa-solid fa-xmark fa-lg" onclick="exitModifyItem()"></i>
         </div>
-
         <form action="" class="main-grid">
             <div class="product-name _4c">
                 <div class="fui-basic-input flex-column gap-6">
                     <label for="categoryname" class="f-bold f-s-14 f-cl-black">Tên</label>
                     <input type="text" name="name" placeholder="" class="input input-bordered f-s-14" id="categoryname" autocomplete="off"/>
-                </div>
-            </div>
-            <div class="flex-column gap-6 _4c">
-                <label for="editor" class="f-bold f-s-14 f-cl-black">
-                    Mô tả sản phẩm
-                </label>
-                <textarea class="editor-label" name="editor" id="editor" cols="30" rows="10"></textarea>
-            </div>
-            <div class="poduct-material _4c">
-                <div class="fui-basic-input flex-column gap-6">
-                    <label for="status" class="f-bold f-s-14 f-cl-black"> Trạng thái</label>
-                    <select name="" id="status" class="input input-bordered f-s-14">
-                        <option value="1">Hiển thị</option>
-                        <option value="2">Ẩn</option>
-                    </select>
                 </div>
             </div>
             <div class="_1c">
@@ -260,7 +244,7 @@
                 const materialName = materialSample[i];
                 const date = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
                 const formattedDate = date.toISOString().split('T')[0];
-                const modifyRecord = " <div class='table-icon-label'>  <a href=\"#\"><i class=\"fa-solid fa-note-sticky\"></i></a>" + "<a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>";
+                const modifyRecord = " <div class='table-icon-label'>  <a href=\"#\" onclick='showModifyItem()'><i class=\"fa-solid fa-note-sticky\"></i></a>" + "<a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>";
                 data.push([
                     checkBox,
                     materialCode,
@@ -281,7 +265,7 @@
                 const manufacturerName = manufacturerSample[i];
                 const date = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
                 const formattedDate = date.toISOString().split('T')[0];
-                const modifyRecord = " <div class='table-icon-label'>  <a href=\"#\"><i class=\"fa-solid fa-note-sticky\"></i></a>" + "<a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>";
+                const modifyRecord = " <div class='table-icon-label'>  <a href=\"#\" onclick='showModifyItem()'><i class=\"fa-solid fa-note-sticky\"></i></a>" + "<a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>";
                 data.push([
                     checkBox,
                     manufacturerCode,
@@ -302,7 +286,7 @@
                 const colorName = colorSample[i];
                 const date = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
                 const formattedDate = date.toISOString().split('T')[0];
-                const modifyRecord = " <div class='table-icon-label'>  <a href=\"#\"><i class=\"fa-solid fa-note-sticky\"></i></a>" + "<a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>";
+                const modifyRecord = " <div class='table-icon-label'>  <a href=\"#\" onclick='showModifyItem()'><i class=\"fa-solid fa-note-sticky\"></i></a>" + "<a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>";
 
                 data.push([
                     checkBox,

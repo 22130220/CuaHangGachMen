@@ -149,8 +149,7 @@
                         <div class="back-button button "></div>
                         <div class="breadcumb">
                             <div class="breadcumb-icon f-s-25">
-                                <i class="fa-solid fa-table-list"></i>
-                            </div>
+                                <i class="fa-solid fa-arrow-down-up-across-line"></i> 99                            </div>
                             <a href="#" class="f-bold f-s-25 breadcumb-text">Quản lý Đơn hàng</a>
                         </div>
                     </div>
@@ -229,7 +228,7 @@
                             <div class="order-date _2c">
                                 <div class="fui-basic-input flex-column gap-6">
                                     <label for="orderdate" class="f-bold f-s-14 f-cl-black">Ngày đặt</label>
-                                    <input type="date" name="name" class="input input-bordered f-s-14" id="orderdate" autocomplete="off" readonly/>
+                                    <input type="text" name="name" placeholder="21/03/2024" class="input input-bordered f-s-14" id="orderdate" autocomplete="off" readonly/>
                                 </div>
                             </div>
                             <div class="order-address _2c">
@@ -321,6 +320,28 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+        <div class="modify-item-sm" id="show_content2">
+            <div class="title-icon">
+                <p class="text_entry_title">Chỉnh sửa trạng thái</p>
+                <i class="fa-solid fa-xmark fa-lg" onclick="exitModifyItem2()"></i>
+            </div>
+            <form action="" class="main-grid">
+                <div class="product-name _4c">
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label for="statuschanged" class="f-bold f-s-14 f-cl-black"> Trạng thái</label>
+                        <select name="" id="statuschanged" class="input input-bordered f-s-14">
+                            <option value="1">Đã giao</option>
+                            <option value="2">Huỷ</option>
+                            <option value="3">Vận chuyển</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="_1c">
+                    <div class="button bg_green f-cl-white" onclick="exitModifyItem2()">Lưu</div>
+                </div>
+            </form>
         </div>
     </div>
     <script src="./assets/js/notification.js"></script>
@@ -345,7 +366,7 @@
                         const userNameDes = userName[Math.floor(Math.random() * userName.length)];
                         const addressDes = address[Math.floor(Math.random() * address.length)];
                         const price = (Math.floor(Math.random() * 500) + 50) * 1000;
-                        const status = statusOptions[Math.floor(Math.random() * statusOptions.length)];
+                        const status = "<div onclick='showModifyItem2()' style='cursor: pointer'>"+statusOptions[Math.floor(Math.random() * statusOptions.length)] + "</div>";
                         const orderDate =  new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
                         const date = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
                         const updateDate = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
@@ -392,6 +413,8 @@
                 });
             });
         </script>
+
+
 </body>
 
 </html>
