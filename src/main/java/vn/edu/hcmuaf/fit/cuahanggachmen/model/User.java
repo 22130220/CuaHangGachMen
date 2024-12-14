@@ -159,6 +159,8 @@ public class User implements Serializable {
     public static void main(String[] args) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UserService service = new UserService();
         service.insertUser("nguyen", "com@gamil.com", "0213432", null, null, null, "", "");
+        service.insertUser("phuc", "com1@gamil.com", "0213432", null, null, null, "", "");
+
     }
 }
 
