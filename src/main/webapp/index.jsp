@@ -144,7 +144,7 @@
 
             <!-- Hành động -->
             <div class="action">
-                <a href="login.html" class="btn sign-up-btn"
+                <a href="login" class="btn sign-up-btn"
                 >Đăng Nhập</a
                 >
             </div>
