@@ -2,6 +2,7 @@
 *.iml
 *.iws
 out/
+.smarttomcat
 
 # Các file cấu hình Maven/Gradle (nếu sử dụng)
 target/

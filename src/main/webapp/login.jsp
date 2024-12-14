@@ -77,7 +77,6 @@
         </div>
 
 <%--        <a href="./home.html"><div class="sign-in">Đăng Nhập</div></a>--%>
-        <button type="submit"><div class="sign-in">Đăng Nhập</div></button>
 
     </form>
 
