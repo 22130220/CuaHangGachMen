@@ -1,0 +1,38 @@
+#map { height: 500px; width: 70%; float: left;
+z-index: 0; }
+#store-info { width: 30%; float: left; padding: 20px; border-left: 1px solid #ccc;
+line-height: 30px; }
+.popup-content { font-size: 16px; }
+.popup-img { width: 200px; height: auto; }
+.info-title { font-size: 18px; font-weight: bold; }
+.info-item { margin-bottom: 10px; }
+
+.ct-map { margin: 0 auto;
+width: 1200px; 
+margin-top: 50px;
+margin-bottom: -50px;}
+
+.map-main { display: flex;
+align-items: center; 
+margin-top: 30px;}
+
+#searchButton{
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 10px;
+    background: #2e2100ff;
+    color: #fff;
+}
+
+#searchInput{
+    padding: 10px;
+    width: 400px;
+    font-size: 15px;
+    border-radius: 10px;
+}
+
+.title-dexuat{
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
