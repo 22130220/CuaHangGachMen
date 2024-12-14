@@ -1,0 +1,185 @@
+:root {
+    --fui-checkbox-size: 30px;
+}
+.list-product-grid{
+    display: grid;
+    grid-template-columns: 30rem 1fr;
+    grid-template-areas:
+    "filter ls-product";
+    grid-row-gap: 2rem;
+    grid-column-gap: 2rem;
+}
+
+.filter-panel{
+    grid-area: filter;
+}
+
+.ls-product{
+    grid-area: ls-product;
+}
+
+.panel-list{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#sort{
+    height: 100%;
+    font-family: "Be Vietnam Pro", sans-serif;
+    border: none;
+    outline: none;
+    border-radius: 0.5rem;
+}
+
+.list-horizontal{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.list-button{
+    padding: 0.7rem;
+    border: none;
+    border-radius: 50rem;
+    cursor: pointer;
+}
+
+.filter-item{
+    width: 100%;
+    height: 3rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-title{
+    padding: 1.2rem 2rem;
+}
+
+.bg-brown{
+    background-color: #2e2100ff;
+}
+
+.product-list{
+    display: grid;
+    grid-template-columns: repeat(4, 200px);
+    column-gap: 1rem;
+    row-gap: 1rem;
+    grid-auto-flow: dense;
+    grid-auto-rows: auto;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bg-white{
+    background-color: var(--mauchudao2);
+}
+
+.bg-black{
+    background-color: black;
+}
+
+.bg-yellow{
+    background-color: #fffcf4;
+}
+
+.cl-brown{
+    color: #2e2100ff;
+}
+
+.cl-black{
+    color: black;
+}
+
+.cl-white{
+    color: var(--mauchudao2);
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.normal{
+    font-weight: normal;
+}
+
+.lighter{
+    font-weight: lighter;
+}
+
+.s-12{
+    font-size: 1.2rem;
+}
+
+.s-14{
+    font-size: 1.4rem;
+}
+
+.s-16{
+    font-size: 1.6rem;
+}
+
+.s-18{
+    font-size: 1.8rem;
+}
+
+.s-25{
+    font-size: 2.5rem;
+}
+
+.s-30{
+    font-size: 3rem;
+}
+
+.view {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.view-type {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.view-func {
+    cursor: pointer;
+}
+
+.button-gr {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.btn-left {
+    flex: 80;
+}
+
+.btn-right {
+    flex: 20;
+}
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.breadcrumb-style {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}

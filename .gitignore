@@ -1,3 +1,55 @@
+.idea/
+*.iml
+*.iws
+out/
+
+# Các file cấu hình Maven/Gradle (nếu sử dụng)
+target/
+build/
+
+# Log file
+*.log
+
+# File hệ thống
+.DS_Store
+Thumbs.db
+
+# File tạm của hệ thống và IDE
+*.swp
+*.tmp
+*.bak
+*.pid
+*.seed
+*.orig
+
+# Tệp jar, war hoặc ear xuất ra
+*.jar
+*.war
+*.ear
+
+# Tệp cấu hình có thể được tạo động hoặc chứa thông tin nhạy cảm
+*.class
+*.db
+*.sqlite
+*.env
+
+# Các thư mục vendor hoặc các file được tải xuống
+lib/
+
+# Các file của hệ điều hành Windows
+*.class
+*.exe
+*.dll
+*.pdb
+
+# Node modules (nếu có sử dụng frontend với npm)
+node_modules/
+
+# Tệp dành riêng cho Tomcat hoặc các server servlet khác
+logs/
+work/
+temp/
+
 .metadata
 .vscode/
 .idea/

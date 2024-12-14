@@ -1,0 +1,69 @@
+body {
+    font-family: "Be Vietnam Pro", sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    text-align: center;
+    padding: 110px 20px;
+}
+
+.container h2 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 50px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.partner-logos {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-row {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.logo-row img {
+    max-width: 140px;
+    max-height: 100px;
+    object-fit: contain;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    filter: grayscale(100%);
+    cursor: pointer;
+}
+
+.logo-row img:hover {
+    transform: scale(1.1);
+    filter: grayscale(0%);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 40px 10px;
+    }
+
+    .container h2 {
+        font-size: 28px;
+    }
+
+    .logo-row {
+        gap: 30px;
+    }
+
+    .logo-row img {
+        max-width: 100px;
+        max-height: 70px;
+    }
+}
