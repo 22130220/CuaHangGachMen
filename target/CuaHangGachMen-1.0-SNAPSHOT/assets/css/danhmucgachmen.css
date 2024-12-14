@@ -1,0 +1,156 @@
+/* Blog */
+.blog {
+    margin-top: 10px;
+    padding: 50px 0;
+    background: #fffcf4;
+    
+  }
+  
+  .blog .blog-top {
+    text-align: center;
+  }
+  
+  .blog .blog-top .desc {
+    margin: 16px auto auto;
+    width: 448px;
+    color: #696262;
+    font-size: 1.6rem;
+    line-height: 1.75; /* 175% */
+  }
+  
+  .blog .blog-list {
+    margin-top: 55px;
+    display: flex;
+    gap: 30px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .blog .item {
+    width: calc(33.33% - 20px);
+    border-radius: 16px;
+    background: #fff;
+    flex-shrink: 0;
+    display: none;
+    
+  }
+  .blog .item:hover {
+    box-shadow: 0px 16px 32px 0px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Hiển thị blog của trang hiện tại */
+  .blog .item.active {
+    display: block;
+  }
+  
+  .blog .item .thumb {
+    width: 100%;
+    border-radius: 16px 16px 0px 0px;
+    height: 300px;
+    object-fit: cover;
+  }
+  
+  .blog .item .info {
+    padding: 10px 20px 28px;
+  }
+  
+  .blog .item .date {
+    position: relative;
+    display: inline-flex;
+    padding-bottom: 12px;
+    align-items: center;
+    color: #5f5b53;
+    font-size: 1.4rem;
+    line-height: 1.86; /* 185.714% */
+  }
+  
+  .blog .item .date::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 4px;
+    background: #ffb900;
+  }
+  
+  .blog .item .date::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: -27px;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    border-radius: 0.5px;
+    background: #e2dfda;
+  }
+  
+  .blog .item .title a {
+    display: inline-block;
+    margin: -10px 0px 12px 0px;
+    color: #171100;
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.75; /* 175% */
+  }
+  .blog .item .btn {
+    font-size: 1.4rem;
+    
+  }
+  .blog .item .btn:hover {
+    background: #ffb900;
+  }
+  
+  .blog .dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 38px;
+  }
+  .blog .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #5f5b53;
+    cursor: pointer;
+  }
+  
+  .blog .dot.active {
+    background: #ffb900;
+    cursor: default;
+  }
+  
+  /* Định dạng mũi tên trái và phải */
+  .blog .arrow {
+    position: absolute;
+    top: 46%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+    transition: all 0.3s ease;
+  }
+  
+  .blog .arrow.left {
+    left: 0px;
+    
+  }
+  
+  .blog .arrow.right {
+    right: 0px;
+  }
+  
+  /* Thêm hiệu ứng khi hover vào mũi tên */
+  .blog .arrow:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+  }
+  
+  
+  

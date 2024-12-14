@@ -1,0 +1,345 @@
+body {
+    font-family: "Be Vietnam Pro", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #F3f4f4;
+      color: #333;
+    }
+    
+    .container {
+      display: flex;
+      max-width: 1200px;
+      margin: 20px auto;
+      gap: 20px;
+    }
+    
+    a{
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .main-content {
+      flex: 3;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    
+    .sidebar {
+      flex: 2;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+    }
+    
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .breadcrumb {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+    
+    .breadcrumb a {
+      color: #007BFF;
+    
+      text-decoration: none;
+      
+    }
+    
+    h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .form-group, .form-row {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    
+    
+    .form-group label {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    
+    .sdt{
+      margin-left: 50px;
+    }
+    
+    .form-row {
+      gap: 15px;
+      flex-direction: row;
+    }
+    
+    input, select {
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+    }
+    
+    input::placeholder {
+      color: #bbb;
+    }
+    
+    .error {
+      color: red;
+      font-size: 12px;
+    }
+    
+    .btn-primary {
+      background-color: #2e2100ff;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .cart-items{
+      padding-right: 20px;
+      padding-left: 20px;
+     
+      border: 1px solid #fff;
+    
+    }
+    .cart-items li {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    
+    .discount {
+      margin: 30px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .img_small{
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    
+    .chitietsanphamthanhtoan{
+      display: flex;
+      align-items: center;
+      
+      
+      
+    }
+  
+    .chitietsanphamthanhtoan span{
+      display: inline-block;
+      font-size: 12px;
+    }
+    
+    .btn_xoasp{
+    
+   
+      padding: 0 5px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      
+      
+    
+    }
+    .btn-secondary {
+     
+      background-color: #2e2100ff;
+      padding: 10px 30px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+     color: #fff;
+      white-space: nowrap;
+      margin-left: 10px;
+      
+    }
+    .price-summary{
+      margin-top: 30px;
+      text-align: center;
+     
+    }
+    .price-summary p {
+      margin:30px 0;
+    }
+    
+    .price-summary h3 {
+      margin-top: 10px;
+      color: #000;
+    }
+    
+    .image-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: gray;
+      color: white;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    
+    /* Header */
+  .hdne {
+      margin-bottom: 20px;
+  }
+  
+  .hdne .brand {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+  }
+  
+  .hdne .breadcrumb {
+      font-size: 14px;
+      color: #666;
+  }
+  
+  .hdne .breadcrumb a {
+      color: #007bff;
+      text-decoration: none;
+  }
+  
+  .hdne .breadcrumb span {
+      color: #333;
+      font-weight: bold;
+  }
+  
+  /* Section Title */
+  .section h2 {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+  }
+  
+  /* Shipping Option */
+  .shipping-option {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      background: #f9f9f9;
+  }
+  
+  .shipping-option label {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+  }
+  
+  .shipping-option .radio-icon {
+      width: 18px;
+      height: 18px;
+      border: 1px solid #007bff;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 10px;
+  }
+  
+  .shipping-option input[type="radio"] {
+      display: none;
+  }
+  
+  .shipping-option input[type="radio"]:checked + label .radio-icon {
+      background: #007bff;
+  }
+  
+  /* Payment Options */
+  .payment-option {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      background: #f9f9f9;
+      gap: 30px;
+  }
+  
+  .payment-option label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      font-size: 14px;
+  }
+  
+  .payment-option img {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+  }
+  
+  .payment-option input[type="radio"] {
+      display: none;
+  }
+  
+  /* Footer */
+  .ftne {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+  }
+  
+  .ftne .link {
+      text-decoration: none;
+      color: #007bff;
+      font-size: 14px;
+  }
+  
+  .ftne .submit-button {
+      background-color: #2e2100ff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+  
+  .ftne .submit-button:hover {
+      background-color: #0056b3;
+  }
+  
+  .bank-info {
+      margin-top: 10px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      background-color: #f9f9f9;
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: center;
+  }
+  

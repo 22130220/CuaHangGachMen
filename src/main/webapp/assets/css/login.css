@@ -1,0 +1,162 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Be Vietnam Pro", sans-serif;
+   
+    height: 100vh;
+    background-color: #f8f8f8;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Thanh header */
+header {
+    background-color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+/* Logo */
+.logo img {
+    width: 200px;
+}
+
+/* Mục lục */
+.breadcrumb {
+    margin: 20px 0;
+    padding: 0;
+    font-size: 16px;
+    text-align: center;
+    
+}
+
+.breadcrumb a {
+    color: #333;
+    text-decoration: none;
+    margin-right: 5px;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.login-container {
+    margin: 0 auto;
+    width: 400px;
+    text-align: center;
+    margin-top: 70px;
+    
+}
+
+.welcome {
+    font-size: 35px; /* Tăng kích thước font chữ cho giống hình */
+    font-weight: 400; /* Đặt độ mảnh cho chữ */
+   
+    line-height: 1; /* Đảm bảo chữ nằm trên một dòng */
+  
+    margin-bottom: 20px;
+    color: #333;
+}
+
+p {
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 0.5px solid #333;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.options a {
+    color: #d9534f;
+    text-decoration: none;
+}
+
+.sign-in {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #2e2100ff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.sign-in:hover {
+    background-color: #555;
+}
+
+.secure-connection {
+    font-size: 12px;
+    color: #5cb85c;
+    margin-top: 5px;
+    margin-bottom: 30px;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.separator:before,
+.separator:after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #333;
+}
+
+.separator:before {
+    margin-right: 10px;
+}
+
+.separator:after {
+    margin-left: 10px;
+}
+
+.create-account {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.create-account:hover {
+    background-color: #f0f0f0;
+}

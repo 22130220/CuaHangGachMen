@@ -1,0 +1,49 @@
+.notifi-box {
+	width: 300px;
+	opacity: 0;
+	padding: 1rem;
+	position: absolute;
+	top: 6.8rem;
+	right: 39rem;
+	background-color: white;
+	transition: 0.5s opacity, 1ms height;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 0.5rem;
+}
+.notifi-box h2 {
+	font-size: 14px;
+	padding: 10px;
+	border-bottom: 1px solid #eee;
+	color: #999;
+}
+.notifi-box h2 span {
+	color: #f00;
+}
+.notifi-item {
+	display: flex;
+	border-bottom: 1px solid #eee;
+	padding: 15px 5px;
+	margin-bottom: 15px;
+	cursor: pointer;
+	flex-direction: row;
+	align-items: center;
+	gap: 1rem;
+}
+.notifi-item:hover {
+	background-color: #eee;
+}
+.notifi-item img i{
+	display: block;
+	width: 50px;
+	margin-right: 10px;
+	border-radius: 50%;
+}
+.notifi-item .text h4 {
+	color: #777;
+	font-size: 14px;
+	margin-top: 10px;
+}
+.notifi-item .text p {
+	color: #aaa;
+	font-size: 12px;
+}

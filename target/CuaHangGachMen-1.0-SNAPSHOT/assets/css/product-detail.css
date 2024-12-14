@@ -1,0 +1,549 @@
+.product-details-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+    grid-template-areas:
+    "breadcrumbs breadcrumbs"
+    "img cartinfo"
+    "description description"
+    "like like";
+
+    grid-auto-rows: auto;
+    grid-auto-flow: column;
+}
+
+.breadcrumb-grid-contain{
+    grid-area: breadcrumbs;
+}
+
+.sumarize-grid {
+    grid-area: cartinfo;
+}
+
+.sumarize-info{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.product-img{
+    grid-area: img;
+}
+
+.product-info-grid{
+    grid-area: description;
+    border-top: 0.1rem solid #000;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.product-contain{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.product-info-list{
+    padding: 1rem 2rem;
+}
+
+.product-info-list ul{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.product-info-list ul>li{
+   cursor: pointer;
+}
+
+.func-item{
+    padding: 1rem 1.5rem;
+    text-align: center;
+    font-weight: normal;
+    font-size: 1.8rem;
+}
+
+.des-title{
+    font-size: var(--fontTenSanPham);
+    margin: 2rem 0 0 0;
+    font-weight: bold;
+}
+
+.spec-label{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.spec-title{
+    font-size: var(--fontTenSanPham);
+    font-weight: 600;
+}
+
+.spec-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+    grid-column-gap: 2rem;
+}
+
+.spec-item{
+    border-bottom: 0.1rem solid #000;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.main-spec-title{
+    font-size: 1.8rem;
+    font-weight: normal;
+}
+
+.main-spec-info{
+    font-size: 1.6rem;
+    font-weight: normal;
+    white-space: pre-wrap;
+}
+
+.content-detail{
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.des-title-label{
+    font-size: var(--fontMoTaSanPham);
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+}
+
+.des-detail{
+    font-size: 1.4rem;
+    font-weight: normal;
+    line-height: 2.5rem;
+    margin: 0 0 3rem 0;
+}
+
+#des{
+    border-bottom: 0.1rem solid #000;
+}
+
+#spec{
+    border-bottom: none;
+}
+
+#des-content{
+    display: flex;
+}
+
+#spec-content{
+    display: none;
+}
+
+.like-grid{
+    grid-area: like;
+}
+
+.like{
+    position: relative;
+}
+
+.like-slider{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 200px);
+    column-gap: 1.5rem;
+    row-gap: 1.5rem;
+
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(200px, 1fr);
+    align-items: center;
+    justify-content: flex-start;
+    overflow: auto;
+    position: relative;
+}
+
+.like-item{
+    margin-bottom: 1rem;
+}
+
+
+.like-slider::-webkit-scrollbar{
+    height: 0.6rem;
+}
+
+.like-slider::-webkit-scrollbar-track{
+    background-color: #eeeeee;
+    border-radius: 10rem;
+}
+
+.like-slider::-webkit-scrollbar-thumb{
+    background-color: #2e2100ff;
+    border-radius: 10rem;
+}
+
+.like-slider::-webkit-scrollbar-thumb:hover{
+    background-color: #513a14;
+}
+
+.like-slider-btn{
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    padding: 0;
+    margin: auto;
+    border: none;
+    outline: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.like-slider-btn img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.like-slider-prev{
+    top: 50%;
+    left: -5%;
+}
+
+.like-slider-next{
+    top: 50%;
+    right: -5%;
+}
+
+.like-title{
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+    font-size: 3rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+#content-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.column{
+    position: sticky;
+    top: 2rem;
+    bottom: 2rem;
+    width: 100%;
+    height: 600px;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 2rem;
+    grid-auto-rows: auto;
+    grid-auto-flow: column ;
+}
+
+#featured{
+    width: 100%;
+    height: 60rem;
+    object-fit: contain;
+    cursor: pointer;
+
+
+}
+
+.thumbnail{
+    object-fit: contain;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    opacity: 0.5;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+
+}
+
+.thumbnail:hover{
+    opacity:1;
+}
+
+.active{
+    opacity: 1;
+}
+
+#slide-wrapper{
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    min-height: 100px;
+    align-items: center;
+}
+
+#slider{
+    display: flex;
+    height: 500px;
+    gap: 2rem;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+
+}
+
+#slider::-webkit-scrollbar {
+    width: 0.5rem;
+
+}
+
+#slider::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10rem;
+}
+
+#slider::-webkit-scrollbar-thumb {
+    background-color: #2e2100ff;
+    border-radius: 10rem;
+
+}
+
+#slider::-webkit-scrollbar-thumb:hover{
+    background-color: #513a14;
+}
+
+.arrow{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.arrow:hover{
+    opacity: .5;
+    width: 35px;
+    height: 35px;
+}
+
+.product-title{
+    font-size: var(--fontTenSanPham);
+    font-weight: bold;
+    line-height: 3.5rem;
+    margin: 2rem auto;
+    width: 100%;
+}
+
+.product-data-info{
+    display: flex;
+    flex-direction: row;
+    font-size: var(--fontMoTaSanPham);
+    gap: 2rem;
+    margin-bottom: 2.4rem;
+}
+
+.product-text{
+    color: gray;
+}
+
+.product-price{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    line-height: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.product-price .per-box{
+    font-size: var(--fontGiaSanPham);
+    font-weight: 600;
+}
+
+.product-price .per-feat{
+    font-size: var(--fontMoTaSanPham);
+    font-weight: normal;
+}
+
+.card-color-container{
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.card-color{
+    padding: 1.5rem;
+    width: 11rem;
+    height: 13rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    cursor: pointer;
+}
+
+.color-active{
+    border: 1px solid gray;
+}
+
+.color{
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.img-color{
+    width: 100%;
+    height: 80%;
+    object-fit: contain;
+    border-radius: 1rem;
+}
+
+.cart{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.cart-label{
+    display : flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-label .box-quantity{
+    flex: 50%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-label .add-cart{
+    flex: 50%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.box-quantity .quantity{
+    width: 4.5rem;
+    border: none;
+    font-family: "Be Vietnam Pro", sans-serif;
+}
+
+.input-sample{
+    padding: 1.2rem 2.4rem;
+    border-radius: 0.5rem;
+    font-family: "Be Vietnam Pro", sans-serif;
+}
+
+.border-type{
+    border: 0.08rem solid gray;
+}
+
+.add-cart-btn{
+    width: 100%;
+    height: 100%;
+    font-weight: 600;
+    letter-spacing: 0.09rem;
+    font-size: 1.4rem;
+    border: none;
+    background-color: #FAF3EA;
+    color: var(--mauChu2);
+}
+
+.buy-btn{
+    width: 100%;
+    font-weight: 600;
+    letter-spacing: 0.09rem;
+    font-size: 1.8rem;
+    border: none;
+    background-color: #2e2100ff;
+    color: var(--mauchudao1);
+}
+
+.breadcrumb-style {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+.comment-section {
+    background: #fff;
+    width: 100%;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.comments {
+    margin-bottom: 20px;
+}
+
+.comment {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #f9f9f9;
+}
+
+.comment img.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment .username {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.comment .content {
+    margin: 0;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#comment-input {
+    resize: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    height: 80px;
+    font-family: "Be Vietnam Pro", sans-serif;
+}
+
+.button-review {
+    background: #2e2100ff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.button-review:hover {
+    background-color: #513a14;
+}
