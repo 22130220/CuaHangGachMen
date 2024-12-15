@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -66,9 +67,14 @@
     <p class="welcome">Đăng Nhập Tài Khoản</p>
     <p>Tạo tài khoản để mua hàng và nhận ngay ưu đãi độc quyền khi mua sắm gạch tại cuahanggachmen.com.</p>
 
+    <div class="error-message">
+        <c:if test="${not empty error}">
+            <p style="color: red; font-weight: bold;">${error}</p>
+        </c:if>
+    </div>
 
     <form action="login" method="post">
-        <input type="text" id="emailorphone" name="emailorphone" placeholder="Số điện thoại hoặc email của bạn" required>
+        <input type="text" id="email" name="email" value="${email}" placeholder="Vui lòng nhập email của bạn" required>
         <input type="password" id="password" name="password" placeholder="Mật khẩu" required>
 
         <div class="options">

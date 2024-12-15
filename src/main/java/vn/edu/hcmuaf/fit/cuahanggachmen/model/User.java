@@ -1,13 +1,14 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 
+
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.ActionResult;
+
+
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserService;
-import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
@@ -24,11 +25,13 @@ public class User implements Serializable {
     private String salt;
     private int role;
     private String password;
+
     private int sex;
 
     public User() {}
 
     public User(int id, String fullname, String email, String phone, String avatar, String address, LocalDateTime birthtime, boolean status, LocalDateTime createtime, String salt, int role, String password, int sex) {
+
         this.id = id;
         this.fullname = fullname;
         this.email = email;
@@ -41,7 +44,9 @@ public class User implements Serializable {
         this.salt = salt;
         this.role = role;
         this.password = password;
+
         this.sex = sex;
+
     }
 
     @Override
@@ -59,6 +64,7 @@ public class User implements Serializable {
                 ", salt='" + salt + '\'' +
                 ", role=" + role +
                 ", password='" + password + '\'' +
+                ", sex=" + sex +
                 '}';
     }
 
@@ -159,18 +165,22 @@ public class User implements Serializable {
         this.password = password;
     }
 
+
     public int getSex() {
         return sex;
     }
 
     public void setSex(int sex) {
+
         this.sex = sex;
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UserService service = new UserService();
+
         ActionResult rs  = service.insertUser("nguyen", "com@gamil.com", "0213432", null, null, null, "", "", 1);
         //service.insertUser("phuc", "com1@gamil.com", "0213432", null, null, null, "", "");
+
 
     }
 }
