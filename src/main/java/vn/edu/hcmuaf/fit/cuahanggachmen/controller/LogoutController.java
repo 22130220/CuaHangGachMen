@@ -1,0 +1,29 @@
+package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
+
+
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
+
+import java.io.IOException;
+
+@WebServlet(name = "logout", value = "/logout")
+public class LogoutController extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // Hủy session
+        }
+        response.sendRedirect("index.jsp"); // Quay lại trang chủ
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+    }
+}
