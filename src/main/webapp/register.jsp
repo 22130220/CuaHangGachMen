@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -25,6 +27,8 @@
 
 </head>
 <body>
+
+<c:set value="${register.data}" var="res"/>
 
 <!-- Thanh Header -->
 <header>
@@ -58,19 +62,20 @@
         </div>
         <div class="right-section">
             <h2><span>🏠</span> Tài Khoản Cá Nhân</h2>
-            <form>
-
-                <input type="text" placeholder="Họ tên" >
-
-
-
-
-                <input type="email" placeholder="Email" >
-                <input type="tel" placeholder="Số Điện Thoại" >
-                <input type="password" placeholder="Mật khẩu" >
-                <input type="password" placeholder="Nhập lại mật khẩu" >
-
-                <input type="text" placeholder="Địa chỉ" >
+            <h1>${register.message}</h1>
+            <h1></h1>
+            <form action="register" method="post">
+                <input type="text" placeholder="Họ tên" id="name" name="name" value="${register.data.name}" required maxlength="50">
+                <input type="email" placeholder="Email" id="email" name="email" value="${register.data.email}" required>
+                <p><c:out value="${res.checkEmail.message}"/></p>
+                <input type="tel" id="tel" name="tel" value="${register.data.phone}" placeholder="Số Điện Thoại">
+                <input type="password" id="password" value="${register.data.password}" name="password" placeholder="Mật khẩu" required>
+                <c:forEach items="${res.checkPassword.list}" var="pCheck">
+                    <p>${pCheck}</p>
+                </c:forEach>
+                <input type="password" id="confirm_password" value="${register.data.confirmPassword}" name="confirm_password" placeholder="Nhập lại mật khẩu" required>
+                <p>${res.checkConfirm.message}</p>
+                <input type="text" id="address" name="address" value="${register.data.address}" placeholder="Địa chỉ" >
                 <div class="form-group radio-group">
                     <label>Giới tính: </label>
                     <div class="radio-options">
@@ -84,10 +89,7 @@
                     <label>Ngày sinh: </label>
                     <input type="date" id="birthday" value="Ngày sinh" style="width: 70%;">
                 </div>
-
-
-
-                <a href="./login.html"><button type="button">Tạo Tài Khoản Cá Nhân</button></a>
+                <button type="submit">Tạo Tài Khoản Cá Nhân</button>
                 <p class="login-text">Bạn đã có tài khoản? <a href="./login.html">Đăng nhập tại đây</a></p>
             </form>
         </div>
