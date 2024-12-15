@@ -39,6 +39,16 @@ public class UserService {
                         .orElse(null)
         );
     }
+    public User findByEmail(String email) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM user WHERE email = :email")
+                        .bind("email", email) // Gắn giá trị id
+                        .map(new UserMapper())
+                        .findOne()
+                        .orElse(null)
+        );
+    }
 
     // Thêm một người dùng mới
     public ActionResult insertUser(String name, String email, String phone, String avatar, String address, LocalDateTime birthtime, String salt, String password, int sex) {
@@ -96,4 +106,6 @@ public class UserService {
                         .execute()
         );
     }
+
+
 }
