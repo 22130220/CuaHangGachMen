@@ -179,7 +179,6 @@ public class User implements Serializable {
         ActionResult rs  = service.insertUser("nguyen", "com@gamil.com", "0213432", null, null, null, "", "", 1, LocalDateTime.now());
         //service.insertUser("phuc", "com1@gamil.com", "0213432", null, null, null, "", "");
 
-
     }
 }
 

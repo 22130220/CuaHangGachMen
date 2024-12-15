@@ -34,6 +34,10 @@ public class DBProperties {
         return prop.get("db.option").toString();
     }
 
+    public static String dataSourceEnv() {
+        return prop.get("db.dataSourceEnv").toString();
+    }
+
     public static void main(String[] args) {
         System.out.println(host());
         System.out.println(port());
@@ -41,6 +45,7 @@ public class DBProperties {
         System.out.println(password());
         System.out.println(dbname());
         System.out.println(option());
+        System.out.println(dataSourceEnv());
     }
 
 }
