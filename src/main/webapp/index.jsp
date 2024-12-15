@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,6 +46,7 @@
     <link rel="stylesheet" href="./assets/css/danhmucgachmen.css" />
     <link rel="stylesheet" href="./assets/css/popular.css" />
     <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css" />
+    <link rel="stylesheet" href="./assets/css/dropdown_user_menu.css">
 </head>
 <body>
 <div class="button-container">
@@ -142,12 +144,31 @@
                 <i class="fa-solid fa-magnifying-glass search-icon"></i>
             </div>
 
-            <!-- Hành động -->
-            <div class="action">
-                <a href="login" class="btn sign-up-btn"
-                >Đăng Nhập</a
-                >
-            </div>
+
+            <!-- Nếu chưa đăng nhập, chỉ hiển thị nút Đăng Nhập -->
+            <c:if test="${empty sessionScope.auth}">
+                <div class="action">
+                    <a href="login" class="btn sign-up-btn">Đăng Nhập</a>
+                </div>
+            </c:if>
+
+            <!-- Nếu đã đăng nhập, chỉ hiển thị giao diện người dùng -->
+            <c:if test="${not empty sessionScope.auth}">
+                <div class="user-menu">
+                    <div class="user-info">
+                        <img src="${sessionScope.auth.avatar != null ? sessionScope.auth.avatar : 'https://via.placeholder.com/150'}"
+                             alt="Avatar" class="avatar">
+                        <span class="username">${sessionScope.auth.fullname}</span>
+                    </div>
+                    <div class="dropdown">
+                        <ul>
+                            <li><a href="./hoso.html">Tài khoản của tôi</a></li>
+                            <li><a href="./lichsudonhangthanhcong.html">Đơn mua</a></li>
+                            <li><a href="logout">Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </c:if>
 
             <!-- Cart Button -->
             <a href="./giohang.html" class="cart-button">
