@@ -1,38 +1,54 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.db;
-
 import com.mysql.cj.jdbc.MysqlDataSource;
-import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 
-
-import java.sql.Connection;
-import java.sql.DriverManager;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DBConect {
-    static String url = "jdbc:mysql://"+ DBProperties.host()+":"+DBProperties.port()+"/"+DBProperties.dbname()+"?"+DBProperties.option();
-    static Jdbi jdbi;
-    static Connection conn;
+    private static DataSource dataSource;
+    private static Jdbi jdbi;
+
+    private DBConect() {}
+
+    public static void init() {
+        InitialContext ctx = null;
+        try {
+            ctx = new InitialContext();
+            dataSource = (DataSource) ctx.lookup(DBProperties.dataSourceEnv());
+            jdbi = Jdbi.create(dataSource);
+        } catch (NamingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static Jdbi get() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        if(jdbi==null) makeConnect();
         return jdbi;
     }
 
-    private static void makeConnect() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public static void mySqlDataSource() {
+        String url = "jdbc:mysql://"+ DBProperties.host()+":"+DBProperties.port()+"/"+DBProperties.dbname()+"?"+DBProperties.option();
         MysqlDataSource src = new MysqlDataSource();
         src.setURL(url);
         src.setUser(DBProperties.username());
         src.setPassword(DBProperties.password());
 
-        src.setUseCompression(true);
-        src.setAutoReconnect(true);
+        try {
+            src.setUseCompression(true);
+            src.setAutoReconnect(true);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
-        jdbi = jdbi.create(src);
+        jdbi = Jdbi.create(src);
+    }
+
+    public static void dataSource() {
+        jdbi = Jdbi.create(dataSource);
     }
 
 
-    }
+}
 
