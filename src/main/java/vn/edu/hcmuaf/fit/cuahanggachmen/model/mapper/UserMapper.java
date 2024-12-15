@@ -23,6 +23,7 @@ public class UserMapper implements RowMapper<User> {
         user.setSalt(rs.getString("salt"));
         user.setRole(rs.getInt("role"));
         user.setPassword(rs.getString("password"));
+        user.setSex(rs.getBoolean("sex"));
         return user;
     }
 }

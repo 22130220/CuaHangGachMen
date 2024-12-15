@@ -1,15 +1,11 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
 import org.jdbi.v3.core.Jdbi;
-import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
-import vn.edu.hcmuaf.fit.cuahanggachmen.action.ActionResult;
-import vn.edu.hcmuaf.fit.cuahanggachmen.action.Result;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.UserMapper;
 
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -41,36 +37,21 @@ public class UserService {
     }
 
     // Thêm một người dùng mới
-    public ActionResult insertUser(String name, String email, String phone, String avatar, String address, LocalDateTime birthtime, String salt, String password, int sex) {
-        Jdbi jdbi = null;
-        try {
-            jdbi = DBConect.get();
-        } catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-            return Result.BadRequest("");
-        }
-        try {
-            jdbi.useHandle(handle ->
-                    handle.createUpdate("INSERT INTO user (fullname, email, phone, avatar, address, birthtime, salt, password, sex) " +
-                                    "VALUES (:fullname, :email, :phone, :avatar, :address, :birthtime, :salt, :password, :sex)")
-                            .bind("fullname", name)
-                            .bind("email", email)
-                            .bind("phone", phone)
-                            .bind("avatar", avatar)
-                            .bind("address", address)
-                            .bind("birthtime", birthtime)
-                            .bind("salt", salt)
-                            .bind("password", password)
-                            .bind("sex", sex)
-                            .execute()
-            );
-            return Result.Ok();
-        } catch (UnableToExecuteStatementException e) {
-            Throwable cause = e.getCause();
-            if (cause instanceof SQLIntegrityConstraintViolationException) {
-                return Result.BadRequest("Email đã tồn tại");
-            }
-            return Result.BadRequest(null);
-        }
+    public void insertUser(String name, String email, String phone, String avatar, String address, LocalDateTime birthtime, String salt, String password) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        jdbi.useHandle(handle ->
+                handle.createUpdate("INSERT INTO user (fullname, email, phone, avatar, address, birthtime, salt, password) " +
+                                "VALUES (:fullname, :email, :phone, :avatar, :address, :birthtime, :salt, :password)")
+                        .bind("fullname", name)
+                        .bind("email", email)
+                        .bind("phone", phone)
+                        .bind("avatar", avatar)
+                        .bind("address", address)
+                        .bind("birthtime", birthtime)
+                        .bind("salt", salt)
+                        .bind("password", password)
+                        .execute()
+        );
     }
 
     // Cập nhật thông tin người dùng
