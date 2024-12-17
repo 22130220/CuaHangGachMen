@@ -22,7 +22,7 @@ public class UserService {
     public List<User> getAllUsers() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM user")
+                handle.createQuery("SELECT * FROM users")
                         .map(new UserMapper()) // Sử dụng UserMapper để ánh xạ
                         .list()
         );
@@ -32,7 +32,7 @@ public class UserService {
     public User getUserById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM user WHERE id = :id")
+                handle.createQuery("SELECT * FROM users WHERE id = :id")
                         .bind("id", id) // Gắn giá trị id
                         .map(new UserMapper())
                         .findOne()
@@ -42,7 +42,7 @@ public class UserService {
     public User findByEmail(String email) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM user WHERE email = :email")
+                handle.createQuery("SELECT * FROM users WHERE email = :email")
                         .bind("email", email) // Gắn giá trị id
                         .map(new UserMapper())
                         .findOne()
@@ -60,7 +60,7 @@ public class UserService {
         }
         try {
             jdbi.useHandle(handle ->
-                    handle.createUpdate("INSERT INTO user (fullname, email, phone, avatar, address, birthtime, salt, password, sex) " +
+                    handle.createUpdate("INSERT INTO users (fullname, email, phone, avatar, address, birthtime, salt, password, sex) " +
                                     "VALUES (:fullname, :email, :phone, :avatar, :address, :birthtime, :salt, :password, :sex)")
                             .bind("fullname", name)
                             .bind("email", email)
@@ -87,7 +87,7 @@ public class UserService {
     public void updateUser(User user) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         jdbi.useHandle(handle ->
-                handle.createUpdate("UPDATE user SET fullname = :fullname, email = :email, phone = :phone, address = :address WHERE id = :id")
+                handle.createUpdate("UPDATE users SET fullname = :fullname, email = :email, phone = :phone, address = :address WHERE id = :id")
                         .bind("fullname", user.getFullname())
                         .bind("email", user.getEmail())
                         .bind("phone", user.getPhone())
@@ -101,7 +101,7 @@ public class UserService {
     public void deleteUser(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         jdbi.useHandle(handle ->
-                handle.createUpdate("DELETE FROM user WHERE id = :id")
+                handle.createUpdate("DELETE FROM users WHERE id = :id")
                         .bind("id", id)
                         .execute()
         );
