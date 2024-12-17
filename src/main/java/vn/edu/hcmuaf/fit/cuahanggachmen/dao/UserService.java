@@ -42,7 +42,9 @@ public class UserService {
     public User findByEmail(String email) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM users WHERE email = :email")
+
+                handle.createQuery("SELECT * FROM user WHERE email = :email")
+
                         .bind("email", email) // Gắn giá trị id
                         .map(new UserMapper())
                         .findOne()
@@ -51,7 +53,7 @@ public class UserService {
     }
 
     // Thêm một người dùng mới
-    public ActionResult insertUser(String name, String email, String phone, String avatar, String address, LocalDateTime birthtime, String salt, String password, int sex) {
+    public ActionResult insertUser(String name, String email, String phone, String avatar, String address, LocalDateTime birthtime, String salt, String password, int sex, LocalDateTime createDate) {
         Jdbi jdbi = null;
         try {
             jdbi = DBConect.get();
@@ -60,8 +62,10 @@ public class UserService {
         }
         try {
             jdbi.useHandle(handle ->
-                    handle.createUpdate("INSERT INTO users (fullname, email, phone, avatar, address, birthtime, salt, password, sex) " +
-                                    "VALUES (:fullname, :email, :phone, :avatar, :address, :birthtime, :salt, :password, :sex)")
+
+                    handle.createUpdate("INSERT INTO user (fullname, email, phone, avatar, address, birthtime, salt, password, sex, createtime) " +
+                                    "VALUES (:fullname, :email, :phone, :avatar, :address, :birthtime, :salt, :password, :sex, :createtime)")
+
                             .bind("fullname", name)
                             .bind("email", email)
                             .bind("phone", phone)
@@ -71,6 +75,7 @@ public class UserService {
                             .bind("salt", salt)
                             .bind("password", password)
                             .bind("sex", sex)
+                            .bind("createtime", createDate)
                             .execute()
             );
             return Result.Ok();

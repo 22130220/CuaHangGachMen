@@ -3,15 +3,23 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.service;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserService;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.PasswordUtils;
+
+
 import java.sql.SQLException;
 
 public class AuthService {
     public  User checkLogin(String email, String password) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         UserService usDao = new UserService();
         User u = usDao.findByEmail(email);
+
+        String salt = u.getSalt();
+        String hashedPassword = u.getPassword();
         System.out.println(u);
-        if(u!=null && password!=null && password.equals(u.getPassword())){
+        if(u!=null && password!=null && PasswordUtils.verifyPassword(password,salt,hashedPassword)){
             u.setPassword(null);
+            u.setSalt(null);
+
             return u;
         }
 
