@@ -6,6 +6,9 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserService;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
 public class RegisterService {
@@ -50,6 +53,16 @@ public class RegisterService {
     }
 
     public ActionResult addUser(User user) {
-        return new UserService().insertUser(user.getFullname(), user.getEmail(), user.getPhone(), user.getAvatar(), user.getAddress(), user.getBirthtime(), user.getSalt(), user.getPassword(), user.getSex());
+        return new UserService().insertUser(user.getFullname(), user.getEmail(), user.getPhone(), user.getAvatar(), user.getAddress(), user.getBirthtime(), user.getSalt(), user.getPassword(), user.getSex(), user.getCreatetime());
+    }
+
+    public Timestamp convertToTimestamp(String dateTime) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date parsedDate = sdf.parse(dateTime);
+            return new Timestamp(parsedDate.getTime());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

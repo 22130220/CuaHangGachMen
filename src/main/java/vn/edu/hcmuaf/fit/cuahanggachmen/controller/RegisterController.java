@@ -8,9 +8,12 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.action.Result;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.StatusCode;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.RegisterService;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.PasswordUtils;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 @WebServlet(name = "register", value = "/register")
 public class RegisterController extends HttpServlet {
@@ -27,7 +30,8 @@ public class RegisterController extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("tel");
         String address = request.getParameter("address");
-        String gender = request.getParameter("gender");
+        int gender =    Integer.parseInt(request.getParameter("gender"));
+        String birthTime = request.getParameter("birthday");
         User user = new User();
 
         RegisterService resService = new RegisterService();
@@ -42,14 +46,18 @@ public class RegisterController extends HttpServlet {
             password = null;
             confirmPassword = null;
         } else {
+            String salt = PasswordUtils.generateSalt();
+            String hashedPassword = PasswordUtils.hashPassword(password, salt);
             user.setFullname(name);
-            user.setPassword(password);
+            user.setPassword(hashedPassword);
+            user.setSalt(salt);
             user.setEmail(email);
             user.setPhone(phone);
             user.setAddress(address);
-            user.setSex(0);
+            user.setSex(gender);
             user.setAvatar(null);
-            user.setSalt(null);
+            user.setCreatetime(LocalDateTime.now());
+            user.setBirthtime(resService.convertToTimestamp(birthTime).toLocalDateTime());
             checkEmail = resService.addUser(user);
         }
         ac.put("checkPassword", checkPassword);
