@@ -79,15 +79,14 @@
                 <div class="form-group radio-group">
                     <label>Giới tính: </label>
                     <div class="radio-options">
-                        <label><input type="radio" name="gender" value="male" /> Nam</label>
-                        <label><input type="radio" name="gender" value="female" checked /> Nữ</label>
-                        <label><input type="radio" name="gender" value="other" /> Khác</label>
+                        <label><input type="radio" name="gender" value="0" /> Nam</label>
+                        <label><input type="radio" name="gender" value="1" checked /> Nữ</label>
                     </div>
                 </div>
 
                 <div class="form-group radio-group ckc">
                     <label>Ngày sinh: </label>
-                    <input type="date" id="birthday" value="Ngày sinh" style="width: 70%;">
+                    <input type="date" id="birthday" name="birthday" value="Ngày sinh" style="width: 70%;" required>
                 </div>
                 <button type="submit">Tạo Tài Khoản Cá Nhân</button>
                 <p class="login-text">Bạn đã có tài khoản? <a href="./login.html">Đăng nhập tại đây</a></p>
