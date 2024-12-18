@@ -11,7 +11,7 @@
  Target Server Version : 110302 (11.3.2-MariaDB)
  File Encoding         : 65001
 
- Date: 18/12/2024 01:21:35
+ Date: 19/12/2024 14:28:41
 */
 
 SET NAMES utf8mb4;
@@ -22,17 +22,20 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category`  (
-  `ID` int(11) NOT NULL,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `Des` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `Status` bit(1) NULL DEFAULT NULL,
-  `CreateDate` datetime NULL DEFAULT NULL,
+  `Status` bit(1) NULL DEFAULT b'1',
+  `CreateDate` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
+INSERT INTO `category` VALUES (1, 'Gách lát sàn', '', b'1', '2024-12-19 14:20:58');
+INSERT INTO `category` VALUES (2, 'Gạch ốp tường', NULL, b'1', '2024-12-19 14:21:51');
+INSERT INTO `category` VALUES (3, 'Gạch gỗ', NULL, b'1', '2024-12-19 14:21:32');
 
 -- ----------------------------
 -- Table structure for colors
@@ -42,7 +45,7 @@ CREATE TABLE `colors`  (
   `ID` int(11) NOT NULL,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of colors
@@ -61,7 +64,7 @@ CREATE TABLE `contact`  (
   `SendDate` datetime NULL DEFAULT NULL,
   `IsReply` bit(1) NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of contact
@@ -75,7 +78,7 @@ CREATE TABLE `manufacturer`  (
   `ID` int(11) NOT NULL,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of manufacturer
@@ -93,7 +96,7 @@ CREATE TABLE `material`  (
   `ID` int(11) NOT NULL,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of material
@@ -110,7 +113,7 @@ CREATE TABLE `orderdetail`  (
   `Price` decimal(18, 2) NULL DEFAULT NULL,
   `CreateDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`OrderID`, `ProductID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orderdetail
@@ -130,7 +133,7 @@ CREATE TABLE `orders`  (
   `Des` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `CreateDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
@@ -145,8 +148,10 @@ CREATE TABLE `product_color_img`  (
   `ColorID` int(11) NOT NULL,
   `Url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ProductID`, `ColorID`) USING BTREE,
-  INDEX `ColorID`(`ColorID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+  INDEX `fk_colorid`(`ColorID` ASC) USING BTREE,
+  CONSTRAINT `fk_productid` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_colorid` FOREIGN KEY (`ColorID`) REFERENCES `colors` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of product_color_img
@@ -161,8 +166,10 @@ CREATE TABLE `product_spec`  (
   `SpecID` int(11) NOT NULL,
   `Value` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ProductID`, `SpecID`) USING BTREE,
-  INDEX `SpecID`(`SpecID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+  INDEX `fk_specid_sp`(`SpecID` ASC) USING BTREE,
+  CONSTRAINT `fk_productid_sp` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_specid_sp` FOREIGN KEY (`SpecID`) REFERENCES `spectype` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of product_spec
@@ -467,9 +474,9 @@ INSERT INTO `product_spec` VALUES (50, 3, 'Men bóng');
 INSERT INTO `product_spec` VALUES (50, 4, 'BAMBU');
 INSERT INTO `product_spec` VALUES (50, 5, 'Mài bóng');
 INSERT INTO `product_spec` VALUES (50, 6, 'Việt Nam');
-INSERT INTO `product_spec` VALUES (51, 3, '600×600 mm');
-INSERT INTO `product_spec` VALUES (51, 2, 'Pocerlain');
 INSERT INTO `product_spec` VALUES (51, 1, 'Men vi tinh');
+INSERT INTO `product_spec` VALUES (51, 2, 'Pocerlain');
+INSERT INTO `product_spec` VALUES (51, 3, '600×600 mm');
 INSERT INTO `product_spec` VALUES (51, 4, 'BAMBU');
 INSERT INTO `product_spec` VALUES (51, 5, 'Mài bóng');
 INSERT INTO `product_spec` VALUES (51, 6, 'Việt Nam');
@@ -767,602 +774,6 @@ INSERT INTO `product_spec` VALUES (100, 3, NULL);
 INSERT INTO `product_spec` VALUES (100, 4, NULL);
 INSERT INTO `product_spec` VALUES (100, 5, NULL);
 INSERT INTO `product_spec` VALUES (100, 6, NULL);
-INSERT INTO `product_spec` VALUES (101, 1, NULL);
-INSERT INTO `product_spec` VALUES (101, 2, NULL);
-INSERT INTO `product_spec` VALUES (101, 3, NULL);
-INSERT INTO `product_spec` VALUES (101, 4, NULL);
-INSERT INTO `product_spec` VALUES (101, 5, NULL);
-INSERT INTO `product_spec` VALUES (101, 6, NULL);
-INSERT INTO `product_spec` VALUES (102, 1, NULL);
-INSERT INTO `product_spec` VALUES (102, 2, NULL);
-INSERT INTO `product_spec` VALUES (102, 3, NULL);
-INSERT INTO `product_spec` VALUES (102, 4, NULL);
-INSERT INTO `product_spec` VALUES (102, 5, NULL);
-INSERT INTO `product_spec` VALUES (102, 6, NULL);
-INSERT INTO `product_spec` VALUES (103, 1, NULL);
-INSERT INTO `product_spec` VALUES (103, 2, NULL);
-INSERT INTO `product_spec` VALUES (103, 3, NULL);
-INSERT INTO `product_spec` VALUES (103, 4, NULL);
-INSERT INTO `product_spec` VALUES (103, 5, NULL);
-INSERT INTO `product_spec` VALUES (103, 6, NULL);
-INSERT INTO `product_spec` VALUES (104, 1, NULL);
-INSERT INTO `product_spec` VALUES (104, 2, NULL);
-INSERT INTO `product_spec` VALUES (104, 3, NULL);
-INSERT INTO `product_spec` VALUES (104, 4, NULL);
-INSERT INTO `product_spec` VALUES (104, 5, NULL);
-INSERT INTO `product_spec` VALUES (104, 6, NULL);
-INSERT INTO `product_spec` VALUES (105, 1, NULL);
-INSERT INTO `product_spec` VALUES (105, 2, NULL);
-INSERT INTO `product_spec` VALUES (105, 3, NULL);
-INSERT INTO `product_spec` VALUES (105, 4, NULL);
-INSERT INTO `product_spec` VALUES (105, 5, NULL);
-INSERT INTO `product_spec` VALUES (105, 6, NULL);
-INSERT INTO `product_spec` VALUES (106, 1, NULL);
-INSERT INTO `product_spec` VALUES (106, 2, NULL);
-INSERT INTO `product_spec` VALUES (106, 3, NULL);
-INSERT INTO `product_spec` VALUES (106, 4, NULL);
-INSERT INTO `product_spec` VALUES (106, 5, NULL);
-INSERT INTO `product_spec` VALUES (106, 6, NULL);
-INSERT INTO `product_spec` VALUES (107, 1, NULL);
-INSERT INTO `product_spec` VALUES (107, 2, NULL);
-INSERT INTO `product_spec` VALUES (107, 3, NULL);
-INSERT INTO `product_spec` VALUES (107, 4, NULL);
-INSERT INTO `product_spec` VALUES (107, 5, NULL);
-INSERT INTO `product_spec` VALUES (107, 6, NULL);
-INSERT INTO `product_spec` VALUES (108, 1, NULL);
-INSERT INTO `product_spec` VALUES (108, 2, NULL);
-INSERT INTO `product_spec` VALUES (108, 3, NULL);
-INSERT INTO `product_spec` VALUES (108, 4, NULL);
-INSERT INTO `product_spec` VALUES (108, 5, NULL);
-INSERT INTO `product_spec` VALUES (108, 6, NULL);
-INSERT INTO `product_spec` VALUES (109, 1, NULL);
-INSERT INTO `product_spec` VALUES (109, 2, NULL);
-INSERT INTO `product_spec` VALUES (109, 3, NULL);
-INSERT INTO `product_spec` VALUES (109, 4, NULL);
-INSERT INTO `product_spec` VALUES (109, 5, NULL);
-INSERT INTO `product_spec` VALUES (109, 6, NULL);
-INSERT INTO `product_spec` VALUES (110, 1, NULL);
-INSERT INTO `product_spec` VALUES (110, 2, NULL);
-INSERT INTO `product_spec` VALUES (110, 3, NULL);
-INSERT INTO `product_spec` VALUES (110, 4, NULL);
-INSERT INTO `product_spec` VALUES (110, 5, NULL);
-INSERT INTO `product_spec` VALUES (110, 6, NULL);
-INSERT INTO `product_spec` VALUES (111, 1, NULL);
-INSERT INTO `product_spec` VALUES (111, 2, NULL);
-INSERT INTO `product_spec` VALUES (111, 3, NULL);
-INSERT INTO `product_spec` VALUES (111, 4, NULL);
-INSERT INTO `product_spec` VALUES (111, 5, NULL);
-INSERT INTO `product_spec` VALUES (111, 6, NULL);
-INSERT INTO `product_spec` VALUES (112, 1, NULL);
-INSERT INTO `product_spec` VALUES (112, 2, NULL);
-INSERT INTO `product_spec` VALUES (112, 3, NULL);
-INSERT INTO `product_spec` VALUES (112, 4, NULL);
-INSERT INTO `product_spec` VALUES (112, 5, NULL);
-INSERT INTO `product_spec` VALUES (112, 6, NULL);
-INSERT INTO `product_spec` VALUES (113, 1, NULL);
-INSERT INTO `product_spec` VALUES (113, 2, NULL);
-INSERT INTO `product_spec` VALUES (113, 3, NULL);
-INSERT INTO `product_spec` VALUES (113, 4, NULL);
-INSERT INTO `product_spec` VALUES (113, 5, NULL);
-INSERT INTO `product_spec` VALUES (113, 6, NULL);
-INSERT INTO `product_spec` VALUES (114, 1, NULL);
-INSERT INTO `product_spec` VALUES (114, 2, NULL);
-INSERT INTO `product_spec` VALUES (114, 3, NULL);
-INSERT INTO `product_spec` VALUES (114, 4, NULL);
-INSERT INTO `product_spec` VALUES (114, 5, NULL);
-INSERT INTO `product_spec` VALUES (114, 6, NULL);
-INSERT INTO `product_spec` VALUES (115, 1, NULL);
-INSERT INTO `product_spec` VALUES (115, 2, NULL);
-INSERT INTO `product_spec` VALUES (115, 3, NULL);
-INSERT INTO `product_spec` VALUES (115, 4, NULL);
-INSERT INTO `product_spec` VALUES (115, 5, NULL);
-INSERT INTO `product_spec` VALUES (115, 6, NULL);
-INSERT INTO `product_spec` VALUES (116, 1, NULL);
-INSERT INTO `product_spec` VALUES (116, 2, NULL);
-INSERT INTO `product_spec` VALUES (116, 3, NULL);
-INSERT INTO `product_spec` VALUES (116, 4, NULL);
-INSERT INTO `product_spec` VALUES (116, 5, NULL);
-INSERT INTO `product_spec` VALUES (116, 6, NULL);
-INSERT INTO `product_spec` VALUES (117, 1, NULL);
-INSERT INTO `product_spec` VALUES (117, 2, NULL);
-INSERT INTO `product_spec` VALUES (117, 3, NULL);
-INSERT INTO `product_spec` VALUES (117, 4, NULL);
-INSERT INTO `product_spec` VALUES (117, 5, NULL);
-INSERT INTO `product_spec` VALUES (117, 6, NULL);
-INSERT INTO `product_spec` VALUES (118, 1, NULL);
-INSERT INTO `product_spec` VALUES (118, 2, NULL);
-INSERT INTO `product_spec` VALUES (118, 3, NULL);
-INSERT INTO `product_spec` VALUES (118, 4, NULL);
-INSERT INTO `product_spec` VALUES (118, 5, NULL);
-INSERT INTO `product_spec` VALUES (118, 6, NULL);
-INSERT INTO `product_spec` VALUES (119, 1, NULL);
-INSERT INTO `product_spec` VALUES (119, 2, NULL);
-INSERT INTO `product_spec` VALUES (119, 3, NULL);
-INSERT INTO `product_spec` VALUES (119, 4, NULL);
-INSERT INTO `product_spec` VALUES (119, 5, NULL);
-INSERT INTO `product_spec` VALUES (119, 6, NULL);
-INSERT INTO `product_spec` VALUES (120, 1, NULL);
-INSERT INTO `product_spec` VALUES (120, 2, NULL);
-INSERT INTO `product_spec` VALUES (120, 3, NULL);
-INSERT INTO `product_spec` VALUES (120, 4, NULL);
-INSERT INTO `product_spec` VALUES (120, 5, NULL);
-INSERT INTO `product_spec` VALUES (120, 6, NULL);
-INSERT INTO `product_spec` VALUES (121, 1, NULL);
-INSERT INTO `product_spec` VALUES (121, 2, NULL);
-INSERT INTO `product_spec` VALUES (121, 3, NULL);
-INSERT INTO `product_spec` VALUES (121, 4, NULL);
-INSERT INTO `product_spec` VALUES (121, 5, NULL);
-INSERT INTO `product_spec` VALUES (121, 6, NULL);
-INSERT INTO `product_spec` VALUES (122, 1, NULL);
-INSERT INTO `product_spec` VALUES (122, 2, NULL);
-INSERT INTO `product_spec` VALUES (122, 3, NULL);
-INSERT INTO `product_spec` VALUES (122, 4, NULL);
-INSERT INTO `product_spec` VALUES (122, 5, NULL);
-INSERT INTO `product_spec` VALUES (122, 6, NULL);
-INSERT INTO `product_spec` VALUES (123, 1, NULL);
-INSERT INTO `product_spec` VALUES (123, 2, NULL);
-INSERT INTO `product_spec` VALUES (123, 3, NULL);
-INSERT INTO `product_spec` VALUES (123, 4, NULL);
-INSERT INTO `product_spec` VALUES (123, 5, NULL);
-INSERT INTO `product_spec` VALUES (123, 6, NULL);
-INSERT INTO `product_spec` VALUES (124, 1, NULL);
-INSERT INTO `product_spec` VALUES (124, 2, NULL);
-INSERT INTO `product_spec` VALUES (124, 3, NULL);
-INSERT INTO `product_spec` VALUES (124, 4, NULL);
-INSERT INTO `product_spec` VALUES (124, 5, NULL);
-INSERT INTO `product_spec` VALUES (124, 6, NULL);
-INSERT INTO `product_spec` VALUES (125, 1, NULL);
-INSERT INTO `product_spec` VALUES (125, 2, NULL);
-INSERT INTO `product_spec` VALUES (125, 3, NULL);
-INSERT INTO `product_spec` VALUES (125, 4, NULL);
-INSERT INTO `product_spec` VALUES (125, 5, NULL);
-INSERT INTO `product_spec` VALUES (125, 6, NULL);
-INSERT INTO `product_spec` VALUES (126, 1, NULL);
-INSERT INTO `product_spec` VALUES (126, 2, NULL);
-INSERT INTO `product_spec` VALUES (126, 3, NULL);
-INSERT INTO `product_spec` VALUES (126, 4, NULL);
-INSERT INTO `product_spec` VALUES (126, 5, NULL);
-INSERT INTO `product_spec` VALUES (126, 6, NULL);
-INSERT INTO `product_spec` VALUES (127, 1, NULL);
-INSERT INTO `product_spec` VALUES (127, 2, NULL);
-INSERT INTO `product_spec` VALUES (127, 3, NULL);
-INSERT INTO `product_spec` VALUES (127, 4, NULL);
-INSERT INTO `product_spec` VALUES (127, 5, NULL);
-INSERT INTO `product_spec` VALUES (127, 6, NULL);
-INSERT INTO `product_spec` VALUES (128, 1, NULL);
-INSERT INTO `product_spec` VALUES (128, 2, NULL);
-INSERT INTO `product_spec` VALUES (128, 3, NULL);
-INSERT INTO `product_spec` VALUES (128, 4, NULL);
-INSERT INTO `product_spec` VALUES (128, 5, NULL);
-INSERT INTO `product_spec` VALUES (128, 6, NULL);
-INSERT INTO `product_spec` VALUES (129, 1, NULL);
-INSERT INTO `product_spec` VALUES (129, 2, NULL);
-INSERT INTO `product_spec` VALUES (129, 3, NULL);
-INSERT INTO `product_spec` VALUES (129, 4, NULL);
-INSERT INTO `product_spec` VALUES (129, 5, NULL);
-INSERT INTO `product_spec` VALUES (129, 6, NULL);
-INSERT INTO `product_spec` VALUES (130, 1, NULL);
-INSERT INTO `product_spec` VALUES (130, 2, NULL);
-INSERT INTO `product_spec` VALUES (130, 3, NULL);
-INSERT INTO `product_spec` VALUES (130, 4, NULL);
-INSERT INTO `product_spec` VALUES (130, 5, NULL);
-INSERT INTO `product_spec` VALUES (130, 6, NULL);
-INSERT INTO `product_spec` VALUES (131, 1, NULL);
-INSERT INTO `product_spec` VALUES (131, 2, NULL);
-INSERT INTO `product_spec` VALUES (131, 3, NULL);
-INSERT INTO `product_spec` VALUES (131, 4, NULL);
-INSERT INTO `product_spec` VALUES (131, 5, NULL);
-INSERT INTO `product_spec` VALUES (131, 6, NULL);
-INSERT INTO `product_spec` VALUES (132, 1, NULL);
-INSERT INTO `product_spec` VALUES (132, 2, NULL);
-INSERT INTO `product_spec` VALUES (132, 3, NULL);
-INSERT INTO `product_spec` VALUES (132, 4, NULL);
-INSERT INTO `product_spec` VALUES (132, 5, NULL);
-INSERT INTO `product_spec` VALUES (132, 6, NULL);
-INSERT INTO `product_spec` VALUES (133, 1, NULL);
-INSERT INTO `product_spec` VALUES (133, 2, NULL);
-INSERT INTO `product_spec` VALUES (133, 3, NULL);
-INSERT INTO `product_spec` VALUES (133, 4, NULL);
-INSERT INTO `product_spec` VALUES (133, 5, NULL);
-INSERT INTO `product_spec` VALUES (133, 6, NULL);
-INSERT INTO `product_spec` VALUES (134, 1, NULL);
-INSERT INTO `product_spec` VALUES (134, 2, NULL);
-INSERT INTO `product_spec` VALUES (134, 3, NULL);
-INSERT INTO `product_spec` VALUES (134, 4, NULL);
-INSERT INTO `product_spec` VALUES (134, 5, NULL);
-INSERT INTO `product_spec` VALUES (134, 6, NULL);
-INSERT INTO `product_spec` VALUES (135, 1, NULL);
-INSERT INTO `product_spec` VALUES (135, 2, NULL);
-INSERT INTO `product_spec` VALUES (135, 3, NULL);
-INSERT INTO `product_spec` VALUES (135, 4, NULL);
-INSERT INTO `product_spec` VALUES (135, 5, NULL);
-INSERT INTO `product_spec` VALUES (135, 6, NULL);
-INSERT INTO `product_spec` VALUES (136, 1, NULL);
-INSERT INTO `product_spec` VALUES (136, 2, NULL);
-INSERT INTO `product_spec` VALUES (136, 3, NULL);
-INSERT INTO `product_spec` VALUES (136, 4, NULL);
-INSERT INTO `product_spec` VALUES (136, 5, NULL);
-INSERT INTO `product_spec` VALUES (136, 6, NULL);
-INSERT INTO `product_spec` VALUES (137, 1, NULL);
-INSERT INTO `product_spec` VALUES (137, 2, NULL);
-INSERT INTO `product_spec` VALUES (137, 3, NULL);
-INSERT INTO `product_spec` VALUES (137, 4, NULL);
-INSERT INTO `product_spec` VALUES (137, 5, NULL);
-INSERT INTO `product_spec` VALUES (137, 6, NULL);
-INSERT INTO `product_spec` VALUES (138, 1, NULL);
-INSERT INTO `product_spec` VALUES (138, 2, NULL);
-INSERT INTO `product_spec` VALUES (138, 3, NULL);
-INSERT INTO `product_spec` VALUES (138, 4, NULL);
-INSERT INTO `product_spec` VALUES (138, 5, NULL);
-INSERT INTO `product_spec` VALUES (138, 6, NULL);
-INSERT INTO `product_spec` VALUES (139, 1, NULL);
-INSERT INTO `product_spec` VALUES (139, 2, NULL);
-INSERT INTO `product_spec` VALUES (139, 3, NULL);
-INSERT INTO `product_spec` VALUES (139, 4, NULL);
-INSERT INTO `product_spec` VALUES (139, 5, NULL);
-INSERT INTO `product_spec` VALUES (139, 6, NULL);
-INSERT INTO `product_spec` VALUES (140, 1, NULL);
-INSERT INTO `product_spec` VALUES (140, 2, NULL);
-INSERT INTO `product_spec` VALUES (140, 3, NULL);
-INSERT INTO `product_spec` VALUES (140, 4, NULL);
-INSERT INTO `product_spec` VALUES (140, 5, NULL);
-INSERT INTO `product_spec` VALUES (140, 6, NULL);
-INSERT INTO `product_spec` VALUES (141, 1, NULL);
-INSERT INTO `product_spec` VALUES (141, 2, NULL);
-INSERT INTO `product_spec` VALUES (141, 3, NULL);
-INSERT INTO `product_spec` VALUES (141, 4, NULL);
-INSERT INTO `product_spec` VALUES (141, 5, NULL);
-INSERT INTO `product_spec` VALUES (141, 6, NULL);
-INSERT INTO `product_spec` VALUES (142, 1, NULL);
-INSERT INTO `product_spec` VALUES (142, 2, NULL);
-INSERT INTO `product_spec` VALUES (142, 3, NULL);
-INSERT INTO `product_spec` VALUES (142, 4, NULL);
-INSERT INTO `product_spec` VALUES (142, 5, NULL);
-INSERT INTO `product_spec` VALUES (142, 6, NULL);
-INSERT INTO `product_spec` VALUES (143, 1, NULL);
-INSERT INTO `product_spec` VALUES (143, 2, NULL);
-INSERT INTO `product_spec` VALUES (143, 3, NULL);
-INSERT INTO `product_spec` VALUES (143, 4, NULL);
-INSERT INTO `product_spec` VALUES (143, 5, NULL);
-INSERT INTO `product_spec` VALUES (143, 6, NULL);
-INSERT INTO `product_spec` VALUES (144, 1, NULL);
-INSERT INTO `product_spec` VALUES (144, 2, NULL);
-INSERT INTO `product_spec` VALUES (144, 3, NULL);
-INSERT INTO `product_spec` VALUES (144, 4, NULL);
-INSERT INTO `product_spec` VALUES (144, 5, NULL);
-INSERT INTO `product_spec` VALUES (144, 6, NULL);
-INSERT INTO `product_spec` VALUES (145, 1, NULL);
-INSERT INTO `product_spec` VALUES (145, 2, NULL);
-INSERT INTO `product_spec` VALUES (145, 3, NULL);
-INSERT INTO `product_spec` VALUES (145, 4, NULL);
-INSERT INTO `product_spec` VALUES (145, 5, NULL);
-INSERT INTO `product_spec` VALUES (145, 6, NULL);
-INSERT INTO `product_spec` VALUES (146, 1, NULL);
-INSERT INTO `product_spec` VALUES (146, 2, NULL);
-INSERT INTO `product_spec` VALUES (146, 3, NULL);
-INSERT INTO `product_spec` VALUES (146, 4, NULL);
-INSERT INTO `product_spec` VALUES (146, 5, NULL);
-INSERT INTO `product_spec` VALUES (146, 6, NULL);
-INSERT INTO `product_spec` VALUES (147, 1, NULL);
-INSERT INTO `product_spec` VALUES (147, 2, NULL);
-INSERT INTO `product_spec` VALUES (147, 3, NULL);
-INSERT INTO `product_spec` VALUES (147, 4, NULL);
-INSERT INTO `product_spec` VALUES (147, 5, NULL);
-INSERT INTO `product_spec` VALUES (147, 6, NULL);
-INSERT INTO `product_spec` VALUES (148, 1, NULL);
-INSERT INTO `product_spec` VALUES (148, 2, NULL);
-INSERT INTO `product_spec` VALUES (148, 3, NULL);
-INSERT INTO `product_spec` VALUES (148, 4, NULL);
-INSERT INTO `product_spec` VALUES (148, 5, NULL);
-INSERT INTO `product_spec` VALUES (148, 6, NULL);
-INSERT INTO `product_spec` VALUES (149, 1, NULL);
-INSERT INTO `product_spec` VALUES (149, 2, NULL);
-INSERT INTO `product_spec` VALUES (149, 3, NULL);
-INSERT INTO `product_spec` VALUES (149, 4, NULL);
-INSERT INTO `product_spec` VALUES (149, 5, NULL);
-INSERT INTO `product_spec` VALUES (149, 6, NULL);
-INSERT INTO `product_spec` VALUES (150, 1, NULL);
-INSERT INTO `product_spec` VALUES (150, 2, NULL);
-INSERT INTO `product_spec` VALUES (150, 3, NULL);
-INSERT INTO `product_spec` VALUES (150, 4, NULL);
-INSERT INTO `product_spec` VALUES (150, 5, NULL);
-INSERT INTO `product_spec` VALUES (150, 6, NULL);
-INSERT INTO `product_spec` VALUES (151, 1, NULL);
-INSERT INTO `product_spec` VALUES (151, 2, NULL);
-INSERT INTO `product_spec` VALUES (151, 3, NULL);
-INSERT INTO `product_spec` VALUES (151, 4, NULL);
-INSERT INTO `product_spec` VALUES (151, 5, NULL);
-INSERT INTO `product_spec` VALUES (151, 6, NULL);
-INSERT INTO `product_spec` VALUES (152, 1, NULL);
-INSERT INTO `product_spec` VALUES (152, 2, NULL);
-INSERT INTO `product_spec` VALUES (152, 3, NULL);
-INSERT INTO `product_spec` VALUES (152, 4, NULL);
-INSERT INTO `product_spec` VALUES (152, 5, NULL);
-INSERT INTO `product_spec` VALUES (152, 6, NULL);
-INSERT INTO `product_spec` VALUES (153, 1, NULL);
-INSERT INTO `product_spec` VALUES (153, 2, NULL);
-INSERT INTO `product_spec` VALUES (153, 3, NULL);
-INSERT INTO `product_spec` VALUES (153, 4, NULL);
-INSERT INTO `product_spec` VALUES (153, 5, NULL);
-INSERT INTO `product_spec` VALUES (153, 6, NULL);
-INSERT INTO `product_spec` VALUES (154, 1, NULL);
-INSERT INTO `product_spec` VALUES (154, 2, NULL);
-INSERT INTO `product_spec` VALUES (154, 3, NULL);
-INSERT INTO `product_spec` VALUES (154, 4, NULL);
-INSERT INTO `product_spec` VALUES (154, 5, NULL);
-INSERT INTO `product_spec` VALUES (154, 6, NULL);
-INSERT INTO `product_spec` VALUES (155, 1, NULL);
-INSERT INTO `product_spec` VALUES (155, 2, NULL);
-INSERT INTO `product_spec` VALUES (155, 3, NULL);
-INSERT INTO `product_spec` VALUES (155, 4, NULL);
-INSERT INTO `product_spec` VALUES (155, 5, NULL);
-INSERT INTO `product_spec` VALUES (155, 6, NULL);
-INSERT INTO `product_spec` VALUES (156, 1, NULL);
-INSERT INTO `product_spec` VALUES (156, 2, NULL);
-INSERT INTO `product_spec` VALUES (156, 3, NULL);
-INSERT INTO `product_spec` VALUES (156, 4, NULL);
-INSERT INTO `product_spec` VALUES (156, 5, NULL);
-INSERT INTO `product_spec` VALUES (156, 6, NULL);
-INSERT INTO `product_spec` VALUES (157, 1, NULL);
-INSERT INTO `product_spec` VALUES (157, 2, NULL);
-INSERT INTO `product_spec` VALUES (157, 3, NULL);
-INSERT INTO `product_spec` VALUES (157, 4, NULL);
-INSERT INTO `product_spec` VALUES (157, 5, NULL);
-INSERT INTO `product_spec` VALUES (157, 6, NULL);
-INSERT INTO `product_spec` VALUES (158, 1, NULL);
-INSERT INTO `product_spec` VALUES (158, 2, NULL);
-INSERT INTO `product_spec` VALUES (158, 3, NULL);
-INSERT INTO `product_spec` VALUES (158, 4, NULL);
-INSERT INTO `product_spec` VALUES (158, 5, NULL);
-INSERT INTO `product_spec` VALUES (158, 6, NULL);
-INSERT INTO `product_spec` VALUES (159, 1, NULL);
-INSERT INTO `product_spec` VALUES (159, 2, NULL);
-INSERT INTO `product_spec` VALUES (159, 3, NULL);
-INSERT INTO `product_spec` VALUES (159, 4, NULL);
-INSERT INTO `product_spec` VALUES (159, 5, NULL);
-INSERT INTO `product_spec` VALUES (159, 6, NULL);
-INSERT INTO `product_spec` VALUES (160, 1, NULL);
-INSERT INTO `product_spec` VALUES (160, 2, NULL);
-INSERT INTO `product_spec` VALUES (160, 3, NULL);
-INSERT INTO `product_spec` VALUES (160, 4, NULL);
-INSERT INTO `product_spec` VALUES (160, 5, NULL);
-INSERT INTO `product_spec` VALUES (160, 6, NULL);
-INSERT INTO `product_spec` VALUES (161, 1, NULL);
-INSERT INTO `product_spec` VALUES (161, 2, NULL);
-INSERT INTO `product_spec` VALUES (161, 3, NULL);
-INSERT INTO `product_spec` VALUES (161, 4, NULL);
-INSERT INTO `product_spec` VALUES (161, 5, NULL);
-INSERT INTO `product_spec` VALUES (161, 6, NULL);
-INSERT INTO `product_spec` VALUES (162, 1, NULL);
-INSERT INTO `product_spec` VALUES (162, 2, NULL);
-INSERT INTO `product_spec` VALUES (162, 3, NULL);
-INSERT INTO `product_spec` VALUES (162, 4, NULL);
-INSERT INTO `product_spec` VALUES (162, 5, NULL);
-INSERT INTO `product_spec` VALUES (162, 6, NULL);
-INSERT INTO `product_spec` VALUES (163, 1, NULL);
-INSERT INTO `product_spec` VALUES (163, 2, NULL);
-INSERT INTO `product_spec` VALUES (163, 3, NULL);
-INSERT INTO `product_spec` VALUES (163, 4, NULL);
-INSERT INTO `product_spec` VALUES (163, 5, NULL);
-INSERT INTO `product_spec` VALUES (163, 6, NULL);
-INSERT INTO `product_spec` VALUES (164, 1, NULL);
-INSERT INTO `product_spec` VALUES (164, 2, NULL);
-INSERT INTO `product_spec` VALUES (164, 3, NULL);
-INSERT INTO `product_spec` VALUES (164, 4, NULL);
-INSERT INTO `product_spec` VALUES (164, 5, NULL);
-INSERT INTO `product_spec` VALUES (164, 6, NULL);
-INSERT INTO `product_spec` VALUES (165, 1, NULL);
-INSERT INTO `product_spec` VALUES (165, 2, NULL);
-INSERT INTO `product_spec` VALUES (165, 3, NULL);
-INSERT INTO `product_spec` VALUES (165, 4, NULL);
-INSERT INTO `product_spec` VALUES (165, 5, NULL);
-INSERT INTO `product_spec` VALUES (165, 6, NULL);
-INSERT INTO `product_spec` VALUES (166, 1, NULL);
-INSERT INTO `product_spec` VALUES (166, 2, NULL);
-INSERT INTO `product_spec` VALUES (166, 3, NULL);
-INSERT INTO `product_spec` VALUES (166, 4, NULL);
-INSERT INTO `product_spec` VALUES (166, 5, NULL);
-INSERT INTO `product_spec` VALUES (166, 6, NULL);
-INSERT INTO `product_spec` VALUES (167, 5, NULL);
-INSERT INTO `product_spec` VALUES (167, 6, NULL);
-INSERT INTO `product_spec` VALUES (168, 1, NULL);
-INSERT INTO `product_spec` VALUES (168, 2, NULL);
-INSERT INTO `product_spec` VALUES (168, 3, NULL);
-INSERT INTO `product_spec` VALUES (168, 4, NULL);
-INSERT INTO `product_spec` VALUES (168, 5, NULL);
-INSERT INTO `product_spec` VALUES (168, 6, NULL);
-INSERT INTO `product_spec` VALUES (169, 1, NULL);
-INSERT INTO `product_spec` VALUES (169, 2, NULL);
-INSERT INTO `product_spec` VALUES (169, 3, NULL);
-INSERT INTO `product_spec` VALUES (169, 4, NULL);
-INSERT INTO `product_spec` VALUES (169, 5, NULL);
-INSERT INTO `product_spec` VALUES (169, 6, NULL);
-INSERT INTO `product_spec` VALUES (170, 1, NULL);
-INSERT INTO `product_spec` VALUES (170, 2, NULL);
-INSERT INTO `product_spec` VALUES (170, 3, NULL);
-INSERT INTO `product_spec` VALUES (170, 4, NULL);
-INSERT INTO `product_spec` VALUES (170, 5, NULL);
-INSERT INTO `product_spec` VALUES (170, 6, NULL);
-INSERT INTO `product_spec` VALUES (171, 1, NULL);
-INSERT INTO `product_spec` VALUES (171, 2, NULL);
-INSERT INTO `product_spec` VALUES (171, 3, NULL);
-INSERT INTO `product_spec` VALUES (171, 4, NULL);
-INSERT INTO `product_spec` VALUES (171, 5, NULL);
-INSERT INTO `product_spec` VALUES (171, 6, NULL);
-INSERT INTO `product_spec` VALUES (172, 1, NULL);
-INSERT INTO `product_spec` VALUES (172, 2, NULL);
-INSERT INTO `product_spec` VALUES (172, 3, NULL);
-INSERT INTO `product_spec` VALUES (172, 4, NULL);
-INSERT INTO `product_spec` VALUES (172, 5, NULL);
-INSERT INTO `product_spec` VALUES (172, 6, NULL);
-INSERT INTO `product_spec` VALUES (173, 1, NULL);
-INSERT INTO `product_spec` VALUES (173, 2, NULL);
-INSERT INTO `product_spec` VALUES (173, 3, NULL);
-INSERT INTO `product_spec` VALUES (173, 4, NULL);
-INSERT INTO `product_spec` VALUES (173, 5, NULL);
-INSERT INTO `product_spec` VALUES (173, 6, NULL);
-INSERT INTO `product_spec` VALUES (174, 1, NULL);
-INSERT INTO `product_spec` VALUES (174, 2, NULL);
-INSERT INTO `product_spec` VALUES (174, 3, NULL);
-INSERT INTO `product_spec` VALUES (174, 4, NULL);
-INSERT INTO `product_spec` VALUES (174, 5, NULL);
-INSERT INTO `product_spec` VALUES (174, 6, NULL);
-INSERT INTO `product_spec` VALUES (175, 1, NULL);
-INSERT INTO `product_spec` VALUES (175, 2, NULL);
-INSERT INTO `product_spec` VALUES (175, 3, NULL);
-INSERT INTO `product_spec` VALUES (175, 4, NULL);
-INSERT INTO `product_spec` VALUES (175, 5, NULL);
-INSERT INTO `product_spec` VALUES (175, 6, NULL);
-INSERT INTO `product_spec` VALUES (176, 1, NULL);
-INSERT INTO `product_spec` VALUES (176, 2, NULL);
-INSERT INTO `product_spec` VALUES (176, 3, NULL);
-INSERT INTO `product_spec` VALUES (176, 4, NULL);
-INSERT INTO `product_spec` VALUES (176, 5, NULL);
-INSERT INTO `product_spec` VALUES (176, 6, NULL);
-INSERT INTO `product_spec` VALUES (177, 1, NULL);
-INSERT INTO `product_spec` VALUES (177, 2, NULL);
-INSERT INTO `product_spec` VALUES (177, 3, NULL);
-INSERT INTO `product_spec` VALUES (177, 4, NULL);
-INSERT INTO `product_spec` VALUES (177, 5, NULL);
-INSERT INTO `product_spec` VALUES (177, 6, NULL);
-INSERT INTO `product_spec` VALUES (178, 1, NULL);
-INSERT INTO `product_spec` VALUES (178, 2, NULL);
-INSERT INTO `product_spec` VALUES (178, 3, NULL);
-INSERT INTO `product_spec` VALUES (178, 4, NULL);
-INSERT INTO `product_spec` VALUES (178, 5, NULL);
-INSERT INTO `product_spec` VALUES (178, 6, NULL);
-INSERT INTO `product_spec` VALUES (179, 1, NULL);
-INSERT INTO `product_spec` VALUES (179, 2, NULL);
-INSERT INTO `product_spec` VALUES (179, 3, NULL);
-INSERT INTO `product_spec` VALUES (179, 4, NULL);
-INSERT INTO `product_spec` VALUES (179, 5, NULL);
-INSERT INTO `product_spec` VALUES (179, 6, NULL);
-INSERT INTO `product_spec` VALUES (180, 1, NULL);
-INSERT INTO `product_spec` VALUES (180, 2, NULL);
-INSERT INTO `product_spec` VALUES (180, 3, NULL);
-INSERT INTO `product_spec` VALUES (180, 4, NULL);
-INSERT INTO `product_spec` VALUES (180, 5, NULL);
-INSERT INTO `product_spec` VALUES (180, 6, NULL);
-INSERT INTO `product_spec` VALUES (181, 1, NULL);
-INSERT INTO `product_spec` VALUES (181, 2, NULL);
-INSERT INTO `product_spec` VALUES (181, 3, NULL);
-INSERT INTO `product_spec` VALUES (181, 4, NULL);
-INSERT INTO `product_spec` VALUES (181, 5, NULL);
-INSERT INTO `product_spec` VALUES (181, 6, NULL);
-INSERT INTO `product_spec` VALUES (182, 1, NULL);
-INSERT INTO `product_spec` VALUES (182, 2, NULL);
-INSERT INTO `product_spec` VALUES (182, 3, NULL);
-INSERT INTO `product_spec` VALUES (182, 4, NULL);
-INSERT INTO `product_spec` VALUES (182, 5, NULL);
-INSERT INTO `product_spec` VALUES (182, 6, NULL);
-INSERT INTO `product_spec` VALUES (183, 1, NULL);
-INSERT INTO `product_spec` VALUES (183, 2, NULL);
-INSERT INTO `product_spec` VALUES (183, 3, NULL);
-INSERT INTO `product_spec` VALUES (183, 4, NULL);
-INSERT INTO `product_spec` VALUES (183, 5, NULL);
-INSERT INTO `product_spec` VALUES (183, 6, NULL);
-INSERT INTO `product_spec` VALUES (184, 1, NULL);
-INSERT INTO `product_spec` VALUES (184, 2, NULL);
-INSERT INTO `product_spec` VALUES (184, 3, NULL);
-INSERT INTO `product_spec` VALUES (184, 4, NULL);
-INSERT INTO `product_spec` VALUES (184, 5, NULL);
-INSERT INTO `product_spec` VALUES (184, 6, NULL);
-INSERT INTO `product_spec` VALUES (185, 1, NULL);
-INSERT INTO `product_spec` VALUES (185, 2, NULL);
-INSERT INTO `product_spec` VALUES (185, 3, NULL);
-INSERT INTO `product_spec` VALUES (185, 4, NULL);
-INSERT INTO `product_spec` VALUES (185, 5, NULL);
-INSERT INTO `product_spec` VALUES (185, 6, NULL);
-INSERT INTO `product_spec` VALUES (186, 1, NULL);
-INSERT INTO `product_spec` VALUES (186, 2, NULL);
-INSERT INTO `product_spec` VALUES (186, 3, NULL);
-INSERT INTO `product_spec` VALUES (186, 4, NULL);
-INSERT INTO `product_spec` VALUES (186, 5, NULL);
-INSERT INTO `product_spec` VALUES (186, 6, NULL);
-INSERT INTO `product_spec` VALUES (187, 1, NULL);
-INSERT INTO `product_spec` VALUES (187, 2, NULL);
-INSERT INTO `product_spec` VALUES (187, 3, NULL);
-INSERT INTO `product_spec` VALUES (187, 4, NULL);
-INSERT INTO `product_spec` VALUES (187, 5, NULL);
-INSERT INTO `product_spec` VALUES (187, 6, NULL);
-INSERT INTO `product_spec` VALUES (188, 1, NULL);
-INSERT INTO `product_spec` VALUES (188, 2, NULL);
-INSERT INTO `product_spec` VALUES (188, 3, NULL);
-INSERT INTO `product_spec` VALUES (188, 4, NULL);
-INSERT INTO `product_spec` VALUES (188, 5, NULL);
-INSERT INTO `product_spec` VALUES (188, 6, NULL);
-INSERT INTO `product_spec` VALUES (189, 1, NULL);
-INSERT INTO `product_spec` VALUES (189, 2, NULL);
-INSERT INTO `product_spec` VALUES (189, 3, NULL);
-INSERT INTO `product_spec` VALUES (189, 4, NULL);
-INSERT INTO `product_spec` VALUES (189, 5, NULL);
-INSERT INTO `product_spec` VALUES (189, 6, NULL);
-INSERT INTO `product_spec` VALUES (190, 1, NULL);
-INSERT INTO `product_spec` VALUES (190, 2, NULL);
-INSERT INTO `product_spec` VALUES (190, 3, NULL);
-INSERT INTO `product_spec` VALUES (190, 4, NULL);
-INSERT INTO `product_spec` VALUES (190, 5, NULL);
-INSERT INTO `product_spec` VALUES (190, 6, NULL);
-INSERT INTO `product_spec` VALUES (191, 1, NULL);
-INSERT INTO `product_spec` VALUES (191, 2, NULL);
-INSERT INTO `product_spec` VALUES (191, 3, NULL);
-INSERT INTO `product_spec` VALUES (191, 4, NULL);
-INSERT INTO `product_spec` VALUES (191, 5, NULL);
-INSERT INTO `product_spec` VALUES (191, 6, NULL);
-INSERT INTO `product_spec` VALUES (192, 1, NULL);
-INSERT INTO `product_spec` VALUES (192, 2, NULL);
-INSERT INTO `product_spec` VALUES (192, 3, NULL);
-INSERT INTO `product_spec` VALUES (192, 4, NULL);
-INSERT INTO `product_spec` VALUES (192, 5, NULL);
-INSERT INTO `product_spec` VALUES (192, 6, NULL);
-INSERT INTO `product_spec` VALUES (193, 1, NULL);
-INSERT INTO `product_spec` VALUES (193, 2, NULL);
-INSERT INTO `product_spec` VALUES (193, 3, NULL);
-INSERT INTO `product_spec` VALUES (193, 4, NULL);
-INSERT INTO `product_spec` VALUES (193, 5, NULL);
-INSERT INTO `product_spec` VALUES (193, 6, NULL);
-INSERT INTO `product_spec` VALUES (194, 1, NULL);
-INSERT INTO `product_spec` VALUES (194, 2, NULL);
-INSERT INTO `product_spec` VALUES (194, 3, NULL);
-INSERT INTO `product_spec` VALUES (194, 4, NULL);
-INSERT INTO `product_spec` VALUES (194, 5, NULL);
-INSERT INTO `product_spec` VALUES (194, 6, NULL);
-INSERT INTO `product_spec` VALUES (195, 1, NULL);
-INSERT INTO `product_spec` VALUES (195, 2, NULL);
-INSERT INTO `product_spec` VALUES (195, 3, NULL);
-INSERT INTO `product_spec` VALUES (195, 4, NULL);
-INSERT INTO `product_spec` VALUES (195, 5, NULL);
-INSERT INTO `product_spec` VALUES (195, 6, NULL);
-INSERT INTO `product_spec` VALUES (196, 1, NULL);
-INSERT INTO `product_spec` VALUES (196, 2, NULL);
-INSERT INTO `product_spec` VALUES (196, 3, NULL);
-INSERT INTO `product_spec` VALUES (196, 4, NULL);
-INSERT INTO `product_spec` VALUES (196, 5, NULL);
-INSERT INTO `product_spec` VALUES (196, 6, NULL);
-INSERT INTO `product_spec` VALUES (197, 1, NULL);
-INSERT INTO `product_spec` VALUES (197, 2, NULL);
-INSERT INTO `product_spec` VALUES (197, 3, NULL);
-INSERT INTO `product_spec` VALUES (197, 4, NULL);
-INSERT INTO `product_spec` VALUES (197, 5, NULL);
-INSERT INTO `product_spec` VALUES (197, 6, NULL);
-INSERT INTO `product_spec` VALUES (198, 1, NULL);
-INSERT INTO `product_spec` VALUES (198, 2, NULL);
-INSERT INTO `product_spec` VALUES (198, 3, NULL);
-INSERT INTO `product_spec` VALUES (198, 4, NULL);
-INSERT INTO `product_spec` VALUES (198, 5, NULL);
-INSERT INTO `product_spec` VALUES (198, 6, NULL);
-INSERT INTO `product_spec` VALUES (199, 1, NULL);
-INSERT INTO `product_spec` VALUES (199, 2, NULL);
-INSERT INTO `product_spec` VALUES (199, 3, NULL);
-INSERT INTO `product_spec` VALUES (199, 4, NULL);
-INSERT INTO `product_spec` VALUES (199, 5, NULL);
-INSERT INTO `product_spec` VALUES (199, 6, NULL);
-INSERT INTO `product_spec` VALUES (200, 1, NULL);
-INSERT INTO `product_spec` VALUES (200, 2, NULL);
-INSERT INTO `product_spec` VALUES (200, 3, NULL);
-INSERT INTO `product_spec` VALUES (200, 4, NULL);
-INSERT INTO `product_spec` VALUES (200, 5, NULL);
-INSERT INTO `product_spec` VALUES (200, 6, NULL);
 
 -- ----------------------------
 -- Table structure for product_view
@@ -1373,7 +784,7 @@ CREATE TABLE `product_view`  (
   `ProductID` int(11) NULL DEFAULT NULL,
   `CreateDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of product_view
@@ -1401,11 +812,15 @@ CREATE TABLE `products`  (
   `ManufacturerID` int(11) NULL DEFAULT NULL,
   `ImgThumbnail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE,
-  INDEX `fk_categoryid`(`CategoryID`) USING BTREE,
-  INDEX `fk_sizeid`(`SizeID`) USING BTREE,
-  INDEX `fk_material`(`MaterialID`) USING BTREE,
-  INDEX `fk_manufacturer`(`ManufacturerID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+  INDEX `fk_category`(`CategoryID` ASC) USING BTREE,
+  INDEX `fk_material`(`MaterialID` ASC) USING BTREE,
+  INDEX `fk_size`(`SizeID` ASC) USING BTREE,
+  INDEX `fk_manufacturer`(`ManufacturerID` ASC) USING BTREE,
+  CONSTRAINT `fk_category` FOREIGN KEY (`CategoryID`) REFERENCES `category` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_material` FOREIGN KEY (`MaterialID`) REFERENCES `material` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_size` FOREIGN KEY (`SizeID`) REFERENCES `size` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_manufacturer` FOREIGN KEY (`ManufacturerID`) REFERENCES `manufacturer` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of products
@@ -1523,7 +938,7 @@ CREATE TABLE `review`  (
   `ReviewDate` datetime NULL DEFAULT NULL,
   `OrderID` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`UserID`, `ProductID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of review
@@ -1537,7 +952,7 @@ CREATE TABLE `size`  (
   `ID` int(11) NOT NULL,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of size
@@ -1557,7 +972,7 @@ CREATE TABLE `spectype`  (
   `ID` int(11) NOT NULL,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of spectype
@@ -1582,7 +997,7 @@ CREATE TABLE `stores`  (
   `StorePhone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `WorkingTime` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of stores
@@ -1607,8 +1022,8 @@ CREATE TABLE `users`  (
   `password` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `sex` int(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `check_email_unique`(`email`) USING BTREE COMMENT 'email da ton tai'
-) ENGINE = MyISAM AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+  UNIQUE INDEX `check_email_unique`(`email` ASC) USING BTREE COMMENT 'email da ton tai'
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
@@ -1619,6 +1034,7 @@ INSERT INTO `users` VALUES (4, 'Trương Diếm', 'com3@gamil.com', '0213432', '
 INSERT INTO `users` VALUES (5, 'phuc', 'com4@gamil.com', '0213432', NULL, NULL, '2024-12-11 16:21:03', b'1', '2024-12-14 16:21:11', '', 0, '123', 0);
 INSERT INTO `users` VALUES (6, 'Ngân cuti', 'ngan@gmail.com', '0376272024', NULL, 'bình định', NULL, b'1', NULL, NULL, 0, 'N123456789', 0);
 INSERT INTO `users` VALUES (7, 'Phạm Tài', 'tai@gmail.com', '022222222', NULL, 'bình định', NULL, b'1', NULL, NULL, 0, 'T123456789', 0);
+INSERT INTO `users` VALUES (8, 'Ta Phuc', 'taphuc@gmail.com', '0987991500', NULL, '231241234123', '2024-12-05 00:00:00', b'1', '2024-12-19 13:29:11', '030087edc3869834eccd84e131e363a5', 0, '5eb7fb8425878afce1b965b3e4f8f27f627ac111d8087189a266b6dd15120117', 0);
 
 -- ----------------------------
 -- Table structure for vouchers
@@ -1632,7 +1048,7 @@ CREATE TABLE `vouchers`  (
   `IsActive` bit(1) NULL DEFAULT NULL,
   `CreateDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of vouchers
@@ -1648,7 +1064,7 @@ CREATE TABLE `voucherusage`  (
   `OrderID` int(11) NULL DEFAULT NULL,
   `UsageDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`VoucherID`, `UserID`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Fixed;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of voucherusage
