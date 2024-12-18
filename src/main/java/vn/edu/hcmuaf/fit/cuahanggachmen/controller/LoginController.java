@@ -1,6 +1,5 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 
-
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -16,36 +15,38 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
+        User user = (User)session.getAttribute("auth");
+
+        if(user != null) {
+            response.sendRedirect("/");
+            return;
+        }
         request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.getSession().invalidate();
+        HttpSession session = request.getSession(true);
+        User user = null;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-
         AuthService service = new AuthService();
-
-        User user = null;
 
         try {
             user = service.checkLogin(email, password);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
+        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
 
         if(user!=null){
-           HttpSession session = request.getSession(true);
+            user.setPassword(null);
+            user.setSalt(null);
             session.setAttribute("auth", user);
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("/");
         }else{
             request.setAttribute("error", "Email hoặc mật khẩu bạn vừa nhập chưa đúng");
             request.setAttribute("email", email);
