@@ -6,8 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tạo Tài Khoản Cá Nhân</title>
-    <link rel="stylesheet" href="./assets/css/register.css">
+    <title>Đăng ký</title>
+    <style><%@include file="assets/css/register.css"%></style>
 
     <!-- Thêm favicon -->
     <link
@@ -24,6 +24,22 @@
             rel="stylesheet"
     />
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Font Awesome-->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"
+            integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    ></script>
+
 
 </head>
 <body>
@@ -32,7 +48,7 @@
 
 <!-- Thanh Header -->
 <header>
-    <a href="./index.html">
+    <a href="/">
         <div class="logo">
             <img src="./assets/icons/logo2.svg" alt="Logo Shop" />
         </div>
@@ -62,19 +78,43 @@
         </div>
         <div class="right-section">
             <h2><span>🏠</span> Tài Khoản Cá Nhân</h2>
-            <h1>${register.message}</h1>
-            <h1></h1>
             <form action="register" method="post">
                 <input type="text" placeholder="Họ tên" id="name" name="name" value="${register.data.name}" required maxlength="50">
                 <input type="email" placeholder="Email" id="email" name="email" value="${register.data.email}" required>
-                <p><c:out value="${res.checkEmail.message}"/></p>
+                <div class="message" id="email_message">
+
+                        <c:if test="${res.checkEmail.message != null}">
+                            <div>
+                                <i class="fa-solid fa-xmark" style="color: #ff0000;"></i>
+                                <c:out value="${res.checkEmail.message}"/>
+                            </div>
+                        </c:if>
+
+                </div>
                 <input type="tel" id="tel" name="tel" value="${register.data.phone}" placeholder="Số Điện Thoại">
+                <div class="message" id="tel-message"></div>
                 <input type="password" id="password" value="${register.data.password}" name="password" placeholder="Mật khẩu" required>
-                <c:forEach items="${res.checkPassword.list}" var="pCheck">
-                    <p>${pCheck}</p>
-                </c:forEach>
+                <div id="message" class="message">
+                    <c:forEach items="${res.checkPassword.list}" var="pCheck">
+                            <c:if test="${pCheck != null}">
+                                <div>
+                                    <i class="fa-solid fa-xmark" style="color: #ff0000;"></i>
+                                    <c:out value="${pCheck}"/>
+                                </div>
+                            </c:if>
+                    </c:forEach>
+                </div>
                 <input type="password" id="confirm_password" value="${register.data.confirmPassword}" name="confirm_password" placeholder="Nhập lại mật khẩu" required>
-                <p>${res.checkConfirm.message}</p>
+                <div id="confirmPasswordMessage" class="message">
+
+                        <c:if test="${res.checkConfirm.message != null}">
+                            <div>
+                                <i class="fa-solid fa-xmark" style="color: #ff0000;"></i>
+                                <c:out value="${res.checkConfirm.message}"/>
+                             </div>
+                        </c:if>
+
+                </div>
                 <input type="text" id="address" name="address" value="${register.data.address}" placeholder="Địa chỉ" >
                 <div class="form-group radio-group">
                     <label>Giới tính: </label>
@@ -86,14 +126,16 @@
 
                 <div class="form-group radio-group ckc">
                     <label>Ngày sinh: </label>
-                    <input type="date" id="birthday" name="birthday" value="Ngày sinh" style="width: 70%;" required>
+                    <input type="date" id="birthday" name="birthday" value="${register.data.birthday}" placeholder="Ngày sinh" style="width: 70%;" required>
                 </div>
-                <button type="submit">Tạo Tài Khoản Cá Nhân</button>
-                <p class="login-text">Bạn đã có tài khoản? <a href="./login.html">Đăng nhập tại đây</a></p>
+                <button type="submit" id="register_btn">Tạo Tài Khoản Cá Nhân</button>
+                <p class="login-text">Bạn đã có tài khoản? <a href="login">Đăng nhập tại đây</a></p>
             </form>
         </div>
     </div>
 </div>
+
+<script src="./assets/js/validate.js"></script>
 </body>
 </html>
 

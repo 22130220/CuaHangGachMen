@@ -16,7 +16,7 @@ public class RegisterService {
         ActionResult result = new ActionResult();
         boolean hasUppercase = Pattern.compile(".*[A-Z].*").matcher(password).matches();
         boolean hasDigit = Pattern.compile(".*\\d.*").matcher(password).matches();
-        boolean isCorrectLength = password.length() >= 8 && password.length() <= 20;
+        boolean isCorrectLength = password.length() >= 8;
 
 
         if (!hasUppercase) {
@@ -29,7 +29,7 @@ public class RegisterService {
         }
         if (!isCorrectLength) {
             result.setCode(StatusCode.PASSWORD_FAILED);
-            result.put("isCorrectLength", "Mật khẩu phải có độ dài từ 8 - 20 ký tự");
+            result.put("isCorrectLength", "Mật khẩu phải có độ dài từ 8 ký tự trở lên");
         }
 
         if (hasUppercase && hasDigit && isCorrectLength) {
