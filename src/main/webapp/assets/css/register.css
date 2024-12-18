@@ -6,7 +6,7 @@
 }
 
 body {
-  
+
     min-height: 100vh;
     background-color: #f5f5f5;
 }
@@ -16,7 +16,7 @@ a {
     text-decoration: none;
     color: inherit;
   }
- 
+
 
    /* Thanh header */
 header {
@@ -36,7 +36,16 @@ header {
     padding: 0;
     font-size: 16px;
     text-align: center;
-    
+
+}
+
+.message > div{
+    font-family: "Be Vietnam Pro", sans-serif;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    margin-bottom: 15px;
 }
 
 .breadcrumb a {
@@ -49,13 +58,10 @@ header {
     text-decoration: underline;
 }
 
- 
 .container {
     margin: 0 auto;
     width: 90%;
     max-width: 1200px;
-    text-align: center;
-  
 }
 
 
@@ -126,7 +132,7 @@ header {
 
 .right-section input,
 .right-section select,
-.right-section button {
+.right-section button{
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -175,10 +181,10 @@ header {
 }
 
 
-.radio-group { display: grid;  align-items: center; gap: 1rem; 
+.radio-group { display: grid;  align-items: center; gap: 1rem;
 margin-left: 5px;
 
-}  
+}
 .form-group { display: grid; grid-template-columns: 15rem auto; /* Label chiếm cố định, input chiếm phần còn lại */ align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
 
 .radio-options {
@@ -186,14 +192,14 @@ margin-left: 5px;
     align-items: center;
     gap: 2rem; /* Khoảng cách giữa các radio buttons */
   }
-  
+
   .radio-options label {
     display: flex;
     align-items: center;
 
-    
+
     gap: 0.5rem; /* Khoảng cách giữa nút radio và text */
-    
+
   }
 
   .radio-options label input{
@@ -207,6 +213,5 @@ margin-left: 5px;
   .ckc{
     margin-top: -30px;
   }
-  
-  
-  
+
+

@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 
+import com.sun.net.httpserver.HttpsParameters;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @WebServlet(name = "register", value = "/register")
 public class RegisterController extends HttpServlet {
@@ -30,7 +32,7 @@ public class RegisterController extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("tel");
         String address = request.getParameter("address");
-        int gender =    Integer.parseInt(request.getParameter("gender"));
+        int gender = Integer.parseInt(request.getParameter("gender"));
         String birthTime = request.getParameter("birthday");
         User user = new User();
 
@@ -60,22 +62,22 @@ public class RegisterController extends HttpServlet {
             user.setBirthtime(resService.convertToTimestamp(birthTime).toLocalDateTime());
             checkEmail = resService.addUser(user);
         }
+        if(checkPassword.isOk(StatusCode.OK) && checkConfirm.isOk(StatusCode.OK) && checkEmail.isOk(StatusCode.OK)) {
+            response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+            response.setHeader("Pragma", "no-cache");
+            response.setHeader("Expires", "0");
+            response.sendRedirect(request.getContextPath() + "/login?registion=1");
+            return;
+        }
         ac.put("checkPassword", checkPassword);
         ac.put("checkConfirm", checkConfirm);
         ac.put("checkEmail", checkEmail);
-
-        if(checkPassword.isOk(StatusCode.OK) && checkConfirm.isOk(StatusCode.OK) && checkEmail.isOk(StatusCode.OK)) {
-            ac.setCode(StatusCode.OK);
-            ac.setMessage("Đăng ký thành công");
-        }
-
         ac.put("name", name);
-        ac.put("password", password);
-        ac.put("confirmPassword", confirmPassword);
-        ac.put("email", email);
         ac.put("phone", phone);
         ac.put("address", address);
         ac.put("gender", gender);
+        ac.put("birthday", birthTime);
+        ac.put("email", email);
 
         request.setAttribute("register", ac);
         doGet(request, response);
