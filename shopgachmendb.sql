@@ -11,7 +11,7 @@
  Target Server Version : 110302 (11.3.2-MariaDB)
  File Encoding         : 65001
 
- Date: 19/12/2024 14:28:41
+ Date: 19/12/2024 18:59:02
 */
 
 SET NAMES utf8mb4;
@@ -50,6 +50,11 @@ CREATE TABLE `colors`  (
 -- ----------------------------
 -- Records of colors
 -- ----------------------------
+INSERT INTO `colors` VALUES (1, 'Đỏ');
+INSERT INTO `colors` VALUES (2, 'Xanh');
+INSERT INTO `colors` VALUES (3, 'Vàng');
+INSERT INTO `colors` VALUES (4, 'Tím');
+INSERT INTO `colors` VALUES (5, 'Trắng');
 
 -- ----------------------------
 -- Table structure for contact
@@ -149,13 +154,27 @@ CREATE TABLE `product_color_img`  (
   `Url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ProductID`, `ColorID`) USING BTREE,
   INDEX `fk_colorid`(`ColorID` ASC) USING BTREE,
-  CONSTRAINT `fk_productid` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_productid` FOREIGN KEY (`ProductID`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_colorid` FOREIGN KEY (`ColorID`) REFERENCES `colors` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of product_color_img
 -- ----------------------------
+INSERT INTO `product_color_img` VALUES (1, 1, 'https://tileshop.scene7.com/is/image/TileShop/484017?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (1, 2, 'https://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (1, 3, 'https://tileshop.scene7.com/is/image/TileShop/484272?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (1, 4, 'https://tileshop.scene7.com/is/image/TileShop/484286?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (1, 5, 'https://tileshop.scene7.com/is/image/TileShop/667724?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (2, 1, 'https://tileshop.scene7.com/is/image/TileShop/667725?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (3, 1, 'https://tileshop.scene7.com/is/image/TileShop/484213?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (4, 1, 'https://tileshop.scene7.com/is/image/TileShop/484212?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (5, 1, 'https://tileshop.scene7.com/is/image/TileShop/484258?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (6, 1, 'https://tileshop.scene7.com/is/image/TileShop/484053?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (7, 1, 'https://tileshop.scene7.com/is/image/TileShop/667753?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (8, 1, 'https://tileshop.scene7.com/is/image/TileShop/484054?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (9, 1, 'https://tileshop.scene7.com/is/image/TileShop/484214?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (10, 1, 'https://tileshop.scene7.com/is/image/TileShop/681784?$ExtraLarge$');
 
 -- ----------------------------
 -- Table structure for product_spec
@@ -167,7 +186,7 @@ CREATE TABLE `product_spec`  (
   `Value` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ProductID`, `SpecID`) USING BTREE,
   INDEX `fk_specid_sp`(`SpecID` ASC) USING BTREE,
-  CONSTRAINT `fk_productid_sp` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_productid_sp` FOREIGN KEY (`ProductID`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_specid_sp` FOREIGN KEY (`SpecID`) REFERENCES `spectype` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
@@ -720,60 +739,6 @@ INSERT INTO `product_spec` VALUES (91, 3, 'Glossy');
 INSERT INTO `product_spec` VALUES (91, 4, 'IVICASA');
 INSERT INTO `product_spec` VALUES (91, 5, 'Mài bóng');
 INSERT INTO `product_spec` VALUES (91, 6, 'Việt Nam');
-INSERT INTO `product_spec` VALUES (92, 1, NULL);
-INSERT INTO `product_spec` VALUES (92, 2, NULL);
-INSERT INTO `product_spec` VALUES (92, 3, NULL);
-INSERT INTO `product_spec` VALUES (92, 4, NULL);
-INSERT INTO `product_spec` VALUES (92, 5, NULL);
-INSERT INTO `product_spec` VALUES (92, 6, NULL);
-INSERT INTO `product_spec` VALUES (93, 1, NULL);
-INSERT INTO `product_spec` VALUES (93, 2, NULL);
-INSERT INTO `product_spec` VALUES (93, 3, NULL);
-INSERT INTO `product_spec` VALUES (93, 4, NULL);
-INSERT INTO `product_spec` VALUES (93, 5, NULL);
-INSERT INTO `product_spec` VALUES (93, 6, NULL);
-INSERT INTO `product_spec` VALUES (94, 1, NULL);
-INSERT INTO `product_spec` VALUES (94, 2, NULL);
-INSERT INTO `product_spec` VALUES (94, 3, NULL);
-INSERT INTO `product_spec` VALUES (94, 4, NULL);
-INSERT INTO `product_spec` VALUES (94, 5, NULL);
-INSERT INTO `product_spec` VALUES (94, 6, NULL);
-INSERT INTO `product_spec` VALUES (95, 1, NULL);
-INSERT INTO `product_spec` VALUES (95, 2, NULL);
-INSERT INTO `product_spec` VALUES (95, 3, NULL);
-INSERT INTO `product_spec` VALUES (95, 4, NULL);
-INSERT INTO `product_spec` VALUES (95, 5, NULL);
-INSERT INTO `product_spec` VALUES (95, 6, NULL);
-INSERT INTO `product_spec` VALUES (96, 1, NULL);
-INSERT INTO `product_spec` VALUES (96, 2, NULL);
-INSERT INTO `product_spec` VALUES (96, 3, NULL);
-INSERT INTO `product_spec` VALUES (96, 4, NULL);
-INSERT INTO `product_spec` VALUES (96, 5, NULL);
-INSERT INTO `product_spec` VALUES (96, 6, NULL);
-INSERT INTO `product_spec` VALUES (97, 1, NULL);
-INSERT INTO `product_spec` VALUES (97, 2, NULL);
-INSERT INTO `product_spec` VALUES (97, 3, NULL);
-INSERT INTO `product_spec` VALUES (97, 4, NULL);
-INSERT INTO `product_spec` VALUES (97, 5, NULL);
-INSERT INTO `product_spec` VALUES (97, 6, NULL);
-INSERT INTO `product_spec` VALUES (98, 1, NULL);
-INSERT INTO `product_spec` VALUES (98, 2, NULL);
-INSERT INTO `product_spec` VALUES (98, 3, NULL);
-INSERT INTO `product_spec` VALUES (98, 4, NULL);
-INSERT INTO `product_spec` VALUES (98, 5, NULL);
-INSERT INTO `product_spec` VALUES (98, 6, NULL);
-INSERT INTO `product_spec` VALUES (99, 1, NULL);
-INSERT INTO `product_spec` VALUES (99, 2, NULL);
-INSERT INTO `product_spec` VALUES (99, 3, NULL);
-INSERT INTO `product_spec` VALUES (99, 4, NULL);
-INSERT INTO `product_spec` VALUES (99, 5, NULL);
-INSERT INTO `product_spec` VALUES (99, 6, NULL);
-INSERT INTO `product_spec` VALUES (100, 1, NULL);
-INSERT INTO `product_spec` VALUES (100, 2, NULL);
-INSERT INTO `product_spec` VALUES (100, 3, NULL);
-INSERT INTO `product_spec` VALUES (100, 4, NULL);
-INSERT INTO `product_spec` VALUES (100, 5, NULL);
-INSERT INTO `product_spec` VALUES (100, 6, NULL);
 
 -- ----------------------------
 -- Table structure for product_view
@@ -795,136 +760,127 @@ CREATE TABLE `product_view`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products`  (
-  `ID` int(11) NOT NULL,
-  `Name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `PricePerBox` int(11) NULL DEFAULT NULL,
-  `Stock` int(11) NULL DEFAULT NULL,
-  `Des` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `Status` bit(1) NULL DEFAULT b'1',
-  `Rating` int(11) NULL DEFAULT 1,
-  `Discount` bit(1) NULL DEFAULT b'0',
-  `PromotionPrice` decimal(18, 2) NULL DEFAULT NULL,
-  `QuantityPerBox` int(11) NULL DEFAULT NULL,
-  `CreateDate` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `CategoryID` int(11) NULL DEFAULT NULL,
-  `SizeID` int(11) NULL DEFAULT NULL,
-  `MaterialID` int(11) NULL DEFAULT NULL,
-  `ManufacturerID` int(11) NULL DEFAULT NULL,
-  `ImgThumbnail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`ID`) USING BTREE,
-  INDEX `fk_category`(`CategoryID` ASC) USING BTREE,
-  INDEX `fk_material`(`MaterialID` ASC) USING BTREE,
-  INDEX `fk_size`(`SizeID` ASC) USING BTREE,
-  INDEX `fk_manufacturer`(`ManufacturerID` ASC) USING BTREE,
-  CONSTRAINT `fk_category` FOREIGN KEY (`CategoryID`) REFERENCES `category` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_material` FOREIGN KEY (`MaterialID`) REFERENCES `material` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_size` FOREIGN KEY (`SizeID`) REFERENCES `size` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_manufacturer` FOREIGN KEY (`ManufacturerID`) REFERENCES `manufacturer` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  `id` int(11) NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `pricePerBox` int(11) NULL DEFAULT NULL,
+  `stock` int(11) NULL DEFAULT NULL,
+  `description` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `status` bit(1) NULL DEFAULT b'1',
+  `rating` int(11) NULL DEFAULT 1,
+  `discount` bit(1) NULL DEFAULT b'0',
+  `promotionPrice` decimal(18, 2) NULL DEFAULT NULL,
+  `quantityPerBox` int(11) NULL DEFAULT NULL,
+  `createDate` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `categoryId` int(11) NULL DEFAULT NULL,
+  `sizeId` int(11) NULL DEFAULT NULL,
+  `materialId` int(11) NULL DEFAULT NULL,
+  `manufacturerId` int(11) NULL DEFAULT NULL,
+  `imgThumbnail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `fk_category`(`categoryId` ASC) USING BTREE,
+  INDEX `fk_material`(`materialId` ASC) USING BTREE,
+  INDEX `fk_size`(`sizeId` ASC) USING BTREE,
+  INDEX `fk_manufacturer`(`manufacturerId` ASC) USING BTREE,
+  CONSTRAINT `fk_category` FOREIGN KEY (`categoryId`) REFERENCES `category` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_material` FOREIGN KEY (`materialId`) REFERENCES `material` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_size` FOREIGN KEY (`sizeId`) REFERENCES `size` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_manufacturer` FOREIGN KEY (`manufacturerId`) REFERENCES `manufacturer` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of products
 -- ----------------------------
-INSERT INTO `products` VALUES (1, 'Gạch lát sân vườn MAXTOT MT5501', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:06:23', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (2, 'Gạch lát sân vườn MAXTOT MT5502', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:06:38', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (3, 'Gạch lát sân vườn MAXTOT MT5503', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:06:38', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (4, 'Gạch lát sân vườn MAXTOT MT5505', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:06:38', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (5, 'Gạch lát sân vườn MAXTOT MT5506', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:06:38', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (6, 'Gạch lát sân vườn MAXTOT MT5507', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (7, 'Gạch lát sân vườn MAXTOT MT5508', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (8, 'Gạch lát sân vườn MAXTOT MT5509', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (9, 'Gạch ốp tường MAXTOT MT3601', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (10, 'Gạch ốp tường MAXTOT MT3601D', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (11, 'Gạch ốp tường MAXTOT MT3602', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (12, 'Gạch ốp tường MAXTOT MT3605', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (13, 'Gạch ốp tường MAXTOT MT3605D', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (14, 'Gạch ốp tường MAXTOT MT3606', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (15, 'Gạch ốp tường MAXTOT MT3607', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (16, 'Gạch ốp tường MAXTOT MT3607D', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (17, 'Gạch ốp tường MAXTOT MT3608', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (18, 'Gạch ốp tường MAXTOT MT3609', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (19, 'Gạch ốp tường MAXTOT MT3609D', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (20, 'Gạch ốp tường MAXTOT MT3610', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (21, 'Gạch ốp tường MAXTOT MT3617', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (22, 'Gạch ốp tường MAXTOT MT3617D', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (23, 'Gạch ốp tường MAXTOT MT3618', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (24, 'Gạch ốp tường MAXTOT MT3619', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (25, 'Gạch ốp tường MAXTOT MT3619D', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (26, 'Gạch ốp tường MAXTOT MT3620', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (27, 'Gạch ốp tường MAXTOT MT3621', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (28, 'Gạch ốp tường MAXTOT MT3621D', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (29, 'Gạch ốp tường MAXTOT MT3621V', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (30, 'Gạch ốp tường MAXTOT MT3623', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (31, 'Gạch ốp tường MAXTOT MT3623D', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (32, 'Gạch ốp tường MAXTOT MT3624', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (33, 'Gạch ốp tường MAXTOT MT4802', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (34, 'Gạch ốp tường MAXTOT MT4802D', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (35, 'Gạch ốp tường MAXTOT MT4803', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (36, 'Gạch ốp tường MAXTOT MT4804', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (37, 'Gạch ốp tường MAXTOT MT4804D', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (38, 'Gạch ốp tường MAXTOT MT4805', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:05', NULL, NULL, NULL, 1, NULL);
-INSERT INTO `products` VALUES (39, 'Gạch lát sàn BAMBU BB66.1008', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:32', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (40, 'Gạch lát sàn BAMBU BB66.1011', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (41, 'Gạch lát sàn BAMBU BB66.1014', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (42, 'Gạch lát sàn BAMBU BB66.1015', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (43, 'Gạch lát sàn BAMBU BB66.1016', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (44, 'Gạch lát sàn BAMBU BB66.6003', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (45, 'Gạch lát sàn BAMBU BB66.6010', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (46, 'Gạch lát sàn BAMBU BB66.6011', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (47, 'Gạch lát sàn BAMBU BB66.6012', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (48, 'Gạch lát sàn BAMBU BB66.6013', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (49, 'Gạch lát sàn BAMBU BB66.6014', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (50, 'Gạch lát sàn BAMBU BB66.6015', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (51, 'Gạch lát sàn BAMBU BB66.6017VT', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (52, 'Gạch lát sàn BAMBU BB66.6018VT', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (53, 'Gạch lát sàn BAMBU BB66.6019VT', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (54, 'Gạch lát sàn BAMBU BB66.6020VT', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (55, 'Gạch lát sàn BAMBU BB66.6021VT', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (56, 'Gạch lát sàn BAMBU BB88.6003', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (57, 'Gạch lát sàn BAMBU BB88.6006', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (58, 'Gạch lát sàn BAMBU BB88.6008', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (59, 'Gạch lát sàn BAMBU BB88.6012', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (60, 'Gạch lát sàn BAMBU BB88.6013', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (61, 'Gạch lát sàn BAMBU BB88.6014', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (62, 'Gạch lát sàn BAMBU BB88.6015', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (63, 'Gạch lát sàn BAMBU BB88.6017VT', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (64, 'Gạch lát sàn BAMBU BB88.6018VT', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (65, 'Gạch lát sàn BAMBU BB88.6019VT', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (66, 'Gạch lát sàn BAMBU BB88.6020VT', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (67, 'Gạch lát sàn BAMBU BB88.6021VT', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (68, 'Gạch ốp tường BAMBU BB36.6001D', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (69, 'Gạch ốp tường BAMBU BB36.6001DE', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (70, 'Gạch ốp tường BAMBU BB36.6001L', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (71, 'Gạch ốp tường BAMBU BB36.6002D', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (72, 'Gạch ốp tường BAMBU BB36.6002DE', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (73, 'Gạch ốp tường BAMBU BB36.6002L', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (74, 'Gạch ốp tường BAMBU BB36.6003D', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (75, 'Gạch ốp tường BAMBU BB36.6003DE', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (76, 'Gạch ốp tường BAMBU BB36.6003L', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (77, 'Gạch ốp tường BAMBU BB36.6004DE', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (78, 'Gạch ốp tường BAMBU BB36.6004L', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (79, 'Gạch ốp tường BAMBU BB36.6004V', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:07:49', NULL, NULL, NULL, 2, NULL);
-INSERT INTO `products` VALUES (80, 'Gạch lát sân vườn FAMITO F503', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:08:17', NULL, NULL, NULL, 3, NULL);
-INSERT INTO `products` VALUES (81, 'Gạch lát sân vườn FAMITO F504', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:08:18', NULL, NULL, NULL, 3, NULL);
-INSERT INTO `products` VALUES (82, 'Gạch lát sân vườn FAMITO F505', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:08:19', NULL, NULL, NULL, 3, NULL);
-INSERT INTO `products` VALUES (83, 'Gạch lát sân vườn FAMITO F506', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:08:20', NULL, NULL, NULL, 3, NULL);
-INSERT INTO `products` VALUES (84, 'Gạch men sân vườn FAMITO F502', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:08:23', NULL, NULL, NULL, 3, NULL);
-INSERT INTO `products` VALUES (85, 'Gạch lát nền granite cao cấp IVICASA GA-P66001 600×600', NULL, NULL, '', b'1', 1, b'0', NULL, NULL, '2024-12-18 01:10:48', NULL, NULL, NULL, 4, '');
-INSERT INTO `products` VALUES (86, 'Gạch lát nền granite cao cấp IVICASA GA-P66002 600×600', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:10:50', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `products` VALUES (87, 'Gạch lát nền granite cao cấp IVICASA GA-P66003 600×600', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:10:51', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `products` VALUES (88, 'Gạch lát nền granite cao cấp IVICASA GA-P66004 600×600', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:10:52', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `products` VALUES (89, 'Gạch lát nền granite cao cấp IVICASA GA-P66005 600×600', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:10:53', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `products` VALUES (90, 'Gạch lát nền granite cao cấp IVICASA GA-P66006 600×600', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:10:53', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `products` VALUES (91, 'Gạch lát nền granite cao cấp IVICASA GA-P66007 600×600', NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:10:54', NULL, NULL, NULL, 4, NULL);
-INSERT INTO `products` VALUES (92, NULL, NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, '2024-12-18 01:11:25', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (93, NULL, NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (94, NULL, NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (95, NULL, NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (96, NULL, NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (97, NULL, NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (98, NULL, NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (99, NULL, NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `products` VALUES (100, NULL, NULL, NULL, NULL, b'1', 1, b'0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `products` VALUES (1, 'Gạch lát sân vườn MAXTOT MT5501', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484017?$ExtraLarge$');
+INSERT INTO `products` VALUES (2, 'Gạch lát sân vườn MAXTOT MT5502', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/667725?$ExtraLarge$');
+INSERT INTO `products` VALUES (3, 'Gạch lát sân vườn MAXTOT MT5503', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484213?$ExtraLarge$');
+INSERT INTO `products` VALUES (4, 'Gạch lát sân vườn MAXTOT MT5505', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484212?$ExtraLarge$');
+INSERT INTO `products` VALUES (5, 'Gạch lát sân vườn MAXTOT MT5506', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484258?$ExtraLarge$');
+INSERT INTO `products` VALUES (6, 'Gạch lát sân vườn MAXTOT MT5507', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484053?$ExtraLarge$');
+INSERT INTO `products` VALUES (7, 'Gạch lát sân vườn MAXTOT MT5508', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/667753?$ExtraLarge$');
+INSERT INTO `products` VALUES (8, 'Gạch lát sân vườn MAXTOT MT5509', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484054?$ExtraLarge$');
+INSERT INTO `products` VALUES (9, 'Gạch ốp tường MAXTOT MT3601', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484214?$ExtraLarge$');
+INSERT INTO `products` VALUES (10, 'Gạch ốp tường MAXTOT MT3601D', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/681784?$ExtraLarge$');
+INSERT INTO `products` VALUES (11, 'Gạch ốp tường MAXTOT MT3602', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$');
+INSERT INTO `products` VALUES (12, 'Gạch ốp tường MAXTOT MT3605', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484272?$ExtraLarge$');
+INSERT INTO `products` VALUES (13, 'Gạch ốp tường MAXTOT MT3605D', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484286?$ExtraLarge$');
+INSERT INTO `products` VALUES (14, 'Gạch ốp tường MAXTOT MT3606', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/667724?$ExtraLarge$');
+INSERT INTO `products` VALUES (15, 'Gạch ốp tường MAXTOT MT3607', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484274?$ExtraLarge$');
+INSERT INTO `products` VALUES (16, 'Gạch ốp tường MAXTOT MT3607D', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/616100?$ExtraLarge$');
+INSERT INTO `products` VALUES (17, 'Gạch ốp tường MAXTOT MT3608', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484216?$ExtraLarge$');
+INSERT INTO `products` VALUES (18, 'Gạch ốp tường MAXTOT MT3609', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/657613?$ExtraLarge$');
+INSERT INTO `products` VALUES (19, 'Gạch ốp tường MAXTOT MT3609D', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484297?$ExtraLarge$');
+INSERT INTO `products` VALUES (20, 'Gạch ốp tường MAXTOT MT3610', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/496215?$ExtraLarge$');
+INSERT INTO `products` VALUES (21, 'Gạch ốp tường MAXTOT MT3617', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/650782?$ExtraLarge$');
+INSERT INTO `products` VALUES (22, 'Gạch ốp tường MAXTOT MT3617D', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/496182?$ExtraLarge$');
+INSERT INTO `products` VALUES (23, 'Gạch ốp tường MAXTOT MT3618', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/650852?$ExtraLarge$');
+INSERT INTO `products` VALUES (24, 'Gạch ốp tường MAXTOT MT3619', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/494248?$ExtraLarge$');
+INSERT INTO `products` VALUES (25, 'Gạch ốp tường MAXTOT MT3619D', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484594?$ExtraLarge$');
+INSERT INTO `products` VALUES (26, 'Gạch ốp tường MAXTOT MT3620', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/494434?$ExtraLarge$');
+INSERT INTO `products` VALUES (27, 'Gạch ốp tường MAXTOT MT3621', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484078?$ExtraLarge$');
+INSERT INTO `products` VALUES (28, 'Gạch ốp tường MAXTOT MT3621D', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484069?$ExtraLarge$');
+INSERT INTO `products` VALUES (29, 'Gạch ốp tường MAXTOT MT3621V', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/658656?$ExtraLarge$');
+INSERT INTO `products` VALUES (30, 'Gạch ốp tường MAXTOT MT3623', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484288?$ExtraLarge$');
+INSERT INTO `products` VALUES (31, 'Gạch ốp tường MAXTOT MT3623D', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484107?$ExtraLarge$');
+INSERT INTO `products` VALUES (32, 'Gạch ốp tường MAXTOT MT3624', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/655838?$ExtraLarge$');
+INSERT INTO `products` VALUES (33, 'Gạch ốp tường MAXTOT MT4802', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484361?$ExtraLarge$');
+INSERT INTO `products` VALUES (34, 'Gạch ốp tường MAXTOT MT4802D', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/681746?$ExtraLarge$');
+INSERT INTO `products` VALUES (35, 'Gạch ốp tường MAXTOT MT4803', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/681043?$ExtraLarge$');
+INSERT INTO `products` VALUES (36, 'Gạch ốp tường MAXTOT MT4804', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484287?$ExtraLarge$');
+INSERT INTO `products` VALUES (37, 'Gạch ốp tường MAXTOT MT4804D', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/650433?$ExtraLarge$');
+INSERT INTO `products` VALUES (38, 'Gạch ốp tường MAXTOT MT4805', NULL, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 1, 'https://tileshop.scene7.com/is/image/TileShop/484019?$ExtraLarge$');
+INSERT INTO `products` VALUES (39, 'Gạch lát sàn BAMBU BB66.1008', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484359?$ExtraLarge$');
+INSERT INTO `products` VALUES (40, 'Gạch lát sàn BAMBU BB66.1011', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/658498?$ExtraLarge$');
+INSERT INTO `products` VALUES (41, 'Gạch lát sàn BAMBU BB66.1014', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/494440?$ExtraLarge$');
+INSERT INTO `products` VALUES (42, 'Gạch lát sàn BAMBU BB66.1015', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/441955?$ExtraLarge$');
+INSERT INTO `products` VALUES (43, 'Gạch lát sàn BAMBU BB66.1016', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484431?$ExtraLarge$');
+INSERT INTO `products` VALUES (44, 'Gạch lát sàn BAMBU BB66.6003', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/615826?$ExtraLarge$');
+INSERT INTO `products` VALUES (45, 'Gạch lát sàn BAMBU BB66.6010', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484038?$ExtraLarge$');
+INSERT INTO `products` VALUES (46, 'Gạch lát sàn BAMBU BB66.6011', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484285?$ExtraLarge$');
+INSERT INTO `products` VALUES (47, 'Gạch lát sàn BAMBU BB66.6012', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/615817?$ExtraLarge$');
+INSERT INTO `products` VALUES (48, 'Gạch lát sàn BAMBU BB66.6013', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484002?$ExtraLarge$');
+INSERT INTO `products` VALUES (49, 'Gạch lát sàn BAMBU BB66.6014', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484017?$ExtraLarge$');
+INSERT INTO `products` VALUES (50, 'Gạch lát sàn BAMBU BB66.6015', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/667725?$ExtraLarge$');
+INSERT INTO `products` VALUES (51, 'Gạch lát sàn BAMBU BB66.6017VT', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484213?$ExtraLarge$');
+INSERT INTO `products` VALUES (52, 'Gạch lát sàn BAMBU BB66.6018VT', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484212?$ExtraLarge$');
+INSERT INTO `products` VALUES (53, 'Gạch lát sàn BAMBU BB66.6019VT', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484258?$ExtraLarge$');
+INSERT INTO `products` VALUES (54, 'Gạch lát sàn BAMBU BB66.6020VT', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484053?$ExtraLarge$');
+INSERT INTO `products` VALUES (55, 'Gạch lát sàn BAMBU BB66.6021VT', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/667753?$ExtraLarge$');
+INSERT INTO `products` VALUES (56, 'Gạch lát sàn BAMBU BB88.6003', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484054?$ExtraLarge$');
+INSERT INTO `products` VALUES (57, 'Gạch lát sàn BAMBU BB88.6006', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484214?$ExtraLarge$');
+INSERT INTO `products` VALUES (58, 'Gạch lát sàn BAMBU BB88.6008', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/681784?$ExtraLarge$');
+INSERT INTO `products` VALUES (59, 'Gạch lát sàn BAMBU BB88.6012', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$');
+INSERT INTO `products` VALUES (60, 'Gạch lát sàn BAMBU BB88.6013', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484272?$ExtraLarge$');
+INSERT INTO `products` VALUES (61, 'Gạch lát sàn BAMBU BB88.6014', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484286?$ExtraLarge$');
+INSERT INTO `products` VALUES (62, 'Gạch lát sàn BAMBU BB88.6015', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/667724?$ExtraLarge$');
+INSERT INTO `products` VALUES (63, 'Gạch lát sàn BAMBU BB88.6017VT', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484274?$ExtraLarge$');
+INSERT INTO `products` VALUES (64, 'Gạch lát sàn BAMBU BB88.6018VT', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/616100?$ExtraLarge$');
+INSERT INTO `products` VALUES (65, 'Gạch lát sàn BAMBU BB88.6019VT', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484216?$ExtraLarge$');
+INSERT INTO `products` VALUES (66, 'Gạch lát sàn BAMBU BB88.6020VT', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/657613?$ExtraLarge$');
+INSERT INTO `products` VALUES (67, 'Gạch lát sàn BAMBU BB88.6021VT', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484297?$ExtraLarge$');
+INSERT INTO `products` VALUES (68, 'Gạch ốp tường BAMBU BB36.6001D', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/496215?$ExtraLarge$');
+INSERT INTO `products` VALUES (69, 'Gạch ốp tường BAMBU BB36.6001DE', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/650782?$ExtraLarge$');
+INSERT INTO `products` VALUES (70, 'Gạch ốp tường BAMBU BB36.6001L', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/496182?$ExtraLarge$');
+INSERT INTO `products` VALUES (71, 'Gạch ốp tường BAMBU BB36.6002D', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/650852?$ExtraLarge$');
+INSERT INTO `products` VALUES (72, 'Gạch ốp tường BAMBU BB36.6002DE', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/494248?$ExtraLarge$');
+INSERT INTO `products` VALUES (73, 'Gạch ốp tường BAMBU BB36.6002L', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484594?$ExtraLarge$');
+INSERT INTO `products` VALUES (74, 'Gạch ốp tường BAMBU BB36.6003D', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/494434?$ExtraLarge$');
+INSERT INTO `products` VALUES (75, 'Gạch ốp tường BAMBU BB36.6003DE', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484078?$ExtraLarge$');
+INSERT INTO `products` VALUES (76, 'Gạch ốp tường BAMBU BB36.6003L', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484069?$ExtraLarge$');
+INSERT INTO `products` VALUES (77, 'Gạch ốp tường BAMBU BB36.6004DE', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/658656?$ExtraLarge$');
+INSERT INTO `products` VALUES (78, 'Gạch ốp tường BAMBU BB36.6004L', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484288?$ExtraLarge$');
+INSERT INTO `products` VALUES (79, 'Gạch ốp tường BAMBU BB36.6004V', NULL, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 2, 'https://tileshop.scene7.com/is/image/TileShop/484107?$ExtraLarge$');
+INSERT INTO `products` VALUES (80, 'Gạch lát sân vườn FAMITO F503', NULL, NULL, 'view_shared/product_des/famito/famito.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 3, 'https://tileshop.scene7.com/is/image/TileShop/655838?$ExtraLarge$');
+INSERT INTO `products` VALUES (81, 'Gạch lát sân vườn FAMITO F504', NULL, NULL, 'view_shared/product_des/famito/famito.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 3, 'https://tileshop.scene7.com/is/image/TileShop/484361?$ExtraLarge$');
+INSERT INTO `products` VALUES (82, 'Gạch lát sân vườn FAMITO F505', NULL, NULL, 'view_shared/product_des/famito/famito.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 3, 'https://tileshop.scene7.com/is/image/TileShop/681746?$ExtraLarge$');
+INSERT INTO `products` VALUES (83, 'Gạch lát sân vườn FAMITO F506', NULL, NULL, 'view_shared/product_des/famito/famito.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 3, 'https://tileshop.scene7.com/is/image/TileShop/681043?$ExtraLarge$');
+INSERT INTO `products` VALUES (84, 'Gạch men sân vườn FAMITO F502', NULL, NULL, 'view_shared/product_des/famito/famito.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 3, 'https://tileshop.scene7.com/is/image/TileShop/484287?$ExtraLarge$');
+INSERT INTO `products` VALUES (85, 'Gạch lát nền granite cao cấp IVICASA GA-P66001 600×600', NULL, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 4, 'https://tileshop.scene7.com/is/image/TileShop/650433?$ExtraLarge$');
+INSERT INTO `products` VALUES (86, 'Gạch lát nền granite cao cấp IVICASA GA-P66002 600×600', NULL, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 4, 'https://tileshop.scene7.com/is/image/TileShop/484019?$ExtraLarge$');
+INSERT INTO `products` VALUES (87, 'Gạch lát nền granite cao cấp IVICASA GA-P66003 600×600', NULL, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 4, 'https://tileshop.scene7.com/is/image/TileShop/484359?$ExtraLarge$');
+INSERT INTO `products` VALUES (88, 'Gạch lát nền granite cao cấp IVICASA GA-P66004 600×600', NULL, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 4, 'https://tileshop.scene7.com/is/image/TileShop/658498?$ExtraLarge$');
+INSERT INTO `products` VALUES (89, 'Gạch lát nền granite cao cấp IVICASA GA-P66005 600×600', NULL, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 4, 'https://tileshop.scene7.com/is/image/TileShop/494440?$ExtraLarge$');
+INSERT INTO `products` VALUES (90, 'Gạch lát nền granite cao cấp IVICASA GA-P66006 600×600', NULL, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 4, 'https://tileshop.scene7.com/is/image/TileShop/441955?$ExtraLarge$');
+INSERT INTO `products` VALUES (91, 'Gạch lát nền granite cao cấp IVICASA GA-P66007 600×600', NULL, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, NULL, '2024-12-19 18:28:28', NULL, NULL, NULL, 4, 'https://tileshop.scene7.com/is/image/TileShop/484431?$ExtraLarge$');
 
 -- ----------------------------
 -- Table structure for review

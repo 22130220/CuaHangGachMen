@@ -1,23 +1,63 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class Product implements Serializable {
-private int id;
-private  String title;
-private double price;
-private String img;
+public class Product implements Serializable{
+    private int id;
+    private String name;
+    private int pricePerBox;
+    private int stock;
+    private String description;
+    private boolean status;
+    private int rating;
+    private boolean discount;
+    private BigDecimal promotionPrice;
+    private int quantityPerBox;
+    private LocalDateTime createDate;
+    private int categoryId;
+    private int sizeId;
+    private int materialId;
+    private int manufacturerId;
+    private String imgThumbnail;
 
-    public Product(int id, String title, double price, String img) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
-        this.img = img;
-    }
 
+    private List<String> imgList = null;
+
+    private Map<String, Object> specs = null;
+
+    // Constructors
     public Product() {
     }
 
+    public Product(int id, String name, int pricePerBox, int stock, String description, boolean status,
+                   int rating, boolean discount, BigDecimal promotionPrice, int quantityPerBox,
+                   LocalDateTime createDate, int categoryId, int sizeId, int materialId,
+                   int manufacturerId, String imgThumbnail) {
+        this.id = id;
+        this.name = name;
+        this.pricePerBox = pricePerBox;
+        this.stock = stock;
+        this.description = description;
+        this.status = status;
+        this.rating = rating;
+        this.discount = discount;
+        this.promotionPrice = promotionPrice;
+        this.quantityPerBox = quantityPerBox;
+        this.createDate = createDate;
+        this.categoryId = categoryId;
+        this.sizeId = sizeId;
+        this.materialId = materialId;
+        this.manufacturerId = manufacturerId;
+        this.imgThumbnail = imgThumbnail;
+    }
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -26,37 +66,170 @@ private String img;
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public double getPrice() {
-        return price;
+    public int getPricePerBox() {
+        return pricePerBox;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPricePerBox(int pricePerBox) {
+        this.pricePerBox = pricePerBox;
     }
 
-    public String getImg() {
-        return img;
+    public int getStock() {
+        return stock;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setStock(int stock) {
+        this.stock = stock;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public boolean isDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(boolean discount) {
+        this.discount = discount;
+    }
+
+    public BigDecimal getPromotionPrice() {
+        return promotionPrice;
+    }
+
+    public void setPromotionPrice(BigDecimal promotionPrice) {
+        this.promotionPrice = promotionPrice;
+    }
+
+    public int getQuantityPerBox() {
+        return quantityPerBox;
+    }
+
+    public void setQuantityPerBox(int quantityPerBox) {
+        this.quantityPerBox = quantityPerBox;
+    }
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public int getSizeId() {
+        return sizeId;
+    }
+
+    public void setSizeId(int sizeId) {
+        this.sizeId = sizeId;
+    }
+
+    public int getMaterialId() {
+        return materialId;
+    }
+
+    public void setMaterialId(int materialId) {
+        this.materialId = materialId;
+    }
+
+    public int getManufacturerId() {
+        return manufacturerId;
+    }
+
+    public void setManufacturerId(int manufacturerId) {
+        this.manufacturerId = manufacturerId;
+    }
+
+    public String getImgThumbnail() {
+        return imgThumbnail;
+    }
+
+    public void setImgThumbnail(String imgThumbnail) {
+        this.imgThumbnail = imgThumbnail;
+    }
+
+    public Map<String, Object> getSpecs() {
+        return specs;
+    }
+
+    public void setSpecs(Map<String, Object> specs) {
+        this.specs = specs;
+    }
+
+    public void addSpec(String key, Object value) {
+        if(specs == null) {
+            specs = new HashMap<>();
+        }
+        specs.put(key, value);
+    }
+
+    public List<String> getImgList() {
+        return imgList;
+    }
+
+    public void setImgList(List<String> imgList) {
+        if(imgList == null) imgList = new ArrayList<>();
+        this.imgList = imgList;
+    }
+
 
     @Override
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
-                ", price=" + price +
-                ", img='" + img + '\'' +
+                ", name='" + name + '\'' +
+                ", pricePerBox=" + pricePerBox +
+                ", stock=" + stock +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", rating=" + rating +
+                ", discount=" + discount +
+                ", promotionPrice=" + promotionPrice +
+                ", quantityPerBox=" + quantityPerBox +
+                ", createDate=" + createDate +
+                ", categoryId=" + categoryId +
+                ", sizeId=" + sizeId +
+                ", materialId=" + materialId +
+                ", manufacturerId=" + manufacturerId +
+                ", imgThumbnail='" + imgThumbnail + '\'' +
                 '}';
     }
 }
