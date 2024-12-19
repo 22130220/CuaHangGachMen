@@ -22,7 +22,7 @@ public class LoginController extends HttpServlet {
             response.sendRedirect("/");
             return;
         }
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class LoginController extends HttpServlet {
         }else{
             request.setAttribute("error", "Email hoặc mật khẩu bạn vừa nhập chưa đúng");
             request.setAttribute("email", email);
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         }
 
     }

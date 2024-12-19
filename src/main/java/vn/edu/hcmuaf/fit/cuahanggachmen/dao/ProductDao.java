@@ -1,0 +1,88 @@
+package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
+import org.jdbi.v3.core.Handle;
+import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.mapper.reflect.ConstructorMapper;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.ProductMapper;
+
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+public class ProductDao {
+    // Lấy tất cả sản phẩm
+    public List<Product> findAll() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM products")
+                        .mapToBean(Product.class)
+                        .list()
+        );
+    }
+
+    // Tìm sản phẩm theo ID
+    public Product findById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+
+        Handle handle = jdbi.open();
+        Product product = handle.createQuery("SELECT * FROM products WHERE ID = :id")
+                        .bind("id", id)
+                        .map(new ProductMapper())
+                        .first();
+
+        List<Map<String, Object>> specs = handle.createQuery("SELECT st.Name, ps.Value\n FROM products p JOIN product_spec ps ON p.ID = ps.ProductID\n" +
+                "JOIN spectype st ON ps.SpecID = st.ID\n" +
+                "WHERE p.ID = :id;").bind("id", id).mapToMap().list();
+
+
+        for(Map<String, Object> map : specs) {
+            String key = (String) map.get("name");
+            String value = (String) map.get("value");
+            product.addSpec(key, value);
+
+        }
+
+        List<String> lsImg = handle.createQuery("Select pci.Url from product_color_img pci join products p on p.ID = pci.ProductID\n" +
+                "WHERE p.ID = 1;").mapTo(String.class).list();
+
+        product.setImgList(lsImg);
+        handle.close();
+        return product;
+    }
+
+    // Thêm sản phẩm mới
+    public void insert(Product product) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        jdbi.useHandle(handle ->
+                handle.createUpdate("INSERT INTO products (Name, PricePerBox, Stock, Des, Status, Rating, Discount, PromotionPrice, QuantityPerBox, CreateDate, CategoryID, SizeID, MaterialID, ManufacturerID, ImgThumbnail) " +
+                                "VALUES (:name, :pricePerBox, :stock, :description, :status, :rating, :discount, :promotionPrice, :quantityPerBox, :createDate, :categoryId, :sizeId, :materialId, :manufacturerId, :imgThumbnail)")
+                        .bindBean(product)
+                        .execute()
+        );
+    }
+
+    // Cập nhật sản phẩm
+    public void update(Product product) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        jdbi.useHandle(handle ->
+                handle.createUpdate("UPDATE products SET Name = :name, PricePerBox = :pricePerBox, Stock = :stock, Des = :description, Status = :status, Rating = :rating, Discount = :discount, PromotionPrice = :promotionPrice, QuantityPerBox = :quantityPerBox, CreateDate = :createDate, CategoryID = :categoryId, SizeID = :sizeId, MaterialID = :materialId, ManufacturerID = :manufacturerId, ImgThumbnail = :imgThumbnail WHERE ID = :id")
+                        .bindBean(product)
+                        .execute()
+        );
+    }
+
+    // Xóa sản phẩm theo ID
+    public void deleteById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        jdbi.useHandle(handle ->
+                handle.createUpdate("DELETE FROM products WHERE ID = :id")
+                        .bind("id", id)
+                        .execute()
+        );
+    }
+}
+

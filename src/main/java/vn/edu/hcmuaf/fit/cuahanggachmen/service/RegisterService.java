@@ -2,10 +2,9 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.service;
 
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.ActionResult;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.StatusCode;
-import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserService;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,7 +52,7 @@ public class RegisterService {
     }
 
     public ActionResult addUser(User user) {
-        return new UserService().insertUser(user.getFullname(), user.getEmail(), user.getPhone(), user.getAvatar(), user.getAddress(), user.getBirthtime(), user.getSalt(), user.getPassword(), user.getSex(), user.getCreatetime());
+        return new UserDao().insertUser(user.getFullname(), user.getEmail(), user.getPhone(), user.getAvatar(), user.getAddress(), user.getBirthtime(), user.getSalt(), user.getPassword(), user.getSex(), user.getCreatetime());
     }
 
     public Timestamp convertToTimestamp(String dateTime) {

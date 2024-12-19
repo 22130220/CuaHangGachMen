@@ -7,14 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Nhập</title>
 
-    <link rel="stylesheet" href="./assets/css/login.css">
+    <link rel="stylesheet" href="assets/css/login.css">
 
 
     <!-- Thêm favicon -->
     <link
             rel="icon"
             type="image/x-icon"
-            href="./assets/icons/logo2_no_text.svg"
+            href="assets/icons/logo2_no_text.svg"
     />
 
     <!-- Nhúng phông chữ -->
@@ -46,9 +46,9 @@
 
 <!-- Thanh Header -->
 <header>
-    <a href="./index.html">
+    <a href="/">
         <div class="logo">
-            <img src="./assets/icons/logo2.svg" alt="Logo Shop" />
+            <img src="assets/icons/logo2.svg" alt="Logo Shop" />
         </div>
     </a>
 
@@ -56,7 +56,7 @@
 
 <!-- Mục Lục -->
 <nav class="breadcrumb">
-    <a href="index.html">Home</a> > <a href="#!">Đăng nhập</a>
+    <a href="/">Home</a> > <a href="#!">Đăng nhập</a>
 </nav>
 
 
@@ -79,7 +79,7 @@
 
         <div class="options">
             <label><input type="checkbox"> Ghi nhớ đăng nhập</label>
-            <a href="./quenmatkhau.html">Quên mật khẩu?</a>
+            <a href="forget_password">Quên mật khẩu?</a>
         </div>
 
 <%--        <a href="./home.html"><div class="sign-in">Đăng Nhập</div></a>--%>
@@ -89,10 +89,10 @@
 
     <div class="separator">
         <span>Bạn chưa có tài khoản? </span>
-        <span><a href="./register.html">Đăng ký ngay.</a></span>
+        <span><a href="register">Đăng ký ngay.</a></span>
     </div>
 
-    <button class="create-account"><a href="./register.html">Tạo Tài Khoản</a></button>
+    <button class="create-account"><a href="register">Tạo Tài Khoản</a></button>
 </div>
 </body>
 </html>

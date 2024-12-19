@@ -1,12 +1,10 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 
 
-import org.jdbi.v3.core.mapper.RowMapper;
-import org.jdbi.v3.core.statement.StatementContext;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.ActionResult;
 
 
-import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserService;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -176,7 +174,7 @@ public class User implements Serializable {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        UserService service = new UserService();
+        UserDao service = new UserDao();
 
         ActionResult rs  = service.insertUser("nguyen", "com@gamil.com", "0213432", null, null, null, "", "", 1, LocalDateTime.now());
         //service.insertUser("phuc", "com1@gamil.com", "0213432", null, null, null, "", "");

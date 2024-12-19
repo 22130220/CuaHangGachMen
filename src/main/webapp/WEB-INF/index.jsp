@@ -8,13 +8,13 @@
     <title>Cửa hàng gạch men</title>
 
     <!-- Reset CSS -->
-    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="assets/css/reset.css" />
 
     <!-- Thêm favicon -->
     <link
             rel="icon"
             type="image/x-icon"
-            href="./assets/icons/logo2_no_text.svg"
+            href="assets/icons/logo2_no_text.svg"
     />
 
     <!-- Nhúng phông chữ -->
@@ -41,12 +41,12 @@
     ></script>
 
     <!-- Kiểu CSS -->
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <link rel="stylesheet" href="./assets/css/banner.css" />
-    <link rel="stylesheet" href="./assets/css/danhmucgachmen.css" />
-    <link rel="stylesheet" href="./assets/css/popular.css" />
-    <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css" />
-    <link rel="stylesheet" href="./assets/css/dropdown_user_menu.css">
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/banner.css" />
+    <link rel="stylesheet" href="assets/css/danhmucgachmen.css" />
+    <link rel="stylesheet" href="assets/css/popular.css" />
+    <link rel="stylesheet" href="assets/css/cacthanhphancodinh.css" />
+    <link rel="stylesheet" href="assets/css/dropdown_user_menu.css">
 </head>
 <body>
 <div class="button-container">
@@ -65,7 +65,7 @@
             <!-- Header -->
             <div class="chat-header">
                 <div class="chat-avatar">
-                    <img src="./assets/icons/logo2_no_text.svg" alt="Avatar">
+                    <img src="assets/icons/logo2_no_text.svg" alt="Avatar">
                 </div>
                 <div class="chat-title">
                     <h3>Hỗ Trợ Khách Hàng</h3>
@@ -77,14 +77,14 @@
             <!-- Messages -->
             <div id="chat-messages" class="chat-messages">
                 <div class="message bot">
-                    <img src="./assets/icons/logo2_no_text.svg" alt="Bot Avatar">
+                    <img src="assets/icons/logo2_no_text.svg" alt="Bot Avatar">
                     <div class="message-content">
                         <p>Chào bạn! Mình có thể giúp gì cho bạn?</p>
                         <span>10:00 AM</span>
                     </div>
                 </div>
                 <div class="message user">
-                    <img src="./assets/icons/logo2_no_text.svg" alt="" style="display: none;">
+                    <img src="assets/icons/logo2_no_text.svg" alt="" style="display: none;">
 
                 </div>
             </div>
@@ -96,8 +96,8 @@
             </div>
         </div>
     </div>
-    <script src="./assets/js/chatbox.js"></script>
-    <script src="./assets/js/chat.js"></script>
+    <script src="assets/js/chatbox.js"></script>
+    <script src="assets/js/chat.js"></script>
 </div>
 
 <div onclick="scrollToTop()" class="scrollTop">
@@ -132,7 +132,7 @@
             <!-- Logo -->
             <a href="#">
                 <img
-                        src="./assets/icons/logo2.svg"
+                        src="assets/icons/logo2.svg"
                         alt="Logo"
                         class="logo"
                 />
@@ -245,13 +245,13 @@
 <div class="slider">
     <div class="slides">
         <div class="slide">
-            <img src="./assets/img/ceramic-india-1-1.jpg" alt="Ảnh 1" />
+            <img src="assets/img/ceramic-india-1-1.jpg" alt="Ảnh 1" />
         </div>
         <div class="slide">
-            <img src="./assets/img/banner-home-1.png" alt="Ảnh 2" />
+            <img src="assets/img/banner-home-1.png" alt="Ảnh 2" />
         </div>
         <div class="slide">
-            <img src="./assets/img/banner-home-2.png" alt="Ảnh 3" />
+            <img src="assets/img/banner-home-2.png" alt="Ảnh 3" />
         </div>
         <!-- Thêm ảnh tùy thích -->
     </div>
@@ -282,7 +282,7 @@
             <div class="item">
                 <a href="./list_product.html">
                     <img
-                            src="./assets/img/loaigach1.jpg"
+                            src="assets/img/loaigach1.jpg"
                             alt="How to become a pro web designer in 2022 and get remot job?"
                             class="thumb"
                     />
@@ -307,7 +307,7 @@
             <div class="item">
                 <a href="./list_product.html">
                     <img
-                            src="./assets/img/loaigach2.jpg"
+                            src="assets/img/loaigach2.jpg"
                             alt="How to become a pro web designer in 2022 and get remot job?"
                             class="thumb"
                     />
@@ -329,7 +329,7 @@
             <div class="item">
                 <a href="./list_product.html">
                     <img
-                            src="./assets/img/loaigach3.png"
+                            src="assets/img/loaigach3.png"
                             alt="How to become a pro web designer in 2022 and get remot job?"
                             class="thumb"
                     />
@@ -351,7 +351,7 @@
             <div class="item">
                 <a href="./list_product.html">
                     <img
-                            src="./assets/img/loaigach4.jpg"
+                            src="assets/img/loaigach4.jpg"
                             alt="How to become a pro web designer in 2022 and get remot job?"
                             class="thumb"
                     />
@@ -373,7 +373,7 @@
             <div class="item">
                 <a href="./list_product.html">
                     <img
-                            src="./assets/img/loaigach5.webp"
+                            src="assets/img/loaigach5.webp"
                             alt="How to become a pro web designer in 2022 and get remot job?"
                             class="thumb"
                     />
@@ -395,7 +395,7 @@
             <div class="item">
                 <a href="./list_product.html">
                     <img
-                            src="./assets/img/loaigach6.jpg"
+                            src="assets/img/loaigach6.jpg"
                             alt="How to become a pro web designer in 2022 and get remot job?"
                             class="thumb"
                     />
@@ -417,7 +417,7 @@
             <div class="item">
                 <a href="./list_product.html">
                     <img
-                            src="./assets/img/loaigach7.jpg"
+                            src="assets/img/loaigach7.jpg"
                             alt="How to become a pro web designer in 2022 and get remot job?"
                             class="thumb"
                     />
@@ -439,7 +439,7 @@
             <div class="item">
                 <a href="./list_product.html">
                     <img
-                            src="./assets/img/loaigach8.jpg"
+                            src="assets/img/loaigach8.jpg"
                             alt="How to become a pro web designer in 2022 and get remot job?"
                             class="thumb"
                     />
@@ -461,7 +461,7 @@
             <div class="item">
                 <a href="#!">
                     <img
-                            src="./assets/img/loaigach9.jpg"
+                            src="assets/img/loaigach9.jpg"
                             alt="How to become a pro web designer in 2022 and get remot job?"
                             class="thumb"
                     />
@@ -505,7 +505,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachlatnenphobien1.jpg"
+                            src="assets/img/gachlatnenphobien1.jpg"
                             alt="Basic web design"
                             class="thumb"
                     />
@@ -519,7 +519,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -574,7 +574,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachlatsanphobien2.jpg"
+                            src="assets/img/gachlatsanphobien2.jpg"
                             alt="UI/UX design"
                             class="thumb"
                     />
@@ -588,7 +588,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -640,7 +640,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachlatsanphobien3.jpg"
+                            src="assets/img/gachlatsanphobien3.jpg"
                             alt="Web App design"
                             class="thumb"
                     />
@@ -654,7 +654,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -708,7 +708,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachoptuongphobien1.jpg"
+                            src="assets/img/gachoptuongphobien1.jpg"
                             alt="Basic web design"
                             class="thumb"
                     />
@@ -722,7 +722,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -774,7 +774,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachoptuongphobien2.jpg"
+                            src="assets/img/gachoptuongphobien2.jpg"
                             alt="UI/UX design"
                             class="thumb"
                     />
@@ -788,7 +788,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -840,7 +840,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachoptuongphobien3.jpg"
+                            src="assets/img/gachoptuongphobien3.jpg"
                             alt="Web App design"
                             class="thumb"
                     />
@@ -854,7 +854,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -933,7 +933,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachlatnenphobien1.jpg"
+                            src="assets/img/gachlatnenphobien1.jpg"
                             alt="Basic web design"
                             class="thumb"
                     />
@@ -947,7 +947,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -1002,7 +1002,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachlatsanphobien2.jpg"
+                            src="assets/img/gachlatsanphobien2.jpg"
                             alt="UI/UX design"
                             class="thumb"
                     />
@@ -1016,7 +1016,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -1068,7 +1068,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachlatsanphobien3.jpg"
+                            src="assets/img/gachlatsanphobien3.jpg"
                             alt="Web App design"
                             class="thumb"
                     />
@@ -1082,7 +1082,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -1136,7 +1136,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachoptuongphobien1.jpg"
+                            src="assets/img/gachoptuongphobien1.jpg"
                             alt="Basic web design"
                             class="thumb"
                     />
@@ -1150,7 +1150,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -1202,7 +1202,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachoptuongphobien2.jpg"
+                            src="assets/img/gachoptuongphobien2.jpg"
                             alt="UI/UX design"
                             class="thumb"
                     />
@@ -1216,7 +1216,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -1268,7 +1268,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachoptuongphobien3.jpg"
+                            src="assets/img/gachoptuongphobien3.jpg"
                             alt="Web App design"
                             class="thumb"
                     />
@@ -1282,7 +1282,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -1360,7 +1360,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachlatnenphobien1.jpg"
+                            src="assets/img/gachlatnenphobien1.jpg"
                             alt="Basic web design"
                             class="thumb"
                     />
@@ -1374,7 +1374,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -1429,7 +1429,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachlatsanphobien2.jpg"
+                            src="assets/img/gachlatsanphobien2.jpg"
                             alt="UI/UX design"
                             class="thumb"
                     />
@@ -1443,7 +1443,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -1495,7 +1495,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachlatsanphobien3.jpg"
+                            src="assets/img/gachlatsanphobien3.jpg"
                             alt="Web App design"
                             class="thumb"
                     />
@@ -1509,7 +1509,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -1563,7 +1563,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachoptuongphobien1.jpg"
+                            src="assets/img/gachoptuongphobien1.jpg"
                             alt="Basic web design"
                             class="thumb"
                     />
@@ -1577,7 +1577,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -1629,7 +1629,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachoptuongphobien2.jpg"
+                            src="assets/img/gachoptuongphobien2.jpg"
                             alt="UI/UX design"
                             class="thumb"
                     />
@@ -1643,7 +1643,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -1695,7 +1695,7 @@
             <div class="course-item">
                 <a href="./product-detail.html">
                     <img
-                            src="./assets/img/gachoptuongphobien3.jpg"
+                            src="assets/img/gachoptuongphobien3.jpg"
                             alt="Web App design"
                             class="thumb"
                     />
@@ -1709,7 +1709,7 @@
                         </div>
                         <div class="rating">
                             <img
-                                    src="./assets/img/star.svg"
+                                    src="assets/img/star.svg"
                                     alt="Star"
                                     class="star"
                             />
@@ -1780,7 +1780,7 @@
                 <!-- Logo -->
                 <a href="#" class="logo footer__logo">
                     <img
-                            src="./assets/icons/logo2_2.svg"
+                            src="assets/icons/logo2_2.svg"
                             alt="grocerymart"
                             class="logo__img"
                     />
@@ -1932,7 +1932,7 @@
                         class="footer__social-link footer__social-link--facebook"
                 >
                     <img
-                            src="./assets/icons/facebook.svg"
+                            src="assets/icons/facebook.svg"
                             alt=""
                             class="footer__social-icon"
                     />
@@ -1942,7 +1942,7 @@
                         class="footer__social-link footer__social-link--youtube"
                 >
                     <img
-                            src="./assets/icons/youtube.svg"
+                            src="assets/icons/youtube.svg"
                             alt=""
                             class="footer__social-icon"
                     />
@@ -1952,7 +1952,7 @@
                         class="footer__social-link footer__social-link--tiktok"
                 >
                     <img
-                            src="./assets/icons/tiktok.svg"
+                            src="assets/icons/tiktok.svg"
                             alt=""
                             class="footer__social-icon"
                     />
@@ -1962,7 +1962,7 @@
                         class="footer__social-link footer__social-link--twitter"
                 >
                     <img
-                            src="./assets/icons/twitter.svg"
+                            src="assets/icons/twitter.svg"
                             alt=""
                             class="footer__social-icon"
                     />
@@ -1972,7 +1972,7 @@
                         class="footer__social-link footer__social-link--linkedin"
                 >
                     <img
-                            src="./assets/icons/linkedin.svg"
+                            src="assets/icons/linkedin.svg"
                             alt=""
                             class="footer__social-icon"
                     />
@@ -1981,9 +1981,9 @@
         </div>
     </div>
 </div>
-<script src="./assets/js/chuyendoicacnut.js"></script>
-<script src="./assets/js/left_right.js"></script>
-<script src="./assets/js/slider.js"></script>
-<script src="./assets/js/scrollTop.js"></script>
+<script src="assets/js/chuyendoicacnut.js"></script>
+<script src="assets/js/left_right.js"></script>
+<script src="assets/js/slider.js"></script>
+<script src="assets/js/scrollTop.js"></script>
 </body>
 </html>
