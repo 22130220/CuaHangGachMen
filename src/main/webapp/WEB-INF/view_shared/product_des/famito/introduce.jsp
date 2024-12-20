@@ -6,21 +6,18 @@
 <p class="des-title-label" >
   Giới thiệu
 </p>
-<p class="des-detail"><a href="https://sieuthigachmen.com/san-pham/gach-lat-san-vuon-maxtot-mt5508/">
-  <c:out value="${p.name}"/>
-</a> là sản phẩm cao cấp đến từ thương hiệu gạch men Maxtot . Gạch men Maxtot là sự lựa chọn phổ biến
-  trong ngành xây dựng nước ta. Điểm nổi bật của MAXTOT là sự đa dạng về mẫu mã và thiết kế, kết hợp hài hòa yếu tố
-  thẩm mỹ và công năng sử dụng cho người Việt. Mẫu gạch <a href="https://gachmenmaxtot.com/">MAXTOT</a> MT5508
-  hứa hẹn mang đến trải nghiệm không gian sống riêng biệt đẹp đẳng cấp – mang giá trị nghệ thuật cao trong từng mét
-  gạch.
-<figure id="attachment_752" aria-describedby="caption-attachment-752" style="width: 700px; margin: 0 auto"
-        class="wp-caption aligncenter"><img loading="lazy" decoding="async" class="wp-image-752"
-                                            src="https://sieuthigachmen.com/wp-content/uploads/2023/06/MT5505-600x421-1.jpg"
-                                            alt="gach-men-maxtot-MT5505" width="700" height="491"
-                                            srcset="https://sieuthigachmen.com/wp-content/uploads/2023/06/MT5505-600x421-1.jpg 600w, https://sieuthigachmen.com/wp-content/uploads/2023/06/MT5505-600x421-1-300x211.jpg 300w"
-                                            sizes="auto, (max-width: 700px) 100vw, 700px">
-  <figcaption id="caption-attachment-752" class="des-detail">Gạch lát sân vườn Maxtot MT5505</figcaption>
-  </p>
-</figure>
+<p class="des-detail">
+
+Về gạch lát nền <c:out value="${p.name}"/> <br>
+<a href="https://sieuthigachmen.com/san-pham/gach-lat-san-vuon-famito-f503/"><strong>Gạch lát sân vườn FAMITO F503</strong> <strong>500×500 mm </strong></a>thuộc dòng gạch cao cấp của của Công Ty <strong>Siêu Thị Gạch Men. </strong>Là đơn vị hàng đầu trong lĩnh vực sản xuất các loại gạch men tại Việt Nam, Siêu Thị Gạch Men luôn chú tâm nghiên cứu những xu hướng, tạo nên phong cách, giá trị riêng.<br>
+Gạch lát sân vườn FAMITO F503 500×500 mm bề mặt nhám chống trơn trượt tốt, xương gạch Pocerlain Chống trầy xước, chống bám bẩn, cứng chắc chịu lực tốt, độ bền cao, chống thấm tối ưu…cho thời gian sử dụng lâu bền nhất.<br>
+  Gạch thiết kế họa tiết giả cổ màu Xám trung tính mang đến không gian sang trọng, mang đậm cá tính riêng của gia chủ. Gạch FAMITO F503 ứng dụng lát nền các không gian trong nhà, ngoài trời đẹp: Phòng khách, phòng ngủ, nhà hàng, quán cà phê, sân vườn…<br>
+Mẫu Gạch lát sân vườn <a href="https://gachmenfamito.com/"><strong>FAMITO</strong> </a> F503 được <a href="https://sieuthigachmen.com/">Siêu Thị Gạch Men</a> phân phối chính hãng giá tốt nhất, chiết khấu cao, hỗ trợ vận chuyển tận chân công trình.<br>
+Sản phẩm hứa hẹn mang đến trải nghiệm không gian sống riêng biệt đẹp đẳng cấp – mang giá trị nghệ thuật cao trong từng mét gạch.<br>
+<div class="image-center" style="text-align: center;">
+  <figure class="image"><img loading="lazy" decoding="async" class="alignnone wp-image-363" src="https://sieuthigachmen.com/wp-content/uploads/2023/06/F503.jpg " alt="" width="831" height="623"><figcaption>Bề mặt gạch FAMITO F503</figcaption></figure>
+</div>
+<br>
+</p>
 </body>
 </html>

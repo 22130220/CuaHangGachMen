@@ -17,7 +17,8 @@ public class LogoutController extends HttpServlet {
         if (session != null) {
             session.invalidate(); // Hủy session
         }
-        response.sendRedirect("index.jsp"); // Quay lại trang chủ
+
+        request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 
     }
 

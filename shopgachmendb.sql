@@ -11,7 +11,7 @@
  Target Server Version : 110302 (11.3.2-MariaDB)
  File Encoding         : 65001
 
- Date: 19/12/2024 18:59:02
+ Date: 21/12/2024 02:09:23
 */
 
 SET NAMES utf8mb4;
@@ -154,8 +154,8 @@ CREATE TABLE `product_color_img`  (
   `Url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ProductID`, `ColorID`) USING BTREE,
   INDEX `fk_colorid`(`ColorID` ASC) USING BTREE,
-  CONSTRAINT `fk_productid` FOREIGN KEY (`ProductID`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_colorid` FOREIGN KEY (`ColorID`) REFERENCES `colors` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `fk_colorid` FOREIGN KEY (`ColorID`) REFERENCES `colors` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_productid` FOREIGN KEY (`ProductID`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -782,9 +782,9 @@ CREATE TABLE `products`  (
   INDEX `fk_size`(`sizeId` ASC) USING BTREE,
   INDEX `fk_manufacturer`(`manufacturerId` ASC) USING BTREE,
   CONSTRAINT `fk_category` FOREIGN KEY (`categoryId`) REFERENCES `category` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_manufacturer` FOREIGN KEY (`manufacturerId`) REFERENCES `manufacturer` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_material` FOREIGN KEY (`materialId`) REFERENCES `material` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_size` FOREIGN KEY (`sizeId`) REFERENCES `size` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_manufacturer` FOREIGN KEY (`manufacturerId`) REFERENCES `manufacturer` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `fk_size` FOREIGN KEY (`sizeId`) REFERENCES `size` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -979,7 +979,7 @@ CREATE TABLE `users`  (
   `sex` int(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `check_email_unique`(`email` ASC) USING BTREE COMMENT 'email da ton tai'
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
@@ -991,6 +991,8 @@ INSERT INTO `users` VALUES (5, 'phuc', 'com4@gamil.com', '0213432', NULL, NULL, 
 INSERT INTO `users` VALUES (6, 'Ngân cuti', 'ngan@gmail.com', '0376272024', NULL, 'bình định', NULL, b'1', NULL, NULL, 0, 'N123456789', 0);
 INSERT INTO `users` VALUES (7, 'Phạm Tài', 'tai@gmail.com', '022222222', NULL, 'bình định', NULL, b'1', NULL, NULL, 0, 'T123456789', 0);
 INSERT INTO `users` VALUES (8, 'Ta Phuc', 'taphuc@gmail.com', '0987991500', NULL, '231241234123', '2024-12-05 00:00:00', b'1', '2024-12-19 13:29:11', '030087edc3869834eccd84e131e363a5', 0, '5eb7fb8425878afce1b965b3e4f8f27f627ac111d8087189a266b6dd15120117', 0);
+INSERT INTO `users` VALUES (9, 'Ngân cuti', 'nguyenhaisuper8@gmail.com', '0376272024', NULL, 'bình định', '2024-12-14 00:00:00', b'1', '2024-12-20 12:19:21', 'ee38298a3ab54677f47c7b689c6dfc1f', 0, '2575028f1907c8395603908a280207c043d751b3275291733360c1e0cc1214bc', 0);
+INSERT INTO `users` VALUES (10, 'bgfbfgb', 'a@gmail.com', '0987991500', NULL, 'cdcsdc', '2024-12-12 00:00:00', b'1', '2024-12-21 02:07:40', 'b46b671d8db9754dbcb140308c35c7a4', 0, '635b4fc85439b34a75b0b7615f27391b11b78e084ab3789ea0e880e3b5212b5b', 0);
 
 -- ----------------------------
 -- Table structure for vouchers

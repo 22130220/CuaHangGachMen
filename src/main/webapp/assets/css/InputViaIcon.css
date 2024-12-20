@@ -1,0 +1,31 @@
+.fui-input-with-icon {
+    position: relative;
+}
+.fui-input-with-icon .input {
+    padding: 10px 10px 10px 46px;
+    width: 80%;
+    height: 100%;
+    border-radius: 6px;
+    border: 1px solid #9ca3af;
+    transition: linear 0.2s;
+}
+.fui-input-with-icon .input:focus {
+    border-color: #1dc071;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+.fui-input-with-icon .input:focus + .icon {
+    color: #1dc071;
+}
+.fui-input-with-icon .icon {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    transition: linear 0.2s;
+    pointer-events: none;
+}
+.fui-input-with-icon .icon svg {
+    height: 24px;
+}

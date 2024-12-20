@@ -6,21 +6,15 @@
 <p class="des-title-label" >
   Giới thiệu
 </p>
-<p class="des-detail"><a href="https://sieuthigachmen.com/san-pham/gach-lat-san-vuon-maxtot-mt5508/">
-  <c:out value="${p.name}"/>
-</a> là sản phẩm cao cấp đến từ thương hiệu gạch men Maxtot . Gạch men Maxtot là sự lựa chọn phổ biến
-  trong ngành xây dựng nước ta. Điểm nổi bật của MAXTOT là sự đa dạng về mẫu mã và thiết kế, kết hợp hài hòa yếu tố
-  thẩm mỹ và công năng sử dụng cho người Việt. Mẫu gạch <a href="https://gachmenmaxtot.com/">MAXTOT</a> MT5508
-  hứa hẹn mang đến trải nghiệm không gian sống riêng biệt đẹp đẳng cấp – mang giá trị nghệ thuật cao trong từng mét
-  gạch.
-<figure id="attachment_752" aria-describedby="caption-attachment-752" style="width: 700px; margin: 0 auto"
-        class="wp-caption aligncenter"><img loading="lazy" decoding="async" class="wp-image-752"
-                                            src="https://sieuthigachmen.com/wp-content/uploads/2023/06/MT5505-600x421-1.jpg"
-                                            alt="gach-men-maxtot-MT5505" width="700" height="491"
-                                            srcset="https://sieuthigachmen.com/wp-content/uploads/2023/06/MT5505-600x421-1.jpg 600w, https://sieuthigachmen.com/wp-content/uploads/2023/06/MT5505-600x421-1-300x211.jpg 300w"
-                                            sizes="auto, (max-width: 700px) 100vw, 700px">
-  <figcaption id="caption-attachment-752" class="des-detail">Gạch lát sân vườn Maxtot MT5505</figcaption>
-  </p>
-</figure>
+<p class="des-detail">
+<strong>Gạch lát nền granite cao cấp IVICASA GA-P66001 600×600</strong> là sản phẩm cao cấp đến từ thương hiệu gạch men IVICASA . Gạch men IVICASA là sự lựa chọn phổ biến trong ngành xây dựng nước ta. Điểm nổi bật của IVICASA là sự đa dạng về mẫu mã và thiết kế, kết hợp hài hòa yếu tố thẩm mỹ và công năng sử dụng cho người Việt. Mẫu <strong>Gạch lát nền granite cao cấp IVICASA GA-P66001 600×600 </strong>hứa hẹn mang đến trải nghiệm không gian sống riêng biệt đẹp đẳng cấp – mang giá trị nghệ thuật cao trong từng mét gạch.<br>
+Gạch IVICASA được thiết kế họa tiết phong cách Ý sang trọng, mang đậm cá tính riêng của gia chủ. Gạch lát nền <strong>Gạch lát nền granite cao cấp IVICASA GA-P66001 600×600</strong> ứng dụng lát nền các không gian trong nhà, phòng khách, phòng ngủ, nhà hàng, quán cà phê, khách sạn,…<br>
+<figure id="attachment_6346" aria-describedby="caption-attachment-6346" style="width: 1020px; margin: 0 auto" class="wp-caption aligncenter"><img loading="lazy" decoding="async" class="wp-image-6346 size-large" src="https://gachmenivicasa.com/wp-content/uploads/2024/09/GA-P66001-1024x576.jpg" alt="" width="1020" height="574"><figcaption id="caption-attachment-6346" class="wp-caption-text">Gạch men IVICASA GA-P66001 được sản xuất từ nhà máy gạch men chất lượng hàng đầu, đảm bảo độ đồng nhất hoàn hảo cho công trình</figcaption></figure>
+<br>
+</p>
+
+
+
+
 </body>
 </html>
