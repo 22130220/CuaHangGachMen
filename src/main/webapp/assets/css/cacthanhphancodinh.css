@@ -1,0 +1,301 @@
+/* Style for the cart button */
+.cart-button {
+    display: inline-flex;
+    position: absolute;
+    top: 50%;
+    right: 350px; /* Adjust based on layout */
+    transform: translateY(-50%);
+    color: #2e2100ff;
+   
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.6rem;
+border: 1px solid #2e2100ff;
+    
+    border-radius: 50%; /* Circular border */
+    padding: 8px; /* Space between SVG and border */
+}
+
+/* Optional styling for hover effect */
+.cart-button:hover {
+    background-color: #2e2100ff;
+
+}
+
+.cart-button:hover .icon path {
+    fill: white;
+}
+
+
+
+
+  
+   /* Basic styling for positioning and layout */
+   .button-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px; /* Changed from right to left */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1;
+  }
+  
+  /* Common button styling */
+  .contact-button1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: #2e2100ff;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  }
+
+  .contact-info {
+    display: none;
+    position: absolute;
+    bottom: 135px;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 320px;
+    color: #333;
+    font-size: 1.4rem;
+    animation: fadeIn 0.3s ease;
+    z-index: 100;
+    
+  }
+  
+  .contact-info p {
+    margin: 0;
+    padding: 5px 0;
+    line-height: 1.5;
+  }
+  
+  .contact-info p strong {
+    color: #555;
+  }
+  
+  .contact-button1:hover .contact-info,
+  .contact-button1:focus-within .contact-info {
+    display: block;
+  }
+  
+  /* Hiệu ứng xuất hiện mượt */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .contact-button2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: #2e2100ff;
+    font-size: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  }
+
+  #messenger:hover .chat-box,
+#messenger:focus-within .chat-box {
+  display: block;
+}
+
+/* Hiệu ứng xuất hiện mượt */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+  /* Specific styles for each button */
+
+  .contact:hover{
+    background-color: #2e2100ff;
+      color: white;
+  }
+
+
+  .messenger:hover{
+    background-color: #2e2100ff;
+      color: white;
+  }
+
+  .chat-box {
+    display: none;
+    position: fixed;
+    bottom: 85px;
+    left: 20px;
+    width: 400px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 1000; /* Đảm bảo chat box nằm trên các phần tử khác */
+  }
+  
+  /* Header */
+.chat-header {
+  display: flex;
+  align-items: center;
+  background: #4a4a4a;
+  color: #fff;
+  padding: 15px;
+  border-bottom: 2px solid #005a9e;
+}
+
+.chat-avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chat-title h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.chat-title p {
+  margin: 0;
+  font-size: 13px;
+  color: #d3e7ff;
+}
+
+.chat-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+/* Khi chatbox bị đóng, ẩn nó đi */
+.chat-box.closed {
+  display: none;
+}
+
+
+/* Messages */
+.chat-messages {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;  /* Thanh cuộn sẽ xuất hiện nếu nội dung vượt quá */
+  height: 260px;
+  max-height: 260px;  /* Chiều cao cố định */
+  background: #f9f9f9;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.message img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.message.bot {
+  flex-direction: row;
+}
+
+.message.bot .message-content {
+  background: #e4e6eb;
+  color: #333;
+  margin-left: 10px;
+  border-radius: 12px 12px 12px 0;
+}
+
+.message.user {
+  flex-direction: row-reverse;
+}
+
+.message.user .message-content {
+  background: #4a4a4a;
+  color: #fff;
+  margin-right: 10px;
+  border-radius: 12px 12px 0 12px;
+}
+
+.message-content {
+  max-width: 70%;
+  padding: 10px;
+  font-size: 14px;
+  position: relative;
+}
+
+.message-content span {
+  display: block;
+  font-size: 11px;
+  color: #888;
+  margin-top: 5px;
+}
+
+/* Input */
+.chat-input {
+  display: flex;
+  padding: 15px;
+  background: #fff;
+  border-top: 1px solid #ddd;
+}
+
+.chat-input textarea {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  resize: none;
+  outline: none;
+}
+
+.chat-input button {
+  background: #2e2100;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  margin-left: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.chat-input button:hover {
+  background: #005a9e;
+}

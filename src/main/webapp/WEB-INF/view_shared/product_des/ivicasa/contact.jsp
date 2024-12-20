@@ -9,28 +9,22 @@
 </p>
 <p class="des-detail">
 
-    Chất lượng gạch men tuyệt hảo <br>
-    Gạch men Maxtot được sản xuất với công nghệ tiên tiến và quy trình kiểm tra chất lượng nghiêm ngặt để đảm bảo độ bền
-    cao và khả năng chống trầy xước. Chất liệu cao cấp và kỹ thuật sản xuất tinh xảo của Maxtot mang đến sự đáng tin cậy
-    và độ bền vượt trội cho công trình. <br>
-    Thiết kế đa dạng – thẩm mỹ <br>
-    Maxtot cung cấp nhiều lựa chọn về màu sắc, kích thước và kiểu dáng. Phù hợp với mọi dự án công trình nhà dân, biệt
-    thự cho đến các ngành y tế, giáo dục, cơ quan nhà nước,…. <br>
-    Sự đồng đều về kích thước <br>
-    Gạch men Maxtot được<em> gia công chuẩn xác về kích thước và hình dạng</em>. Điều này giúp dễ dàng
-    thi công và tạo ra các đường kết nối chính xác và cân đối giữa các viên gạch.<br>
-    Lợi ích khi lựa chọn sản phẩm tại Siêu thị gạch men <br>
-    <a href="https://sieuthigachmen.com/gioi-thieu/">Tổng kho gạch men Siêu Thị Gạch Men</a> – Sản xuất,
-    phân phối xuất nhập khẩu và thi công các loại Gạch men cao cấp. Sản phẩm Gạch Men của chúng tôi khi đưa ra thị
-    trường đều đáp ứng được các tiêu chuẩn an toàn và chất lượng.<br>
-<ul class="des-detail">
-    <li><em>Giá thành cạnh tranh</em></li>
-    <li><em>Kho hàng toàn quốc, giao hàng nhanh chóng</em></li>
-    <li><em>Sản phẩm độc quyền, đảm bảo 100% chất lượng đến từ nhà sản xuất</em></li>
-    Vì vậy đừng ngần ngại lựa chọn&nbsp;Siêu Thị Gạch Men&nbsp;khi có nhu cầu tìm mua các sản phẩm&nbsp;của
-    chúng tôi cho công trình của bạn.
-</ul>
-<br>
+Chất lượng gạch vượt trội<br>
+Gach men lát nền, lát sàn IVICASA có độ bền cao, chịu được va đập, mài mòn, nhiệt độ và độ ẩm tốt. Gạch không bị bong tróc, nứt nẻ hay phai màu theo thời gian.<br>
+Gạch men IVICASA được<em><strong>&nbsp;gia công chuẩn xác về kích thước và hình dạng</strong></em>. Điều này giúp dễ dàng thi công và tạo ra các đường kết nối chính xác và cân đối giữa các viên gạch.<br>
+Thiết kế đa dạng, mang giá trị thẩm mỹ cao<br>
+Gach men lát nền, lát sàn ivicasa có màu sắc đa dạng, họa tiết phong phú và tinh tế. Gạch có thể phù hợp với nhiều phong cách thiết kế khác nhau, từ cổ điển đến hiện đại, từ sang trọng đến trẻ trung.<br>
+    Gach men lát nền, lát sàn ivicasa có khả năng cách âm và cách nhiệt tốt, giúp tiết kiệm điện năng và tạo không gian thoải mái cho người ở. Gạch có độ dày vừa phải, không quá nặng hay quá nhẹ, giảm thiểu tiếng ồn khi di chuyển.<br>
+Gạch men Ivicasa – thân thiện với môi trường<br>
+Gạch men IVICASA được chế tạo từ nguyên liệu tự nhiên và tuân thủ các tiêu chuẩn bền vững. Với cam kết về bảo vệ môi trường, IVICASA là sự lựa chọn thông minh cho những ai quan tâm đến sự phát triển bền vững và môi trường sống lành mạnh.<br>
+Lợi ích khi lựa chọn sản phẩm tại Siêu thị gạch men<br>
+<a href="https://sieuthigachmen.com/gioi-thieu/"><strong>Tổng kho gạch men Siêu Thị Gạch Men</strong></a> – Sản xuất, phân phối xuất nhập khẩu và thi công các loại Gạch men cao cấp. Sản phẩm Gạch Men của chúng tôi khi đưa ra thị trường đều đáp ứng được các tiêu chuẩn an toàn và chất lượng.<br>
+
+    Giá thành cạnh tranh <br>
+    Kho hàng toàn quốc, giao hàng nhanh chóng<br>
+    Sản phẩm độc quyền, đảm bảo 100% chất lượng đến từ nhà sản xuất<br>
+
+
 
 </p>
 </body>

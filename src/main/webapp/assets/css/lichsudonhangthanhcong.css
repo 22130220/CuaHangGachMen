@@ -1,0 +1,245 @@
+/* Reset tổng quát */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 62.5%; /* 1rem = 10px */
+  }
+  
+  body {
+    font-size: 1.6rem; /* 16px */
+    background-color: #f5f5f5;
+    font-family: "Be Vietnam Pro", sans-serif;
+  }
+  
+  
+  
+  /* Tổng thể */
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 4fr; /* Sidebar chiếm 20%, Profile chiếm 80% */
+    max-width: 120rem; /* 1200px */
+    background: white;
+    box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+    border-radius: 0.8rem;
+    margin: 4rem auto;
+    overflow: hidden;
+  }
+  
+  /* Hồ sơ nhỏ trong Sidebar */
+  .small-profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    background-color: #fff;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+  }
+  
+  .small-profile .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 1rem;
+    background-color: #e0e0e0;
+  }
+  
+  .small-profile .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .small-profile .info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .small-profile .username {
+    font-size: 1.4rem; /* 14px */
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .small-profile .edit-profile {
+    font-size: 1.2rem; /* 12px */
+    color: #555;
+    text-decoration: none;
+    margin-top: 0.4rem;
+    display: flex;
+    align-items: center;
+  }
+  
+  .small-profile .edit-profile:hover {
+    text-decoration: underline;
+  }
+  
+  .small-profile .edit-profile .edit-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-right: 0.5rem;
+    background: url('edit-icon.png') no-repeat center;
+    background-size: contain;
+  }
+  
+  
+  /* Sidebar */
+  .sidebar {
+    background-color: #f8f8f8;
+    padding: 1.5rem;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+  }
+  
+  .sidebar li {
+    padding: 1rem;
+    font-size: 1.4rem; /* 14px */
+    cursor: pointer;
+  }
+  
+  .sidebar li.active,
+  .sidebar li:hover {
+    color: #ee4d2d;
+    font-weight: bold;
+  }
+  
+  /* Main Profile Section */
+  .profile {
+    padding: 2rem;
+  }
+  
+  .danhmucdautien{
+    display: flex;
+justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+   
+   
+  }
+
+  .danhmucdautien .DH{
+   background-color: #2e2100ff;
+    color: white;
+    padding: 10px;
+    border-radius: 30px;
+   
+
+
+  }
+
+  .danhmucdautien .DH.active{
+    background-color: green;
+  }
+
+  .timkiemdonhangdadat{
+    margin-top: 10px;
+    text-align: center;
+    position: relative;
+
+  }
+
+  .timkiemdonhangdadat input{
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    padding-left: 40px;
+    font-size: 1.4rem;
+    
+  }
+
+  .img-search{
+    position: absolute;
+    top:8px;
+    left: 10px;
+    color: gray;
+  }
+
+  .noidungcacdonhang{
+    margin-top: 30px;
+    
+  }
+  .noidungcacdonhang .hoanthanh{
+    margin-bottom: 10px;
+    text-align: right;
+  }
+
+  .sanpham{
+text-align: center;
+    display: flex;
+    
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .hinhanhcuacaigach img{
+width: 100px;
+height: 100px;
+object-fit: cover;
+  }
+
+  .mualaine{
+    
+    margin-bottom: 10px;
+    
+  
+  }
+  .mualai{
+    
+    padding: 10px;
+   
+    border-radius: 20px;
+    color: #fff;
+    background-color: #2e2100ff;
+  }
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  a{
+    text-decoration: none;
+    color: #333;
+  }
+
+
+
+
+
+  
