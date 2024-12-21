@@ -53,7 +53,6 @@
     <style><%@include file="./assets/css/checkbox.css"%></style>
     <style><%@include file="./assets/css/pagination.css"%></style>
     <style><%@include file="./assets/css/cacthanhphancodinh.css"%></style>
-    <link rel="stylesheet" href="assets/css/style.css" />
     <link rel="stylesheet" href="assets/css/banner.css" />
     <link rel="stylesheet" href="assets/css/danhmucgachmen.css" />
     <link rel="stylesheet" href="assets/css/popular.css" />

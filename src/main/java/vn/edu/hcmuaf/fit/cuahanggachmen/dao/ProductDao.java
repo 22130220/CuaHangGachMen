@@ -3,7 +3,9 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.reflect.ConstructorMapper;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Review;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.ProductMapper;
 
 import java.math.BigDecimal;
@@ -47,9 +49,22 @@ public class ProductDao {
         }
 
         List<String> lsImg = handle.createQuery("Select pci.Url from product_color_img pci join products p on p.ID = pci.ProductID\n" +
-                "WHERE p.ID = 1;").mapTo(String.class).list();
+                "WHERE p.ID = :id;").bind("id", id ).mapTo(String.class).list();
 
         product.setImgList(lsImg);
+
+        ReviewDao rvDao = new ReviewDao();
+
+        List<Review> lsReview = rvDao.findReviewsByProductId(id);
+
+        product.setLsReview(lsReview);
+
+        ColorDao colorDao = new ColorDao();
+
+        List<Color> lsColor = colorDao.findColorByIds(id);
+
+        product.setLsColor(lsColor);
+
         handle.close();
         return product;
     }

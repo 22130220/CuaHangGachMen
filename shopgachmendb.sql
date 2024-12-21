@@ -11,7 +11,7 @@
  Target Server Version : 110302 (11.3.2-MariaDB)
  File Encoding         : 65001
 
- Date: 21/12/2024 02:09:23
+ Date: 21/12/2024 16:23:21
 */
 
 SET NAMES utf8mb4;
@@ -149,32 +149,47 @@ CREATE TABLE `orders`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `product_color_img`;
 CREATE TABLE `product_color_img`  (
-  `ProductID` int(11) NOT NULL,
-  `ColorID` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ColorId` int(11) NULL DEFAULT NULL,
+  `ProductId` int(11) NULL DEFAULT NULL,
   `Url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`ProductID`, `ColorID`) USING BTREE,
-  INDEX `fk_colorid`(`ColorID` ASC) USING BTREE,
-  CONSTRAINT `fk_colorid` FOREIGN KEY (`ColorID`) REFERENCES `colors` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_productid` FOREIGN KEY (`ProductID`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `fk_colorid`(`ColorId` ASC) USING BTREE,
+  INDEX `fk_productid`(`ProductId` ASC) USING BTREE,
+  CONSTRAINT `fk_colorid` FOREIGN KEY (`ColorId`) REFERENCES `colors` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_productid` FOREIGN KEY (`ProductId`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of product_color_img
 -- ----------------------------
-INSERT INTO `product_color_img` VALUES (1, 1, 'https://tileshop.scene7.com/is/image/TileShop/484017?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (1, 2, 'https://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (1, 3, 'https://tileshop.scene7.com/is/image/TileShop/484272?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (1, 4, 'https://tileshop.scene7.com/is/image/TileShop/484286?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (1, 5, 'https://tileshop.scene7.com/is/image/TileShop/667724?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (2, 1, 'https://tileshop.scene7.com/is/image/TileShop/667725?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (3, 1, 'https://tileshop.scene7.com/is/image/TileShop/484213?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (4, 1, 'https://tileshop.scene7.com/is/image/TileShop/484212?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (5, 1, 'https://tileshop.scene7.com/is/image/TileShop/484258?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (6, 1, 'https://tileshop.scene7.com/is/image/TileShop/484053?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (7, 1, 'https://tileshop.scene7.com/is/image/TileShop/667753?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (8, 1, 'https://tileshop.scene7.com/is/image/TileShop/484054?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (9, 1, 'https://tileshop.scene7.com/is/image/TileShop/484214?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (10, 1, 'https://tileshop.scene7.com/is/image/TileShop/681784?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (15, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/484017?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (16, 2, 1, 'https://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (17, 3, 1, 'https://tileshop.scene7.com/is/image/TileShop/484272?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (18, 4, 1, 'https://tileshop.scene7.com/is/image/TileShop/484286?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (19, 5, 1, 'https://tileshop.scene7.com/is/image/TileShop/667724?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (20, 1, 2, 'https://tileshop.scene7.com/is/image/TileShop/667725?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (21, 1, 3, 'https://tileshop.scene7.com/is/image/TileShop/484213?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (22, 1, 4, 'https://tileshop.scene7.com/is/image/TileShop/484212?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (23, 1, 5, 'https://tileshop.scene7.com/is/image/TileShop/484258?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (24, 1, 6, 'https://tileshop.scene7.com/is/image/TileShop/484053?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (25, 1, 7, 'https://tileshop.scene7.com/is/image/TileShop/667753?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (26, 1, 8, 'https://tileshop.scene7.com/is/image/TileShop/484054?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (27, 1, 9, 'https://tileshop.scene7.com/is/image/TileShop/484214?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (29, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/484017?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (30, 2, 1, 'https://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (31, 3, 1, 'https://tileshop.scene7.com/is/image/TileShop/484272?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (32, 4, 1, 'https://tileshop.scene7.com/is/image/TileShop/484286?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (33, 5, 1, 'https://tileshop.scene7.com/is/image/TileShop/667724?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (34, 1, 2, 'https://tileshop.scene7.com/is/image/TileShop/667725?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (35, 1, 3, 'https://tileshop.scene7.com/is/image/TileShop/484213?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (36, 1, 4, 'https://tileshop.scene7.com/is/image/TileShop/484212?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (37, 1, 5, 'https://tileshop.scene7.com/is/image/TileShop/484258?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (38, 1, 6, 'https://tileshop.scene7.com/is/image/TileShop/484053?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (39, 1, 7, 'https://tileshop.scene7.com/is/image/TileShop/667753?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (40, 1, 8, 'https://tileshop.scene7.com/is/image/TileShop/484054?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (41, 1, 9, 'https://tileshop.scene7.com/is/image/TileShop/484214?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (42, 1, 10, 'https://tileshop.scene7.com/is/image/TileShop/681784?$ExtraLarge$');
 
 -- ----------------------------
 -- Table structure for product_spec
@@ -770,7 +785,7 @@ CREATE TABLE `products`  (
   `discount` bit(1) NULL DEFAULT b'0',
   `promotionPrice` decimal(18, 2) NULL DEFAULT NULL,
   `quantityPerBox` int(11) NULL DEFAULT NULL,
-  `createDate` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `createDate` datetime NULL DEFAULT current_timestamp(),
   `categoryId` int(11) NULL DEFAULT NULL,
   `sizeId` int(11) NULL DEFAULT NULL,
   `materialId` int(11) NULL DEFAULT NULL,
@@ -891,14 +906,21 @@ CREATE TABLE `review`  (
   `ProductID` int(11) NOT NULL,
   `Rating` int(11) NULL DEFAULT NULL,
   `ReviewText` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `ReviewDate` datetime NULL DEFAULT NULL,
+  `ReviewDate` datetime NULL DEFAULT current_timestamp(),
   `OrderID` int(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`UserID`, `ProductID`) USING BTREE
+  PRIMARY KEY (`UserID`, `ProductID`) USING BTREE,
+  INDEX `fk_productid_review`(`ProductID` ASC) USING BTREE,
+  CONSTRAINT `fk_productid_review` FOREIGN KEY (`ProductID`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_userid_review` FOREIGN KEY (`UserID`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of review
 -- ----------------------------
+INSERT INTO `review` VALUES (7, 1, 3, 'cung dc', '2024-12-21 14:25:58', NULL);
+INSERT INTO `review` VALUES (8, 1, 5, 'E đẹp lắm', '2024-12-21 14:26:15', NULL);
+INSERT INTO `review` VALUES (9, 1, 4, 'Dep dzai qua', '2024-12-20 14:25:34', 0);
+INSERT INTO `review` VALUES (9, 2, 1, 'như qq', '2024-12-21 14:24:31', NULL);
 
 -- ----------------------------
 -- Table structure for size
@@ -972,7 +994,7 @@ CREATE TABLE `users`  (
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `birthtime` datetime NULL DEFAULT NULL,
   `status` bit(1) NULL DEFAULT b'1',
-  `createtime` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `createtime` datetime NULL DEFAULT current_timestamp(),
   `salt` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `role` int(11) NULL DEFAULT 0,
   `password` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
@@ -989,10 +1011,10 @@ INSERT INTO `users` VALUES (3, 'Trang Trang', 'com1@gamil.com', '0213432', 'http
 INSERT INTO `users` VALUES (4, 'Trương Diếm', 'com3@gamil.com', '0213432', 'https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-44.jpg.webp', NULL, '2024-12-04 16:20:58', b'1', '2024-12-15 17:08:36', '', 0, '123', 1);
 INSERT INTO `users` VALUES (5, 'phuc', 'com4@gamil.com', '0213432', NULL, NULL, '2024-12-11 16:21:03', b'1', '2024-12-14 16:21:11', '', 0, '123', 0);
 INSERT INTO `users` VALUES (6, 'Ngân cuti', 'ngan@gmail.com', '0376272024', NULL, 'bình định', NULL, b'1', NULL, NULL, 0, 'N123456789', 0);
-INSERT INTO `users` VALUES (7, 'Phạm Tài', 'tai@gmail.com', '022222222', NULL, 'bình định', NULL, b'1', NULL, NULL, 0, 'T123456789', 0);
-INSERT INTO `users` VALUES (8, 'Ta Phuc', 'taphuc@gmail.com', '0987991500', NULL, '231241234123', '2024-12-05 00:00:00', b'1', '2024-12-19 13:29:11', '030087edc3869834eccd84e131e363a5', 0, '5eb7fb8425878afce1b965b3e4f8f27f627ac111d8087189a266b6dd15120117', 0);
-INSERT INTO `users` VALUES (9, 'Ngân cuti', 'nguyenhaisuper8@gmail.com', '0376272024', NULL, 'bình định', '2024-12-14 00:00:00', b'1', '2024-12-20 12:19:21', 'ee38298a3ab54677f47c7b689c6dfc1f', 0, '2575028f1907c8395603908a280207c043d751b3275291733360c1e0cc1214bc', 0);
-INSERT INTO `users` VALUES (10, 'bgfbfgb', 'a@gmail.com', '0987991500', NULL, 'cdcsdc', '2024-12-12 00:00:00', b'1', '2024-12-21 02:07:40', 'b46b671d8db9754dbcb140308c35c7a4', 0, '635b4fc85439b34a75b0b7615f27391b11b78e084ab3789ea0e880e3b5212b5b', 0);
+INSERT INTO `users` VALUES (7, 'Phạm Tài', 'tai@gmail.com', '022222222', 'https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-con-gai-24.jpg', 'bình định', NULL, b'1', NULL, NULL, 0, 'T123456789', 0);
+INSERT INTO `users` VALUES (8, 'Ta Phuc', 'taphuc@gmail.com', '0987991500', 'https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-44.jpg.webp', '231241234123', '2024-12-05 00:00:00', b'1', '2024-12-19 13:29:11', '030087edc3869834eccd84e131e363a5', 0, '5eb7fb8425878afce1b965b3e4f8f27f627ac111d8087189a266b6dd15120117', 0);
+INSERT INTO `users` VALUES (9, 'Ngân cuti', 'nguyenhaisuper8@gmail.com', '0376272024', 'https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-con-gai-24.jpg', 'bình định', '2024-12-14 00:00:00', b'1', '2024-12-20 12:19:21', 'ee38298a3ab54677f47c7b689c6dfc1f', 0, '2575028f1907c8395603908a280207c043d751b3275291733360c1e0cc1214bc', 0);
+INSERT INTO `users` VALUES (10, 'bgfbfgb', 'a@gmail.com', '0987991500', 'https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-44.jpg.webp', 'cdcsdc', '2024-12-12 00:00:00', b'1', '2024-12-21 02:07:40', 'b46b671d8db9754dbcb140308c35c7a4', 0, '635b4fc85439b34a75b0b7615f27391b11b78e084ab3789ea0e880e3b5212b5b', 0);
 
 -- ----------------------------
 -- Table structure for vouchers

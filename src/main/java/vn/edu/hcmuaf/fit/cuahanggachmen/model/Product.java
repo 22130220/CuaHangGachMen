@@ -31,7 +31,10 @@ public class Product implements Serializable{
 
     private Map<String, Object> specs = null;
 
-    // Constructors
+    private List<Review> lsReview = null;
+
+    private  List<Color> lsColor=null;
+
     public Product() {
     }
 
@@ -210,6 +213,21 @@ public class Product implements Serializable{
         this.imgList = imgList;
     }
 
+    public List<Review> getLsReview() {
+        return lsReview;
+    }
+
+    public void setLsReview(List<Review> lsReview) {
+        this.lsReview = lsReview;
+    }
+
+    public List<Color> getLsColor() {
+        return lsColor;
+    }
+
+    public void setLsColor(List<Color> lsColor) {
+        this.lsColor = lsColor;
+    }
 
     @Override
     public String toString() {
