@@ -40,13 +40,21 @@
             referrerpolicy="no-referrer"
     ></script>
 
-    <!-- Kiểu CSS -->
+<%--    <!-- Kiểu CSS -->--%>
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="stylesheet" href="./assets/css/banner.css" />
     <link rel="stylesheet" href="./assets/css/danhmucgachmen.css" />
     <link rel="stylesheet" href="./assets/css/popular.css" />
     <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css" />
     <link rel="stylesheet" href="./assets/css/dropdown_user_menu.css">
+
+<%--    <style><%@include file="assets/css/style.css"%></style>--%>
+<%--    <style><%@include file="assets/css/banner.css"%></style>--%>
+<%--    <style><%@include file="assets/css/danhmucgachmen.css"%></style>--%>
+<%--    <style><%@include file="assets/css/popular.css"%></style>--%>
+<%--    <style><%@include file="assets/css/cacthanhphancodinh.css"%></style>--%>
+<%--    <style><%@include file="assets/css/dropdown_user_menu.css"%></style>--%>
+
 </head>
 <body>
 

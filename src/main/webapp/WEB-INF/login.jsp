@@ -8,7 +8,7 @@
     <title>Đăng Nhập</title>
 
 
-    <style><%@include file="assets/css/login.css"%></style>
+    <link rel="stylesheet" href="./assets/css/login.css">
 
 
     <!-- Thêm favicon -->

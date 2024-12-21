@@ -9,9 +9,8 @@
     <title>Gạch men Catalan</title>
 
     <!-- Reset CSS -->
-<%--    <link rel="stylesheet" href="./assets/css/reset.css" />--%>
+    <link rel="stylesheet" href="./assets/css/reset.css" />
 
-    <style><%@include file="./assets/css/reset.css"%></style>
 
     <!-- Thêm favicon -->
     <link
@@ -43,21 +42,17 @@
             referrerpolicy="no-referrer"
     ></script>
 
-
-
-    <style><%@include file="./assets/css/style.css"%></style>
-    <style><%@include file="./assets/css/popular.css"%></style>
-    <style><%@include file="./assets/css/breadcrumb.css"%></style>
-    <style><%@include file="./assets/css/product-card.css"%></style>
-    <style><%@include file="./assets/css/list_product.css"%></style>
-    <style><%@include file="./assets/css/checkbox.css"%></style>
-    <style><%@include file="./assets/css/pagination.css"%></style>
-    <style><%@include file="./assets/css/cacthanhphancodinh.css"%></style>
-    <link rel="stylesheet" href="assets/css/banner.css" />
-    <link rel="stylesheet" href="assets/css/danhmucgachmen.css" />
-    <link rel="stylesheet" href="assets/css/popular.css" />
-    <link rel="stylesheet" href="assets/css/cacthanhphancodinh.css" />
-    <link rel="stylesheet" href="assets/css/dropdown_user_menu.css">
+    <link rel="stylesheet" href="./assets/css/banner.css" />
+    <link rel="stylesheet" href="./assets/css/danhmucgachmen.css" />
+    <link rel="stylesheet" href="./assets/css/popular.css" />
+    <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css" />
+    <link rel="stylesheet" href="./assets/css/dropdown_user_menu.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/breadcrumb.css">
+    <link rel="stylesheet" href="./assets/css/pagination.css">
+    <link rel="stylesheet" href="./assets/css/list_product.css">
+    <link rel="stylesheet" href="./assets/css/checkbox.css">
+    <link rel="stylesheet" href="./assets/css/product-card.css">
 </head>
 <body>
 
