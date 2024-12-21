@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Nhập</title>
 
-    <link rel="stylesheet" href="assets/css/login.css">
+
+    <style><%@include file="assets/css/login.css"%></style>
 
 
     <!-- Thêm favicon -->

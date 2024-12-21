@@ -144,7 +144,7 @@
 <%--                                <img class="thumbnail" src="./assets/img/gachlatsanphobien3.jpg">--%>
                             </div>
                         </div>
-                        <img id=featured src="${p.imgList.get(0)}">
+                        <img id=featured src="${p.imgList.isEmpty() ? " " : p.imgList.get(0)}">
                     </div>
                 </div>
                 <div class="sumarize-info sumarize-grid">
@@ -171,18 +171,13 @@
                     <div class="producttype">
                         <p class="color">Màu sắc</p>
                         <div class="card-color-container">
+                            <c:forEach items="${p.lsColor}" var="items" >
                             <div class="card-color color-active">
-                                <img src="./assets/img/loaigach4.jpg" alt="" class="img-color">
-                                <div class="color-name">Xám</div>
+                                <img src="${items.url}" alt="" class="img-color">
+                                <div class="color-name">${items.name}</div>
+<%--                                <a href="pdetail?pid=${p.id}&color=${items.ID}"/>--%>
                             </div>
-                            <div class="card-color">
-                                <img src="./assets/img/ceramic-india-1-1.jpg" alt="" class="img-color">
-                                <div class="color-name">Trắng</div>
-                            </div>
-                            <div class="card-color" >
-                                <img src="./assets/img/gt02.webp" alt="" class="img-color">
-                                <div class="color-name">Nâu</div>
-                            </div>
+                            </c:forEach>
                         </div>
                     </div>
 
@@ -233,21 +228,15 @@
                             <div class="content-detail review-content" id="review-content">
                                 <div class="comment-section">
                                     <div class="comments">
-                                        <!-- Bình luận mẫu -->
-                                        <div class="comment">
-                                            <img src="./assets/img/blog-1.jpg" alt="Avatar" class="avatar">
-                                            <div class="comment-content">
-                                                <p class="username">Teo123</p>
-                                                <p class="content">Sản phẩm đẹp quá</p>
+                                        <c:forEach items="${p.lsReview}" var="re">
+                                            <div class="comment">
+                                                <img src="${re.avatar}" alt="Avatar" class="avatar">
+                                                <div class="comment-content">
+                                                    <p class="username">${re.userName}</p>
+                                                    <p class="content">${re.reviewText}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="comment">
-                                            <img src="./assets/img/feedback-avatar.jpg" alt="Avatar" class="avatar">
-                                            <div class="comment-content">
-                                                <p class="username">k1mSaChi</p>
-                                                <p class="content">Very good</p>
-                                            </div>
-                                        </div>
+                                        </c:forEach>
                                     </div>
 
                                     <form class="comment-form">
