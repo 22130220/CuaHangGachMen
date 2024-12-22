@@ -25,6 +25,28 @@ public class ProductDao {
                         .list()
         );
     }
+    public List<String> findImagesByColor(int productId, int colorId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT Url FROM product_color_img WHERE ProductID = :productId AND ColorID = :colorId")
+                        .bind("productId", productId)
+                        .bind("colorId", colorId)
+                        .mapTo(String.class)
+                        .list()
+        );
+    }
+
+    public List<Product> findRelatedProducts(int manufacturerId, int currentProductId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM products WHERE ManufacturerID = :manufacturerId AND ID != :currentProductId")
+                        .bind("manufacturerId", manufacturerId)
+                        .bind("currentProductId", currentProductId)
+                        .mapToBean(Product.class)
+                        .list()
+        );
+    }
+
 
     // Tìm sản phẩm theo ID
     public Product findById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {

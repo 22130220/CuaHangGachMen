@@ -167,11 +167,13 @@
                         <p class="color">Màu sắc</p>
                         <div class="card-color-container">
                             <c:forEach items="${p.lsColor}" var="items" >
+                                <a href="pdetail?pid=${p.id}&color=${items.ID}">
                             <div class="card-color color-active">
                                 <img src="${items.url}" alt="" class="img-color">
                                 <div class="color-name">${items.name}</div>
-<%--                                <a href="pdetail?pid=${p.id}&color=${items.ID}"/>--%>
+
                             </div>
+                                </a>
                             </c:forEach>
                         </div>
                     </div>
@@ -248,158 +250,22 @@
                 <div class="like like-grid">
                     <div class="like-title">Có thể bạn cũng thích</div>
                     <div class="like-slider" id="like-slider">
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
+                        <c:forEach items="${relatedProducts}" var="related">
+                            <div class="like-item">
+                                <div class="product-card">
+                                    <div class="card-img">
+                                        <img src="${related.imgThumbnail}" alt="${related.name}">
+                                    </div>
+                                    <div class="card-title">${related.name}</div>
+                                    <div class="card-price">${related.pricePerBox}đ/1 hộp</div>
+                                    <a href="pdetail?pid=${related.id}">
+                                        <button class="add-cart-button">Xem chi tiết</button>
+                                    </a>
                                 </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
                             </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="like-item">
-                            <div class="product-card">
-                                <div class="card-img">
-                                    <img src="./assets/img/gachoptuongphobien3.jpg" alt="">
-                                </div>
-                                <div class="card-title"> Gạch 80X80 Catalan 80112</div>
-                                <div class="card-price"> 750.000đ/1 hộp</div>
-                                <button class="add-cart-button">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-
+                        </c:forEach>
                     </div>
+
                     <button class="like-slider-prev like-slider-btn" onclick="scrollToItemNextSmooth(1)">
                         <img src="./assets/img/arrow-left.png" alt="">
                     </button>
@@ -509,5 +375,29 @@
 
 </script>
 <script src="./assets/js/scrollTop.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const colorBoxes = document.querySelectorAll('.card-color');
+
+        colorBoxes.forEach(box => {
+            // Xử lý sự kiện click
+            box.addEventListener('click', function () {
+                // Loại bỏ trạng thái "color-active" của tất cả các ô màu
+                colorBoxes.forEach(box => {
+                    box.classList.remove('color-active');
+                    box.style.backgroundColor = ''; // Reset màu nền về mặc định
+                });
+
+                // Thêm trạng thái "color-active" cho ô màu được chọn
+                this.classList.add('color-active');
+                this.style.backgroundColor = "#000"; // Đổi màu nền thành đỏ (ví dụ)
+
+                // Thực hiện các hành động khác nếu cần, ví dụ: cập nhật dữ liệu
+            });
+        });
+    });
+
+</script>
 </body>
 </html>

@@ -11,7 +11,7 @@
  Target Server Version : 110302 (11.3.2-MariaDB)
  File Encoding         : 65001
 
- Date: 21/12/2024 16:23:21
+ Date: 23/12/2024 01:24:53
 */
 
 SET NAMES utf8mb4;
@@ -158,7 +158,7 @@ CREATE TABLE `product_color_img`  (
   INDEX `fk_productid`(`ProductId` ASC) USING BTREE,
   CONSTRAINT `fk_colorid` FOREIGN KEY (`ColorId`) REFERENCES `colors` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_productid` FOREIGN KEY (`ProductId`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of product_color_img
@@ -176,7 +176,6 @@ INSERT INTO `product_color_img` VALUES (24, 1, 6, 'https://tileshop.scene7.com/i
 INSERT INTO `product_color_img` VALUES (25, 1, 7, 'https://tileshop.scene7.com/is/image/TileShop/667753?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (26, 1, 8, 'https://tileshop.scene7.com/is/image/TileShop/484054?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (27, 1, 9, 'https://tileshop.scene7.com/is/image/TileShop/484214?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (29, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/484017?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (30, 2, 1, 'https://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (31, 3, 1, 'https://tileshop.scene7.com/is/image/TileShop/484272?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (32, 4, 1, 'https://tileshop.scene7.com/is/image/TileShop/484286?$ExtraLarge$');
@@ -190,6 +189,16 @@ INSERT INTO `product_color_img` VALUES (39, 1, 7, 'https://tileshop.scene7.com/i
 INSERT INTO `product_color_img` VALUES (40, 1, 8, 'https://tileshop.scene7.com/is/image/TileShop/484054?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (41, 1, 9, 'https://tileshop.scene7.com/is/image/TileShop/484214?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (42, 1, 10, 'https://tileshop.scene7.com/is/image/TileShop/681784?$ExtraLarge$');
+INSERT INTO `product_color_img` VALUES (43, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/484017_instb1?$PDPThumbnail$&fmt=webp');
+INSERT INTO `product_color_img` VALUES (44, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/484017_Detail_Angle?$PDPThumbnail$&fmt=webp');
+INSERT INTO `product_color_img` VALUES (45, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/COSpringsShoot_Harper_Riad_VERTICAL?$PDPThumbnail$&fmt=webp');
+INSERT INTO `product_color_img` VALUES (46, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/TimberTrails_CoastalChic_Kitchen_013?$PDPThumbnail$&fmt=webp');
+INSERT INTO `product_color_img` VALUES (47, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/TimberTrails_CoastalChic_Bar_003?$PDPThumbnail$&fmt=webp');
+INSERT INTO `product_color_img` VALUES (48, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/ISpyDIY_Loft_Kitchen_002?$PDPThumbnail$&fmt=webp');
+INSERT INTO `product_color_img` VALUES (49, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/ISpyDIY_Loft_Kitchen006?$PDPThumbnail$&fmt=webp');
+INSERT INTO `product_color_img` VALUES (50, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/AlisonVictoria_AtlantaLoft_Bathroom2_006?$PDPThumbnail$&fmt=webp');
+INSERT INTO `product_color_img` VALUES (51, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/AlisonVictoria_AtlantaLoft_Bathroom2_005?$PDPThumbnail$&fmt=webp');
+INSERT INTO `product_color_img` VALUES (52, 2, 1, 'https://tileshop.scene7.com/is/image/TileShop/AlisonVictoria_AtlantaLoft_Bathroom2_005?$PDPThumbnail$&fmt=webp');
 
 -- ----------------------------
 -- Table structure for product_spec
