@@ -1,6 +1,5 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 
-
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -9,37 +8,56 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
-@WebServlet(name = "pdetail", value = "/pdetail")
+@WebServlet(name = "ProductDetailController", value = "/pdetail")
 public class ProductDetailController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pid = request.getParameter("pid");
-        Product p = null;
+        String pidParam = request.getParameter("pid");
+        String colorParam = request.getParameter("color");
+
+        Product product = null;
         ProductDao productDao = new ProductDao();
-        try{
-            Integer id = Integer.parseInt(pid);
-            try {
-              p = productDao.findById(id);
-            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+
+        try {
+            // Lấy ID sản phẩm từ request
+            int productId = Integer.parseInt(pidParam);
+            int colorId = colorParam != null ? Integer.parseInt(colorParam) : 0;
+
+            // Lấy thông tin sản phẩm từ DAO
+            product = productDao.findById(productId);
+
+            // Lay ra danh sach san pham cung nha san xuat
+            List<Product> relatedProducts = productDao.findRelatedProducts(product.getManufacturerId(), productId);
+            request.setAttribute("relatedProducts", relatedProducts);
+
+
+            // Nếu có colorId, cập nhật danh sách ảnh theo màu sắc được chọn
+            if (colorId > 0) {
+                product.setImgList(productDao.findImagesByColor(productId, colorId));
             }
 
         } catch (NumberFormatException e) {
-            throw new NumberFormatException();
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid product or color ID");
+            return;
+        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException("Error fetching product details", e);
         }
 
-        request.setAttribute("p", p);
-        request.getRequestDispatcher("/WEB-INF/product-detail.jsp").forward(request, response);
+        // Đặt sản phẩm vào request attribute để hiển thị trên JSP
+        request.setAttribute("p", product);
 
+
+        // Chuyển tiếp đến trang chi tiết sản phẩm
+        request.getRequestDispatcher("/WEB-INF/product-detail.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Xử lý yêu cầu POST
-        response.getWriter().println("Hello from POST method!");
+        response.getWriter().println("POST method is not supported for this action.");
     }
 }
