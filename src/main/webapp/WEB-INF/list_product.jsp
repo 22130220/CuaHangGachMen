@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="../assets/css/product-card.css"/>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gạch men Catalan</title>
@@ -53,6 +54,8 @@
     <link rel="stylesheet" href="./assets/css/list_product.css">
     <link rel="stylesheet" href="./assets/css/checkbox.css">
     <link rel="stylesheet" href="./assets/css/product-card.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
@@ -108,13 +111,14 @@
         </div>
         <div class="list-product-grid">
             <div class="filter-panel">
+                <div id="filters">
                 <div class="panel-title bg-brown cl-white s-16 bold"> LOẠI SẢN PHẨM</div>
                 <div class="panel-title bg-white cl-brown s-16 normal"> Mức giá</div>
                 <div class="panel-list bg-yellow cl-brown">
                     <div class="filter-item">
                         <div class="fui-checkbox-custom">
                             <div class="input-wrap">
-                                <input type="checkbox" name="check" id="price1" class="input-checkbox" />
+                                <input type="checkbox" name="priceRange" value="5000-1000" id="price1" class="input-checkbox filter" />
                                 <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
@@ -125,7 +129,7 @@
                     <div class="filter-item">
                         <div class="fui-checkbox-custom">
                             <div class="input-wrap">
-                                <input type="checkbox" name="check" id="price2" class="input-checkbox" />
+                                <input type="checkbox" name="priceRange" value="1000-1500" id="price2" class="input-checkbox filter" />
                                 <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
@@ -136,7 +140,7 @@
                     <div class="filter-item">
                         <div class="fui-checkbox-custom">
                             <div class="input-wrap">
-                                <input type="checkbox" name="check" id="price3" class="input-checkbox" />
+                                <input type="checkbox" name="priceRange" value="1500-2000" id="price3" class="input-checkbox filter" />
                                 <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
@@ -147,7 +151,7 @@
                     <div class="filter-item">
                         <div class="fui-checkbox-custom">
                             <div class="input-wrap">
-                                <input type="checkbox" name="check" id="price4" class="input-checkbox" />
+                                <input type="checkbox" name="priceRange" value="2000-5000" id="price4" class="input-checkbox filter" />
                                 <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
@@ -162,158 +166,153 @@
                     <div class="filter-item">
                         <div class="fui-checkbox-custom">
                             <div class="input-wrap">
-                                <input type="checkbox" name="check" id="1" class="input-checkbox" />
+                                <input type="checkbox" name="size" value="1" id="1" class="input-checkbox filter" />
                                 <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
                             </div>
-                            <label class="label s-12 cl-brown" for="1">7 x 60 cm</label>
+                            <label class="label s-12 cl-brown" for="1">500 x 500mm</label>
                         </div>
                     </div>
                     <div class="filter-item">
                         <div class="fui-checkbox-custom">
                             <div class="input-wrap">
-                                <input type="checkbox" name="check" id="2" class="input-checkbox" />
+                                <input type="checkbox" name="size" value="2" id="2" class="input-checkbox filter" />
                                 <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
                             </div>
-                            <label class="label s-12 cl-brown" for="2">7 x 60 cm</label>
+                            <label class="label s-12 cl-brown" for="2">300×600 mm</label>
                         </div>
                     </div>
                     <div class="filter-item">
                         <div class="fui-checkbox-custom">
                             <div class="input-wrap">
-                                <input type="checkbox" name="check" id="3" class="input-checkbox" />
+                                <input type="checkbox" name="size" value="3" id="3" class="input-checkbox filter" />
                                 <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
                             </div>
-                            <label class="label s-12 cl-brown" for="3">7 x 60 cm</label>
+                            <label class="label s-12 cl-brown" for="3">400×800 mm</label>
                         </div>
                     </div>
                     <div class="filter-item">
                         <div class="fui-checkbox-custom">
                             <div class="input-wrap">
-                                <input type="checkbox" name="check" id="4" class="input-checkbox" />
+                                <input type="checkbox" name="size" value="4" id="4" class="input-checkbox filter" />
                                 <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
                             </div>
-                            <label class="label s-12 cl-brown" for="4">7 x 60 cm</label>
+                            <label class="label s-12 cl-brown" for="4">600×600 mm</label>
+                        </div>
+                    </div>
+                    <div class="filter-item">
+                        <div class="fui-checkbox-custom">
+                            <div class="input-wrap">
+                                <input type="checkbox" name="size" value="5" id="5" class="input-checkbox filter" />
+                                <span class="check-icon">
+                                    <i class="fa-solid fa-check"></i>
+                                 </span>
+                            </div>
+                            <label class="label s-12 cl-brown" for="5">800×800 mm</label>
                         </div>
                     </div>
                 </div>
-                <div class="panel-title bg-white cl-brown s-16 normal"> Xuất xứ</div>
-                <div class="panel-list bg-yellow cl-brown">
-                    <div class="list-horizontal">
-                        <div class="list-button s-12 cl-white bg-brown">Việt Nam</div>
-                        <div class="list-button s-12 cl-white bg-brown">Ấn Độ</div>
-                        <div class="list-button s-12 cl-white bg-brown">Trung Quốc</div>
-                        <div class="list-button s-12 cl-white bg-brown">Châu Âu</div>
-                    </div>
-                </div>
+<%--                <div class="panel-title bg-white cl-brown s-16 normal"> Xuất xứ</div>--%>
+<%--                <div class="panel-list bg-yellow cl-brown">--%>
+<%--                    <div class="filter-item">--%>
+<%--                        <div class="fui-checkbox-custom">--%>
+<%--                            <div class="input-wrap">--%>
+<%--                                <input type="checkbox" name="manu" value="vn" id="vn" class="input-checkbox" />--%>
+<%--                                <span class="check-icon">--%>
+<%--                                    <i class="fa-solid fa-check"></i>--%>
+<%--                                 </span>--%>
+<%--                            </div>--%>
+<%--                            <label class="label s-12 cl-brown" for="vn">Việt Nam</label>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                    <div class="filter-item">--%>
+<%--                        <div class="fui-checkbox-custom">--%>
+<%--                            <div class="input-wrap">--%>
+<%--                                <input type="checkbox" name="manu" value="Ấn Độ" id="indi" class="input-checkbox" />--%>
+<%--                                <span class="check-icon">--%>
+<%--                                    <i class="fa-solid fa-check"></i>--%>
+<%--                                 </span>--%>
+<%--                            </div>--%>
+<%--                            <label class="label s-12 cl-brown" for="indi">Ấn Độ</label>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                    <div class="filter-item">--%>
+<%--                        <div class="fui-checkbox-custom">--%>
+<%--                            <div class="input-wrap">--%>
+<%--                                <input type="checkbox" name="manu" value="Ấn Độ" id="cn" class="input-checkbox" />--%>
+<%--                                <span class="check-icon">--%>
+<%--                                    <i class="fa-solid fa-check"></i>--%>
+<%--                                 </span>--%>
+<%--                            </div>--%>
+<%--                            <label class="label s-12 cl-brown" for="indi">Ấn Độ</label>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+
+
+
+
+
+<%--&lt;%&ndash;                    <div class="list-horizontal">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <div class="list-button s-12 cl-white bg-brown">Việt Nam</div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <div class="list-button s-12 cl-white bg-brown">Ấn Độ</div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <div class="list-button s-12 cl-white bg-brown">Trung Quốc</div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                        <div class="list-button s-12 cl-white bg-brown">Châu Âu</div>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    </div>&ndash;%&gt;--%>
+<%--                </div>--%>
                 <div class="panel-title bg-white cl-brown s-16 normal"> Nhà máy sản xuất</div>
                 <div class="panel-list bg-yellow cl-brown">
-                        <div class="filter-item">
-                            <div class="fui-checkbox-custom">
-                                <div class="input-wrap">
-                                    <input type="checkbox" name="check" id="Catalan" class="input-checkbox" />
-                                    <span class="check-icon">
+                    <div class="filter-item">
+                        <div class="fui-checkbox-custom">
+                            <div class="input-wrap">
+                                <input type="checkbox" name="nsx" value="1" id="Maxtot" class="input-checkbox filter" />
+                                <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
-                                </div>
-                                <label class="label s-12 cl-brown" for="Catalan">Catalan</label>
                             </div>
+                            <label class="label s-12 cl-brown" for="Maxtot">Maxtot</label>
                         </div>
-                        <div class="filter-item">
-                            <div class="fui-checkbox-custom">
-                                <div class="input-wrap">
-                                    <input type="checkbox" name="check" id="Vitto" class="input-checkbox" />
-                                    <span class="check-icon">
+                    </div>
+                    <div class="filter-item">
+                        <div class="fui-checkbox-custom">
+                            <div class="input-wrap">
+                                <input type="checkbox" name="nsx" value="2" id="Bambu" class="input-checkbox filter" />
+                                <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
-                                </div>
-                                <label class="label s-12 cl-brown" for="Vitto">Vitto</label>
                             </div>
+                            <label class="label s-12 cl-brown" for="Bambu">Bambu</label>
                         </div>
-                        <div class="filter-item">
-                            <div class="fui-checkbox-custom">
-                                <div class="input-wrap">
-                                    <input type="checkbox" name="check" id="Mikado" class="input-checkbox" />
-                                    <span class="check-icon">
+                    </div>
+                    <div class="filter-item">
+                        <div class="fui-checkbox-custom">
+                            <div class="input-wrap">
+                                <input type="checkbox" name="nsx" value="3" id="Famito" class="input-checkbox filter" />
+                                <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
-                                </div>
-                                <label class="label s-12 cl-brown" for="Mikado">Mikado</label>
                             </div>
+                            <label class="label s-12 cl-brown" for="Famito">Famito</label>
                         </div>
-                        <div class="filter-item">
-                            <div class="fui-checkbox-custom">
-                                <div class="input-wrap">
-                                    <input type="checkbox" name="check" id="XsmartCatalan" class="input-checkbox" />
-                                    <span class="check-icon">
+                    </div>
+                    <div class="filter-item">
+                        <div class="fui-checkbox-custom">
+                            <div class="input-wrap">
+                                <input type="checkbox" name="nsx" id="Ivicasa" value="4" class="input-checkbox filter" />
+                                <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
-                                </div>
-                                <label class="label s-12 cl-brown" for="XsmartCatalan">Xsmart - Catalan</label>
                             </div>
+                            <label class="label s-12 cl-brown" for="Ivicasa">Ivicasa</label>
                         </div>
-                        <div class="filter-item">
-                            <div class="fui-checkbox-custom">
-                                <div class="input-wrap">
-                                    <input type="checkbox" name="check" id="CMC" class="input-checkbox" />
-                                    <span class="check-icon">
-                                    <i class="fa-solid fa-check"></i>
-                                 </span>
-                                </div>
-                                <label class="label s-12 cl-brown" for="CMC">CMC</label>
-                            </div>
-                        </div>
-                        <div class="filter-item">
-                            <div class="fui-checkbox-custom">
-                                <div class="input-wrap">
-                                    <input type="checkbox" name="check" id="Takao" class="input-checkbox" />
-                                    <span class="check-icon">
-                                    <i class="fa-solid fa-check"></i>
-                                 </span>
-                                </div>
-                                <label class="label s-12 cl-brown" for="Takao">Takao</label>
-                            </div>
-                        </div>
-                        <div class="filter-item">
-                            <div class="fui-checkbox-custom">
-                                <div class="input-wrap">
-                                    <input type="checkbox" name="check" id="KisLuxury" class="input-checkbox" />
-                                    <span class="check-icon">
-                                    <i class="fa-solid fa-check"></i>
-                                 </span>
-                                </div>
-                                <label class="label s-12 cl-brown" for="KisLuxury">Gạch ốp lát Kis Luxury</label>
-                            </div>
-                        </div>
-                        <div class="filter-item">
-                            <div class="fui-checkbox-custom">
-                                <div class="input-wrap">
-                                    <input type="checkbox" name="check" id="MyDuc" class="input-checkbox" />
-                                    <span class="check-icon">
-                                    <i class="fa-solid fa-check"></i>
-                                 </span>
-                                </div>
-                                <label class="label s-12 cl-brown" for="MyDuc">Mỹ Đức</label>
-                            </div>
-                        </div>
-                        <div class="filter-item">
-                            <div class="fui-checkbox-custom">
-                                <div class="input-wrap">
-                                    <input type="checkbox" name="check" id="TrungDo" class="input-checkbox" />
-                                    <span class="check-icon">
-                                    <i class="fa-solid fa-check"></i>
-                                 </span>
-                                </div>
-                                <label class="label s-12 cl-brown" for="TrungDo">Gạch ốp lát Trung Đô</label>
-                            </div>
-                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
             <div class="ls-product">
@@ -338,9 +337,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="product-list">
+                <div class="product-list" id="product_list">
                     <c:forEach items="${list}" var="item">
                         <div class="product-card">
+                            <a href="pdetail?pid=${item.id}" class="product-card-link">
                             <div class="card-img">
                                 <img src="${item.imgThumbnail}" alt="">
                             </div>
@@ -348,15 +348,18 @@
                                 <span><c:out value="${item.name}"/></span>
                             </div>
                             <div class="card-price"> ${item.pricePerBox} Vnđ/hộp</div>
+                            </a>
                             <div class="button-gr">
                                 <button class="add-cart-button btn-left">
-                                    <a href="pdetail?pid=${item.id}" > Xen chi tiết  </a>
+                                    <a href="pdetail?pid=${item.id}">Xem chi tiết</a>
                                 </button>
                                 <button class="buy-now btn-right">
                                     <a href="giohang.html"><i class="fa-solid fa-plus fa-lg"></i></a>
                                 </button>
                             </div>
                         </div>
+
+
                     </c:forEach>
                 </div>
                 <div class="pagination">
@@ -426,5 +429,6 @@
 <jsp:include page="view_shared/header_footer/footer.jsp"/>
 
 <script src="./assets/js/scrollTop.js"></script>
+<script src="./assets/js/filterItem.js"></script>
 </body>
 </html>
