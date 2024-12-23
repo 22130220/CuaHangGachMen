@@ -17,13 +17,6 @@ public class ListProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDao productDao = new ProductDao();
-        try {
-            List<Product> lsProduct = productDao.findAll();
-            request.setAttribute("list", lsProduct);
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
         request.getRequestDispatcher("/WEB-INF/list_product.jsp").forward(request,response);
     }
 
