@@ -127,7 +127,7 @@
         </c:if>
 
         <!-- Cart Button -->
-        <a href="./giohang.html" class="cart-button">
+        <a href="cart" class="cart-button">
           <svg
                   class="icon"
                   width="30"

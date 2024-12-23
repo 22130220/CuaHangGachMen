@@ -57,9 +57,13 @@
     <link rel="stylesheet" href="./assets/css/product-detail.css">
     <link rel="stylesheet" href="./assets/css/breadcrumb.css">
     <link rel="stylesheet" href="./assets/css/product-card.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 <jsp:include page="view_shared/header_footer/header.jsp"/>
+
+<input type="hidden" value="${p.id}" id="pid">
 
         <div class="main-content">
             <div class="fui-basic-breadcrumb breadcrumb-style">
@@ -149,17 +153,19 @@
                         </p>
                         <div class="product-data-info">
                             <p class="product-id product-text">#484040</p>
-                            <p class="product-des product-text">Mỗi hộp bao gồm 10 thẻ</p>
+                            <p class="product-des product-text">Mỗi hộp bao gồm <c:out value="${p.quantityPerBox}"/> thẻ</p>
                         </div>
 
                     </div>
 
                     <div class="product-price">
                         <p class="per-box">
-                            750.000đ/1 hộp
+                            <f:formatNumber value="${p.pricePerBox}" type="number" maxFractionDigits="0"/>₫/1 hộp
                         </p>
                         <p class="per-feat">
-                            80.000đ/1 thẻ
+                            <f:formatNumber value="${p.pricePerBox / p.quantityPerBox}" type="number" maxFractionDigits="0"/>₫/1 thẻ
+
+
                         </p>
                     </div>
 
@@ -224,22 +230,30 @@
                             </div>
                             <div class="content-detail review-content" id="review-content">
                                 <div class="comment-section">
-                                    <div class="comments">
-                                        <c:forEach items="${p.lsReview}" var="re">
-                                            <div class="comment">
-                                                <img src="${re.avatar}" alt="Avatar" class="avatar">
-                                                <div class="comment-content">
-                                                    <p class="username">${re.userName}</p>
-                                                    <p class="content">${re.reviewText}</p>
-                                                </div>
-                                            </div>
-                                        </c:forEach>
+                                    <div class="comments" id="comment">
+<%--                                        <c:forEach items="${p.lsReview}" var="re">--%>
+<%--                                            <div class="comment">--%>
+<%--                                                <img src="${re.avatar}" alt="Avatar" class="avatar">--%>
+<%--                                                <div class="comment-content">--%>
+<%--                                                    <p class="username">${re.userName}</p>--%>
+<%--                                                    <p class="content">${re.reviewText}</p>--%>
+<%--                                                </div>--%>
+<%--                                            </div>--%>
+<%--                                        </c:forEach>--%>
                                     </div>
 
-                                    <form class="comment-form">
-                                        <textarea id="comment-input" placeholder="Viết bình luận của bạn..." required></textarea>
-                                        <button class="button-review" type="submit">Gửi</button>
-                                    </form>
+                                    <div class="comment-form">
+                                        <textarea id="comment-input" name="comment_text" placeholder="Viết bình luận của bạn..." required></textarea>
+                                        <ul>
+                                            <li>Đánh giá</li>
+                                            <li><input type="radio" name="rating" value="1">  ⭐</li>
+                                            <li><input type="radio" name="rating" value="2">  ⭐ ⭐</li>
+                                            <li><input type="radio" name="rating" value="3">  ⭐ ⭐ ⭐</li>
+                                            <li><input type="radio" name="rating" value="4">  ⭐ ⭐ ⭐ ⭐</li>
+                                            <li><input type="radio" name="rating" value="5">  ⭐ ⭐ ⭐ ⭐ ⭐</li>
+                                        </ul>
+                                        <a href="#" class="button-review" onclick="addReview()">Gửi</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -279,7 +293,7 @@
     </div>
 
 <jsp:include page="view_shared/header_footer/footer.jsp"/>
-
+<script src="./assets/js/comment_ajax.js"></script>
 
     <script type="text/javascript">
         let thumbnails = document.getElementsByClassName('thumbnail')
@@ -302,37 +316,8 @@
         }
 
 
-        let buttonRight = document.getElementById('slideRight');
-        let buttonLeft = document.getElementById('slideLeft');
-
-        buttonLeft.addEventListener('click', function(){
-            document.getElementById('slider').scrollLeft -= 180
-        })
-
-        buttonRight.addEventListener('click', function(){
-            document.getElementById('slider').scrollLeft += 180
-        })
-
-
     </script>
-        <script>
-            function activateDesInfo(button){
-                const des = button.id;
-                const elements = document.getElementById('product-content').children;
-                Array.from(elements).forEach(element => {
-                    const id = element.id.split('-');
-                    if(id[0] === des) {
-                        element.style.display = 'flex';
-                        document.getElementById(id[0]).style.borderBottom = '1px solid #000';
-
-                    } else {
-                        element.style.display = 'none';
-                        document.getElementById(id[0]).style.borderBottom = 'none';
-                    }
-                });
-            }
-
-        </script>
+        <script src="./assets/js/activateDesInfo.js"></script>
         <script>
             function scrollToItemNextSmooth(index) {
                 const items = document.querySelectorAll('.like-slider > div');
@@ -361,6 +346,10 @@
             if (id[0] === des) {
                 element.style.display = 'flex';
                 document.getElementById(id[0]).style.borderBottom = '1px solid #000';
+                if(des == "review") {
+                    const value = $("#pid").val();
+                    getComment(value);
+                }
             } else {
                 element.style.display = 'none';
                 document.getElementById(id[0]).style.borderBottom = 'none';
@@ -399,5 +388,7 @@
     });
 
 </script>
+
+
 </body>
 </html>

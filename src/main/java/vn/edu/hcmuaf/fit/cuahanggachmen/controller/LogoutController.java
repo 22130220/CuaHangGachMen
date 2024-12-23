@@ -18,8 +18,8 @@ public class LogoutController extends HttpServlet {
             session.invalidate(); // Hủy session
         }
 
-        request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-
+//        request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+        response.sendRedirect("/");
     }
 
     @Override

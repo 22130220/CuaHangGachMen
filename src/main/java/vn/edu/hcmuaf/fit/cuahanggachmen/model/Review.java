@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class Review implements Serializable {
         private int userId;
@@ -8,7 +9,7 @@ public class Review implements Serializable {
         private int productId;
         private int rating;
         private String reviewText;
-        private String reviewDate;
+        private LocalDateTime reviewDate;
         private int orderId;
         private String avatar;
 
@@ -16,7 +17,7 @@ public class Review implements Serializable {
 
     public Review() {}
 
-        public Review(int userId, int productId, int rating, String reviewText, String reviewDate, int orderId) {
+        public Review(int userId, int productId, int rating, String reviewText, LocalDateTime reviewDate, int orderId) {
             this.userId = userId;
             this.productId = productId;
             this.rating = rating;
@@ -58,11 +59,11 @@ public class Review implements Serializable {
             this.reviewText = reviewText;
         }
 
-        public String getReviewDate() {
+        public LocalDateTime getReviewDate() {
             return reviewDate;
         }
 
-        public void setReviewDate(String reviewDate) {
+        public void setReviewDate(LocalDateTime reviewDate) {
             this.reviewDate = reviewDate;
         }
 

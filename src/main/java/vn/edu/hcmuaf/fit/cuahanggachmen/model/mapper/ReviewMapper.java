@@ -20,7 +20,7 @@ public class ReviewMapper implements RowMapper<Review> {
         review.setProductId(rs.getInt("ProductID"));
         review.setRating(rs.getInt("Rating"));
         review.setReviewText(rs.getString("ReviewText"));
-        review.setReviewDate(rs.getString("ReviewDate"));
+        review.setReviewDate(rs.getTimestamp("ReviewDate").toLocalDateTime());
         review.setOrderId(rs.getInt("OrderID"));
 
         return review;
