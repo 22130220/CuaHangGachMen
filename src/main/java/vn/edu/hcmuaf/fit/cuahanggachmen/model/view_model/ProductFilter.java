@@ -9,6 +9,8 @@ public class ProductFilter {
     private List<Integer[]> priceRanges = new ArrayList<>();
     private int[] sizes = null;
     private int[] origins = null;
+    private int[] material = null;
+    private int[] category = null;
     private int page;
     private int pageSize;
     private int totalPages;
@@ -47,6 +49,14 @@ public class ProductFilter {
         return origins != null;
     }
 
+    public boolean haveMaterialFilter() {
+        return material != null;
+    }
+
+    public boolean haveCategoryFilter() {
+        return category != null;
+    }
+
     public void setPageSize(int value) {
         pageSize = value;
     }
@@ -61,6 +71,24 @@ public class ProductFilter {
 
     public int getPage() {
         return page;
+    }
+
+    public int[] getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(String[] materials) {
+        if (materials == null || Objects.equals(materials[0], "")) return;
+        this.material = convertToInt(materials);
+    }
+
+    public int[] getCategory() {
+        return category;
+    }
+
+    public void setCategory(String[] categories) {
+        if (categories == null || Objects.equals(categories[0], "")) return;
+        this.category = convertToInt(categories);
     }
 
     public void setPriceRanges(String[] priceRanges) {
@@ -98,6 +126,14 @@ public class ProductFilter {
 
     public boolean isManufacturer(int id) {
         return Arrays.stream(origins).anyMatch(i -> i == id);
+    }
+
+    public boolean isCategory(int id) {
+        return Arrays.stream(category).anyMatch(i -> i == id);
+    }
+
+    public boolean isMaterial(int id) {
+        return Arrays.stream(material).anyMatch(i -> i == id);
     }
 
     public boolean isSize(int id) {

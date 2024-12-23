@@ -14,21 +14,33 @@ public class ProductService {
         ProductStorage storage = new ProductStorage();
         List<Product> products = storage.getAll();
 
+        //price
+        if (filter.havePriceRangeFilter()) {
+            products = products.stream().filter(product -> filter.isPrice(product.getPricePerBox())).collect(Collectors.toList());
+        }
+
+
         //Manufacturer
         if(filter.haveOriginsFilter()) {
             products = products.stream().filter(product -> filter.isManufacturer(product.getManufacturerId())).collect(Collectors.toList());
         }
 
-//        //size
-//        if (filter.haveSizesFilter()) {
-//            products = products.stream().filter(product -> filter.isSize(product.getSizeId())).collect(Collectors.toList());
-//
-//        }
-//
-//        //price
-//        if (filter.havePriceRangeFilter()) {
-//            products = products.stream().filter(product -> filter.isPrice(product.getPricePerBox())).collect(Collectors.toList());
-//        }
+        //size
+        if (filter.haveSizesFilter()) {
+            products = products.stream().filter(product -> filter.isSize(product.getSizeId())).collect(Collectors.toList());
+        }
+
+        //category
+        if(filter.haveCategoryFilter()) {
+            products = products.stream().filter(product -> filter.isCategory(product.getCategoryId())).collect(Collectors.toList());
+        }
+
+        //material
+        if(filter.haveMaterialFilter()) {
+            products = products.stream().filter(product -> filter.isMaterial(product.getMaterialId())).collect(Collectors.toList());
+        }
+
+
 
         int getTotalPages = (int) Math.ceil((double) products.size() / filter.getPageSize());
         filter.setTotalPages(getTotalPages);
