@@ -1,8 +1,10 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.utils;
 
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ReviewDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Review;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -19,6 +21,9 @@ public class AjaxResponse {
         this.text.add(String.format("\"products\":%s", productListToJson(productList)));
     }
 
+    public void addReviewList(List<Review> reviewList) {
+        this.text.add(String.format("\"review\":%s", reviewListToJson(reviewList)));
+    }
     public void addInt(String fieldName, int value) {
         this.text.add(String.format("\"%s\":%d", fieldName, value));
     }
@@ -61,6 +66,29 @@ public class AjaxResponse {
         return jsonArrayJoiner.toString();
     }
 
+    private String reviewListToJson(List<Review> reviewList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (Review review : reviewList) {
+            StringJoiner jsonReviewJoiner = new StringJoiner(",", "{", "}");
+
+            jsonReviewJoiner.add(String.format("\"userId\":%d", review.getUserId()))
+                    .add(String.format("\"userName\":\"%s\"", review.getUserName()))
+                    .add(String.format("\"productId\":%d", review.getProductId()))
+                    .add(String.format("\"rating\":%d", review.getRating()))
+                    .add(String.format("\"reviewText\":\"%s\"", review.getReviewText()))
+                    .add(String.format("\"reviewDate\":\"%s\"", review.getReviewDate()))
+                    .add(String.format("\"orderId\":%d", review.getOrderId()))
+                    .add(String.format("\"avatar\":\"%s\"", review.getAvatar()));
+
+            // Thêm đối tượng review vào mảng JSON
+            jsonArrayJoiner.add(jsonReviewJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
+
     public String getText() {
         return text.toString();
     }
@@ -70,15 +98,21 @@ public class AjaxResponse {
 
         ProductDao dao = new ProductDao();
 
+        ReviewDao rvDao = new ReviewDao();
+
         List<Product> ls = dao.findAll();
+
+        List<Review> rv = rvDao.findReviewsByProductId(1);
 
         AjaxResponse ajaxResponse = new AjaxResponse();
 
-        ajaxResponse.addInt("age", 34);
-        ajaxResponse.addString("name", "phuc");
-        ajaxResponse.addBool("sex", true);
+//        ajaxResponse.addInt("age", 34);
+//        ajaxResponse.addString("name", "phuc");
+//        ajaxResponse.addBool("sex", true);
 
+       // ajaxResponse.addProductList(ls);
 
+        ajaxResponse.addReviewList(rv);
         System.out.println(ajaxResponse.getText());
 
 

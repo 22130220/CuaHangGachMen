@@ -2,30 +2,45 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.Query;
+import org.jdbi.v3.core.statement.UnableToExecuteStatementException;
 import org.jdbi.v3.core.statement.Update;
+import vn.edu.hcmuaf.fit.cuahanggachmen.action.Result;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Review;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.ReviewMapper;
 
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public class ReviewDao {
     // Thêm một bản ghi mới vào bảng Review
-    public void insertReview(Review review) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        jdbi.useHandle(handle -> {
-            Update update = handle.createUpdate("INSERT INTO review (UserID, ProductID, Rating, ReviewText, ReviewDate, OrderID) " +
-                    "VALUES (:userId, :productId, :rating, :reviewText, :reviewDate, :orderId)");
-            update.bind("userId", review.getUserId())
-                    .bind("productId", review.getProductId())
-                    .bind("rating", review.getRating())
-                    .bind("reviewText", review.getReviewText())
-                    .bind("reviewDate", review.getReviewDate())
-                    .bind("orderId", review.getOrderId())
-                    .execute();
-        });
-
+    public int insertReview(Review review) {
+        Jdbi jdbi = null;
+        try {
+            jdbi = DBConect.get();
+        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            return jdbi.withHandle(handle -> {
+                return handle.createUpdate("INSERT INTO review (UserID, ProductID, Rating, ReviewText, ReviewDate, OrderID) " +
+                                "VALUES (:userId, :productId, :rating, :reviewText, :reviewDate, :orderId)")
+                        .bind("userId", review.getUserId())
+                        .bind("productId", review.getProductId())
+                        .bind("rating", review.getRating())
+                        .bind("reviewText", review.getReviewText())
+                        .bind("reviewDate", review.getReviewDate())
+                        .bind("orderId", review.getOrderId())
+                        .execute();
+            });
+        } catch (UnableToExecuteStatementException e) {
+            Throwable cause = e.getCause();
+            if (cause instanceof SQLIntegrityConstraintViolationException) {
+                return 0;
+            }
+           return 0;
+        }
 
     }
 
