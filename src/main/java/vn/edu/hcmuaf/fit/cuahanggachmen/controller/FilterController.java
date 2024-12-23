@@ -22,17 +22,18 @@ public class FilterController extends HttpServlet {
         String manufacturers = request.getParameter("nsx");
         String size = request.getParameter("size");
         String price = request.getParameter("price");
+        String category = request.getParameter("category");
+        String material = request.getParameter("material");
         String currentPage = request.getParameter("page");
         String pageSize = request.getParameter("pageSize");
         String sort = request.getParameter("sort");
 
-        String[] prices = AjaxParseRequest.parse(price);
-        String[] sizes = AjaxParseRequest.parse(size);
-        String[] manufactures = AjaxParseRequest.parse(manufacturers);
 
         productFilter.setPriceRanges(AjaxParseRequest.parse(price));
         productFilter.setSizes(AjaxParseRequest.parse(size));
         productFilter.setOrigins(AjaxParseRequest.parse(manufacturers));
+        productFilter.setCategory(AjaxParseRequest.parse(category));
+        productFilter.setMaterial(AjaxParseRequest.parse(material));
         productFilter.setPageSize(AjaxParseRequest.parseInt(pageSize));
         productFilter.setPage(AjaxParseRequest.parseInt(currentPage));
         productFilter.setSort(AjaxParseRequest.parseInt(sort));

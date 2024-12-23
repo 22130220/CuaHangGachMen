@@ -6,6 +6,8 @@ function loadProducts() {
     const priceRanges = [];
     const sizes = [];
     const origins = [];
+    const category = [];
+    const material = [];
     let sortItem = $("#sort").val();
 
     $("input[name='priceRange']:checked").each(function() {
@@ -20,8 +22,18 @@ function loadProducts() {
         origins.push($(this).val());
     });
 
+    $("input[name='material']:checked").each(function() {
+        material.push($(this).val());
+    });
+
+    $("input[name='category']:checked").each(function() {
+        category.push($(this).val());
+    });
+
     const priceRangesJson = JSON.stringify(priceRanges);
     const sizesRangesJson = JSON.stringify(sizes);
+    const categoryJson = JSON.stringify(category);
+    const materialJson = JSON.stringify(material);
     const nsxJson = JSON.stringify(origins);
 
 
@@ -32,6 +44,8 @@ function loadProducts() {
             price: priceRangesJson,
             size: sizesRangesJson,
             nsx: nsxJson,
+            category : categoryJson,
+            material : materialJson,
             page: currentPage,
             pageSize: pageSize,
             sort : sortItem
