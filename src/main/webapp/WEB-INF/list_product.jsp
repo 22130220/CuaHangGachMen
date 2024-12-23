@@ -331,40 +331,17 @@
                             Sắp xếp theo
                         </label>
                         <select name="sort" id="sort">
-                            <option value="new">Mới cập nhật</option>
-                            <option value="asc">Giá tăng dần</option>
-                            <option value="desc">Giá giảm dần</option>
+                            <option value="1" selected>Từ A-Z</option>
+                            <option value="2">Giá tăng dần</option>
+                            <option value="3">Giá giảm dần</option>
                         </select>
                     </div>
                 </div>
                 <div class="product-list" id="product_list">
-                    <c:forEach items="${list}" var="item">
-                        <div class="product-card">
-                            <a href="pdetail?pid=${item.id}" class="product-card-link">
-                            <div class="card-img">
-                                <img src="${item.imgThumbnail}" alt="">
-                            </div>
-                            <div class="card-title">
-                                <span><c:out value="${item.name}"/></span>
-                            </div>
-                            <div class="card-price"> ${item.pricePerBox} Vnđ/hộp</div>
-                            </a>
-                            <div class="button-gr">
-                                <button class="add-cart-button btn-left">
-                                    <a href="pdetail?pid=${item.id}">Xem chi tiết</a>
-                                </button>
-                                <button class="buy-now btn-right">
-                                    <a href="giohang.html"><i class="fa-solid fa-plus fa-lg"></i></a>
-                                </button>
-                            </div>
-                        </div>
-
-
-                    </c:forEach>
                 </div>
                 <div class="pagination">
                     <div class="fui-roundedFull-pagination">
-                        <ul class="pagination-list">
+                        <ul class="pagination-list" id="pagination">
                             <li class="pagination-item btn-prev">
                                 <a href="#" class="pagination-link">
                                     <svg

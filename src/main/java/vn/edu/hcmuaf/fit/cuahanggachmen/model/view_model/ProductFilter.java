@@ -9,7 +9,27 @@ public class ProductFilter {
     private List<Integer[]> priceRanges = new ArrayList<>();
     private int[] sizes = null;
     private int[] origins = null;
+    private int page;
+    private int pageSize;
+    private int totalPages;
 
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
+    private int sort;
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
 
     public List<Integer[]> getPriceRanges() {
         return priceRanges;
@@ -25,6 +45,22 @@ public class ProductFilter {
 
     public boolean haveOriginsFilter() {
         return origins != null;
+    }
+
+    public void setPageSize(int value) {
+        pageSize = value;
+    }
+
+    public void setPage(int value) {
+        page = value;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public int getPage() {
+        return page;
     }
 
     public void setPriceRanges(String[] priceRanges) {
