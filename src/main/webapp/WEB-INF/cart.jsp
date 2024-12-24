@@ -14,16 +14,16 @@
             href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/cacthanhphancodinh.css">
     <!-- Thêm favicon -->
     <link
             rel="icon"
             type="image/x-icon"
-            href="./assets/icons/logo2_no_text.svg"
+            href="/assets/icons/logo2_no_text.svg"
 
     />
-    <link rel="stylesheet" href="./assets/css/giohang.css">
+    <link rel="stylesheet" href="/assets/css/giohang.css">
 </head>
 <body>
 
@@ -34,7 +34,7 @@
             <!-- Logo -->
             <a href="./index.html">
                 <img
-                        src="./assets/icons/logo2.svg"
+                        src="/assets/icons/logo2.svg"
                         alt="Logo"
                         class="logo"
                 />
@@ -233,7 +233,7 @@
     </div>
 </div>
 
-<script src="./assets/js/congtrusaochep.js"></script>
+<script src="/assets/js/congtrusaochep.js"></script>
 
 <div class="gioithieuuytin">
     <div class="info">
@@ -269,7 +269,7 @@
                 <!-- Logo -->
                 <a href="#" class="logo footer__logo">
                     <img
-                            src="./assets/icons/logo2_2.svg"
+                            src="/assets/icons/logo2_2.svg"
                             alt="grocerymart"
                             class="logo__img"
                     />

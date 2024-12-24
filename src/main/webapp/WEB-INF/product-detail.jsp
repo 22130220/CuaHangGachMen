@@ -9,13 +9,13 @@
     <title>Gạch 80X80 Catalan 80112</title>
 
     <!-- Reset CSS -->
-    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/reset.css" />
 
     <!-- Thêm favicon -->
     <link
             rel="icon"
             type="image/x-icon"
-            href="./assets/icons/logo2_no_text.svg"
+            href="/assets/icons/logo2_no_text.svg"
     />
 
     <!-- Nhúng phông chữ -->
@@ -48,15 +48,15 @@
         }
     </style>
 
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <link rel="stylesheet" href="./assets/css/banner.css" />
-    <link rel="stylesheet" href="./assets/css/danhmucgachmen.css" />
-    <link rel="stylesheet" href="./assets/css/popular.css" />
-    <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css" />
-    <link rel="stylesheet" href="./assets/css/dropdown_user_menu.css">
-    <link rel="stylesheet" href="./assets/css/product-detail.css">
-    <link rel="stylesheet" href="./assets/css/breadcrumb.css">
-    <link rel="stylesheet" href="./assets/css/product-card.css">
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/banner.css" />
+    <link rel="stylesheet" href="/assets/css/danhmucgachmen.css" />
+    <link rel="stylesheet" href="/assets/css/popular.css" />
+    <link rel="stylesheet" href="/assets/css/cacthanhphancodinh.css" />
+    <link rel="stylesheet" href="/assets/css/dropdown_user_menu.css">
+    <link rel="stylesheet" href="/assets/css/product-detail.css">
+    <link rel="stylesheet" href="/assets/css/breadcrumb.css">
+    <link rel="stylesheet" href="/assets/css/product-card.css">
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
@@ -136,11 +136,11 @@
                                 <c:forEach items="${p.imgList}" var="lsImg">
                                     <img class="thumbnail active" src="${lsImg}">
                                 </c:forEach>
-<%--                                <img class="thumbnail active" src="./assets/img/gt04.webp">--%>
-<%--                                <img class="thumbnail" src="./assets/img/loaigach1.jpg">--%>
-<%--                                <img class="thumbnail" src="./assets/img/gachlatsanphobien3.jpg">--%>
-<%--                                <img class="thumbnail" src="./assets/img/gachoptuongphobien2.jpg">--%>
-<%--                                <img class="thumbnail" src="./assets/img/gachlatsanphobien3.jpg">--%>
+<%--                                <img class="thumbnail active" src="/assets/img/gt04.webp">--%>
+<%--                                <img class="thumbnail" src="/assets/img/loaigach1.jpg">--%>
+<%--                                <img class="thumbnail" src="/assets/img/gachlatsanphobien3.jpg">--%>
+<%--                                <img class="thumbnail" src="/assets/img/gachoptuongphobien2.jpg">--%>
+<%--                                <img class="thumbnail" src="/assets/img/gachlatsanphobien3.jpg">--%>
                             </div>
                         </div>
                         <img id=featured src="${p.imgList.isEmpty() ? " " : p.imgList.get(0)}">
@@ -281,10 +281,10 @@
                     </div>
 
                     <button class="like-slider-prev like-slider-btn" onclick="scrollToItemNextSmooth(1)">
-                        <img src="./assets/img/arrow-left.png" alt="">
+                        <img src="/assets/img/arrow-left.png" alt="">
                     </button>
                     <button class="like-slider-next like-slider-btn" onclick="scrollToItemPrevSmooth(1)">
-                        <img src="./assets/img/arrow-right.png" alt="">
+                        <img src="/assets/img/arrow-right.png" alt="">
                     </button>
                 </div>
             </div>
@@ -293,7 +293,7 @@
     </div>
 
 <jsp:include page="view_shared/header_footer/footer.jsp"/>
-<script src="./assets/js/comment_ajax.js"></script>
+<script src="/assets/js/comment_ajax.js"></script>
 
     <script type="text/javascript">
         let thumbnails = document.getElementsByClassName('thumbnail')
@@ -317,7 +317,7 @@
 
 
     </script>
-        <script src="./assets/js/activateDesInfo.js"></script>
+        <script src="/assets/js/activateDesInfo.js"></script>
         <script>
             function scrollToItemNextSmooth(index) {
                 const items = document.querySelectorAll('.like-slider > div');
@@ -363,7 +363,7 @@
     }
 
 </script>
-<script src="./assets/js/scrollTop.js"></script>
+<script src="/assets/js/scrollTop.js"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
