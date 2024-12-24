@@ -11,7 +11,7 @@
  Target Server Version : 80300 (8.3.0)
  File Encoding         : 65001
 
- Date: 24/12/2024 00:34:05
+ Date: 24/12/2024 09:34:51
 */
 
 SET NAMES utf8mb4;
@@ -32,8 +32,8 @@ CREATE TABLE `category`  (
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES (1, 'Gách lát sàn', b'1', '2024-12-19 14:20:58');
-INSERT INTO `category` VALUES (2, 'Gạch ốp tường', b'1', '2024-12-19 14:21:51');
+INSERT INTO `category` VALUES (1, 'GẠCH LÁT SÀN', b'1', '2024-12-24 09:16:14');
+INSERT INTO `category` VALUES (2, 'GẠCH ỐP TƯỜNG', b'1', '2024-12-24 09:12:43');
 
 -- ----------------------------
 -- Table structure for colors
@@ -811,8 +811,8 @@ CREATE TABLE `products`  (
   INDEX `fk_manufacturer`(`manufacturerId` ASC) USING BTREE,
   CONSTRAINT `fk_category` FOREIGN KEY (`categoryId`) REFERENCES `category` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_manufacturer` FOREIGN KEY (`manufacturerId`) REFERENCES `manufacturer` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_size` FOREIGN KEY (`sizeId`) REFERENCES `size` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `fk_material` FOREIGN KEY (`materialId`) REFERENCES `material` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `fk_material` FOREIGN KEY (`materialId`) REFERENCES `material` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `fk_size` FOREIGN KEY (`sizeId`) REFERENCES `size` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -935,6 +935,8 @@ INSERT INTO `review` VALUES (8, 3, 0, 'fsdfkjgdf', '2024-12-23 16:00:35', 1);
 INSERT INTO `review` VALUES (8, 10, 3, 'fdsgdfsf', '2024-12-23 16:22:28', 1);
 INSERT INTO `review` VALUES (8, 14, 0, 'fdsfsd', '2024-12-23 16:26:06', 1);
 INSERT INTO `review` VALUES (8, 22, 0, 'fkjdklgjklsjflksad', '2024-12-23 15:57:24', 1);
+INSERT INTO `review` VALUES (8, 47, 4, 'Hom nay an gi', '2024-12-24 09:31:48', 1);
+INSERT INTO `review` VALUES (8, 48, 3, 'Hôm nay chơi gi đây', '2024-12-24 09:33:32', 1);
 INSERT INTO `review` VALUES (8, 81, 0, 'Fame tao to', '2024-12-23 15:58:18', 1);
 INSERT INTO `review` VALUES (9, 1, 4, 'Dep dzai qua', '2024-12-20 14:25:34', 0);
 INSERT INTO `review` VALUES (9, 2, 0, 'cút đi hàng dỏm', '2024-12-23 16:07:10', 1);

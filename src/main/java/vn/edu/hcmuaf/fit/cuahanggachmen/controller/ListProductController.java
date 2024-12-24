@@ -22,6 +22,7 @@ public class ListProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String danhMuc = request.getParameter("danhmuc");
         CategoryDao categoryDao = new CategoryDao();
         MaterialDao materialDao = new MaterialDao();
         ManufacturerDao manufacturerDao  = new ManufacturerDao();
@@ -34,9 +35,18 @@ public class ListProductController extends HttpServlet {
             rs.put("material", materialDao.findAll());
             rs.put("manufacturer", manufacturerDao.findAll());
             rs.put("size", sizeDao.findAll());
+            Category category = new Category();
+            if(danhMuc != null) {
+                rs.put("categoryMain", categoryDao.findById(Integer.parseInt(danhMuc)));
+            } else {
+                category.setName("TẤT CẢ SẢN PHẨM");
+                category.setId(0);
+                rs.put("categoryMain", category);
+            }
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
+
 
         request.setAttribute("rs", rs);
         request.getRequestDispatcher("/WEB-INF/list_product.jsp").forward(request,response);

@@ -69,7 +69,7 @@
             <div class="fui-basic-breadcrumb breadcrumb-style">
                 <ul class="breadcrumb-list">
                     <li class="breadcrumb-item">
-                        <a href="index.html" class="breadcrumb-link">
+                        <a href="/" class="breadcrumb-link">
                             Trang chủ
                         </a>
                     </li>
@@ -88,7 +88,7 @@
                                     clip-rule="evenodd"
                             ></path>
                         </svg>
-                        <a href="list_product.html" class="breadcrumb-link">Danh mục gạch men</a>
+                        <a href="list-product" class="breadcrumb-link">Danh mục</a>
                     </li>
                     <li class="breadcrumb-item">
                         <svg
@@ -105,7 +105,7 @@
                                     clip-rule="evenodd"
                             ></path>
                         </svg>
-                        <a href="list_product.html" class="breadcrumb-link">Gạch men Catalan</a>
+                        <a href="list-product?danhmuc=${p.category.id}" class="breadcrumb-link"><c:out value="${p.category.name}"/> </a>
                     </li>
                     <li class="breadcrumb-item">
                         <svg
@@ -122,7 +122,7 @@
                                     clip-rule="evenodd"
                             ></path>
                         </svg>
-                        <a href="product-detail.html" class="breadcrumb-link">Gạch 80X80 Catalan 80112</a>
+                        <a href="#" class="breadcrumb-link"><c:out value="${p.name}"/></a>
                     </li>
                 </ul>
             </div>
@@ -252,7 +252,7 @@
                                             <li><input type="radio" name="rating" value="4">  ⭐ ⭐ ⭐ ⭐</li>
                                             <li><input type="radio" name="rating" value="5">  ⭐ ⭐ ⭐ ⭐ ⭐</li>
                                         </ul>
-                                        <a href="#" class="button-review" onclick="addReview()">Gửi</a>
+                                        <button class="button-review" onclick="addReview()">Gửi</button>
                                     </div>
                                 </div>
                             </div>
