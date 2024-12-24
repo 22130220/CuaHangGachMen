@@ -87,6 +87,8 @@ public class ProductDao {
 
         product.setLsColor(lsColor);
 
+        product.setCategory(new CategoryDao().findById(product.getCategoryId()));
+
         handle.close();
         return product;
     }

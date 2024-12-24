@@ -176,14 +176,14 @@
               <a href="list-product">DANH MỤC</a>
             </li>
             <li>
-              <a href="./list_product.html">GẠCH LÁT NỀN</a>
+              <a href="list-product?danhmuc=1">GẠCH LÁT SÀN</a>
             </li>
             <li>
-              <a href="./list_product.html">GẠCH ỐP TƯỜNG</a>
+              <a href="list-product?danhmuc=2">GẠCH ỐP TƯỜNG</a>
             </li>
 
             <li>
-              <a href="./list_product.html">GẠCH TRANG TRÍ</a>
+              <a href="list-product">GẠCH TRANG TRÍ</a>
             </li>
 
             <li>

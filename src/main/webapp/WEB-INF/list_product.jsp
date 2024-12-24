@@ -67,7 +67,7 @@
         <div class="fui-basic-breadcrumb breadcrumb-style">
             <ul class="breadcrumb-list">
                 <li class="breadcrumb-item">
-                    <a href="index.html" class="breadcrumb-link">
+                    <a href="/" class="breadcrumb-link">
                         Trang chủ
                     </a>
                 </li>
@@ -86,8 +86,8 @@
                                 clip-rule="evenodd"
                         ></path>
                     </svg>
-                    <a href="list_product.html" class="breadcrumb-link">
-                        Danh mục gạch men
+                    <a href="list-product" class="breadcrumb-link">
+                        Danh mục
                     </a>
                 </li>
                 <li class="breadcrumb-item">
@@ -105,8 +105,8 @@
                                 clip-rule="evenodd"
                         ></path>
                     </svg>
-                    <a href="#" class="breadcrumb-link">
-                        Gạch men Catalan
+                    <a href="list-product?danhmuc=${p.categoryMain.id}" class="breadcrumb-link">
+                        <c:out value="${p.categoryMain.name}"/>
                     </a>
                 </li>
             </ul>
@@ -169,10 +169,21 @@
                             <div class="filter-item">
                                 <div class="fui-checkbox-custom">
                                     <div class="input-wrap">
-                                        <input type="checkbox" name="category" value="${category.id}" id="${category.name}" class="input-checkbox filter" />
-                                        <span class="check-icon">
-                                    <i class="fa-solid fa-check"></i>
-                                 </span>
+                                        <c:choose>
+                                            <c:when test="${p.categoryMain.id == category.id}">
+                                                <input type="checkbox" name="category" value="${category.id}" id="${category.name}" class="input-checkbox filter" checked/>
+                                                <span class="check-icon">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <input type="checkbox" name="category" value="${category.id}" id="${category.name}" class="input-checkbox filter"/>
+                                                <span class="check-icon">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>
+                                            </c:otherwise>
+                                        </c:choose>
+
                                     </div>
                                     <label class="label s-12 cl-brown" for="${category.name}"><c:out value="${category.name}"/></label>
                                 </div>
@@ -233,7 +244,7 @@
                 </div>
             </div>
             <div class="ls-product">
-                <div class="panel-title cl-brown s-18 bold"> GẠCH ỐP LÁT CATALAYN</div>
+                <div class="panel-title cl-brown s-18 bold"> <c:out value="${p.categoryMain.name}" /></div>
                 <div class="panel-title view bg-brown cl-white s-16 normal">
                     <div class="view-type">
                         <div class="view-func view-grid">

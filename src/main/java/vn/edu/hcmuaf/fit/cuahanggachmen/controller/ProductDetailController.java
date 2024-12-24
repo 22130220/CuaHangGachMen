@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Category;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 
 import java.io.IOException;

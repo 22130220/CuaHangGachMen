@@ -25,7 +25,7 @@ public class Product implements Serializable{
     private int materialId;
     private int manufacturerId;
     private String imgThumbnail;
-
+    private Category category;
 
     private List<String> imgList = null;
 
@@ -179,6 +179,14 @@ public class Product implements Serializable{
 
     public void setManufacturerId(int manufacturerId) {
         this.manufacturerId = manufacturerId;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getImgThumbnail() {
