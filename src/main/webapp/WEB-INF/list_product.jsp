@@ -4,20 +4,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="../assets/css/product-card.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/css/product-card.css"/>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gạch men Catalan</title>
 
     <!-- Reset CSS -->
-    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/reset.css" />
 
 
     <!-- Thêm favicon -->
     <link
             rel="icon"
             type="image/x-icon"
-            href="./assets/icons/logo2_no_text.svg"
+            href="/assets/icons/logo2_no_text.svg"
     />
 
     <!-- Nhúng phông chữ -->
@@ -43,17 +43,17 @@
             referrerpolicy="no-referrer"
     ></script>
 
-    <link rel="stylesheet" href="./assets/css/banner.css" />
-    <link rel="stylesheet" href="./assets/css/danhmucgachmen.css" />
-    <link rel="stylesheet" href="./assets/css/popular.css" />
-    <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css" />
-    <link rel="stylesheet" href="./assets/css/dropdown_user_menu.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./assets/css/breadcrumb.css">
-    <link rel="stylesheet" href="./assets/css/pagination.css">
-    <link rel="stylesheet" href="./assets/css/list_product.css">
-    <link rel="stylesheet" href="./assets/css/checkbox.css">
-    <link rel="stylesheet" href="./assets/css/product-card.css">
+    <link rel="stylesheet" href="/assets/css/banner.css" />
+    <link rel="stylesheet" href="/assets/css/danhmucgachmen.css" />
+    <link rel="stylesheet" href="/assets/css/popular.css" />
+    <link rel="stylesheet" href="/assets/css/cacthanhphancodinh.css" />
+    <link rel="stylesheet" href="/assets/css/dropdown_user_menu.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/breadcrumb.css">
+    <link rel="stylesheet" href="/assets/css/pagination.css">
+    <link rel="stylesheet" href="/assets/css/list_product.css">
+    <link rel="stylesheet" href="/assets/css/checkbox.css">
+    <link rel="stylesheet" href="/assets/css/product-card.css">
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
@@ -333,7 +333,7 @@
 
 <jsp:include page="view_shared/header_footer/footer.jsp"/>
 
-<script src="./assets/js/scrollTop.js"></script>
-<script src="./assets/js/filterItem.js"></script>
+<script src="/assets/js/scrollTop.js"></script>
+<script src="/assets/js/filterItem.js"></script>
 </body>
 </html>
