@@ -40,8 +40,10 @@
     <link rel="stylesheet" href="/assets/css/admin_addproduct.css">
     <link rel="stylesheet" href="/assets/css/notification.css">
     <link rel="stylesheet" href="/assets/css/arccordion.css">
-    <!-- CKeditor 5 -->
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.css" />
+    <!-- CKeditor 4 -->
+    <script src="/assets/ckeditor/ckeditor.js"></script>
+    <script src="/assets/ckfinder/ckfinder.js"></script>
+
 
     <style>
         div.container {
@@ -52,97 +54,7 @@
 
 <body>
 <div class="admin-container grid-layout">
-    <div class="header grid-item header-grid">
-        <div class="logo">
-            <img src="/assets/icons/logo_2_white.svg" alt="">
-        </div>
-        <div class="search-func">
-            <div class="fui-input-with-icon">
-                <input class="input" type="text" placeholder="fastui@gmail.com" />
-                <span class="icon f-s-12">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </span>
-            </div>
-        </div>
-        <div class="signout">
-            <div class="logout-icon icon-hover">
-                <i class="fa-solid fa-table-list fa-2x"></i>
-            </div>
-            <div class="logout-icon icon-hover" onclick="toggleNotifi()">
-                <i class="fa-regular fa-bell fa-2x"></i>
-            </div>
-            <div class="logout-icon icon-hover">
-                <i class="fa-solid fa-arrow-right-from-bracket fa-2x"></i>
-            </div>
-        </div>
-        <div class="acount-info">
-            <i class="fa-regular fa-circle-user fa-2x"></i>
-            <div class="account-label">
-                <p class="text text-name"> Tạ Hoàng Phúc</p>
-                <p class="text text-permission"> Admin</p>
-            </div>
-        </div>
-
-    </div>
-    <div class="sidebar grid-item sidebar-grid">
-        <a href="admin_dashboard.jsp" class="sidebar-button .has-icon">
-            <div class="sidebar-icon">
-                <i class="fa-solid fa-house-user"></i>
-            </div>
-            <p class="text">
-                Dashboard
-            </p>
-        </a>
-        <a href="admin_manageproduct.jsp" class="sidebar-button">
-            <div class="sidebar-icon">
-                <i class="fa-solid fa-table-list"></i>
-            </div>
-            <p class="text">
-                Quản lý sản phẩm
-            </p>
-        </a>
-        <a href="admin_addproduct.html" class="sidebar-button">
-            <div class="sidebar-icon">
-                <i class="fa-regular fa-square-plus"></i>
-            </div>
-            <p class="text">
-                Thêm sản phẩm
-            </p>
-        </a>
-        <a href="admin_manageCategory.html" class="sidebar-button">
-            <div class="sidebar-icon">
-                <i class="fa-solid fa-layer-group"></i>
-            </div>
-            <p class="text">
-                Quản lý danh mục
-            </p>
-        </a>
-        <a href="admin_productelement.html" class="sidebar-button">
-            <div class="sidebar-icon">
-                <i class="fa-solid fa-circle-info"></i>
-            </div>
-            <p class="text">
-                Quản lý thành phần
-            </p>
-        </a>
-        <a href="admin_manageorder.html" class="sidebar-button">
-            <div class="sidebar-icon">
-                <i class="fa-solid fa-arrow-down-up-across-line"></i>
-            </div>
-            <p class="text">
-                Quản lý đơn hàng
-            </p>
-        </a>
-        <a href="admin_manageuser.html" class="item5 sidebar-button">
-            <div class="sidebar-icon">
-                <i class="fa-solid fa-user-tag"></i>
-            </div>
-            <p class="text">
-                Quản lý khách hàng
-            </p>
-        </a>
-
-    </div>
+    <jsp:include page="view_shared/admin/admin-grid.jsp"/>
     <div class="content grid-item content-grid">
         <div class="main-grid">
             <nav class="navbar tag-line _4c _1r">
@@ -152,11 +64,11 @@
                         <div class="breadcumb-icon f-s-25">
                             <i class="fa-regular fa-square-plus"></i>
                         </div>
-                        <p class="f-bold f-s-25 breadcumb-text"> Thêm sản phẩm </p>
+                        <p class="f-bold f-s-25 breadcumb-text"> <c:out value="${message}"/> </p>
                     </div>
                 </div>
                 <div class="funcproduct">
-                    <a href="#" class="button bg_green f-cl-white">Thêm</a>
+                    <a href="#" class="button bg_green f-cl-white"> <c:out value="${operation}"/></a>
                 </div>
             </nav>
             <div class="options card _1c 10r gap-10">
@@ -190,71 +102,86 @@
                     <div class="product-name _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productname" class="f-bold f-s-14 f-cl-black">Tên sản phẩm</label>
-                            <input type="text" name="name" placeholder="Nhập tên sản phẩm" class="input input-bordered f-s-14" id="productname" autocomplete="off"/>
+                            <input type="text" name="name" placeholder="Nhập tên sản phẩm" value="${product.name}" class="input input-bordered f-s-14" id="productname" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="poduct-quantity _3c">
                         <div class="fui-basic-input flex-column gap-6">
-                            <label for="producttag" class="f-bold f-s-14 f-cl-black">Kích thước</label>
-                            <input type="text" name="name" placeholder="Nhập thẻ" class="input input-bordered f-s-14" id="producttag" autocomplete="off"/>
+                            <label for="size" class="f-bold f-s-14 f-cl-black">Kích thước</label>
+                            <select name="size" id="size" class="input input-bordered f-s-14">
+                                <c:forEach items="${sizes}" var="size">
+                                    <c:choose>
+                                        <c:when test="${product.sizeId == size.id}">
+                                            <option value="${size.id}" selected><c:out value="${size.name}"/></option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${size.id}"><c:out value="${size.name}"/></option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </select>
                         </div>
                     </div>
                     <div class="poduct-quantity _1c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productquantity" class="f-bold f-s-14 f-cl-black">Số lượng</label>
-                            <input type="text" name="name" placeholder="Nhập số lượng" class="input input-bordered f-s-14" id="productquantity" autocomplete="off"/>
+                            <input type="text" name="quantity" placeholder="Nhập số lượng" value="${product.quantityPerBox}" class="input input-bordered f-s-14" id="productquantity" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="product-price _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productprice" class="f-bold f-s-14 f-cl-black">Giá Sản phẩm (1 hộp)</label>
-                            <input type="text" name="name" placeholder="Nhập giá" class="input input-bordered f-s-14" id="productprice" autocomplete="off"/>
-                        </div>
-                    </div>
-                    <div class="poduct-madewhere _4c">
-                        <div class="fui-basic-input flex-column gap-6">
-                            <label for="poductmadewhere" class="f-bold f-s-14 f-cl-black"> Nơi sản xuất</label>
-                            <select name="" id="poductmadewhere" class="input input-bordered f-s-14">
-                                <option value="0"></option>
-                                <option value="1">Việt Nam</option>
-                                <option value="2">Trung Quốc</option>
-                                <option value="3">Châu Âu</option>
-                            </select>
+                            <input type="text" name="price" placeholder="Nhập giá" value="${product.pricePerBox}" class="input input-bordered f-s-14" id="productprice" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="poduct-form _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productform" class="f-bold f-s-14 f-cl-black"> Loại sản phẩm</label>
-                            <select name="" id="productform" class="input input-bordered f-s-14">
-                                <option value="0"></option>
-                                <option value="1">Gạch Lát Nền</option>
-                                <option value="2">Gạch Ốp Tường</option>
-                                <option value="3">Gạch Men</option>
-                                <option value="4">Gạch lau sàn</option>
+                            <select name="category" id="productform" class="input input-bordered f-s-14">
+                                <c:forEach items="${categories}" var="category">
+                                    <c:choose>
+                                        <c:when test="${product.categoryId == category.id}">
+                                            <option value="${category.id}" selected><c:out value="${category.name}"/></option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${category.id}"><c:out value="${category.name}"/></option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
                     <div class="poduct-material _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productmaterial" class="f-bold f-s-14 f-cl-black"> Chất liệu</label>
-                            <select name="" id="productmaterial" class="input input-bordered f-s-14">
-                                <option value=""></option>
-                                <option value="1">Gốm</option>
-                                <option value="2">Thuỷ tinh</option>
-                                <option value="3">Nhựa</option>
-                                <option value="4">Gỗ</option>
+                            <select name="material" id="productmaterial" class="input input-bordered f-s-14">
+                                <c:forEach items="${materials}" var="material">
+                                    <c:choose>
+                                        <c:when test="${product.materialId == material.id}">
+                                            <option value="${material.id}" selected><c:out value="${material.name}"/></option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${material.id}"><c:out value="${material.name}"/></option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
                     <div class="poduct-manufacturer _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productmanufacturer" class="f-bold f-s-14 f-cl-black"> Nhà cung cấp</label>
-                            <select name="" id="productmanufacturer" class="input input-bordered f-s-14">
-                                <option value=""></option>
-                                <option value="1">Catalan</option>
-                                <option value="2">Vitto</option>
-                                <option value="3">Mikado</option>
-                                <option value="4">Xsmart - Catalan</option>
+                            <select name="manufacturer" id="productmanufacturer" class="input input-bordered f-s-14">
+                                <c:forEach items="${manufacturers}" var="manufacturer">
+                                    <c:choose>
+                                        <c:when test="${product.manufacturerId == manufacturer.id}">
+                                            <option value="${manufacturer.id}" selected><c:out value="${manufacturer.name}"/></option>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <option value="${manufacturer.id}"><c:out value="${manufacturer.name}"/></option>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -513,6 +440,10 @@
 <script src="/assets/js/notification.js"></script>
 <script src="/assets/js/img-uploading.js"></script>
 <script src="/assets/js/accordion.js"></script>
+<script>
+    var editor = CKEDITOR.replace('editor');
+    CKFinder.setupCKEditor(editor, 'assets/ckfinder/');
+</script>
 </body>
 
 </html>
