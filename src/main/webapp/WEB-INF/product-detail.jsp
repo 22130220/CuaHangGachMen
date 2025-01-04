@@ -186,14 +186,26 @@
 
                     <div class="cart">
                         <div class="cart-label">
-                            <div class="box-quantity input-sample border-type">
-                                <label for="quantity">Số lượng</label>
-                                <span class="seperate">|</span>
-                                <input type="number" class="quantity " value="1" id="quantity">
-                            </div>
-                            <div class="add-cart">
-                                <button class="input-sample add-cart-btn">Thêm vào giỏ</button>
-                            </div>
+                            <!-- Form submit đến /add-to-cart -->
+                            <form action="${pageContext.request.contextPath}/add-to-cart" method="post" onsubmit="return checkColor();">
+                                <!-- productId -->
+                                <input type="hidden" name="productId" value="${p.id}">
+
+                                <input type="hidden" name="colorId" id="colorIdInput" value="${param.color}">
+
+
+                                <!-- Số lượng -->
+                                <div class="box-quantity input-sample border-type">
+                                    <label for="quantity">Số lượng</label>
+                                    <span class="seperate">|</span>
+                                    <input type="number" name="quantity" class="quantity" value="1" min="1" id="quantity">
+                                </div>
+
+                                <div class="add-cart">
+                                    <button type="submit" class="input-sample add-cart-btn" name="action" value="addToCart">Thêm vào giỏ</button>
+                                </div>
+                            </form>
+
 
                         </div>
                         <button class="input-sample buy-btn">Mua ngay</button>
@@ -389,6 +401,18 @@
 
 </script>
 
+<script>
+
+        function checkColor() {
+        const colorId = document.getElementById("colorIdInput").value;
+        if (!colorId) {
+        alert("Bạn vui lòng chọn màu trước khi thêm vào giỏ hàng");
+        return false; // Chặn không cho submit form
+    }
+        return true; // Cho phép submit form
+    }
+
+</script>
 
 </body>
 </html>

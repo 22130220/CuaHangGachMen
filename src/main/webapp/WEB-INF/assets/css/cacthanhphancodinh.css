@@ -18,7 +18,23 @@ border: 1px solid #2e2100ff;
     border-radius: 50%; /* Circular border */
     padding: 8px; /* Space between SVG and border */
 }
+.cart-count {
+  position: absolute;
+  top: 0;      /* Căn chỉnh toạ độ badge */
+  right: 0;    /* Căn chỉnh toạ độ badge */
+  transform: translate(25%, -25%);
+  /* Dịch chuyển badge ra ngoài icon một chút */
 
+  /* Trang trí */
+  background-color: #2e2100; /* Màu nền (đỏ) */
+  color: #ffffff;            /* Màu chữ (trắng) */
+  padding: 2px 6px;          /* Khoảng đệm cho badge */
+  border-radius: 50%;        /* Tạo hình tròn */
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 18px;           /* Để badge không bị quá nhỏ khi số = 1 */
+  text-align: center;        /* Canh giữa text */
+}
 /* Optional styling for hover effect */
 .cart-button:hover {
     background-color: #2e2100ff;

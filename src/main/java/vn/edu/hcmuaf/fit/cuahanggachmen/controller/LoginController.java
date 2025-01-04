@@ -28,7 +28,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().invalidate();
+//        request.getSession().invalidate();
         HttpSession session = request.getSession(true);
         User user = null;
         String email = request.getParameter("email");
