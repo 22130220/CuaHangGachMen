@@ -61,7 +61,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
-<jsp:include page="view_shared/header_footer/header.jsp"/>
+<jsp:include page="../view_shared/header_footer/header.jsp"/>
 
 <input type="hidden" value="${p.id}" id="pid">
 
@@ -224,7 +224,7 @@
                         </div>
                         <div class="product-content" id="product-content">
                             <div class="content-detail des-content" id="des-content">
-                                <jsp:include page="${p.description}"/>
+                                <jsp:include page="/${p.description}"/>
 
                             </div>
                             <div class="content-detail spec-content" id="spec-content">
@@ -304,7 +304,7 @@
         </div>
     </div>
 
-<jsp:include page="view_shared/header_footer/footer.jsp"/>
+<jsp:include page="../view_shared/header_footer/footer.jsp"/>
 <script src="/assets/js/comment_ajax.js"></script>
 
     <script type="text/javascript">

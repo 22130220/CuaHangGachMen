@@ -58,7 +58,7 @@
 </head>
 <body>
 
-<jsp:include page="view_shared/header_footer/header.jsp"/>
+<jsp:include page="../view_shared/header_footer/header.jsp"/>
 
 <div class="slider">
     <div class="slides">
@@ -1589,12 +1589,12 @@
     </div>
 </div>
 
-<jsp:include page="view_shared/header_footer/footer.jsp"/>
+<jsp:include page="../view_shared/header_footer/footer.jsp"/>
 
 
-<script src="assets/js/chuyendoicacnut.js"></script>
-<script src="assets/js/left_right.js"></script>
-<script src="assets/js/slider.js"></script>
-<script src="assets/js/scrollTop.js"></script>
+<script src="../assets/js/chuyendoicacnut.js"></script>
+<script src="../assets/js/left_right.js"></script>
+<script src="../assets/js/slider.js"></script>
+<script src="../assets/js/scrollTop.js"></script>
 </body>
 </html>

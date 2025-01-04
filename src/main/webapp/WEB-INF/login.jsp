@@ -15,7 +15,7 @@
     <link
             rel="icon"
             type="image/x-icon"
-            href="assets/icons/logo2_no_text.svg"
+            href="../assets/icons/logo2_no_text.svg"
     />
 
     <!-- Nhúng phông chữ -->
@@ -49,7 +49,7 @@
 <header>
     <a href="/">
         <div class="logo">
-            <img src="assets/icons/logo2.svg" alt="Logo Shop" />
+            <img src="../assets/icons/logo2.svg" alt="Logo Shop" />
         </div>
     </a>
 
