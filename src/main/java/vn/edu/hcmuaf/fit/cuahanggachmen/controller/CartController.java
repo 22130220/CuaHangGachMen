@@ -4,8 +4,10 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Cart;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebServlet(name = "CartController", value = "/cart")
 public class CartController extends HttpServlet {
@@ -13,13 +15,38 @@ public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-request.getRequestDispatcher("/WEB-INF/cart.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/cart.jsp").forward(request, response);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Lấy action
+        String action = request.getParameter("action");
 
+        HttpSession session = request.getSession();
+        Cart cart = (Cart) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new Cart();
+        }
+
+        if ("remove".equals(action)) {
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            String color = request.getParameter("color");
+            cart.removeItem(productId, color);
+        }
+
+        if ("update".equals(action)) {
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            String color = request.getParameter("color");
+            int newQuantity = Integer.parseInt(request.getParameter("quantity"));
+            cart.updateQuantity(productId, color, newQuantity);
+
+
+        }
+
+        session.setAttribute("cart", cart);
+        response.sendRedirect("cart");
     }
 }

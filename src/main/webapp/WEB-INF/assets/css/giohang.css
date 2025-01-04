@@ -94,6 +94,7 @@ input[type="number"] {
     font-size: 14px;
     margin-bottom: 5px;
     color: #666;
+    margin-top: 10px;
   }
   
   .breadcrumb a {

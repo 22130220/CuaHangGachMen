@@ -21,6 +21,22 @@ public class ColorDao {
         );
     }
 
+    public Color findById(int id)
+            throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+
+
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM colors WHERE ID = :id")
+                        .bind("id", id)
+                        .mapToBean(Color.class)
+                        .findOne() // trả về Optional<Color>
+                        .orElse(null) // Nếu không có, trả về null
+        );
+    }
+
+
+
     // Lấy tất cả các color
     public List<Color> getAllColors() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();

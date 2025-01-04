@@ -1,0 +1,162 @@
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin giao hàng</title>
+    <link rel="stylesheet" href="./assets/css/payment_method.css">
+    <!-- Nhúng phông chữ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet"
+    />
+</head>
+<body>
+<div class="container">
+    <div class="main-content">
+        <div class="hdne">
+            <h1 class="brand">Cửa hàng gạch men</h1>
+            <nav class="breadcrumb">
+                <a href="cart">Giỏ hàng</a> >
+                <a href="#">Thông tin giao hàng</a> >
+                <span>Phương thức thanh toán</span>
+            </nav>
+        </div>
+        <section class="section">
+            <h2>Phương thức vận chuyển</h2>
+            <div class="shipping-option">
+                <input type="radio" id="shipping" name="shipping">
+                <label for="shipping">
+                    <span class="radio-icon"></span>
+                    Phí vận chuyển
+                </label>
+                <span class="price">0₫</span>
+            </div>
+        </section>
+        <section class="section">
+            <h2>Phương thức thanh toán</h2>
+            <div class="payment-option">
+                <div>
+                    <input type="checkbox" id="cod" name="payment" >
+                </div>
+
+                <div>
+                    <img src="https://hstatic.net/0/0/global/design/seller/image/payment/cod.svg?v=6" alt="COD" >
+                </div>
+
+                <div> Thanh toán khi giao hàng (COD) </div>
+            </div>
+            <div class="payment-option">
+                <div><input type="checkbox" id="chuyenkhoan" name="payment"  ></div>
+                <div>
+                    <img src="https://hstatic.net/0/0/global/design/seller/image/payment/other.svg?v=6" alt="Ngân hàng">
+                </div>
+
+                <div>Chuyển khoản qua ngân hàng</div>
+            </div>
+            <div class="bank-info" id="bank-info" style="display: none;">
+                <p>Quý khách vui lòng chuyển khoản trước số tiền cần thanh toán, sau đó chúng tôi tiến hành giao hàng theo thỏa thuận hoặc hợp đồng với Quý khách.</p>
+                <p><strong>Thông tin tài khoản:</strong></p>
+                <p><strong>0376272024 - BIDV CN HCM</strong></p>
+                <p><strong>Công ty CP Cửa Hàng Gạch Men</strong></p>
+                <p><strong>Nội dung chuyển khoản:</strong> Ghi rõ Số điện thoại hoặc Số đơn hàng</p>
+            </div>
+        </section>
+
+        <div class="ftne">
+            <a href="cart" class="link">Giỏ hàng</a>
+            <a href="./complete_order.html" class="submit-button">Hoàn tất đơn hàng</a>
+        </div>
+    </div>
+    <aside class="sidebar">
+        <ul class="cart-items">
+            <li class="chitietsanphamthanhtoan">
+                <div class="image-wrapper">
+                    <img class="img_small" src="https://sieuthigachmen.com/wp-content/uploads/2024/06/GACH-AN-DO-300x300.jpg" alt="">
+                    <span class="badge">1</span>
+                </div>
+                <span>Gạch lát nền cao cấp <br> MÀU ĐỎ  <br>   SỐ LƯỢNG: 1 HỘP </span>
+                <span>794,000đ</span>
+                <button class="btn_xoasp">x</button>
+            </li>
+
+            <li class="chitietsanphamthanhtoan">
+                <div class="image-wrapper">
+                    <img class="img_small" src="https://sieuthigachmen.com/wp-content/uploads/2024/06/GACH-AN-DO-300x300.jpg" alt="">
+                    <span class="badge">4</span>
+                </div>
+                <span>Gạch lát nền cao cấp</span>
+                <span>794,000đ</span>
+                <button class="btn_xoasp">x</button>
+            </li>
+            <li class="chitietsanphamthanhtoan">
+                <div class="image-wrapper">
+                    <img class="img_small" src="https://sieuthigachmen.com/wp-content/uploads/2024/06/GACH-AN-DO-300x300.jpg" alt="">
+                    <span class="badge">1</span>
+                </div>
+                <span>Gạch lát nền cao cấp</span>
+                <span>159,200đ</span>
+                <button class="btn_xoasp">x</button>
+            </li>
+
+            <li class="chitietsanphamthanhtoan">
+                <div class="image-wrapper">
+                    <img class="img_small" src="https://sieuthigachmen.com/wp-content/uploads/2024/06/GACH-AN-DO-300x300.jpg" alt="">
+                    <span class="badge">1</span>
+                </div>
+
+
+                <span>Gạch lát nền cao cấp</span>
+                <span>159,200đ</span>
+                <button class="btn_xoasp">x</button>
+            </li>
+        </ul>
+        <div class="discount">
+            <input type="text" id="discount" placeholder="Nhập mã giảm giá">
+            <div class="btn-secondary">Sử dụng</div>
+        </div>
+        <hr>
+        <div class="price-summary">
+            <p>Tạm tính: 2,170,400đ</p>
+            <p>Phí vận chuyển: Miễn ship</p>
+            <p>Giảm giá: 50000đ </p>
+            <hr>
+            <h3>Tổng cộng: 2,170,400đ</h3>
+        </div>
+    </aside>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const codCheckbox = document.getElementById("cod");
+        const bankCheckbox = document.getElementById("chuyenkhoan");
+        const bankInfo = document.getElementById("bank-info");
+
+        // Xử lý sự kiện khi chọn "Chuyển khoản qua ngân hàng"
+        bankCheckbox.addEventListener("change", function () {
+            if (bankCheckbox.checked) {
+                codCheckbox.checked = false; // Bỏ chọn COD
+                bankInfo.style.display = "block"; // Hiển thị thông tin ngân hàng
+            } else {
+                bankInfo.style.display = "none"; // Ẩn thông tin ngân hàng
+            }
+        });
+
+        // Xử lý sự kiện khi chọn "COD"
+        codCheckbox.addEventListener("change", function () {
+            if (codCheckbox.checked) {
+                bankCheckbox.checked = false; // Bỏ chọn ngân hàng
+                bankInfo.style.display = "none"; // Ẩn thông tin ngân hàng
+            }
+        });
+    });
+
+
+</script>
+</body>
+</html>
+
