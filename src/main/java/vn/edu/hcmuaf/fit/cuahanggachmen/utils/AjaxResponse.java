@@ -3,7 +3,9 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.utils;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ReviewDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.ProductSpec;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Review;
 
 import java.sql.SQLException;
@@ -23,6 +25,14 @@ public class AjaxResponse {
 
     public void addReviewList(List<Review> reviewList) {
         this.text.add(String.format("\"review\":%s", reviewListToJson(reviewList)));
+    }
+
+    public void addColorList(List<Color> colorList) {
+        this.text.add(String.format("\"colors\":%s", colorListToJson(colorList)));
+    }
+
+    public void addProductSpecList(List<ProductSpec> productSpecList) {
+        this.text.add(String.format("\"productSpecs\":%s", productSpecListToJson(productSpecList)));
     }
     public void addInt(String fieldName, int value) {
         this.text.add(String.format("\"%s\":%d", fieldName, value));
@@ -83,6 +93,39 @@ public class AjaxResponse {
 
             // Thêm đối tượng review vào mảng JSON
             jsonArrayJoiner.add(jsonReviewJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
+    private String productSpecListToJson(List<ProductSpec> productSpecList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (ProductSpec pSpec : productSpecList) {
+            StringJoiner jsonReviewJoiner = new StringJoiner(",", "{", "}");
+
+            jsonReviewJoiner.add(String.format("\"productId\":%d", pSpec.getProcuctId()))
+                    .add(String.format("\"specId\":%d", pSpec.getSpecId()))
+                    .add(String.format("\"specName\":\"%s\"", pSpec.getSpecName()))
+                    .add(String.format("\"value\":\"%s\"", pSpec.getValue()));
+
+            // Thêm đối tượng review vào mảng JSON
+            jsonArrayJoiner.add(jsonReviewJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
+    private String colorListToJson(List<Color> colorSpecList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (Color cl : colorSpecList) {
+            StringJoiner jsonColorJoiner = new StringJoiner(",", "{", "}");
+
+            jsonColorJoiner.add(String.format("\"Id\":%d", cl.getID()))
+                    .add(String.format("\"Name\":\"%s\"", cl.getName()));
+
+            jsonArrayJoiner.add(jsonColorJoiner.toString());
         }
 
         return jsonArrayJoiner.toString();

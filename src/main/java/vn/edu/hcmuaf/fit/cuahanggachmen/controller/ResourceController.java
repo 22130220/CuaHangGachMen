@@ -21,7 +21,7 @@ public class ResourceController extends HttpServlet {
         }
 
         // Xác định đường dẫn thực tế trong thư mục WEB-INF/resources
-        String realPath = getServletContext().getRealPath("/WEB-INF/assets" + resourcePath);
+        String realPath = getServletContext().getRealPath("/assets" + resourcePath);
         File resourceFile = new File(realPath);
 
         // Kiểm tra xem file có tồn tại không

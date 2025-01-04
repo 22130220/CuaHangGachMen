@@ -59,7 +59,7 @@
 </head>
 <body>
 
-<jsp:include page="view_shared/header_footer/header.jsp"/>
+<jsp:include page="../view_shared/header_footer/header.jsp"/>
 
 <c:set value="${rs.data}" var="p"/>
 
@@ -331,7 +331,7 @@
 
     </div>
 
-<jsp:include page="view_shared/header_footer/footer.jsp"/>
+<jsp:include page="../view_shared/header_footer/footer.jsp"/>
 
 <script src="/assets/js/scrollTop.js"></script>
 <script src="/assets/js/filterItem.js"></script>

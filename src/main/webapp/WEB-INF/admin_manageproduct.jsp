@@ -76,7 +76,7 @@
 
 <body>
     <div class="admin-container grid-layout">
-        <jsp:include page="view_shared/admin/admin-grid.jsp"/>
+        <jsp:include page="../view_shared/admin/admin-grid.jsp"/>
         <div class="content grid-item content-grid">
             <div class="main-grid">
                 <nav class="navbar tag-line _4c _1r">

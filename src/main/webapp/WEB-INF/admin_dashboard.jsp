@@ -42,7 +42,7 @@
 
 <body>
     <div class="admin-container grid-layout">
-        <jsp:include page="view_shared/admin/admin-grid.jsp"/>
+        <jsp:include page="../view_shared/admin/admin-grid.jsp"/>
         <div class="content grid-item content-grid">
             <div class="main-grid">
                 <div class="card _1c _2r">

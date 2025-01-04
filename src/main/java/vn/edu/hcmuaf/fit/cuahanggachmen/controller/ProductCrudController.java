@@ -54,7 +54,7 @@ public class ProductCrudController extends HttpServlet {
         request.setAttribute("manufacturers", manufacturers);
         request.setAttribute("materials", materials);
         request.setAttribute("operation", operation);
-        request.setAttribute("product", product);
+        request.setAttribute("p", product);
         request.setAttribute("message", message);
 
         request.getRequestDispatcher("/WEB-INF/admin_addproduct.jsp").forward(request, response);

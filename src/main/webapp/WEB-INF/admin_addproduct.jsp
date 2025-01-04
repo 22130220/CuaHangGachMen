@@ -40,10 +40,30 @@
     <link rel="stylesheet" href="/assets/css/admin_addproduct.css">
     <link rel="stylesheet" href="/assets/css/notification.css">
     <link rel="stylesheet" href="/assets/css/arccordion.css">
+
+
+    <!-- Thêm Datatable-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.0/css/buttons.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/2.1.0/css/select.dataTables.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/select/2.1.0/js/dataTables.select.js"></script>
+    <script src="https://cdn.datatables.net/select/2.1.0/js/select.dataTables.js"></script>
+
+
     <!-- CKeditor 4 -->
     <script src="/assets/ckeditor/ckeditor.js"></script>
-    <script src="/assets/ckfinder/ckfinder.js"></script>
-
 
     <style>
         div.container {
@@ -54,7 +74,9 @@
 
 <body>
 <div class="admin-container grid-layout">
-    <jsp:include page="view_shared/admin/admin-grid.jsp"/>
+    <jsp:include page="../view_shared/admin/admin-grid.jsp"/>
+    <input type="hidden" id="pid" value="${p.id}">
+    <input type="hidden" id="desUrl" value="${p.description}">
     <div class="content grid-item content-grid">
         <div class="main-grid">
             <nav class="navbar tag-line _4c _1r">
@@ -102,7 +124,7 @@
                     <div class="product-name _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productname" class="f-bold f-s-14 f-cl-black">Tên sản phẩm</label>
-                            <input type="text" name="name" placeholder="Nhập tên sản phẩm" value="${product.name}" class="input input-bordered f-s-14" id="productname" autocomplete="off"/>
+                            <input type="text" name="name" placeholder="Nhập tên sản phẩm" value="${p.name}" class="input input-bordered f-s-14" id="productname" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="poduct-quantity _3c">
@@ -111,7 +133,7 @@
                             <select name="size" id="size" class="input input-bordered f-s-14">
                                 <c:forEach items="${sizes}" var="size">
                                     <c:choose>
-                                        <c:when test="${product.sizeId == size.id}">
+                                        <c:when test="${p.sizeId == size.id}">
                                             <option value="${size.id}" selected><c:out value="${size.name}"/></option>
                                         </c:when>
                                         <c:otherwise>
@@ -125,13 +147,13 @@
                     <div class="poduct-quantity _1c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productquantity" class="f-bold f-s-14 f-cl-black">Số lượng</label>
-                            <input type="text" name="quantity" placeholder="Nhập số lượng" value="${product.quantityPerBox}" class="input input-bordered f-s-14" id="productquantity" autocomplete="off"/>
+                            <input type="text" name="quantity" placeholder="Nhập số lượng" value="${p.quantityPerBox}" class="input input-bordered f-s-14" id="productquantity" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="product-price _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productprice" class="f-bold f-s-14 f-cl-black">Giá Sản phẩm (1 hộp)</label>
-                            <input type="text" name="price" placeholder="Nhập giá" value="${product.pricePerBox}" class="input input-bordered f-s-14" id="productprice" autocomplete="off"/>
+                            <input type="text" name="price" placeholder="Nhập giá" value="${p.pricePerBox}" class="input input-bordered f-s-14" id="productprice" autocomplete="off"/>
                         </div>
                     </div>
                     <div class="poduct-form _4c">
@@ -140,7 +162,7 @@
                             <select name="category" id="productform" class="input input-bordered f-s-14">
                                 <c:forEach items="${categories}" var="category">
                                     <c:choose>
-                                        <c:when test="${product.categoryId == category.id}">
+                                        <c:when test="${p.categoryId == category.id}">
                                             <option value="${category.id}" selected><c:out value="${category.name}"/></option>
                                         </c:when>
                                         <c:otherwise>
@@ -157,7 +179,7 @@
                             <select name="material" id="productmaterial" class="input input-bordered f-s-14">
                                 <c:forEach items="${materials}" var="material">
                                     <c:choose>
-                                        <c:when test="${product.materialId == material.id}">
+                                        <c:when test="${p.materialId == material.id}">
                                             <option value="${material.id}" selected><c:out value="${material.name}"/></option>
                                         </c:when>
                                         <c:otherwise>
@@ -174,7 +196,7 @@
                             <select name="manufacturer" id="productmanufacturer" class="input input-bordered f-s-14">
                                 <c:forEach items="${manufacturers}" var="manufacturer">
                                     <c:choose>
-                                        <c:when test="${product.manufacturerId == manufacturer.id}">
+                                        <c:when test="${p.manufacturerId == manufacturer.id}">
                                             <option value="${manufacturer.id}" selected><c:out value="${manufacturer.name}"/></option>
                                         </c:when>
                                         <c:otherwise>
@@ -192,222 +214,237 @@
                             </label>
                             <textarea class="editor-label" name="editor" id="editor" cols="30" rows="10"></textarea>
                         </div>
+
+                    </div><div class="product-spec _4c">
+                    <div class="flex-column gap-6">
+                        <label for="specs" class="f-bold f-s-14 f-cl-black">
+                            Thông tin sản phẩm
+                        </label>
+                        <table id="specs" class="display compact" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Tên thông số</th>
+                                <th>Giá trị</th>
+                            </tr>
+                            </thead>
+                        </table>
                     </div>
-                    <div class="poduct-img-thumb _4c">
-                        <div class="flex-column gap-6">
-                            <p class="f-bold f-s-14 f-cl-black">Thêm thông số</p>
-                            <div class="fui-accordion-HL1">
-                                <div class="wrapBox">
-                                    <div class="boxTitle">
-                                        <span class="title">
-                                            <div class="fui-basic-input flex-column gap-6">
-                                             <select name="" id=""spec1 class="input f-s-14 accordion-input">
-                                                 <option value="0"></option>
-                                                <option value="2">Hoa văn</option>
-                                                <option value="3">Độ dày</option>
-                                                 <option value="4">Hoàn thiện</option>
-                                                 <option value="5">Áp dụng cho</option>
-                                            </select>
+                </div>
+<%--                    <div class="poduct-img-thumb _4c">--%>
+<%--                        <div class="flex-column gap-6">--%>
+<%--                            <p class="f-bold f-s-14 f-cl-black">Thêm thông số</p>--%>
+<%--                            <div class="fui-accordion-HL1">--%>
+<%--                                <div class="wrapBox">--%>
+<%--                                    <div class="boxTitle">--%>
+<%--                                        <span class="title">--%>
+<%--                                            <div class="fui-basic-input flex-column gap-6">--%>
+<%--                                             <select name="" id=""spec1 class="input f-s-14 accordion-input">--%>
+<%--                                                 <option value="0"></option>--%>
+<%--                                                <option value="2">Hoa văn</option>--%>
+<%--                                                <option value="3">Độ dày</option>--%>
+<%--                                                 <option value="4">Hoàn thiện</option>--%>
+<%--                                                 <option value="5">Áp dụng cho</option>--%>
+<%--                                            </select>--%>
 
-                                        </div>
-                                    </span>
-                                        <div class="boxIcon"><span class="icon icon-plus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
-              </svg></span><span class="icon icon-minus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
-              </svg></span></div>
-                                    </div>
-                                    <div class="boxContent">
-                                        <div class="fui-basic-input flex-column gap-6">
-                                            <label for="moretext1" class="f-bold f-s-14 f-cl-black">Nội dung</label>
-                                            <input type="text" name="name" placeholder="" class="input input-bordered f-s-14" id="moretext1" autocomplete="off"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="wrapBox">
-                                    <div class="boxTitle">
-                                        <span class="title">
-                                            <div class="fui-basic-input flex-column gap-6">
-                                             <select name="" id="spec2" class="input f-s-14 accordion-input">
-                                                 <option value="0"></option>
-                                                <option value="2">Hoa văn</option>
-                                                <option value="3">Độ dày</option>
-                                                 <option value="4">Hoàn thiện</option>
-                                                 <option value="5">Áp dụng cho</option>
-                                            </select>
+<%--                                        </div>--%>
+<%--                                    </span>--%>
+<%--                                        <div class="boxIcon"><span class="icon icon-plus">--%>
+<%--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--%>
+<%--                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>--%>
+<%--              </svg></span><span class="icon icon-minus">--%>
+<%--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--%>
+<%--                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>--%>
+<%--              </svg></span></div>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="boxContent">--%>
+<%--                                        <div class="fui-basic-input flex-column gap-6">--%>
+<%--                                            <label for="moretext1" class="f-bold f-s-14 f-cl-black">Nội dung</label>--%>
+<%--                                            <input type="text" name="name" placeholder="" class="input input-bordered f-s-14" id="moretext1" autocomplete="off"/>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                                <div class="wrapBox">--%>
+<%--                                    <div class="boxTitle">--%>
+<%--                                        <span class="title">--%>
+<%--                                            <div class="fui-basic-input flex-column gap-6">--%>
+<%--                                             <select name="" id="spec2" class="input f-s-14 accordion-input">--%>
+<%--                                                 <option value="0"></option>--%>
+<%--                                                <option value="2">Hoa văn</option>--%>
+<%--                                                <option value="3">Độ dày</option>--%>
+<%--                                                 <option value="4">Hoàn thiện</option>--%>
+<%--                                                 <option value="5">Áp dụng cho</option>--%>
+<%--                                            </select>--%>
 
-                                        </div>
-                                    </span>
-                                        <div class="boxIcon"><span class="icon icon-plus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
-              </svg></span><span class="icon icon-minus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
-              </svg></span></div>
-                                    </div>
-                                    <div class="boxContent">
-                                        <div class="fui-basic-input flex-column gap-6">
-                                            <label for="moretext2" class="f-bold f-s-14 f-cl-black">Nội dung</label>
-                                            <input type="text" name="name" placeholder="" class="input input-bordered f-s-14" id="moretext2" autocomplete="off"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="wrapBox">
-                                    <div class="boxTitle">
-                                        <span class="title">
-                                            <div class="fui-basic-input flex-column gap-6">
-                                             <select name="" id="spec3" class="input f-s-14 accordion-input">
-                                                 <option value="0"></option>
-                                                <option value="2">Hoa văn</option>
-                                                <option value="3">Độ dày</option>
-                                                 <option value="4">Hoàn thiện</option>
-                                                 <option value="5">Áp dụng cho</option>
-                                            </select>
+<%--                                        </div>--%>
+<%--                                    </span>--%>
+<%--                                        <div class="boxIcon"><span class="icon icon-plus">--%>
+<%--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--%>
+<%--                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>--%>
+<%--              </svg></span><span class="icon icon-minus">--%>
+<%--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--%>
+<%--                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>--%>
+<%--              </svg></span></div>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="boxContent">--%>
+<%--                                        <div class="fui-basic-input flex-column gap-6">--%>
+<%--                                            <label for="moretext2" class="f-bold f-s-14 f-cl-black">Nội dung</label>--%>
+<%--                                            <input type="text" name="name" placeholder="" class="input input-bordered f-s-14" id="moretext2" autocomplete="off"/>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                                <div class="wrapBox">--%>
+<%--                                    <div class="boxTitle">--%>
+<%--                                        <span class="title">--%>
+<%--                                            <div class="fui-basic-input flex-column gap-6">--%>
+<%--                                             <select name="" id="spec3" class="input f-s-14 accordion-input">--%>
+<%--                                                 <option value="0"></option>--%>
+<%--                                                <option value="2">Hoa văn</option>--%>
+<%--                                                <option value="3">Độ dày</option>--%>
+<%--                                                 <option value="4">Hoàn thiện</option>--%>
+<%--                                                 <option value="5">Áp dụng cho</option>--%>
+<%--                                            </select>--%>
 
-                                        </div>
-                                    </span>
-                                        <div class="boxIcon"><span class="icon icon-plus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
-              </svg></span><span class="icon icon-minus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
-              </svg></span></div>
-                                    </div>
-                                    <div class="boxContent">
-                                        <div class="fui-basic-input flex-column gap-6">
-                                            <label for="moretext3" class="f-bold f-s-14 f-cl-black">Nội dung</label>
-                                            <input type="text" name="name" placeholder="" class="input input-bordered f-s-14" id="moretext3" autocomplete="off"/>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-                    <div class="poduct-img-thumb _4c">
-                        <div class="flex-column gap-6">
-                            <p class="f-bold f-s-14 f-cl-black">Chọn ảnh đại diện</p>
-                            <div id="thumbnail" class="upload-area-container">
-                                <div class="upload-area">
-                                    <label class="custom-file-upload">
-                                        Chọn ảnh
-                                        <input type="file" accept="image/*" multiple style="display: none;">
-                                    </label>
-                                    <div class="image-preview"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="poduct-img-thumb _4c">
-                        <div class="flex-column gap-6">
-                            <p class="f-bold f-s-14 f-cl-black">Ảnh của từng loại màu</p>
-                            <div class="fui-accordion-HL1">
-                                <div class="wrapBox">
-                                    <div class="boxTitle">
-                                        <span class="title">
-                                            <div class="fui-basic-input flex-column gap-6">
-                                             <select name="" id="corlor1" class="input f-s-14 accordion-input">
-                                                 <option value="0"></option>
-                                                <option value="1">Xanh ngọc</option>
-                                                <option value="2">Trắng</option>
-                                                <option value="3">Cam</option>
-                                            </select>
+<%--                                        </div>--%>
+<%--                                    </span>--%>
+<%--                                        <div class="boxIcon"><span class="icon icon-plus">--%>
+<%--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--%>
+<%--                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>--%>
+<%--              </svg></span><span class="icon icon-minus">--%>
+<%--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--%>
+<%--                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>--%>
+<%--              </svg></span></div>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="boxContent">--%>
+<%--                                        <div class="fui-basic-input flex-column gap-6">--%>
+<%--                                            <label for="moretext3" class="f-bold f-s-14 f-cl-black">Nội dung</label>--%>
+<%--                                            <input type="text" name="name" placeholder="" class="input input-bordered f-s-14" id="moretext3" autocomplete="off"/>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                    <div class="poduct-img-thumb _4c">--%>
+<%--                        <div class="flex-column gap-6">--%>
+<%--                            <p class="f-bold f-s-14 f-cl-black">Chọn ảnh đại diện</p>--%>
+<%--                            <div id="thumbnail" class="upload-area-container">--%>
+<%--                                <div class="upload-area">--%>
+<%--                                    <label class="custom-file-upload">--%>
+<%--                                        Chọn ảnh--%>
+<%--                                        <input type="file" accept="image/*" multiple style="display: none;">--%>
+<%--                                    </label>--%>
+<%--                                    <div class="image-preview"></div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                    <div class="poduct-img-thumb _4c">--%>
+<%--                        <div class="flex-column gap-6">--%>
+<%--                            <p class="f-bold f-s-14 f-cl-black">Ảnh của từng loại màu</p>--%>
+<%--                            <div class="fui-accordion-HL1">--%>
+<%--                                <div class="wrapBox">--%>
+<%--                                    <div class="boxTitle">--%>
+<%--                                        <span class="title">--%>
+<%--                                            <div class="fui-basic-input flex-column gap-6">--%>
+<%--                                             <select name="" id="corlor1" class="input f-s-14 accordion-input">--%>
+<%--                                                 <option value="0"></option>--%>
+<%--                                                <option value="1">Xanh ngọc</option>--%>
+<%--                                                <option value="2">Trắng</option>--%>
+<%--                                                <option value="3">Cam</option>--%>
+<%--                                            </select>--%>
 
-                                        </div>
-                                    </span>
-                                        <div class="boxIcon"><span class="icon icon-plus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
-              </svg></span><span class="icon icon-minus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
-              </svg></span></div>
-                                    </div>
-                                    <div class="boxContent">
-                                        <div id="area1" class="upload-area-container">
-                                            <div class="upload-area">
-                                                <label class="custom-file-upload">
-                                                    Chọn ảnh
-                                                    <input type="file" accept="image/*" multiple style="display: none;">
-                                                </label>
-                                                <div class="image-preview"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="wrapBox">
-                                    <div class="boxTitle"><span class="title">
-                                        <div class="fui-basic-input flex-column gap-6">
-                                             <select name="" id="corlor2" class="input f-s-14 accordion-input">
-                                                 <option value="0"></option>
-                                                <option value="1">Xanh ngọc</option>
-                                                <option value="2">Trắng</option>
-                                                <option value="3">Cam</option>
-                                            </select>
+<%--                                        </div>--%>
+<%--                                    </span>--%>
+<%--                                        <div class="boxIcon"><span class="icon icon-plus">--%>
+<%--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--%>
+<%--                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>--%>
+<%--              </svg></span><span class="icon icon-minus">--%>
+<%--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--%>
+<%--                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>--%>
+<%--              </svg></span></div>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="boxContent">--%>
+<%--                                        <div id="area1" class="upload-area-container">--%>
+<%--                                            <div class="upload-area">--%>
+<%--                                                <label class="custom-file-upload">--%>
+<%--                                                    Chọn ảnh--%>
+<%--                                                    <input type="file" accept="image/*" multiple style="display: none;">--%>
+<%--                                                </label>--%>
+<%--                                                <div class="image-preview"></div>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                                <div class="wrapBox">--%>
+<%--                                    <div class="boxTitle"><span class="title">--%>
+<%--                                        <div class="fui-basic-input flex-column gap-6">--%>
+<%--                                             <select name="" id="corlor2" class="input f-s-14 accordion-input">--%>
+<%--                                                 <option value="0"></option>--%>
+<%--                                                <option value="1">Xanh ngọc</option>--%>
+<%--                                                <option value="2">Trắng</option>--%>
+<%--                                                <option value="3">Cam</option>--%>
+<%--                                            </select>--%>
 
-                                        </div>
-                                    </span>
-                                        <div class="boxIcon"><span class="icon icon-plus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
-              </svg></span><span class="icon icon-minus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
-              </svg></span></div>
-                                    </div>
-                                    <div class="boxContent">
-                                        <div id="area2" class="upload-area-container">
-                                            <div class="upload-area">
-                                                <label class="custom-file-upload">
-                                                    Chọn ảnh
-                                                    <input type="file" accept="image/*" multiple style="display: none;">
-                                                </label>
-                                                <div class="image-preview"></div>
-                                            </div>
-                                        </div>
+<%--                                        </div>--%>
+<%--                                    </span>--%>
+<%--                                        <div class="boxIcon"><span class="icon icon-plus">--%>
+<%--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--%>
+<%--                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>--%>
+<%--              </svg></span><span class="icon icon-minus">--%>
+<%--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--%>
+<%--                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>--%>
+<%--              </svg></span></div>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="boxContent">--%>
+<%--                                        <div id="area2" class="upload-area-container">--%>
+<%--                                            <div class="upload-area">--%>
+<%--                                                <label class="custom-file-upload">--%>
+<%--                                                    Chọn ảnh--%>
+<%--                                                    <input type="file" accept="image/*" multiple style="display: none;">--%>
+<%--                                                </label>--%>
+<%--                                                <div class="image-preview"></div>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
 
-                                    </div>
-                                </div>
-                                <div class="wrapBox">
-                                    <div class="boxTitle"><span class="title">
-                                        <div class="fui-basic-input flex-column gap-6">
-                                             <select name="" id="corlor3" class="input f-s-14 accordion-input">
-                                                 <option value="0"></option>
-                                                <option value="1">Xanh ngọc</option>
-                                                <option value="2">Trắng</option>
-                                                <option value="3">Cam</option>
-                                            </select>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                                <div class="wrapBox">--%>
+<%--                                    <div class="boxTitle"><span class="title">--%>
+<%--                                        <div class="fui-basic-input flex-column gap-6">--%>
+<%--                                             <select name="" id="corlor3" class="input f-s-14 accordion-input">--%>
+<%--                                                 <option value="0"></option>--%>
+<%--                                                <option value="1">Xanh ngọc</option>--%>
+<%--                                                <option value="2">Trắng</option>--%>
+<%--                                                <option value="3">Cam</option>--%>
+<%--                                            </select>--%>
 
-                                        </div>
-                                    </span>
-                                        <div class="boxIcon"><span class="icon icon-plus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
-              </svg></span><span class="icon icon-minus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
-              </svg></span></div>
-                                    </div>
-                                    <div class="boxContent">
-                                        <div id="area3" class="upload-area-container">
-                                            <div class="upload-area">
-                                                <label class="custom-file-upload">
-                                                    Chọn ảnh
-                                                    <input type="file" accept="image/*" multiple style="display: none;">
-                                                </label>
-                                                <div class="image-preview"></div>
-                                            </div>
-                                        </div>
+<%--                                        </div>--%>
+<%--                                    </span>--%>
+<%--                                        <div class="boxIcon"><span class="icon icon-plus">--%>
+<%--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--%>
+<%--                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>--%>
+<%--              </svg></span><span class="icon icon-minus">--%>
+<%--              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">--%>
+<%--                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>--%>
+<%--              </svg></span></div>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="boxContent">--%>
+<%--                                        <div id="area3" class="upload-area-container">--%>
+<%--                                            <div class="upload-area">--%>
+<%--                                                <label class="custom-file-upload">--%>
+<%--                                                    Chọn ảnh--%>
+<%--                                                    <input type="file" accept="image/*" multiple style="display: none;">--%>
+<%--                                                </label>--%>
+<%--                                                <div class="image-preview"></div>--%>
+<%--                                            </div>--%>
+<%--                                        </div>--%>
 
-                                    </div>
-                                </div>
+<%--                                    </div>--%>
+<%--                                </div>--%>
 
-                            </div>
-                        </div>
-                    </div>
-                    </div>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                    </div>--%>
                 </form>
             </div>
         </div>
@@ -440,10 +477,9 @@
 <script src="/assets/js/notification.js"></script>
 <script src="/assets/js/img-uploading.js"></script>
 <script src="/assets/js/accordion.js"></script>
-<script>
-    var editor = CKEDITOR.replace('editor');
-    CKFinder.setupCKEditor(editor, 'assets/ckfinder/');
-</script>
+<script src="/assets/js/ckeditorLoadFile.js"></script>
+<script src="/assets/js/datatable_addproduct.js"></script>
+
 </body>
 
 </html>
