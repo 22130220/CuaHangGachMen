@@ -4,19 +4,18 @@ import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.ColorMapper;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.ColorNUrlMapper;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class ColorDao {
     // Thêm một color mới
-    public void insertColor(Color color) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public int insertColor(Color color) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
-        jdbi.useHandle(handle ->
-                handle.createUpdate("INSERT INTO color (ID, Name, Url) VALUES (:ID, :Name, :Url)")
-                        .bind("ID", color.getID())
+        return jdbi.withHandle(handle ->
+                handle.createUpdate("INSERT INTO colors (Name) VALUES (:Name)")
                         .bind("Name", color.getName())
-                        .bind("Url", color.getUrl())
                         .execute()
         );
     }
@@ -41,8 +40,8 @@ public class ColorDao {
     public List<Color> getAllColors() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM color")
-                        .map(new ColorMapper()) // Sử dụng ColorMapper để ánh xạ
+                handle.createQuery("SELECT * FROM colors")
+                        .map(new ColorNUrlMapper()) // Sử dụng ColorMapper để ánh xạ
                         .list()
         );
     }
@@ -86,22 +85,21 @@ public class ColorDao {
     }
 
     // Cập nhật color theo ID
-    public void updateColor(Color color) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public int updateColor(Color color) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
-        jdbi.useHandle(handle ->
-                handle.createUpdate("UPDATE color SET Name = :Name, Url = :Url WHERE ID = :ID")
+        return jdbi.withHandle(handle ->
+                handle.createUpdate("UPDATE colors SET Name = :Name WHERE ID = :ID")
                         .bind("ID", color.getID())
                         .bind("Name", color.getName())
-                        .bind("Url", color.getUrl())
                         .execute()
         );
     }
 
     // Xóa color theo ID
-    public void deleteColor(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public int deleteColor(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
-        jdbi.useHandle(handle ->
-                handle.createUpdate("DELETE FROM color WHERE ID = :ID")
+        return jdbi.withHandle(handle ->
+                handle.createUpdate("DELETE FROM colors WHERE ID = :ID")
                         .bind("ID", id)
                         .execute()
         );
