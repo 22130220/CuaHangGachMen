@@ -65,6 +65,19 @@
     <script src="https://cdn.datatables.net/select/2.1.0/js/dataTables.select.js"></script>
     <script src="https://cdn.datatables.net/select/2.1.0/js/select.dataTables.js"></script>
 
+    <!-- Jquery UI-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js" integrity="sha512-MSOo1aY+3pXCOCdGAYoBZ6YGI0aragoQsg1mKKBHXCYPIWxamwOE7Drh+N5CPgGI5SA9IEKJiPjdfqWFWmZtRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css" integrity="sha512-TFee0335YRJoyiqz8hA8KV3P0tXa5CpRBSoM0Wnkn7JoJx1kaq1yXL/rb8YFpWXkMOjRcv5txv+C6UluttluCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/theme.min.css" integrity="sha512-lfR3NT1DltR5o7HyoeYWngQbo6Ec4ITaZuIw6oAxIiCNYu22U5kpwHy9wAaN0vvBj3U6Uy2NNtAfiaKcDxfhTg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <!--Micromodal.js-->
+    <script src="https://cdn.jsdelivr.net/npm/micromodal/dist/micromodal.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/micromodal.css">
+
+    <!--Notyf-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
     <style>
         div.container {
             max-width: 1200px;
@@ -79,7 +92,6 @@
         <div class="main-grid">
             <nav class="navbar tag-line _4c _1r">
                 <div class="nav-back-prev">
-                    <div class="back-button button "></div>
                     <div class="breadcumb">
                         <div class="breadcumb-icon f-s-25">
                             <i class="fa-solid fa-circle-info"></i>
@@ -91,16 +103,22 @@
             <div class="product-table table _4c">
                 <div class="title-icon">
                     <p class="text_entry_title"> Màu sắc</p>
-                    <div class="button bg_green f-cl-white" onclick="showModifyItem()">Thêm</div>
+                    <button class="button bg_green f-cl-white" id="cl_add" data-micromodal-trigger="add_modal">Thêm</button>
                 </div>
-                <table id="example3" class="display" style="width:100%">
-                    <tbody id="table-data3"></tbody>
+                <table id="cl" class="display compact" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên màu</th>
+                        <th>Chỉnh sửa</th>
+                    </tr>
+                    </thead>
                 </table>
             </div>
             <div class="product-table table _2c">
                 <div class="title-icon">
                     <p class="text_entry_title"> Chất liệu</p>
-                    <div class="button bg_green f-cl-white" onclick="showModifyItem()">Thêm</div>
+                    <button class="button bg_green f-cl-white" id="mat_add" data-micromodal-trigger="add_modal">Thêm</button>
                 </div>
                 <table id="example" class="display" style="width:100%">
                     <tbody id="table-data"></tbody>
@@ -109,7 +127,7 @@
             <div class="product-table table _2c">
                 <div class="title-icon">
                     <p class="text_entry_title"> Nhà cung cấp</p>
-                    <div class="button bg_green f-cl-white" onclick="showModifyItem()">Thêm</div>
+                    <button class="button bg_green f-cl-white" id="ncc_add" data-micromodal-trigger="add_modal">Thêm</button>
                 </div>
                 <table id="example2" class="display" style="width:100%">
                     <tbody id="table-data2"></tbody>
@@ -139,28 +157,61 @@
             </div>
         </div>
     </div>
-    <div class="modify-item-sm" id="show_content">
-        <div class="title-icon">
-            <p class="text_entry_title"></p>
-            <i class="fa-solid fa-xmark fa-lg" onclick="exitModifyItem()"></i>
-        </div>
-        <form action="" class="main-grid">
-            <div class="product-name _4c">
-                <div class="fui-basic-input flex-column gap-6">
-                    <label for="categoryname" class="f-bold f-s-14 f-cl-black">Tên</label>
-                    <input type="text" name="name" placeholder="" class="input input-bordered f-s-14" id="categoryname" autocomplete="off"/>
+
+    <div class="modal micromodal-slide" id="update_modal" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title">
+                        Thêm Chất Liệu
+                    </h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div class="modal-content-content">
+                    <div class="modal__content">
+                        <div class="fui-basic-input" style="width: 100%">
+                            <label for="update" class="f-bold f-s-14 f-cl-black">Tên</label>
+                            <input type="text" name="material_add" placeholder="" class="input input-bordered f-s-14" style="width: 100%" id="update" autocomplete="off" />
+                        </div>
+                    </div>
+                    <footer class="modal__footer">
+                        <button class="button bg_green f-cl-white" id="update_btn">Thêm</button>
+                    </footer>
                 </div>
             </div>
-            <div class="_1c">
-                <div class="button bg_green f-cl-white" onclick="exitModifyItem()">Thêm</div>
+        </div>
+    </div>
+
+    <div class="modal micromodal-slide" id="add_modal" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title">
+                        Thêm Màu Sắc
+                    </h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div class="modal-content-content">
+                    <div class="modal__content">
+                        <div class="fui-basic-input" style="width: 100%">
+                            <label for="add" class="f-bold f-s-14 f-cl-black">Tên</label>
+                            <input type="text" name="color_add" placeholder="" class="input input-bordered f-s-14" style="width: 100%" id="add" autocomplete="off"/>
+                        </div>
+                    </div>
+                    <footer class="modal__footer">
+                        <button class="button bg_green f-cl-white add" id="add_btn">Thêm</button>
+                    </footer>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="/assets/js/script.js"></script>
 <script src="/assets/js/notification.js"></script>
 <script src="/assets/js/accordion.js"></script>
 <script src="/assets/js/exitfFunc.js"></script>
-
+<script src="/assets/js/ajaxElement.js"></script>
 <script>
     $(document).ready(function () {
         const materialSample = ["Gốm", "Gỗ", "Thuỷ tinh", "Nhựa"];
