@@ -158,6 +158,21 @@
                 </table>
             </div>
 
+            <div class="product-table table _2c">
+                <div class="title-icon">
+                    <p class="text_entry_title"> Loại thông số</p>
+                    <button class="button bg_green f-cl-white" id="spec_add" data-micromodal-trigger="add_modal">Thêm</button>
+                </div>
+                <table id="spec" class="display compact" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Loại</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+
         </div>
     </div>
 <%--    <div class="notifi-box" id="box">--%>

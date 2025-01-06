@@ -25,6 +25,7 @@ public class ProductSpecDao {
         return ls;
     }
 
+
     public static void main(String[] args) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         DBConect.mySqlDataSource();
         ProductSpecDao dao = new ProductSpecDao();

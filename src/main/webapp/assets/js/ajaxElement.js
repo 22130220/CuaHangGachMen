@@ -7,6 +7,7 @@ let colorUrl = '/admin/color';
 let materialUrl = '/admin/material';
 let nccUrl = '/admin/manufacturer';
 let sizeUrl = '/admin/size';
+let specTypeUrl = '/admin/spec';
 let action;
 let url;
 
@@ -317,6 +318,80 @@ var sizeTable = new DataTable('#size', {
     }
 });
 
+var specTypeTable = new DataTable('#spec', {
+    ajax: {
+        url: '/admin/spec',
+        dataSrc: 'specTypes'
+    },
+    fixedHeader: true,
+    layout: {
+        topStart: {
+            buttons: [
+                'colvis',
+                {
+                    text: 'Chỉnh Sửa',
+                    className: 'green',
+                    action: function (e, dt, node, config) {
+                        let data = dt.row({ selected: true }).data();
+                        id = data.Id;
+                        url = specTypeUrl;
+                        action = updateEle;
+                        tableReload = "spec";
+                        openModal('update_modal', 'update', data.Name);
+                    },
+                    enabled: false
+                },
+                {
+                    text: 'Xoá',
+                    className: 'red',
+                    action: function (e, dt, node, config) {
+                        // console.log('Rows: ' + dt.rows({ selected: true }).count());
+                        var data = dt.rows({ selected: true }).data();
+                        data.each(function(rowData, index) {
+                            deleteId.push(rowData.Id);
+                        });
+                        url = specTypeUrl;
+                        action = delEle;
+                        tableReload = "spec";
+                        deleteAjax(url, 'POST', JSON.stringify(deleteId),null, action);
+                    },
+                    enabled: false
+                }
+            ]
+        },
+    },
+    select: true,
+    columnDefs: [
+        {
+            targets: 0,
+            data: 'Id',
+            className: 'dt-center'
+        },
+        {
+            targets: 1,
+            data: 'Name',
+            className: 'dt-center'
+        },
+    ],
+    'autoWidth': false,
+    language: {
+        lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
+        zeroRecords: "Không tìm thấy kết quả",
+        info: "Hiển thị trang _PAGE_ của _PAGES_",
+        infoEmpty: "Không có dữ liệu",
+        infoFiltered: "(lọc từ _MAX_ tổng mục)"
+    },
+
+    createdRow: function (row, data, dataIndex) {
+        // Thêm lớp CSS để căn giữa các ô
+        $('td', row).css({
+            'text-align': 'center',
+            'vertical-align': 'middle',
+            'padding': '1rem 0.8rem'
+        });
+    }
+});
+
 $('table th').resizable({
     handles: 'e',
     stop: function(e, ui) {
@@ -348,6 +423,13 @@ sizeTable.on('select deselect', function () {
     sizeTable.button(2).enable(selectedRows > 0);
 });
 
+specTypeTable.on('select deselect', function () {
+    var selectedRows = specTypeTable.rows({ selected: true }).count();
+    specTypeTable.button(1).enable(selectedRows === 1);
+    specTypeTable.button(2).enable(selectedRows > 0);
+});
+
+
 function reloadButton(table) {
     table.rows().deselect();
 }
@@ -377,6 +459,13 @@ $("#size_add").on('click', function () {
     url = sizeUrl;
     action = addEle;
     tableReload = "size";
+    console.log(url + " "  + action);
+});
+
+$("#spec_add").on('click', function () {
+    url = specTypeUrl;
+    action = addEle;
+    tableReload = "spec";
     console.log(url + " "  + action);
 });
 
@@ -508,6 +597,9 @@ function reload() {
     } else if(tableReload.toString() === "size") {
         sizeTable.ajax.reload();
         reloadButton(sizeTable);
+    } else if(tableReload.toString() === "spec") {
+        specTypeTable.ajax.reload();
+        reloadButton(specTypeTable);
     }
 }
 
