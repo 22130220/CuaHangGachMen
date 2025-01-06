@@ -5,6 +5,7 @@ let delEle = 'Xoá';
 
 let colorUrl = '/admin/color';
 let materialUrl = '/admin/material';
+let nccUrl = '/admin/manufacturer';
 let action;
 let url;
 
@@ -166,7 +167,79 @@ var matTable = new DataTable('#mat', {
     }
 });
 
+var nccTable = new DataTable('#ncc', {
+    ajax: {
+        url: '/admin/manufacturer',
+        dataSrc: 'manufacturers'
+    },
+    fixedHeader: true,
+    layout: {
+        topStart: {
+            buttons: [
+                'colvis',
+                {
+                    text: 'Chỉnh Sửa',
+                    className: 'green',
+                    action: function (e, dt, node, config) {
+                        let data = dt.row({ selected: true }).data();
+                        id = data.Id;
+                        url = nccUrl;
+                        action = updateEle;
+                        tableReload = "ncc";
+                        openModal('update_modal', 'update', data.Name);
+                    },
+                    enabled: false
+                },
+                {
+                    text: 'Xoá',
+                    className: 'red',
+                    action: function (e, dt, node, config) {
+                        // console.log('Rows: ' + dt.rows({ selected: true }).count());
+                        var data = dt.rows({ selected: true }).data();
+                        data.each(function(rowData, index) {
+                            deleteId.push(rowData.Id);
+                        });
+                        url = nccUrl;
+                        action = delEle;
+                        tableReload = "ncc";
+                        deleteAjax(url, 'POST', JSON.stringify(deleteId),null, action);
+                    },
+                    enabled: false
+                }
+            ]
+        },
+    },
+    select: true,
+    columnDefs: [
+        {
+            targets: 0,
+            data: 'Id',
+            className: 'dt-center'
+        },
+        {
+            targets: 1,
+            data: 'Name',
+            className: 'dt-center'
+        },
+    ],
+    'autoWidth': false,
+    language: {
+        lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
+        zeroRecords: "Không tìm thấy kết quả",
+        info: "Hiển thị trang _PAGE_ của _PAGES_",
+        infoEmpty: "Không có dữ liệu",
+        infoFiltered: "(lọc từ _MAX_ tổng mục)"
+    },
 
+    createdRow: function (row, data, dataIndex) {
+        // Thêm lớp CSS để căn giữa các ô
+        $('td', row).css({
+            'text-align': 'center',
+            'vertical-align': 'middle',
+            'padding': '1rem 0.8rem'
+        });
+    }
+});
 
 $('table th').resizable({
     handles: 'e',
@@ -187,6 +260,12 @@ matTable.on('select deselect', function () {
     matTable.button(2).enable(selectedRows > 0);
 });
 
+nccTable.on('select deselect', function () {
+    var selectedRows = nccTable.rows({ selected: true }).count();
+    nccTable.button(1).enable(selectedRows === 1);
+    nccTable.button(2).enable(selectedRows > 0);
+});
+
 function reloadButton(table) {
     table.rows().deselect();
 }
@@ -202,6 +281,13 @@ $("#mat_add").on('click', function () {
     url = materialUrl;
     action = addEle;
     tableReload = "material";
+    console.log(url + " "  + action);
+});
+
+$("#ncc_add").on('click', function () {
+    url = nccUrl;
+    action = addEle;
+    tableReload = "ncc";
     console.log(url + " "  + action);
 });
 
@@ -326,6 +412,10 @@ function reload() {
     else if(tableReload.toString() === "material") {
         matTable.ajax.reload();
         reloadButton(matTable);
+    }
+    else if(tableReload.toString() === "ncc") {
+        nccTable.ajax.reload();
+        reloadButton(nccTable);
     }
 }
 
