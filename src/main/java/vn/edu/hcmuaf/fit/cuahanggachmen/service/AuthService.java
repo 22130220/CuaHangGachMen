@@ -18,7 +18,7 @@ public class AuthService {
             if(PasswordUtils.verifyPassword(password,salt,hashedPassword)) {
                 u.setPassword(null);
                 u.setSalt(null);
-            }
+            } else u = null;
         }
         return u;
     }
