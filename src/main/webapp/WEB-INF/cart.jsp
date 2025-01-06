@@ -23,7 +23,7 @@
 </head>
 <body>
 <!-- Header chung -->
-<jsp:include page="view_shared/header_footer/header.jsp" />
+<jsp:include page="/view_shared/header_footer/header.jsp" />
 
 <div class="cart-page">
     <!-- Đường dẫn -->
@@ -131,19 +131,21 @@
                 </div>
                 <p>Phí vận chuyển sẽ được tính ở trang Thanh toán.</p>
                 <p>Mã giảm giá được nhập ở trang Thanh toán.</p>
-                <a href="#!" onclick="checkLogin()">
-                    <a href="thanhtoan"><button class="btn-checkout">Thanh toán</button></a>
-                </a>
+
+                    <a href="#" onclick="handleCheckout()" ><button class="btn-checkout">Thanh toán</button></a>
+
 
                 <script>
-                    function checkLogin() {
-                        let userConfirmed = confirm("Bạn cần đăng nhập để tiếp tục thanh toán. Bạn có muốn đăng nhập không?");
-                        if (userConfirmed) {
-                            window.location.href = "./login.html";
+                    function handleCheckout() {
+                        const isLoggedIn = ${not empty sessionScope.auth}; // Kiểm tra session đăng nhập
+                        if (!isLoggedIn) {
+                            alert("Bạn cần đăng nhập để tiếp tục thanh toán.");
+                            window.location.href = "login"; // Chuyển đến trang đăng nhập
                         } else {
-                            window.history.back();
+                            window.location.href = "delivery_information"; // Chuyển đến trang thông tin giao hàng
                         }
                     }
+
                 </script>
 
                 <!-- Vouchers -->
@@ -206,7 +208,7 @@
     </div>
 </div>
 
-<jsp:include page="view_shared/header_footer/footer.jsp"/>
+<jsp:include page="/view_shared/header_footer/footer.jsp"/>
 
 <script>
     function triggerUpdate(inputElement) {
