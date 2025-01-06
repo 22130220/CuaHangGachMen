@@ -110,7 +110,6 @@
                     <tr>
                         <th>ID</th>
                         <th>Tên màu</th>
-                        <th>Chỉnh sửa</th>
                     </tr>
                     </thead>
                 </table>
@@ -120,8 +119,13 @@
                     <p class="text_entry_title"> Chất liệu</p>
                     <button class="button bg_green f-cl-white" id="mat_add" data-micromodal-trigger="add_modal">Thêm</button>
                 </div>
-                <table id="example" class="display" style="width:100%">
-                    <tbody id="table-data"></tbody>
+                <table id="mat" class="display compact" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên chất liệu</th>
+                    </tr>
+                    </thead>
                 </table>
             </div>
             <div class="product-table table _2c">
@@ -129,41 +133,46 @@
                     <p class="text_entry_title"> Nhà cung cấp</p>
                     <button class="button bg_green f-cl-white" id="ncc_add" data-micromodal-trigger="add_modal">Thêm</button>
                 </div>
-                <table id="example2" class="display" style="width:100%">
-                    <tbody id="table-data2"></tbody>
+                <table id="ncc" class="display compact" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên nhà cung cấp</th>
+                    </tr>
+                    </thead>
                 </table>
             </div>
 
         </div>
     </div>
-    <div class="notifi-box" id="box">
-        <h2>Có <span>3 thông báo mới</span></h2>
-        <div class="notifi-item">
-            <i class="fa-solid fa-user-tag fa-2x"></i>
-            <div class="text">
-                <h4>Có 4 khách hàng mới</h4>
-            </div>
-        </div>
-        <div class="notifi-item">
-            <i class="fa-solid fa-bookmark fa-2x"></i>
-            <div class="text">
-                <h4>Đã có thêm 4 đơn đặt hàng mới</h4>
-            </div>
-        </div>
-        <div class="notifi-item">
-            <i class="fa-solid fa-thumbs-up fa-2x"></i>
-            <div class="text">
-                <h4>Hôm qua làm việc tốt lắm</h4>
-            </div>
-        </div>
-    </div>
+<%--    <div class="notifi-box" id="box">--%>
+<%--        <h2>Có <span>3 thông báo mới</span></h2>--%>
+<%--        <div class="notifi-item">--%>
+<%--            <i class="fa-solid fa-user-tag fa-2x"></i>--%>
+<%--            <div class="text">--%>
+<%--                <h4>Có 4 khách hàng mới</h4>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="notifi-item">--%>
+<%--            <i class="fa-solid fa-bookmark fa-2x"></i>--%>
+<%--            <div class="text">--%>
+<%--                <h4>Đã có thêm 4 đơn đặt hàng mới</h4>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div class="notifi-item">--%>
+<%--            <i class="fa-solid fa-thumbs-up fa-2x"></i>--%>
+<%--            <div class="text">--%>
+<%--                <h4>Hôm qua làm việc tốt lắm</h4>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
     <div class="modal micromodal-slide" id="update_modal" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
-                    <h2 class="modal__title">
-                        Thêm Chất Liệu
+                    <h2 class="modal__title" id="update_title">
+                        Cập nhật
                     </h2>
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
@@ -186,8 +195,8 @@
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
-                    <h2 class="modal__title">
-                        Thêm Màu Sắc
+                    <h2 class="modal__title" id="add_title">
+                        Thêm
                     </h2>
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>

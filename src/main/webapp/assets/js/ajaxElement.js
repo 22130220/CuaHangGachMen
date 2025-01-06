@@ -4,6 +4,7 @@ let updateEle = 'Cập nhật';
 let delEle = 'Xoá';
 
 let colorUrl = '/admin/color';
+let materialUrl = '/admin/material';
 let action;
 let url;
 
@@ -71,13 +72,79 @@ var clTable = new DataTable('#cl', {
             data: 'Name',
             className: 'dt-center'
         },
+    ],
+    'autoWidth': false,
+    language: {
+        lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
+        zeroRecords: "Không tìm thấy kết quả",
+        info: "Hiển thị trang _PAGE_ của _PAGES_",
+        infoEmpty: "Không có dữ liệu",
+        infoFiltered: "(lọc từ _MAX_ tổng mục)"
+    },
+
+    createdRow: function (row, data, dataIndex) {
+        // Thêm lớp CSS để căn giữa các ô
+        $('td', row).css({
+            'text-align': 'center',
+            'vertical-align': 'middle',
+            'padding': '1rem 0.8rem'
+        });
+    }
+});
+
+var matTable = new DataTable('#mat', {
+    ajax: {
+        url: '/admin/material',
+        dataSrc: 'materials'
+    },
+    fixedHeader: true,
+    layout: {
+        topStart: {
+            buttons: [
+                'colvis',
+                {
+                    text: 'Chỉnh Sửa',
+                    className: 'green',
+                    action: function (e, dt, node, config) {
+                        let data = dt.row({ selected: true }).data();
+                        id = data.Id;
+                        url = materialUrl;
+                        action = updateEle;
+                        tableReload = "material";
+                        openModal('update_modal', 'update', data.Name);
+                    },
+                    enabled: false
+                },
+                {
+                    text: 'Xoá',
+                    className: 'red',
+                    action: function (e, dt, node, config) {
+                        // console.log('Rows: ' + dt.rows({ selected: true }).count());
+                        var data = dt.rows({ selected: true }).data();
+                        data.each(function(rowData, index) {
+                            deleteId.push(rowData.Id);
+                        });
+                        url = materialUrl;
+                        action = delEle;
+                        tableReload = "material";
+                        deleteAjax(url, 'POST', JSON.stringify(deleteId),null, action);
+                    },
+                    enabled: false
+                }
+            ]
+        },
+    },
+    select: true,
+    columnDefs: [
         {
-            targets: 2,
+            targets: 0,
             data: 'Id',
-            render: function (data) {
-                return '<div class=\'table-icon-label\'> <a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>'
-            },
-            className: 'dt-center  dt-nowrap'
+            className: 'dt-center'
+        },
+        {
+            targets: 1,
+            data: 'Name',
+            className: 'dt-center'
         },
     ],
     'autoWidth': false,
@@ -100,6 +167,7 @@ var clTable = new DataTable('#cl', {
 });
 
 
+
 $('table th').resizable({
     handles: 'e',
     stop: function(e, ui) {
@@ -113,6 +181,12 @@ clTable.on('select deselect', function () {
     clTable.button(2).enable(selectedRows > 0);
 });
 
+matTable.on('select deselect', function () {
+    var selectedRows = matTable.rows({ selected: true }).count();
+    matTable.button(1).enable(selectedRows === 1);
+    matTable.button(2).enable(selectedRows > 0);
+});
+
 function reloadButton(table) {
     table.rows().deselect();
 }
@@ -121,6 +195,13 @@ $("#cl_add").on('click', function () {
     url = colorUrl;
     action = addEle;
     tableReload = "color";
+    console.log(url + " "  + action);
+});
+
+$("#mat_add").on('click', function () {
+    url = materialUrl;
+    action = addEle;
+    tableReload = "material";
     console.log(url + " "  + action);
 });
 
@@ -155,6 +236,7 @@ function update() {
 function openModal(modalSelector, inputSelector, bind) {
     MicroModal.show(modalSelector);
     $("#" + inputSelector).val(bind);
+
 }
 
 
@@ -241,11 +323,16 @@ function reload() {
         clTable.ajax.reload();
         reloadButton(clTable);
     }
+    else if(tableReload.toString() === "material") {
+        matTable.ajax.reload();
+        reloadButton(matTable);
+    }
 }
 
 function clearParams() {
     action = '';
     url= '';
     tableReload= '';
+    deleteId = [];
 }
 

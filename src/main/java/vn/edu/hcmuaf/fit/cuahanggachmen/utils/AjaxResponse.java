@@ -3,10 +3,7 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.utils;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ReviewDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.ProductSpec;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.Review;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -29,6 +26,10 @@ public class AjaxResponse {
 
     public void addColorList(List<Color> colorList) {
         this.text.add(String.format("\"colors\":%s", colorListToJson(colorList)));
+    }
+
+    public void addMaterialList(List<Material> materialList) {
+        this.text.add(String.format("\"materials\":%s", materialListToJson(materialList)));
     }
 
     public void addProductSpecList(List<ProductSpec> productSpecList) {
@@ -124,6 +125,21 @@ public class AjaxResponse {
 
             jsonColorJoiner.add(String.format("\"Id\":%d", cl.getID()))
                     .add(String.format("\"Name\":\"%s\"", cl.getName()));
+
+            jsonArrayJoiner.add(jsonColorJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
+    private String materialListToJson(List<Material> matList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (Material mat : matList) {
+            StringJoiner jsonColorJoiner = new StringJoiner(",", "{", "}");
+
+            jsonColorJoiner.add(String.format("\"Id\":%d", mat.getId()))
+                    .add(String.format("\"Name\":\"%s\"", mat.getName()));
 
             jsonArrayJoiner.add(jsonColorJoiner.toString());
         }
