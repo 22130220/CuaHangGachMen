@@ -36,6 +36,9 @@ public class AjaxResponse {
         this.text.add(String.format("\"sizes\":%s", sizesListToJson(sizeList)));
     }
 
+    public void addSpecTypeList(List<SpecType> specTypeList) {
+        this.text.add(String.format("\"specTypes\":%s", specTypeListToJson(specTypeList)));
+    }
 
     public void addManufacturerList(List<Manufacturer> manufacturerList) {
         this.text.add(String.format("\"manufacturers\":%s", manufacturersListToJson(manufacturerList)));
@@ -179,6 +182,21 @@ public class AjaxResponse {
 
             jsonColorJoiner.add(String.format("\"Id\":%d", size.getId()))
                     .add(String.format("\"Name\":\"%s\"", size.getName()));
+
+            jsonArrayJoiner.add(jsonColorJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
+    private String specTypeListToJson(List<SpecType> specTypeList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (SpecType spec : specTypeList) {
+            StringJoiner jsonColorJoiner = new StringJoiner(",", "{", "}");
+
+            jsonColorJoiner.add(String.format("\"Id\":%d", spec.getId()))
+                    .add(String.format("\"Name\":\"%s\"", spec.getName()));
 
             jsonArrayJoiner.add(jsonColorJoiner.toString());
         }

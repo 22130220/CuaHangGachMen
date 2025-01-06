@@ -1,0 +1,53 @@
+package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
+
+import org.jdbi.v3.core.Handle;
+import org.jdbi.v3.core.Jdbi;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Material;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.ProductSpec;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.SpecType;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.ProductSpecMapper;
+
+import java.sql.SQLException;
+import java.util.List;
+
+public class SpecTypeDao {
+
+    public List<SpecType> findAll() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM SpecType;")
+                        .mapToBean(SpecType.class)
+                        .list()
+        );
+    }
+
+
+    public int insert(SpecType c) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createUpdate("INSERT INTO SpecType (Name) VALUES (:name)")
+                        .bind("name", c.getName())
+                        .execute()
+        );
+    }
+
+    public int update(SpecType c) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createUpdate("UPDATE SpecType SET Name = :name WHERE ID = :id")
+                        .bind("name", c.getName())
+                        .bind("id", c.getId())
+                        .execute()
+        );
+    }
+
+    public int deleteById(int i) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createUpdate("DELETE FROM SpecType WHERE ID = :id")
+                        .bind("id", i)
+                        .execute()
+        );
+    }
+}

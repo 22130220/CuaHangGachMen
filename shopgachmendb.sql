@@ -3,15 +3,15 @@
 
  Source Server         : MySql
  Source Server Type    : MySQL
- Source Server Version : 80300 (8.3.0)
+ Source Server Version : 90100 (9.1.0)
  Source Host           : localhost:3307
  Source Schema         : shopgachmendb
 
  Target Server Type    : MySQL
- Target Server Version : 80300 (8.3.0)
+ Target Server Version : 90100 (9.1.0)
  File Encoding         : 65001
 
- Date: 24/12/2024 09:34:51
+ Date: 06/01/2025 12:42:16
 */
 
 SET NAMES utf8mb4;
@@ -40,10 +40,10 @@ INSERT INTO `category` VALUES (2, 'GẠCH ỐP TƯỜNG', b'1', '2024-12-24 09:1
 -- ----------------------------
 DROP TABLE IF EXISTS `colors`;
 CREATE TABLE `colors`  (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of colors
@@ -78,10 +78,10 @@ CREATE TABLE `contact`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `manufacturer`;
 CREATE TABLE `manufacturer`  (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of manufacturer
@@ -99,7 +99,7 @@ CREATE TABLE `material`  (
   `ID` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of material
@@ -133,7 +133,7 @@ CREATE TABLE `orderdetail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders`  (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `UserID` int NULL DEFAULT NULL,
   `OrderDate` datetime NULL DEFAULT NULL,
   `Address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
@@ -953,10 +953,10 @@ INSERT INTO `review` VALUES (13, 1, 0, 'Em oi lau dai tinh ai do', '2024-12-23 1
 -- ----------------------------
 DROP TABLE IF EXISTS `size`;
 CREATE TABLE `size`  (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of size
@@ -972,10 +972,10 @@ INSERT INTO `size` VALUES (5, '800×800 mm');
 -- ----------------------------
 DROP TABLE IF EXISTS `spectype`;
 CREATE TABLE `spectype`  (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of spectype
