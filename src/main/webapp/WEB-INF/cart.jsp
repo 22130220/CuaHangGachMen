@@ -150,30 +150,23 @@
 
                 <!-- Vouchers -->
                 <div class="vouchers">
-                    <div class="voucher-card">
-                        <div class="voucher-content">
-                            <img src="https://theme.hstatic.net/200000796751/1001266995/14/home_coupon_2_img.png?v=66" alt="Voucher">
-                            <div class="voucher-info">
-                                <p><b>Giảm 200.000đ</b></p>
-                                <p>Đơn hàng từ 3 triệu</p>
-                                <p>Mã: <b class="a">VOUCHERT11-200K</b></p>
-                                <p>HSD: 30/11/2024</p>
+
+                    <c:forEach var="vsc" items="${vs}">
+                        <div class="voucher-card">
+                            <div class="voucher-content">
+                                <img src="https://theme.hstatic.net/200000796751/1001266995/14/home_coupon_2_img.png?v=66" alt="Voucher">
+                                <div class="voucher-info">
+                                    <p><b><c:out value="${vsc.discountValue}"/></b></p>
+
+                                    <p>Mã: <b class="a">${vsc.code}</b></p>
+                                    <p>HSD: ${vsc.expireDate} </p>
+                                </div>
                             </div>
+                            <button class="btn-copy">SAO CHÉP MÃ</button>
                         </div>
-                        <button class="btn-copy">SAO CHÉP MÃ</button>
-                    </div>
-                    <div class="voucher-card">
-                        <div class="voucher-content">
-                            <img src="https://theme.hstatic.net/200000796751/1001266995/14/home_coupon_2_img.png?v=66" alt="Voucher">
-                            <div class="voucher-info">
-                                <p><b>Giảm 100.000đ</b></p>
-                                <p>Đơn hàng từ 2 triệu</p>
-                                <p>Mã: <b class="a">VOUCHERT11-100K</b></p>
-                                <p>HSD: 30/11/2024</p>
-                            </div>
-                        </div>
-                        <button class="btn-copy">SAO CHÉP MÃ</button>
-                    </div>
+                    </c:forEach>
+
+
                 </div>
             </div>
         </c:if>

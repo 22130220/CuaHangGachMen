@@ -16,6 +16,11 @@
             href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             rel="stylesheet"
     />
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+    <!--Notyf-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 </head>
 <body>
 <div class="container">
@@ -74,7 +79,7 @@
         <div class="discount">
 
             <input type="text" id="discount" placeholder="Nhập mã giảm giá">
-            <div class="btn-secondary">Sử dụng</div>
+            <div class="btn-secondary" id="btn_usage">Sử dụng</div>
         </div>
         <hr>
         <div class="price-summary">
@@ -84,16 +89,16 @@
             <p>Phí vận chuyển:
                 <fmt:formatNumber value="${shippingFee}" type="number" maxFractionDigits="0"/>₫
             </p>
-            <p>
-                Giá giảm từ Voucher: 20000đ
-            </p>
+            <p id="dis_val"></p>
             <hr>
             <h3>Tổng cộng:
-                <fmt:formatNumber value="${cart.total + shippingFee}" type="number" maxFractionDigits="0"/>₫
+                <span id="totalPrice"><fmt:formatNumber value="${cart.total + shippingFee}" type="number" maxFractionDigits="0"/></span>₫
             </h3>
         </div>
     </aside>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="/assets/js/ajaxVoucher.js"></script>
 </body>
 </html>
 

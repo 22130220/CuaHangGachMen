@@ -59,6 +59,10 @@ public class AjaxResponse {
         this.text.add(String.format("\"%s\":%b", fieldName, value));
     }
 
+    public void addDouble(String fieldName, double value) {
+        this.text.add(String.format("\"%s\":%f", fieldName, value));
+    }
+
     private String productListToJson(List<Product> productList) {
         StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
 
