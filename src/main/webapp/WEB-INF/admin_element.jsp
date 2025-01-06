@@ -100,7 +100,7 @@
                     </div>
                 </div>
             </nav>
-            <div class="product-table table _4c">
+            <div class="product-table table _2c">
                 <div class="title-icon">
                     <p class="text_entry_title"> Màu sắc</p>
                     <button class="button bg_green f-cl-white" id="cl_add" data-micromodal-trigger="add_modal">Thêm</button>
@@ -114,6 +114,21 @@
                     </thead>
                 </table>
             </div>
+            <div class="product-table table _2c">
+                <div class="title-icon">
+                    <p class="text_entry_title"> Kích thước</p>
+                    <button class="button bg_green f-cl-white" id="size_add" data-micromodal-trigger="add_modal">Thêm</button>
+                </div>
+                <table id="size" class="display compact" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Kích thước</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+
             <div class="product-table table _2c">
                 <div class="title-icon">
                     <p class="text_entry_title"> Chất liệu</p>
