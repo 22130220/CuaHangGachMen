@@ -12,10 +12,9 @@ public class CategoryDao {
     public int insert(Category category) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi  = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("INSERT INTO Category (Name, Status, CreateDate) VALUES (:name, :status, :createDate)")
+                handle.createUpdate("INSERT INTO Category (Name, Status) VALUES (:name, :status)")
                         .bind("name", category.getName())
                         .bind("status", category.isStatus())
-                        .bind("createDate", category.getCreateDate())
                         .execute()
         );
     }
@@ -45,15 +44,25 @@ public class CategoryDao {
     public int update(Category category) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi  = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("UPDATE Category SET Name = :name, Status = :status, CreateDate = :createDate WHERE ID = :id")
+                handle.createUpdate("UPDATE Category SET Name = :name, Status = :status WHERE ID = :id")
                         .bind("name", category.getName())
                         .bind("status", category.isStatus())
-                        .bind("createDate", category.getCreateDate())
                         .bind("id", category.getId())
                         .execute()
         );
     }
 
+    public int updateActive(int id, boolean active) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createUpdate(
+                                "UPDATE Category SET status = :status WHERE Id = :id"
+                        )
+                        .bind("id", id)
+                        .bind("status", active)
+                        .execute()
+        );
+    }
 
     public int deleteById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi  = DBConect.get();

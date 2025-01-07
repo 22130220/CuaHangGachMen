@@ -52,7 +52,7 @@
             Quản lý sản phẩm
         </p>
     </a>
-    <a href="/admin/addproduct" class="sidebar-button">
+    <a href="/admin/productcrud" class="sidebar-button">
         <div class="sidebar-icon">
             <i class="fa-regular fa-square-plus"></i>
         </div>
@@ -60,7 +60,7 @@
             Thêm sản phẩm
         </p>
     </a>
-    <a href="admin/admin_manageCategory.html" class="sidebar-button">
+    <a href="/admin/manage-category" class="sidebar-button">
         <div class="sidebar-icon">
             <i class="fa-solid fa-layer-group"></i>
         </div>

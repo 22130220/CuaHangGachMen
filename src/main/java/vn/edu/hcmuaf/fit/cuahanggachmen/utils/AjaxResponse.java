@@ -36,6 +36,10 @@ public class AjaxResponse {
         this.text.add(String.format("\"sizes\":%s", sizesListToJson(sizeList)));
     }
 
+    public void addCategoryList(List<Category> categoryList) {
+        this.text.add(String.format("\"categories\":%s", categoryListToJson(categoryList)));
+    }
+
     public void addSpecTypeList(List<SpecType> specTypeList) {
         this.text.add(String.format("\"specTypes\":%s", specTypeListToJson(specTypeList)));
     }
@@ -225,6 +229,22 @@ public class AjaxResponse {
                     .add(String.format("\"isActive\":%b", vou.isActive()));
 
             // Thêm đối tượng review vào mảng JSON
+            jsonArrayJoiner.add(jsonReviewJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
+    private String categoryListToJson(List<Category> categoryList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (Category cat : categoryList) {
+            StringJoiner jsonReviewJoiner = new StringJoiner(",", "{", "}");
+
+            jsonReviewJoiner.add(String.format("\"id\":%d", cat.getId()))
+                    .add(String.format("\"name\":\"%s\"", cat.getName()))
+                    .add(String.format("\"status\":%b", cat.isStatus()));
+
             jsonArrayJoiner.add(jsonReviewJoiner.toString());
         }
 
