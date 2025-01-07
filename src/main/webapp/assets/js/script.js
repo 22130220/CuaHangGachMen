@@ -1,13 +1,14 @@
 document.addEventListener("DOMContentLoaded", function() {
     try {
         MicroModal.init({
-            awaitCloseAnimation: true,// set to false, to remove close animation
+            awaitCloseAnimation: true,
             onShow: function(modal) {
-                console.log("micromodal open");
+                console.log(modal.id + ' is shown');
             },
             onClose: function(modal) {
-                console.log("micromodal close");
-            }
+                console.log(modal.id + ' is closed');
+            },
+            debugMode: true
         });
 
     } catch (e) {

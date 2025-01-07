@@ -500,7 +500,6 @@ function update() {
 function openModal(modalSelector, inputSelector, bind) {
     MicroModal.show(modalSelector);
     $("#" + inputSelector).val(bind);
-
 }
 
 

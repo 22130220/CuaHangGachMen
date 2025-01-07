@@ -22,6 +22,16 @@ public class SpecTypeDao {
         );
     }
 
+    public List<SpecType> findByProduct(int productId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT st.* FROM specType st LEFT JOIN product_spec ps ON st.ID = ps.SpecID AND ps.ProductID = :productId WHERE ps.SpecID IS NULL;")
+                        .bind("productId", productId)
+                        .mapToBean(SpecType.class)
+                        .list()
+        );
+    }
+
 
     public int insert(SpecType c) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();

@@ -156,7 +156,7 @@
                             <div class="product-name _4c">
                                 <div class="fui-basic-input flex-column gap-6">
                                     <label for="productname" class="f-bold f-s-14 f-cl-black">Tên sản phẩm</label>
-                                    <input type="text" name="name" placeholder="Nhập tên sản phẩm" value="${p.name}" class="input input-bordered f-s-14" id="productname" autocomplete="off"/>
+                                    <input type="text" name="name" placeholder="Nhập tên sản phẩm" class="input input-bordered f-s-14" id="productname" autocomplete="off"/>
                                 </div>
                             </div>
                             <div class="poduct-quantity _3c">
@@ -172,19 +172,25 @@
                             <div class="poduct-quantity _1c">
                                 <div class="fui-basic-input flex-column gap-6">
                                     <label for="productquantity" class="f-bold f-s-14 f-cl-black">Số lượng</label>
-                                    <input type="text" name="quantity" placeholder="Nhập số lượng" value="${p.quantityPerBox}" class="input input-bordered f-s-14" id="productquantity" autocomplete="off"/>
+                                    <input type="number" name="quantity" placeholder="Nhập số lượng" class="input input-bordered f-s-14" id="productquantity" autocomplete="off"/>
                                 </div>
                             </div>
                             <div class="product-price _4c">
                                 <div class="fui-basic-input flex-column gap-6">
                                     <label for="productprice" class="f-bold f-s-14 f-cl-black">Giá Sản phẩm (1 hộp)</label>
-                                    <input type="text" name="price" placeholder="Nhập giá" value="${p.pricePerBox}" class="input input-bordered f-s-14" id="productprice" autocomplete="off"/>
+                                    <input type="number" name="price" placeholder="Nhập giá" class="input input-bordered f-s-14" id="productprice" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <div class="product-price-promotion _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="price_promotion" class="f-bold f-s-14 f-cl-black">Giá khuyến mãi</label>
+                                    <input type="number" name="price_promotion" placeholder="Nhập giá khuyến mãi" class="input input-bordered f-s-14" id="price_promotion" autocomplete="off"/>
                                 </div>
                             </div>
                             <div class="poduct-form _4c">
                                 <div class="fui-basic-input flex-column gap-6">
-                                    <label for="productform" class="f-bold f-s-14 f-cl-black"> Loại sản phẩm</label>
-                                    <select name="category" id="productform" class="input input-bordered f-s-14">
+                                    <label for="category" class="f-bold f-s-14 f-cl-black"> Loại sản phẩm</label>
+                                    <select name="category" id="category" class="input input-bordered f-s-14">
                                         <c:forEach items="${categories}" var="category">
                                             <option value="${category.id}"><c:out value="${category.name}"/></option>
                                         </c:forEach>
@@ -211,6 +217,12 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="product-img _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="productimg" class="f-bold f-s-14 f-cl-black">Hình ảnh</label>
+                                    <input type="text" name="productimg" placeholder="Nhập giá" class="input input-bordered f-s-14" id="productimg" autocomplete="off"/>
+                                </div>
+                            </div>
                         </div>
                         <footer class="modal__footer">
                             <button class="button bg_green f-cl-white" id="update_product_btn">Cập nhật</button>
@@ -220,6 +232,83 @@
             </div>
         </div>
 
+        <div class="modal micromodal-slide" id="update_spec_modal" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">
+                            Cập nhật trạng thái
+                        </h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
+                            <table id="spec" class="display compact" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Giá trị</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal micromodal-slide" id="add_spec" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">
+                            Cập nhật trạng thái
+                        </h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
+                            <div class="fui-basic-input" style="width: 100%">
+                                <label for="add_spec_type" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+                                <select name="add_spec_type" id="add_spec_type" class="input input-bordered f-s-14" required>
+                                </select>
+                            </div>
+                            <div class="fui-basic-input flex-column gap-6">
+                                <label for="add_spec_val" class="f-bold f-s-14 f-cl-black">Giá trị</label>
+                                <input type="text" name="add_spec_val" placeholder="Nhập giá trị" class="input input-bordered f-s-14" id="add_spec_val" autocomplete="off"/>
+                            </div>
+                        </div>
+                        <footer class="modal__footer">
+                            <button class="button bg_green f-cl-white" id="add_spec_btn">Cập nhật</button>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal micromodal-slide" id="update_spec" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">
+                            Cập nhật trạng thái
+                        </h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
+                            <div class="fui-basic-input flex-column gap-6">
+                                <label for="update_spec_val" class="f-bold f-s-14 f-cl-black">Giá trị</label>
+                                <input type="text" name="update_spec_val" placeholder="Nhập giá trị" class="input input-bordered f-s-14" id="update_spec_val" autocomplete="off"/>
+                            </div>
+                        </div>
+                        <footer class="modal__footer">
+                            <button class="button bg_green f-cl-white" id="update_spec_btn">Cập nhật</button>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
