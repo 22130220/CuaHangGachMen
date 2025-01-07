@@ -105,19 +105,19 @@ public class ProductDao {
     }
 
     // Cập nhật sản phẩm
-    public void update(Product product) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public int update(Product product) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
-        jdbi.useHandle(handle ->
-                handle.createUpdate("UPDATE products SET Name = :name, PricePerBox = :pricePerBox, Stock = :stock, Des = :description, Status = :status, Rating = :rating, Discount = :discount, PromotionPrice = :promotionPrice, QuantityPerBox = :quantityPerBox, CreateDate = :createDate, CategoryID = :categoryId, SizeID = :sizeId, MaterialID = :materialId, ManufacturerID = :manufacturerId, ImgThumbnail = :imgThumbnail WHERE ID = :id")
+        return jdbi.withHandle(handle ->
+                handle.createUpdate("UPDATE products SET Name = :name, PricePerBox = :pricePerBox, Stock = :stock, Discount = :discount, PromotionPrice = :promotionPrice, QuantityPerBox = :quantityPerBox, CategoryID = :categoryId, SizeID = :sizeId, MaterialID = :materialId, ManufacturerID = :manufacturerId, ImgThumbnail = :imgThumbnail WHERE ID = :id")
                         .bindBean(product)
                         .execute()
         );
     }
 
     // Xóa sản phẩm theo ID
-    public void deleteById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public int deleteById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
-        jdbi.useHandle(handle ->
+        return jdbi.withHandle(handle ->
                 handle.createUpdate("DELETE FROM products WHERE ID = :id")
                         .bind("id", id)
                         .execute()
