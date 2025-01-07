@@ -60,12 +60,18 @@
     <script src="https://cdn.datatables.net/select/2.1.0/js/dataTables.select.js"></script>
     <script src="https://cdn.datatables.net/select/2.1.0/js/select.dataTables.js"></script>
 
-
     <!-- Jquery UI-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js" integrity="sha512-MSOo1aY+3pXCOCdGAYoBZ6YGI0aragoQsg1mKKBHXCYPIWxamwOE7Drh+N5CPgGI5SA9IEKJiPjdfqWFWmZtRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css" integrity="sha512-TFee0335YRJoyiqz8hA8KV3P0tXa5CpRBSoM0Wnkn7JoJx1kaq1yXL/rb8YFpWXkMOjRcv5txv+C6UluttluCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/theme.min.css" integrity="sha512-lfR3NT1DltR5o7HyoeYWngQbo6Ec4ITaZuIw6oAxIiCNYu22U5kpwHy9wAaN0vvBj3U6Uy2NNtAfiaKcDxfhTg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
+    <!--Micromodal.js-->
+    <script src="https://cdn.jsdelivr.net/npm/micromodal/dist/micromodal.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/micromodal.css">
+
+    <!--Notyf-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 
     <style>
         div.container {
@@ -90,8 +96,6 @@
                     </div>
                     <div class="funcproduct">
                         <a href="admin_addproduct.jsp" class="button bg_green f-cl-white">Thêm mới</a>
-                        <a href="#" class="button bg_black f-cl-white">Chọn tất cả</a>
-
                     </div>
                 </nav>
                 <div class="product-table table _4c _6r">
@@ -102,7 +106,7 @@
                             <th>Tên Sp</th>
                             <th>Giá mỗi hộp</th>
                             <th>Tồn kho</th>
-                            <th>Đánh giá</th>
+                            <th>Trạng thái</th>
                             <th>Chỉnh sửa</th>
                         </tr>
                         </thead>
@@ -110,242 +114,121 @@
                 </div>
             </div>
         </div>
-        <div class="notifi-box" id="box">
-            <h2>Có <span>3 thông báo mới</span></h2>
-            <div class="notifi-item">
-                <i class="fa-solid fa-user-tag fa-2x"></i>
-                <div class="text">
-                    <h4>Có 4 khách hàng mới</h4>
-                </div>
-            </div>
-            <div class="notifi-item">
-                <i class="fa-solid fa-bookmark fa-2x"></i>
-                <div class="text">
-                    <h4>Đã có thêm 4 đơn đặt hàng mới</h4>
-                </div>
-            </div>
-            <div class="notifi-item">
-                <i class="fa-solid fa-thumbs-up fa-2x"></i>
-                <div class="text">
-                    <h4>Hôm qua làm việc tốt lắm</h4>
+
+        <div class="modal micromodal-slide" id="update_id_modal" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">
+                            Cập nhật trạng thái
+                        </h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
+                            <div class="fui-basic-input" style="width: 100%">
+                                <label for="update_active_id" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+                                <select name="update_active_id" id="update_active_id" class="input input-bordered f-s-14" required>
+                                    <option value="true">Bật</option>
+                                    <option value="false">Tắt</option>
+                                </select>
+                            </div>
+                        </div>
+                        <footer class="modal__footer">
+                            <button class="button bg_green f-cl-white" id="update_id_btn">Cập nhật</button>
+                        </footer>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="modify-item" id="show_content">
-            <div class="title-icon">
-                <p class="text_entry_title"> Gạch men</p>
-                <i class="fa-solid fa-xmark fa-lg" onclick="exitModifyItem()"></i>
-            </div>
 
-            <div class="fui-accordion-HL1">
-                <div class="wrapBox">
-                    <div class="boxTitle">
-                        <span class="title">Thông tin sản phẩm</span>
-                        <div class="boxIcon">
-  <span class="icon icon-plus">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
-      </svg></span><span class="icon icon-minus">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
-      </svg></span></div>
-                    </div>
-                    <div class="boxContent">
-                        <form action="" class="main-grid">
+        <div class="modal micromodal-slide" id="update_product_modal" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">
+                            Cập nhật thông tin sản phẩm
+                        </h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
                             <div class="product-name _4c">
                                 <div class="fui-basic-input flex-column gap-6">
                                     <label for="productname" class="f-bold f-s-14 f-cl-black">Tên sản phẩm</label>
-                                    <input type="text" name="name" placeholder="Gạch ốp Catalyn 25in x 25in" class="input input-bordered f-s-14" id="productname" autocomplete="off" readonly/>
+                                    <input type="text" name="name" placeholder="Nhập tên sản phẩm" value="${p.name}" class="input input-bordered f-s-14" id="productname" autocomplete="off"/>
                                 </div>
                             </div>
                             <div class="poduct-quantity _3c">
                                 <div class="fui-basic-input flex-column gap-6">
-                                    <label for="producttag" class="f-bold f-s-14 f-cl-black">Kích Thước</label>
-                                    <input type="text" name="name" placeholder="25 x 25" class="input input-bordered f-s-14" id="producttag" autocomplete="off" readonly/>
+                                    <label for="size" class="f-bold f-s-14 f-cl-black">Kích thước</label>
+                                    <select name="size" id="size" class="input input-bordered f-s-14">
+                                        <c:forEach items="${sizes}" var="size">
+                                            <option value="${size.id}" selected><c:out value="${size.name}"/></option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
                             <div class="poduct-quantity _1c">
                                 <div class="fui-basic-input flex-column gap-6">
                                     <label for="productquantity" class="f-bold f-s-14 f-cl-black">Số lượng</label>
-                                    <input type="text" name="name" placeholder="23" class="input input-bordered f-s-14" id="productquantity" autocomplete="off" readonly/>
+                                    <input type="text" name="quantity" placeholder="Nhập số lượng" value="${p.quantityPerBox}" class="input input-bordered f-s-14" id="productquantity" autocomplete="off"/>
                                 </div>
                             </div>
-                            <div class="poduct-price _4c">
+                            <div class="product-price _4c">
                                 <div class="fui-basic-input flex-column gap-6">
-                                    <label for="productprice" class="f-bold f-s-14 f-cl-black"> Giá sản phẩm (1 hộp)</label>
-                                    <input type="text" name="name" placeholder="340.000 vnđ" class="input input-bordered f-s-14" id="productprice" autocomplete="off" readonly/>
-                                </div>
-                            </div>
-                            <div class="poduct-madewhere _4c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="poductmadewhere" class="f-bold f-s-14 f-cl-black"> Nơi sản xuất</label>
-                                    <input type="text" name="name" placeholder="Việt Nam" class="input input-bordered f-s-14" id="poductmadewhere" autocomplete="off" readonly/>
+                                    <label for="productprice" class="f-bold f-s-14 f-cl-black">Giá Sản phẩm (1 hộp)</label>
+                                    <input type="text" name="price" placeholder="Nhập giá" value="${p.pricePerBox}" class="input input-bordered f-s-14" id="productprice" autocomplete="off"/>
                                 </div>
                             </div>
                             <div class="poduct-form _4c">
                                 <div class="fui-basic-input flex-column gap-6">
                                     <label for="productform" class="f-bold f-s-14 f-cl-black"> Loại sản phẩm</label>
-                                    <input type="text" name="name" placeholder="Gạch Ốp lát tường" class="input input-bordered f-s-14" id="productform" autocomplete="off" readonly/>
+                                    <select name="category" id="productform" class="input input-bordered f-s-14">
+                                        <c:forEach items="${categories}" var="category">
+                                            <option value="${category.id}"><c:out value="${category.name}"/></option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
-
                             <div class="poduct-material _4c">
                                 <div class="fui-basic-input flex-column gap-6">
                                     <label for="productmaterial" class="f-bold f-s-14 f-cl-black"> Chất liệu</label>
-                                    <input type="text" name="name" placeholder="Gốm" class="input input-bordered f-s-14" id="productmaterial" autocomplete="off" readonly/>
+                                    <select name="material" id="productmaterial" class="input input-bordered f-s-14">
+                                        <c:forEach items="${materials}" var="material">
+                                            <option value="${material.id}"><c:out value="${material.name}"/></option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
-
-                            <div class="poduct-material _4c">
+                            <div class="poduct-manufacturer _4c">
                                 <div class="fui-basic-input flex-column gap-6">
-                                    <label for="productmanufacturer" class="f-bold f-s-14 f-cl-black"> Nhà Cung Cấp</label>
-                                    <input type="text" name="name" placeholder="Catalyn" class="input input-bordered f-s-14" id="productmanufacturer" autocomplete="off" readonly/>
+                                    <label for="productmanufacturer" class="f-bold f-s-14 f-cl-black"> Nhà cung cấp</label>
+                                    <select name="manufacturer" id="productmanufacturer" class="input input-bordered f-s-14">
+                                        <c:forEach items="${manufacturers}" var="manufacturer">
+                                            <option value="${manufacturer.id}"><c:out value="${manufacturer.name}"/></option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
-
-                        </form>
-                    </div>
-                </div>
-                <div class="wrapBox">
-                    <div class="boxTitle"><span class="title">Mô tả sản phẩm</span>
-                        <div class="boxIcon"><span class="icon icon-plus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
-              </svg></span><span class="icon icon-minus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
-              </svg></span></div>
-                    </div>
-                    <div class="boxContent">
-                        BST sử dụng công nghệ mực Rocker Ink – một loại ứng dụng công nghệ kỹ thuật số để tạo ra hiệu ứng chạm khắc sắc nét và tinh tế. mang thiên nhiên chân thực vào cuộc sống. Công nghệ hiện đại này tạo nên bề mặt tương phản ấn tượng giữa mặt phẳng và chi tiết trang trí, các đường nét chất liệu vân đá được lún sâu trên bề mặt gạch. Tương phản giữa bề mặt men Mờ với hiệu ứng Bóng phản chiếu ánh sáng, giúp các hoa văn trang trí, bề mặt đá sống động và chân thực như bề mặt tự nhiên. Đây được xem là một công nghệ kết nối Gốm sứ truyền thống với Gốm sứ hiện đại bằng cách tạo nên những bản khắc Laser thực sự trên Gạch. Kết cấu vi mô độ nét và độ sâu chưa từng thấy trước đây. Hiệu ứng mực Rocker In không chỉ mang lại hiệu ứng thị giác chân thực, sinh động, mà bề mặt còn Tính năng nổi bật lún 3D có thể cảm nhận khi sờ chạm, mô phỏng bề mặt tự nhiên một cách hoàn hảo nhất.
-                    </div>
-                </div>
-                <div class="wrapBox">
-                    <div class="boxTitle"><span class="title">Thông số</span>
-                        <div class="boxIcon"><span class="icon icon-plus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M13 7C13 6.44772 12.5523 6 12 6C11.4477 6 11 6.44772 11 7V11H7C6.44772 11 6 11.4477 6 12C6 12.5523 6.44772 13 7 13H11V17C11 17.5523 11.4477 18 12 18C12.5523 18 13 17.5523 13 17V13H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V7Z" fill="currentColor"></path>
-              </svg></span><span class="icon icon-minus">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12Z" fill="currentColor"></path>
-              </svg></span></div>
-                    </div>
-                    <div class="boxContent">
-                            <div class="spec-label">
-                                <p class="spec-title">Kiểu mẫu</p>
-                                <div class="spec-grid">
-                                    <div class="spec-item">
-                                        <p class="main-spec-title">Màu sắc</p>
-                                        <p class="main-spec-info">trắng</p>
-                                    </div>
-                                    <div class="spec-item">
-                                        <p class="main-spec-title">Độ dày</p>
-                                        <p class="main-spec-info">10mm</p>
-                                    </div>
-                                    <div class="spec-item">
-                                        <p class="main-spec-title">Hoa văn</p>
-                                        <p class="main-spec-info">Vân đá</p>
-                                    </div>
-                                    <div class="spec-item">
-                                        <p class="main-spec-title">Kích thước</p>
-                                        <p class="main-spec-info">300mm x 600mm</p>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="spec-label">
-                                <p class="spec-title">Kiểu mẫu</p>
-                                <div class="spec-grid">
-                                    <div class="spec-item">
-                                        <p class="main-spec-title">Màu sắc</p>
-                                        <p class="main-spec-info">trắng</p>
-                                    </div>
-                                    <div class="spec-item">
-                                        <p class="main-spec-title">Độ dày</p>
-                                        <p class="main-spec-info">10mm</p>
-                                    </div>
-                                    <div class="spec-item">
-                                        <p class="main-spec-title">Hoa văn</p>
-                                        <p class="main-spec-info">Vân đá</p>
-                                    </div>
-                                    <div class="spec-item">
-                                        <p class="main-spec-title">Kích thước</p>
-                                        <p class="main-spec-info">300mm x 600mm</p>
-                                    </div>
-
-                                </div>
-                            </div>
+                        </div>
+                        <footer class="modal__footer">
+                            <button class="button bg_green f-cl-white" id="update_product_btn">Cập nhật</button>
+                        </footer>
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="/assets/js/script.js"></script>
     <script src="/assets/js/notification.js"></script>
     <script src="/assets/js/accordion.js"></script>
     <script src="/assets/js/exitfFunc.js"></script>
-
     <script src="/assets/js/datatableAjax.js"></script>
 
-<%--    <script>--%>
-<%--            $(document).ready(function () {--%>
-<%--                // Hàm tạo dữ liệu ngẫu nhiên--%>
-<%--                function generateRandomData() {--%>
-<%--                    const categories = ["Gạch lát nền", "Gạch ốp tường", "Gạch trang trí", "Gạch chống trơn"];--%>
-<%--                    const statusOptions = ["Còn hàng", "Hết hàng", "Sắp có hàng"];--%>
-<%--                    const data = [];--%>
-
-<%--                    for (let i = 1; i <= 200; i++) {--%>
-<%--                        const checkBox = "<input type=\"checkbox\"></input>";--%>
-<%--                        const productCode = "<a onclick='showModifyItem()'>" + i + "</a>";--%>
-<%--                        const productName = "Gạch men " + i;--%>
-<%--                        const category = categories[Math.floor(Math.random() * categories.length)];--%>
-<%--                        const status = statusOptions[Math.floor(Math.random() * statusOptions.length)];--%>
-<%--                        const date = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));--%>
-<%--                        const formattedDate = date.toISOString().split('T')[0];--%>
-<%--                        const price = (Math.floor(Math.random() * 500) + 50) * 1000;--%>
-<%--                        const modifyRecord = " <div class='table-icon-label'>  <a href=\"#\"><i class=\"fa-solid fa-note-sticky\"></i></a>" + "<a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>";--%>
-<%--                        data.push([--%>
-<%--                            checkBox,--%>
-<%--                            productCode,--%>
-<%--                            productName,--%>
-<%--                            category,--%>
-<%--                            status,--%>
-<%--                            formattedDate,--%>
-<%--                            price.toLocaleString('vi-VN') + " VND",--%>
-<%--                            modifyRecord,--%>
-<%--                        ]);--%>
-<%--                    }--%>
-<%--                    return data;--%>
-<%--                }--%>
-
-<%--                // Thêm dữ liệu vào bảng--%>
-<%--                const table = $('#example').DataTable({--%>
-<%--                    columnDefs: [--%>
-<%--                        { targets: '_all', className: 'text-left' }--%>
-<%--                    ],--%>
-<%--                    data: generateRandomData(),--%>
-
-<%--                    columns: [--%>
-<%--                        { title: " " },--%>
-<%--                        { title: "ID" },--%>
-<%--                        { title: "Tên Sản phẩm" },--%>
-<%--                        { title: "Danh mục" },--%>
-<%--                        { title: "Tồn kho" },--%>
-<%--                        { title: "Ngày nhập" },--%>
-<%--                        { title: "Giá bán (1 hộp)" },--%>
-<%--                        { title: "Chỉnh sửa" }--%>
-<%--                    ],--%>
-<%--                    pageLength: 10,--%>
-<%--                    language: {--%>
-<%--                        lengthMenu: "Hiển thị _MENU_ mục mỗi trang",--%>
-<%--                        zeroRecords: "Không tìm thấy kết quả",--%>
-<%--                        info: "Hiển thị trang _PAGE_ của _PAGES_",--%>
-<%--                        infoEmpty: "Không có dữ liệu",--%>
-<%--                        infoFiltered: "(lọc từ _MAX_ tổng mục)"--%>
-<%--                    }--%>
-<%--                });--%>
-<%--            });--%>
-<%--        </script>--%>
 </body>
 
 </html>
