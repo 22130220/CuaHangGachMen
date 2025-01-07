@@ -81,7 +81,6 @@
             <div class="main-grid">
                 <nav class="navbar tag-line _4c _1r">
                     <div class="nav-back-prev">
-                        <div class="back-button button "></div>
                         <div class="breadcumb">
                             <div class="breadcumb-icon f-s-25">
                                 <i class="fa-solid fa-table-list"></i>

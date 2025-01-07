@@ -68,7 +68,7 @@
             Quản lý danh mục
         </p>
     </a>
-    <a href="admin_productelement.html" class="sidebar-button">
+    <a href="/admin/element" class="sidebar-button">
         <div class="sidebar-icon">
             <i class="fa-solid fa-circle-info"></i>
         </div>
@@ -90,6 +90,15 @@
         </div>
         <p class="text">
             Quản lý khách hàng
+        </p>
+    </a>
+
+    <a href="/admin/manage-voucher" class="item5 sidebar-button">
+        <div class="sidebar-icon">
+            <i class="fa-solid fa-user-tag"></i>
+        </div>
+        <p class="text">
+            Quản lý Voucher
         </p>
     </a>
 

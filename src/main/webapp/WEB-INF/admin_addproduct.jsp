@@ -81,7 +81,6 @@
         <div class="main-grid">
             <nav class="navbar tag-line _4c _1r">
                 <div class="nav-back-prev">
-                    <div class="back-button button "></div>
                     <div class="breadcumb">
                         <div class="breadcumb-icon f-s-25">
                             <i class="fa-regular fa-square-plus"></i>
@@ -93,33 +92,7 @@
                     <a href="#" class="button bg_green f-cl-white"> <c:out value="${operation}"/></a>
                 </div>
             </nav>
-            <div class="options card _1c 10r gap-10">
-                <p class="f-s-18 f-bold border-bottom">Tuỳ chỉnh</p>
-                <div class="card-white">
-                    <p class="f-s-14 f-bold">Tên sản phẩm</p>
-                    <br>
-                    <p class="f-s-12 f-regular"> - Phải có dấu </p>
-                    <br>
-                    <p class="f-s-12 f-regular"> - Không dài quá 20 ký tự </p>
-                    <br>
-                    <p class="f-s-12 f-regular"> - Theo format là: Tên sản phẩm + loại sản phẩm </p>
-                </div>
-                <div class="card-white">
-                    <p class="f-s-14 f-bold">Thẻ sản phẩm</p>
-                    <br>
-                    <p class="f-s-12 f-regular"> - Gạch có vân </p>
-                    <br>
-                    <p class="f-s-12 f-regular"> - Gạch không vân </p>
-                    <br>
-                    <p class="f-s-12 f-regular"> - Gạch ceramic </p>
-                </div>
-                <div class="card-white">
-                    <p class="f-s-14 f-bold">Số lượng sản phẩm</p>
-                    <br>
-                    <p class="f-s-12 f-regular"> - Không được âm </p>
-                </div>
-            </div>
-            <div class="card _3c _10r">
+            <div class="card _4c _10r">
                 <form action="" class="main-grid">
                     <div class="product-name _4c">
                         <div class="fui-basic-input flex-column gap-6">
@@ -446,27 +419,6 @@
 <%--                    </div>--%>
 <%--                    </div>--%>
                 </form>
-            </div>
-        </div>
-        <div class="notifi-box" id="box">
-            <h2>Có <span>3 thông báo mới</span></h2>
-            <div class="notifi-item">
-                <i class="fa-solid fa-user-tag fa-2x"></i>
-                <div class="text">
-                    <h4>Có 4 khách hàng mới</h4>
-                </div>
-            </div>
-            <div class="notifi-item">
-                <i class="fa-solid fa-bookmark fa-2x"></i>
-                <div class="text">
-                    <h4>Đã có thêm 4 đơn đặt hàng mới</h4>
-                </div>
-            </div>
-            <div class="notifi-item">
-                <i class="fa-solid fa-thumbs-up fa-2x"></i>
-                <div class="text">
-                    <h4>Hôm qua làm việc tốt lắm</h4>
-                </div>
             </div>
         </div>
     </div>

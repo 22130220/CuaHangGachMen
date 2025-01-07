@@ -5,6 +5,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ProductStorage implements IServerStorage<Product> {
     private static List<Product> products;
@@ -13,7 +14,7 @@ public class ProductStorage implements IServerStorage<Product> {
     static {
         ProductDao dao = new ProductDao();
         try {
-            products = dao.findAll();
+            products = new CopyOnWriteArrayList<>(dao.findAll());
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
@@ -27,7 +28,7 @@ public class ProductStorage implements IServerStorage<Product> {
         if(currentTime - updatePoint > 10000) {
             ProductDao pDao = new ProductDao();
             try {
-                products = pDao.findAll();
+                products = new CopyOnWriteArrayList<>(pDao.findAll());
                 System.out.println("hon 10s");
                 updatePoint = System.currentTimeMillis();
             } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {

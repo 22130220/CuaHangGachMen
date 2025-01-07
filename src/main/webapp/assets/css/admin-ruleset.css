@@ -1,3 +1,16 @@
+.isActive{
+    color: white;
+    background-color: green;
+    padding: 0.3rem;
+    border-radius: 0.3rem;
+}
+
+.deActive{
+    color: white;
+    background-color: red;
+    padding: 0.3rem;
+    border-radius: 0.3rem;
+}
 
 button.red,
 a.red {

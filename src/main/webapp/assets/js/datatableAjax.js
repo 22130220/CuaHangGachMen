@@ -49,7 +49,7 @@ var table = new DataTable('#example', {
             targets: 2, // Cột giá
             data: 'pricePerBox',
             render: function (data) {
-                return `<td style="color: red;">${data.toLocaleString()} VND</td>`;
+                return `<td style="color: red;">${data.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>`;
             },
             className: 'dt-center  dt-nowrap'
         },
