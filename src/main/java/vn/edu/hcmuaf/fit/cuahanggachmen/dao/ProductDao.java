@@ -123,5 +123,17 @@ public class ProductDao {
                         .execute()
         );
     }
+
+    public int updateActive(int id, boolean active) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createUpdate(
+                                "UPDATE Products SET status = :status WHERE Id = :id"
+                        )
+                        .bind("id", id)
+                        .bind("status", active)
+                        .execute()
+        );
+    }
 }
 

@@ -1,3 +1,17 @@
+var notyf = new Notyf();
+let addEle = 'Thêm';
+let updateEle = 'Cập nhật';
+let delEle = 'Xoá';
+
+let vid;
+
+let setActive = [];
+
+let action;
+function isNullOrEmptyOrWhitespace(str) {
+    return str === null || str === undefined || /^\s*$/.test(str) || str === "";
+}
+
 var table = new DataTable('#example', {
     ajax: {
         url: '/admin/get-product',
@@ -8,20 +22,29 @@ var table = new DataTable('#example', {
         topStart: {
             buttons: [
                 'colvis',
+                // {
+                //     text: 'Chỉnh Sửa',
+                //     className: 'green',
+                //     action: function (e, dt, node, config) {
+                //         let data = dt.row({ selected: true }).data();
+                //         action = updateEle;
+                //         vid = data.id;
+                //         openModal('update_modal', data.name, data.status);
+                //
+                //     },
+                //     enabled: false
+                // },
                 {
-                    text: 'Chỉnh Sửa',
-                    className: 'green',
-                    action: function (e, dt, node, config) {
-                        let data = dt.row({ selected: true }).data();
-                        window.location.href = `/admin/productcrud?pid=${encodeURIComponent(data.id)}`;
-                    },
-                    enabled: false
-                },
-                {
-                    text: 'Xoá',
+                    text: 'Trạng thái',
                     className: 'red',
                     action: function (e, dt, node, config) {
-                        console.log('Rows: ' + dt.rows({ selected: true }).count());
+                        var data = dt.rows({ selected: true }).data();
+                        setActive = [];
+                        data.each(function(rowData, index) {
+                            setActive.push(rowData.id);
+                        });
+                        action = delEle;
+                        MicroModal.show('update_id_modal');
                     },
                     enabled: false
                 }
@@ -64,9 +87,11 @@ var table = new DataTable('#example', {
         },
         {
             targets: 4, // Cột đánh giá
-            data: 'rating',
+            data: 'status',
             render: function (data) {
-                return `<td style="text-align: center;">${data} ★</td>`;
+                if(data) {
+                    return `<td> <div class="isActive"> Còn hàng </div> </td>`
+                } else return `<td> <div class="deActive"> Hết hàng </div> </td>`
             },
             className: 'dt-center'
         },
@@ -74,7 +99,7 @@ var table = new DataTable('#example', {
             target: 5,
             data: 'id',
             render: function (data) {
-                return '<div class=\'table-icon-label\'>  <a href=\"#\"><i class=\"fa-solid fa-note-sticky\"></i></a><a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>'
+                return`<div class='table-icon-label'>  <a href="#" onclick="openUpdateProductModal(${data})"><i class="fa-solid fa-note-sticky"></i></a><a href="#"><i class="fa-solid fa-eraser"></i></a> </div>`
             },
             className: 'dt-center'
         }
@@ -108,6 +133,43 @@ $('table th').resizable({
 table.on('select deselect', function () {
     var selectedRows = table.rows({ selected: true }).count();
 
-    table.button(1).enable(selectedRows === 1);
-    table.button(2).enable(selectedRows > 0);
+    // table.button(1).enable(selectedRows === 1);
+    // table.button(2).enable(selectedRows > 0);
+
+    table.button(1).enable(selectedRows > 0);
 });
+
+$("#update_id_btn").on('click', function () {
+    const active = $("#update_active_id").val();
+    if((isNullOrEmptyOrWhitespace(active))) {
+        notyf.error("Cần nhập đủ thông tin");
+    } else{
+        $.ajax({
+            url: '/admin/get-product',
+            type: 'POST',
+            data: {
+                active: active,
+                action: action,
+                id: JSON.stringify(setActive)
+            },
+            success: function (data) {
+                if(data.success) {
+                    notyf.success(action + " thành công");
+                    MicroModal.close('update_id_modal');
+                    table.ajax.reload();
+                    table.rows().deselect();
+                } else {
+                    notyf.error(action + " thất bại");
+                    table.rows().deselect();
+                }
+            },
+            error: function () {
+                notyf.error(action + " thất bại");
+            }
+        })
+    }
+});
+
+function openUpdateProductModal(id) {
+    MicroModal.show('update_product_modal');
+}
