@@ -89,7 +89,7 @@
                         <div class="breadcumb-icon f-s-25">
                             <i class="fa-solid fa-layer-group"></i>
                         </div>
-                        <a href="#" class="f-bold f-s-25 breadcumb-text">Quản lý danh mục</a>
+                        <a href="#" class="f-bold f-s-25 breadcumb-text">Quản lý Vouchers</a>
                     </div>
                 </div>
                 <div class="funcproduct">
