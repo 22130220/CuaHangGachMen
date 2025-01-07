@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: MikeJohnP
-  Date: 1/4/2025
-  Time: 4:47 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -175,27 +168,6 @@
 
         </div>
     </div>
-<%--    <div class="notifi-box" id="box">--%>
-<%--        <h2>Có <span>3 thông báo mới</span></h2>--%>
-<%--        <div class="notifi-item">--%>
-<%--            <i class="fa-solid fa-user-tag fa-2x"></i>--%>
-<%--            <div class="text">--%>
-<%--                <h4>Có 4 khách hàng mới</h4>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="notifi-item">--%>
-<%--            <i class="fa-solid fa-bookmark fa-2x"></i>--%>
-<%--            <div class="text">--%>
-<%--                <h4>Đã có thêm 4 đơn đặt hàng mới</h4>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div class="notifi-item">--%>
-<%--            <i class="fa-solid fa-thumbs-up fa-2x"></i>--%>
-<%--            <div class="text">--%>
-<%--                <h4>Hôm qua làm việc tốt lắm</h4>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
 
     <div class="modal micromodal-slide" id="update_modal" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
@@ -251,110 +223,6 @@
 <script src="/assets/js/accordion.js"></script>
 <script src="/assets/js/exitfFunc.js"></script>
 <script src="/assets/js/ajaxElement.js"></script>
-<script>
-    $(document).ready(function () {
-        const materialSample = ["Gốm", "Gỗ", "Thuỷ tinh", "Nhựa"];
-        const manufacturerSample = ["Cattalan", "Vitto", "Mikado", "Xsmart-Cattalan"];
-        const colorSample = ["Xanh ngọc", "Xanh dương", "Trắng", "Cam"];
-        // Hàm tạo dữ liệu ngẫu nhiên
-        function generateRandomDataForMaterial() {
-
-            const data = [];
-
-            for (let i = 0; i < materialSample.length; i++) {
-                const checkBox = "<input type=\"checkbox\"></input>";
-                const materialCode = "<a onclick='showModifyItem()'>" + i  + "</a>";
-                const materialName = materialSample[i];
-                const date = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
-                const formattedDate = date.toISOString().split('T')[0];
-                const modifyRecord = " <div class='table-icon-label'>  <a href=\"#\" onclick='showModifyItem()'><i class=\"fa-solid fa-note-sticky\"></i></a>" + "<a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>";
-                data.push([
-                    checkBox,
-                    materialCode,
-                    materialName,
-                    modifyRecord,
-                ]);
-            }
-            return data;
-        }
-
-        function generateRandomDataForManufacturer() {
-
-            const data = [];
-
-            for (let i = 0; i < manufacturerSample.length; i++) {
-                const checkBox = "<input type=\"checkbox\"></input>";
-                const manufacturerCode = "<a onclick='showModifyItem()'>" + i  + "</a>";
-                const manufacturerName = manufacturerSample[i];
-                const date = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
-                const formattedDate = date.toISOString().split('T')[0];
-                const modifyRecord = " <div class='table-icon-label'>  <a href=\"#\" onclick='showModifyItem()'><i class=\"fa-solid fa-note-sticky\"></i></a>" + "<a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>";
-                data.push([
-                    checkBox,
-                    manufacturerCode,
-                    manufacturerName,
-                    modifyRecord,
-                ]);
-            }
-            return data;
-        }
-
-        function generateRandomDataForColor() {
-
-            const data = [];
-
-            for (let i = 0; i < colorSample.length; i++) {
-                const checkBox = "<input type=\"checkbox\"></input>";
-                const colorCode = "<a onclick='showModifyItem()'>" + i  + "</a>";
-                const colorName = colorSample[i];
-                const date = new Date(2024, Math.floor(Math.random() * 12), Math.ceil(Math.random() * 28));
-                const formattedDate = date.toISOString().split('T')[0];
-                const modifyRecord = " <div class='table-icon-label'>  <a href=\"#\" onclick='showModifyItem()'><i class=\"fa-solid fa-note-sticky\"></i></a>" + "<a href=\"#\"><i class=\"fa-solid fa-eraser\"></i></a> </div>";
-
-                data.push([
-                    checkBox,
-                    colorCode,
-                    colorName,
-                    modifyRecord,
-                ]);
-            }
-            return data;
-        }
-        // Thêm dữ liệu vào bảng
-        const table = $('#example').DataTable({
-            data: generateRandomDataForMaterial(),
-            dom: '<"clear">',
-            columns: [
-                { title: " " },
-                { title: "ID" },
-                { title: "Tên chất liệu" },
-                { title: "Chỉnh sửa" }
-            ],
-        });
-
-        const table2 = $('#example2').DataTable({
-            data: generateRandomDataForManufacturer(),
-            dom: '<"clear">',
-            columns: [
-                { title: " " },
-                { title: "ID" },
-                { title: "Tên NSX" },
-                { title: "Chỉnh sửa" }
-            ],
-        });
-
-        const table3 = $('#example3').DataTable({
-            data: generateRandomDataForColor(),
-            dom: '<"clear">',
-            columns: [
-                { title: " " },
-                { title: "ID" },
-                { title: "Tên Màu" },
-                { title: "Chỉnh sửa" }
-            ],
-        });
-    });
-</script>
 </body>
 
 </html>

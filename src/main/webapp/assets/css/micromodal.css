@@ -234,6 +234,9 @@
 }
 
 .modal__content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
     font-family: "Be Vietnam Pro", sans-serif;
     margin-top: 2rem;
     margin-bottom: 2rem;

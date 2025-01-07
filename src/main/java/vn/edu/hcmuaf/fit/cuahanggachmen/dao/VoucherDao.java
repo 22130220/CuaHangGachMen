@@ -18,21 +18,13 @@ public class VoucherDao {
     // Insert a new Voucher
     public int insert(Voucher Voucher) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle -> {
-            Update update = handle.createUpdate(
-                    "INSERT INTO vouchers (Code, VoucherValue, ExpireDate, IsActive, CreateDate) " +
-                            "VALUES (:code, :VoucherValue, :expireDate, :isActive, :createDate)"
-            );
-            update.bind("code", Voucher.getCode())
+        return jdbi.withHandle(handle ->
+             handle.createUpdate("INSERT INTO vouchers (code, discountValue, expireDate, isActive) VALUES (:code, :VoucherValue, :expireDate, :isActive)")
+                     .bind("code", Voucher.getCode())
                     .bind("VoucherValue", Voucher.getDiscountValue())
                     .bind("expireDate", Voucher.getExpireDate())
-                    .bind("isActive", Voucher.isActive())
-                    .bind("createDate", Voucher.getCreateDate());
-            update.execute();
-            return handle.createQuery("SELECT LAST_INSERT_ID()")
-                    .mapTo(Integer.class)
-                    .one();
-        });
+                    .bind("isActive", Voucher.isActive()).execute()
+        );
     }
 
     // Find Voucher by ID
@@ -60,28 +52,35 @@ public class VoucherDao {
 
 
     // Update a Voucher
-    public void update(Voucher Voucher) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public int update(Voucher Voucher) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
-        jdbi.useHandle(handle -> {
-            handle.createUpdate(
-                            "UPDATE vouchers SET Code = :code, VoucherValue = :VoucherValue, " +
-                                    "ExpireDate = :expireDate, IsActive = :isActive, CreateDate = :createDate " +
-                                    "WHERE ID = :id"
-                    )
+        return jdbi.withHandle(handle ->
+            handle.createUpdate("UPDATE vouchers SET code = :code, discountValue = :VoucherValue, expireDate = :expireDate, isActive = :isActive WHERE Id = :id")
                     .bind("id", Voucher.getId())
                     .bind("code", Voucher.getCode())
                     .bind("VoucherValue", Voucher.getDiscountValue())
                     .bind("expireDate", Voucher.getExpireDate())
                     .bind("isActive", Voucher.isActive())
-                    .bind("createDate", Voucher.getCreateDate())
-                    .execute();
-        });
+                    .execute()
+        );
+    }
+
+    public int updateActive(int id, boolean active) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createUpdate(
+                                "UPDATE vouchers SET isActive = :isActive WHERE Id = :id"
+                        )
+                        .bind("id", id)
+                        .bind("isActive", active)
+                        .execute()
+        );
     }
 
     // Delete Voucher by ID
-    public void delete(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public int delete(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
-        jdbi.useHandle(handle ->
+        return jdbi.withHandle(handle ->
                 handle.createUpdate("DELETE FROM vouchers WHERE ID = :id")
                         .bind("id", id)
                         .execute()

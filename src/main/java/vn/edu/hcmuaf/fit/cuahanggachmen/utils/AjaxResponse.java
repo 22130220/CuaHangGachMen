@@ -47,6 +47,10 @@ public class AjaxResponse {
     public void addProductSpecList(List<ProductSpec> productSpecList) {
         this.text.add(String.format("\"productSpecs\":%s", productSpecListToJson(productSpecList)));
     }
+
+    public void addVoucherList(List<Voucher> voucherList) {
+        this.text.add(String.format("\"vouchers\":%s", voucherListToJson(voucherList)));
+    }
     public void addInt(String fieldName, int value) {
         this.text.add(String.format("\"%s\":%d", fieldName, value));
     }
@@ -203,6 +207,25 @@ public class AjaxResponse {
                     .add(String.format("\"Name\":\"%s\"", spec.getName()));
 
             jsonArrayJoiner.add(jsonColorJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
+    private String voucherListToJson(List<Voucher> voucherList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (Voucher vou : voucherList) {
+            StringJoiner jsonReviewJoiner = new StringJoiner(",", "{", "}");
+
+            jsonReviewJoiner.add(String.format("\"id\":%d", vou.getId()))
+                    .add(String.format("\"code\":\"%s\"", vou.getCode()))
+                    .add(String.format("\"discountValue\":%f", vou.getDiscountValue()))
+                    .add(String.format("\"expireDate\":\"%s\"", vou.getExpireDate()))
+                    .add(String.format("\"isActive\":%b", vou.isActive()));
+
+            // Thêm đối tượng review vào mảng JSON
+            jsonArrayJoiner.add(jsonReviewJoiner.toString());
         }
 
         return jsonArrayJoiner.toString();
