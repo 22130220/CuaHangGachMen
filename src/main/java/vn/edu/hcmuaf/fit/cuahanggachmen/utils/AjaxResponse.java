@@ -52,6 +52,10 @@ public class AjaxResponse {
         this.text.add(String.format("\"productSpecs\":%s", productSpecListToJson(productSpecList)));
     }
 
+    public void addProductColorList(List<ProductColorImg> productColorList) {
+        this.text.add(String.format("\"productColors\":%s", productColorListToJson(productColorList)));
+    }
+
     public void addVoucherList(List<Voucher> voucherList) {
         this.text.add(String.format("\"vouchers\":%s", voucherListToJson(voucherList)));
     }
@@ -244,6 +248,24 @@ public class AjaxResponse {
             jsonReviewJoiner.add(String.format("\"id\":%d", cat.getId()))
                     .add(String.format("\"name\":\"%s\"", cat.getName()))
                     .add(String.format("\"status\":%b", cat.isStatus()));
+
+            jsonArrayJoiner.add(jsonReviewJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
+    private String productColorListToJson(List<ProductColorImg> pcList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (ProductColorImg p : pcList) {
+            StringJoiner jsonReviewJoiner = new StringJoiner(",", "{", "}");
+
+            jsonReviewJoiner.add(String.format("\"id\":%d", p.getId()))
+                    .add(String.format("\"productId\":%d", p.getProductId()))
+                    .add(String.format("\"colorId\":%d", p.getColorId()))
+                    .add(String.format("\"colorName\":\"%s\"", p.getColorName()))
+                    .add(String.format("\"url\":\"%s\"",p.getUrl()));
 
             jsonArrayJoiner.add(jsonReviewJoiner.toString());
         }

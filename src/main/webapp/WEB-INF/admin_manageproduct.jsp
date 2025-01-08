@@ -237,7 +237,7 @@
                 <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                     <header class="modal__header">
                         <h2 class="modal__title">
-                            Cập nhật trạng thái
+                            Thông Số Sản Phẩm
                         </h2>
                         <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                     </header>
@@ -262,7 +262,7 @@
                 <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                     <header class="modal__header">
                         <h2 class="modal__title">
-                            Cập nhật trạng thái
+                            Thêm Thông Số
                         </h2>
                         <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                     </header>
@@ -291,7 +291,7 @@
                 <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                     <header class="modal__header">
                         <h2 class="modal__title">
-                            Cập nhật trạng thái
+                            Thông số sản phẩm
                         </h2>
                         <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                     </header>
@@ -310,6 +310,83 @@
             </div>
         </div>
 
+        <div class="modal micromodal-slide" id="update_color_modal" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">
+                            Màu sản phẩm
+                        </h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
+                            <table id="color" class="display compact" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Giá trị</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal micromodal-slide" id="add_color" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">
+                            Thêm màu
+                        </h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
+                            <div class="fui-basic-input" style="width: 100%">
+                                <label for="add_color_type" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+                                <select name="add_color_type" id="add_color_type" class="input input-bordered f-s-14" required>
+                                </select>
+                            </div>
+                            <div class="fui-basic-input flex-column gap-6">
+                                <label for="add_color_val" class="f-bold f-s-14 f-cl-black">Đường dẫn</label>
+                                <input type="text" name="add_color_val" placeholder="Nhập giá trị" class="input input-bordered f-s-14" id="add_color_val" autocomplete="off"/>
+                            </div>
+                        </div>
+                        <footer class="modal__footer">
+                            <button class="button bg_green f-cl-white" id="add_color_btn">Cập nhật</button>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal micromodal-slide" id="update_color" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">
+                            Cập nhật đường dẫn
+                        </h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
+                            <div class="fui-basic-input flex-column gap-6">
+                                <label for="update_color_val" class="f-bold f-s-14 f-cl-black">Đường dẫn</label>
+                                <input type="text" name="update_color_val" placeholder="Nhập giá trị" class="input input-bordered f-s-14" id="update_color_val" autocomplete="off"/>
+                            </div>
+                        </div>
+                        <footer class="modal__footer">
+                            <button class="button bg_green f-cl-white" id="update_color_btn">Cập nhật</button>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="/assets/js/script.js"></script>
