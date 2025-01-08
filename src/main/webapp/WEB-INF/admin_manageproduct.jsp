@@ -73,6 +73,9 @@
     <!--Notyf-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 
+    <!-- CKeditor 4 -->
+    <script src="/assets/ckeditor/ckeditor.js"></script>
+
     <style>
         div.container {
             max-width: 1200px;
@@ -387,6 +390,33 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal micromodal-slide" id="update_des" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">
+                            Mô Tả sản phẩm
+                        </h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
+                            <div class="fui-basic-input flex-column gap-6">
+                                <label for="des" class="f-bold f-s-14 f-cl-black">
+                                    Mô tả sản phẩm
+                                </label>
+                                <textarea class="editor-label" name="des" id="des" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <footer class="modal__footer">
+                            <button class="button bg_green f-cl-white" id="update_des_btn">Cập nhật</button>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <script src="/assets/js/script.js"></script>
