@@ -13,8 +13,13 @@ import java.sql.SQLException;
 public class ViewShared extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
+
         String path = request.getPathInfo(); // Lấy phần sau /view-shared/
         String pid = request.getParameter("pid"); // Lấy tham số pid
+
+
 
         // Ghi đè xử lý nếu cần
         if (path != null && pid != null) {

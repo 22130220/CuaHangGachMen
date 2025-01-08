@@ -12,6 +12,10 @@ let pid;
 let specId;
 let colorRowId;
 
+let linkDes;
+
+var editor = CKEDITOR.replace('des');
+
 function isNullOrEmptyOrWhitespace(str) {
     return str === null || str === undefined || /^\s*$/.test(str) || str === "";
 }
@@ -34,18 +38,18 @@ var table = new DataTable('#example', {
         topStart: {
             buttons: [
                 'colvis',
-                // {
-                //     text: 'Chỉnh Sửa',
-                //     className: 'green',
-                //     action: function (e, dt, node, config) {
-                //         let data = dt.row({ selected: true }).data();
-                //         action = updateEle;
-                //         vid = data.id;
-                //         openModal('update_modal', data.name, data.status);
-                //
-                //     },
-                //     enabled: false
-                // },
+                {
+                    text: 'Mô tả',
+                    className: 'green',
+                    action: function (e, dt, node, config) {
+                        let data = dt.row({ selected: true }).data();
+                        linkDes = data.description;
+                        pid = data.id;
+                        action = updateEle;
+                        loadFileCKEditor(linkDes, pid);
+                    },
+                    enabled: false
+                },
                 {
                     text: 'Trạng thái',
                     className: 'red',
@@ -111,7 +115,7 @@ var table = new DataTable('#example', {
             target: 5,
             data: 'id',
             render: function (data) {
-                return`<div class='table-icon-label'>  <a href="#" onclick="openUpdateProductModal(${data})"><i class="fa-solid fa-note-sticky"></i></a><a href="#" onclick="openSpecModal(${data})"><i class="fa-solid fa-eraser"></i></a> <a href="#" onclick="openColorModal(${data})"><i class="fa-solid fa-eraser"></i></a></div>`
+                return`<div class='table-icon-label'>  <a href="#" onclick="openUpdateProductModal(${data})"><i class="fa-solid fa-note-sticky"></i></a><a href="#" onclick="openSpecModal(${data})"><i class="fa-solid fa-eraser"></i></a> <a href="#" onclick="openColorModal(${data})"><i class="fa-solid fa-eraser"></i></a> </div>`
             },
             className: 'dt-center'
         }
@@ -148,7 +152,8 @@ table.on('select deselect', function () {
     // table.button(1).enable(selectedRows === 1);
     // table.button(2).enable(selectedRows > 0);
 
-    table.button(1).enable(selectedRows > 0);
+    table.button(1).enable(selectedRows === 1);
+    table.button(2).enable(selectedRows > 0);
 });
 
 $("#update_id_btn").on('click', function () {
@@ -709,4 +714,58 @@ function deleteColor(colorIdToDel) {
         }
     });
 }
+
+function loadFileCKEditor(linkDescription, productId) {
+    $.ajax({
+        url: '/admin/des',
+        type: 'GET',
+        data: {
+            pid: pid,
+            linkDes: linkDescription
+        },
+        dataType: 'text',
+        success: function (data) {
+            console.log(data);
+            editor.setData(data);
+            MicroModal.show('update_des');
+
+        },
+        error: function () {
+            alert('Không thể tải danh sách sản phẩm.');
+        }
+    });
+}
+
+$("#update_des_btn").on('click', function () {
+    const value =  editor.getData();
+    if((isNullOrEmptyOrWhitespace(value))) {
+        notyf.error("Cần nhập đủ thông tin");
+    } else {
+        var decodedContent = $('<div/>').html(value).text();
+        $.ajax({
+            url: '/admin/des',
+            type: 'POST',
+            data: {
+                action: action,
+                value: decodedContent,
+                linkDes: linkDes
+            },
+            success: function (data) {
+                if(data.success) {
+                    notyf.success(action + " thành công");
+                    MicroModal.close('update_des');
+                    table.ajax.reload();
+                    table.rows().deselect();
+                } else {
+                    notyf.error(action + " thất bại");
+                    table.rows().deselect();
+                }
+            },
+            error: function () {
+                notyf.error(action + " thất bại");
+            }
+        });
+    }
+
+});
 
