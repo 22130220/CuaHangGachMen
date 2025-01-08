@@ -10,6 +10,7 @@ let action;
 
 let pid;
 let specId;
+let colorRowId;
 
 function isNullOrEmptyOrWhitespace(str) {
     return str === null || str === undefined || /^\s*$/.test(str) || str === "";
@@ -21,6 +22,7 @@ function openModal(modalSelector, inputSelector, bind) {
 }
 
 var specTable = null;
+var colorTable = null;
 
 var table = new DataTable('#example', {
     ajax: {
@@ -109,7 +111,7 @@ var table = new DataTable('#example', {
             target: 5,
             data: 'id',
             render: function (data) {
-                return`<div class='table-icon-label'>  <a href="#" onclick="openUpdateProductModal(${data})"><i class="fa-solid fa-note-sticky"></i></a><a href="#" onclick="openSpecModal(${data})"><i class="fa-solid fa-eraser"></i></a> </div>`
+                return`<div class='table-icon-label'>  <a href="#" onclick="openUpdateProductModal(${data})"><i class="fa-solid fa-note-sticky"></i></a><a href="#" onclick="openSpecModal(${data})"><i class="fa-solid fa-eraser"></i></a> <a href="#" onclick="openColorModal(${data})"><i class="fa-solid fa-eraser"></i></a></div>`
             },
             className: 'dt-center'
         }
@@ -391,7 +393,7 @@ function openSpecModal(productId) {
                                 $("#update_spec_val").val(data.value);
                                 MicroModal.show('update_spec', {
                                     onClose: function() {
-                                        openSpecModal(productId);
+                                        openSpecModal(pid);
                                     }
                                 });
 
@@ -409,7 +411,7 @@ function openSpecModal(productId) {
                                     MicroModal.close('update_spec_modal');
                                     MicroModal.show('add_spec', {
                                         onClose: function() {
-                                            openSpecModal(productId);
+                                            openSpecModal(pid);
                                         }
                                     });
                                 } else notyf.error("Trường dữ liệu đã đầy");
@@ -481,3 +483,230 @@ function openSpecModal(productId) {
     }
     MicroModal.show('update_spec_modal');
 }
+
+function openColorModal(productForColorId) {
+    pid = productForColorId;
+    $("#add_color_type").empty();
+    if (colorTable === null) {
+        colorTable = new DataTable('#color', {
+            ajax: {
+                url: '/admin/productColorImg',
+                data: function(d) {
+                    d.pid = productForColorId;
+                },
+                dataSrc: function (json) {
+                    json.colors.forEach(function (e) {
+                        $('#add_color_type').append(
+                            $('<option></option>').val(e.Id).text(e.Name)
+                        );
+                    });
+
+                    return json.productColors;
+                }
+            },
+            fixedHeader: true,
+            layout: {
+                topStart: {
+                    buttons: [
+                        'colvis',
+                        {
+                            text: 'Chỉnh Sửa',
+                            className: 'blue',
+                            action: function (e, dt, node, config) {
+                                let data = dt.row({ selected: true }).data();
+                                action = updateEle;
+                                colorRowId = data.id;
+                                MicroModal.close('update_color_modal');
+                                $("#update_color_val").val(data.url);
+                                MicroModal.show('update_color', {
+                                    onClose: function() {
+                                        openColorModal(pid);
+                                    }
+                                });
+
+                            },
+                            enabled: false
+                        },
+                        {
+                            text: 'Thêm',
+                            className: 'green',
+                            action: function (e, dt, node, config) {
+                                let data = dt.row({ selected: true }).data();
+                                action = addEle;
+
+                                    MicroModal.close('update_color_modal');
+                                    MicroModal.show('add_color', {
+                                        onClose: function() {
+                                            openColorModal(pid);
+                                        }
+                                    });
+                            },
+                            enabled: true
+                        },
+                        {
+                            text: 'Xoá',
+                            className: 'red',
+                            action: function (e, dt, node, config) {
+                                var data = dt.rows({ selected: true }).data();
+                                var colorRowIdToDel = [];
+                                data.each(function(rowData, index) {
+                                    colorRowIdToDel.push(rowData.id);
+                                });
+                                action = delEle;
+                                deleteColor(colorRowIdToDel);
+                            },
+                            enabled: false
+                        }
+                    ]
+                },
+            },
+            select: true,
+            columnDefs: [
+                {
+                    targets: 0,
+                    data: 'colorName',
+                    className: 'dt-center'
+                },
+                {
+                    targets: 1,
+                    data: 'url',
+                    render: function (data) {
+                        return `<td style="background-color: #f5f5f5;">
+                            <img src="${data}" style="width:50px; height:auto;">
+                        </td>`;
+                    },
+                    className: 'dt-center'
+                },
+            ],
+            'autoWidth': false,
+            language: {
+                lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
+                zeroRecords: "Không tìm thấy kết quả",
+                info: "Hiển thị trang _PAGE_ của _PAGES_",
+                infoEmpty: "Không có dữ liệu",
+                infoFiltered: "(lọc từ _MAX_ tổng mục)"
+            },
+
+            createdRow: function (row, data, dataIndex) {
+                // Thêm lớp CSS để căn giữa các ô
+                $('td', row).css({
+                    'text-align': 'center',
+                    'vertical-align': 'middle'
+                });
+            },
+            paging: false,
+            searching: false,
+        });
+
+        colorTable.on('select deselect', function () {
+            var selectedRows = colorTable.rows({ selected: true }).count();
+
+            colorTable.button(1).enable(selectedRows === 1);
+            colorTable.button(3).enable(selectedRows > 0);
+        });
+    } else {
+        colorTable.settings()[0].ajax.data = function (d) {
+            d.pid = productForColorId;
+        };
+        colorTable.ajax.reload();
+    }
+    MicroModal.show('update_color_modal');
+}
+
+$("#add_color_btn").on('click', function () {
+    const value =  $("#add_color_val").val();
+    const sel = $("#add_color_type").val();
+    if((isNullOrEmptyOrWhitespace(value) || isNullOrEmptyOrWhitespace(sel))) {
+        notyf.error("Cần nhập đủ thông tin");
+    } else {
+        $.ajax({
+            url: '/admin/productColorImg',
+            type: 'POST',
+            data: {
+                action: action,
+                value: value,
+                sel: sel,
+                pid: pid,
+                vid: vid
+            },
+            success: function (data) {
+                if(data.success) {
+                    notyf.success(action + " thành công");
+                    MicroModal.close('add_color');
+                    colorTable.ajax.reload();
+                    colorTable.rows().deselect();
+                    $("#add_color_val").val("");
+                } else {
+                    notyf.error(action + " thất bại");
+                    colorTable.rows().deselect();
+                }
+            },
+            error: function () {
+                notyf.error(action + " thất bại");
+            }
+        });
+    }
+
+});
+
+$("#update_color_btn").on('click', function () {
+    const value =  $("#update_color_val").val();
+    if((isNullOrEmptyOrWhitespace(value))) {
+        notyf.error("Cần nhập đủ thông tin");
+    } else {
+        $.ajax({
+            url: '/admin/productColorImg',
+            type: 'POST',
+            data: {
+                action: action,
+                value: value,
+                colorRowId: colorRowId,
+                vid: vid
+            },
+            success: function (data) {
+                if(data.success) {
+                    notyf.success(action + " thành công");
+                    MicroModal.close('update_color');
+                    colorTable.ajax.reload();
+                    colorTable.rows().deselect();
+                    $("#update_color_val").val("");
+                } else {
+                    notyf.error(action + " thất bại");
+                    colorTable.rows().deselect();
+                }
+            },
+            error: function () {
+                notyf.error(action + " thất bại");
+            }
+        });
+    }
+
+});
+
+function deleteColor(colorIdToDel) {
+    $.ajax({
+        url: '/admin/productColorImg',
+        type: 'POST',
+        data: {
+            action: action,
+            colorIdToDel: JSON.stringify(colorIdToDel),
+        },
+        success: function (data) {
+            if(data.success) {
+                notyf.success(action + " thành công");
+                colorTable.ajax.reload();
+                colorTable.rows().deselect();
+                $("#add_color_type").empty();
+
+            } else {
+                notyf.error(action + " thất bại");
+                colorTable.rows().deselect();
+                $("#add_color_type").empty();
+            }
+        },
+        error: function () {
+            notyf.error(action + " thất bại");
+        }
+    });
+}
+

@@ -1,8 +1,10 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
 import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.result.RowView;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.ProductColorImg;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.ColorMapper;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.ColorNUrlMapper;
 
@@ -42,6 +44,16 @@ public class ColorDao {
         return jdbi.withHandle(handle ->
                 handle.createQuery("SELECT * FROM colors")
                         .map(new ColorNUrlMapper()) // Sử dụng ColorMapper để ánh xạ
+                        .list()
+        );
+    }
+
+    public List<Color> findByProductNotUsed(int productId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT c.* FROM colors c LEFT JOIN product_color_img ps ON c.ID = ps.ColorId AND ps.ProductId = :productId WHERE ps.ColorId IS NULL;")
+                        .bind("productId", productId)
+                        .map(this::mapRow)
                         .list()
         );
     }
@@ -103,5 +115,12 @@ public class ColorDao {
                         .bind("ID", id)
                         .execute()
         );
+    }
+
+    private Color mapRow(RowView rowView) {
+        Color p = new Color();
+        p.setID(rowView.getColumn("ID", Integer.class));
+        p.setName(rowView.getColumn("Name", String.class));
+        return p;
     }
 }
