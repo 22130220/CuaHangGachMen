@@ -61,6 +61,19 @@
     <script src="https://cdn.datatables.net/select/2.1.0/js/dataTables.select.js"></script>
     <script src="https://cdn.datatables.net/select/2.1.0/js/select.dataTables.js"></script>
 
+    <!-- Jquery UI-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js" integrity="sha512-MSOo1aY+3pXCOCdGAYoBZ6YGI0aragoQsg1mKKBHXCYPIWxamwOE7Drh+N5CPgGI5SA9IEKJiPjdfqWFWmZtRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/jquery-ui.min.css" integrity="sha512-TFee0335YRJoyiqz8hA8KV3P0tXa5CpRBSoM0Wnkn7JoJx1kaq1yXL/rb8YFpWXkMOjRcv5txv+C6UluttluCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/theme.min.css" integrity="sha512-lfR3NT1DltR5o7HyoeYWngQbo6Ec4ITaZuIw6oAxIiCNYu22U5kpwHy9wAaN0vvBj3U6Uy2NNtAfiaKcDxfhTg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <!--Micromodal.js-->
+    <script src="https://cdn.jsdelivr.net/npm/micromodal/dist/micromodal.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/micromodal.css">
+
+    <!--Notyf-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
 
     <!-- CKeditor 4 -->
     <script src="/assets/ckeditor/ckeditor.js"></script>
@@ -129,6 +142,12 @@
                             <input type="text" name="price" placeholder="Nhập giá" value="${p.pricePerBox}" class="input input-bordered f-s-14" id="productprice" autocomplete="off"/>
                         </div>
                     </div>
+                    <div class="product-price-promotion _4c">
+                        <div class="fui-basic-input flex-column gap-6">
+                            <label for="price_promotion" class="f-bold f-s-14 f-cl-black">Giá khuyến mãi</label>
+                            <input type="number" name="price_promotion" placeholder="Nhập giá khuyến mãi" class="input input-bordered f-s-14" id="price_promotion" autocomplete="off"/>
+                        </div>
+                    </div>
                     <div class="poduct-form _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productform" class="f-bold f-s-14 f-cl-black"> Loại sản phẩm</label>
@@ -188,21 +207,7 @@
                             <textarea class="editor-label" name="editor" id="editor" cols="30" rows="10"></textarea>
                         </div>
 
-                    </div><div class="product-spec _4c">
-                    <div class="flex-column gap-6">
-                        <label for="specs" class="f-bold f-s-14 f-cl-black">
-                            Thông tin sản phẩm
-                        </label>
-                        <table id="specs" class="display compact" style="width:100%">
-                            <thead>
-                            <tr>
-                                <th>Tên thông số</th>
-                                <th>Giá trị</th>
-                            </tr>
-                            </thead>
-                        </table>
                     </div>
-                </div>
                 </form>
             </div>
         </div>
