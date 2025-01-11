@@ -202,7 +202,7 @@
 </div>
 
 
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="/assets/js/script.js"></script>
 <script src="/assets/js/categoryAjax.js"></script>

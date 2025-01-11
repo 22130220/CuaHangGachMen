@@ -20,6 +20,10 @@ public class AjaxResponse {
         this.text.add(String.format("\"products\":%s", productListToJson(productList)));
     }
 
+    public void addUserList(List<User> userList) {
+        this.text.add(String.format("\"users\":%s", userListToJson(userList)));
+    }
+
     public void addReviewList(List<Review> reviewList) {
         this.text.add(String.format("\"review\":%s", reviewListToJson(reviewList)));
     }
@@ -268,6 +272,33 @@ public class AjaxResponse {
                     .add(String.format("\"url\":\"%s\"",p.getUrl()));
 
             jsonArrayJoiner.add(jsonReviewJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
+    private String userListToJson(List<User> userList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (User user : userList) {
+            StringJoiner jsonUserJoiner = new StringJoiner(",", "{", "}");
+
+            jsonUserJoiner.add(String.format("\"id\":%d", user.getId()))
+                    .add(String.format("\"fullname\":\"%s\"", user.getFullname()))
+                    .add(String.format("\"email\":\"%s\"", user.getEmail()))
+                    .add(String.format("\"phone\":\"%s\"", user.getPhone()))
+                    .add(String.format("\"avatar\":\"%s\"", user.getAvatar()))
+                    .add(String.format("\"address\":\"%s\"", user.getAddress()))
+                    .add(String.format("\"birthtime\":\"%s\"", user.getBirthtime() != null ? user.getBirthtime().toString() : null))
+                    .add(String.format("\"status\":%b", user.isStatus()))
+                    .add(String.format("\"createtime\":\"%s\"", user.getCreatetime() != null ? user.getCreatetime().toString() : null))
+                    .add(String.format("\"salt\":\"%s\"", user.getSalt()))
+                    .add(String.format("\"role\":%d", user.getRole()))
+                    .add(String.format("\"password\":\"%s\"", user.getPassword()))
+                    .add(String.format("\"sex\":%d", user.getSex()));
+
+            // Thêm đối tượng user vào mảng JSON
+            jsonArrayJoiner.add(jsonUserJoiner.toString());
         }
 
         return jsonArrayJoiner.toString();
