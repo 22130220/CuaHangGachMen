@@ -114,7 +114,7 @@
                 </c:forEach>
 
                 <!-- Ghi chú đơn hàng -->
-                <div class="order-note">
+                <div class="orders-note">
                     <label for="note">Ghi chú đơn hàng</label>
                     <textarea id="note" placeholder="Ghi chú..."></textarea>
                 </div>

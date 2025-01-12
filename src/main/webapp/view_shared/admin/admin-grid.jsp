@@ -84,7 +84,7 @@
             Quản lý đơn hàng
         </p>
     </a>
-    <a href="admin_manageuser.html" class="item5 sidebar-button">
+    <a href="/admin/manage-user" class="item5 sidebar-button">
         <div class="sidebar-icon">
             <i class="fa-solid fa-user-tag"></i>
         </div>

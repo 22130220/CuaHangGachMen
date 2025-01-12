@@ -520,7 +520,7 @@ Fixed Issues:
 * [#3586](https://github.com/ckeditor/ckeditor4/issues/3586): Fixed: Content pasted from Microsoft Excel is not correctly recognised by the [Paste from Word](https://ckeditor.com/cke4/addon/pastefromword) plugin.
 * [#3585](https://github.com/ckeditor/ckeditor4/issues/3585): [Firefox] Fixed: Microsoft Excel content is pasted as an image.
 * [#3625](https://github.com/ckeditor/ckeditor4/issues/3625): [Firefox] Fixed: Microsoft PowerPoint content is pasted as an image.
-* [#3474](https://github.com/ckeditor/ckeditor4/issues/3474): Fixed: Incorrect focus order after any tab in a [dialog](https://ckeditor.com/cke4/addon/dialog) was clicked.
+* [#3474](https://github.com/ckeditor/ckeditor4/issues/3474): Fixed: Incorrect focus orders after any tab in a [dialog](https://ckeditor.com/cke4/addon/dialog) was clicked.
 * [#3689](https://github.com/ckeditor/ckeditor4/issues/3689): Fixed: Cannot change [dialog](https://ckeditor.com/cke4/addon/dialog) tabs with keyboard arrow keys after focusing any tab with a mouse click.
 
 API Changes:
@@ -668,8 +668,8 @@ Other Changes:
 
 Fixed Issues:
 
-* [#2721](https://github.com/ckeditor/ckeditor4/issues/2721), [#487](https://github.com/ckeditor/ckeditor4/issues/487): Fixed: The order of sublist items is reversed when a higher level list item is removed.
-* [#2527](https://github.com/ckeditor/ckeditor4/issues/2527): Fixed: [Emoji](https://ckeditor.com/cke4/addon/emoji) autocomplete order does not prioritize emojis with the name starting from the used string.
+* [#2721](https://github.com/ckeditor/ckeditor4/issues/2721), [#487](https://github.com/ckeditor/ckeditor4/issues/487): Fixed: The orders of sublist items is reversed when a higher level list item is removed.
+* [#2527](https://github.com/ckeditor/ckeditor4/issues/2527): Fixed: [Emoji](https://ckeditor.com/cke4/addon/emoji) autocomplete orders does not prioritize emojis with the name starting from the used string.
 * [#2572](https://github.com/ckeditor/ckeditor4/issues/2572): Fixed: Icons in the [Emoji](https://ckeditor.com/cke4/addon/emoji) dropdown navigation groups are not centered.
 * [#1191](https://github.com/ckeditor/ckeditor4/issues/1191): Fixed: Items in the [elements path](https://ckeditor.com/cke4/addon/elementspath) are draggable.
 * [#2292](https://github.com/ckeditor/ckeditor4/issues/2292): Fixed: Dropping a list with a link on the editor's margin causes a console error and removes the dragged text from editor.
@@ -945,10 +945,10 @@ New Features:
 
 Fixed Issues:
 
-* [#796](https://github.com/ckeditor/ckeditor4/issues/796): Fixed: A list is pasted from OneNote in the reversed order.
+* [#796](https://github.com/ckeditor/ckeditor4/issues/796): Fixed: A list is pasted from OneNote in the reversed orders.
 * [#834](https://github.com/ckeditor/ckeditor4/issues/834): [IE9-11] Fixed: The editor does not save the selected state of radio buttons inserted by the [Form Elements](https://ckeditor.com/cke4/addon/forms) plugin.
 * [#704](https://github.com/ckeditor/ckeditor4/issues/704): [Edge] Fixed: Using <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Z</kbd> breaks widget structure.
-* [#591](https://github.com/ckeditor/ckeditor4/issues/591): Fixed: A column is inserted in a wrong order inside the table if any cell has a vertical split.
+* [#591](https://github.com/ckeditor/ckeditor4/issues/591): Fixed: A column is inserted in a wrong orders inside the table if any cell has a vertical split.
 * [#787](https://github.com/ckeditor/ckeditor4/issues/787): Fixed: Using Cut inside a nested table does not cut the selected content.
 * [#842](https://github.com/ckeditor/ckeditor4/issues/842): Fixed: List style not restored when toggling list indent level in the [Indent List](https://ckeditor.com/cke4/addon/indentlist) plugin.
 * [#711](https://github.com/ckeditor/ckeditor4/issues/711): Fixed: Dragging widgets should only work with the left mouse button.
@@ -1284,7 +1284,7 @@ New Features:
 Fixed Issues:
 
 * [#10448](https://dev.ckeditor.com/ticket/10448): Fixed: Lack of scrollbar in the [right-to-left text direction](https://ckeditor.com/cke4/addon/bidi).
-* [#12707](https://dev.ckeditor.com/ticket/12707): Fixed: The order of table elements does not comply with the HTML specification.
+* [#12707](https://dev.ckeditor.com/ticket/12707): Fixed: The orders of table elements does not comply with the HTML specification.
 * [#13756](https://dev.ckeditor.com/ticket/13756): [Edge] Fixed: Context menus are cut-off.
 
 ## CKEditor 4.5.7
@@ -1509,7 +1509,7 @@ New Features:
 
   * Major features:
     * Support for dropping and pasting files into the editor was introduced. Through a set of new facades for native APIs it is now possible to easily intercept and process inserted files.
-    * [File upload tools](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.fileTools.html) were introduced in order to simplify controlling the loading, uploading and handling server response, properly handle [new upload configuration](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-uploadUrl) options, etc.
+    * [File upload tools](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.fileTools.html) were introduced in orders to simplify controlling the loading, uploading and handling server response, properly handle [new upload configuration](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-uploadUrl) options, etc.
     * [Upload Image](https://ckeditor.com/cke4/addon/uploadimage) widget was introduced to upload dropped images. A base class for the [upload widget](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.fileTools.uploadWidgetDefinition.html) was exposed, too, to make it simple to create new types of upload widgets which can handle any type of dropped file, show the upload progress and update the content when the process is done. It also handles editing and undo/redo operations when a file is being uploaded and integrates with the [notification aggregator](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.plugins.notificationAggregator.html) to show progress and success or error.
     * All drag and drop operations were integrated with the editor. All dropped content is passed through the [`editor#paste`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#event-paste) event and a set of new editor events was introduced &mdash; [`dragstart`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#event-dragstart), [`drop`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#event-drop), [`dragend`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#event-dragend).
     * The [Data Transfer](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.plugins.clipboard.dataTransfer.html) facade was introduced to unify access to data in various types and files. [Data Transfer](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.plugins.clipboard.dataTransfer.html) is now always available in the [`editor#paste`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#event-paste) event.
@@ -1549,7 +1549,7 @@ New Features:
   * [#11580](https://dev.ckeditor.com/ticket/11580): Introduced the [notification system](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.plugins.notification.html).
   * [#12810](https://dev.ckeditor.com/ticket/12810): Introduced a [notification aggregator](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.plugins.notificationAggregator.html) for the [notification system](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.plugins.notification.html) which simplifies displaying progress of many concurrent tasks.
 * [#11636](https://dev.ckeditor.com/ticket/11636): Introduced new, UX-focused, methods for getting selected HTML and deleting it &mdash; [`editor.getSelectedHtml()`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-getSelectedHtml) and [`editor.extractSelectedHtml()`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-extractSelectedHtml).
-* [#12416](https://dev.ckeditor.com/ticket/12416): Added the [`widget.definition.upcastPriority`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_plugins_widget_definition.html#property-upcastPriority) property which gives more control over widget upcasting order to the widget author.
+* [#12416](https://dev.ckeditor.com/ticket/12416): Added the [`widget.definition.upcastPriority`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_plugins_widget_definition.html#property-upcastPriority) property which gives more control over widget upcasting orders to the widget author.
 * [#12036](https://dev.ckeditor.com/ticket/12036): Initialize the editor in [read-only](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#property-readOnly) mode when the `<textarea>` element has a `readonly` attribute.
 * [#11905](https://dev.ckeditor.com/ticket/11905): The [`resize` event](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#event-resize) passes the current dimensions in its data.
 * [#12126](https://dev.ckeditor.com/ticket/12126): Introduced [`config.image_prefillDimensions`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-image_prefillDimensions) and [`config.image2_prefillDimensions`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-image2_prefillDimensions) to make pre-filling `width` and `height` configurable for the [Enhanced Image](https://ckeditor.com/cke4/addon/image2).
@@ -1573,7 +1573,7 @@ Changes:
 
 Fixed issues:
 
-* [#11586](https://dev.ckeditor.com/ticket/11586): Fixed: [`range.cloneContents()`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_dom_range.html#method-cloneContents) should not change the DOM in order not to affect selection.
+* [#11586](https://dev.ckeditor.com/ticket/11586): Fixed: [`range.cloneContents()`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_dom_range.html#method-cloneContents) should not change the DOM in orders not to affect selection.
 * [#12148](https://dev.ckeditor.com/ticket/12148): Fixed: [`dom.element.getChild()`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_dom_element.html#method-getChild) should not modify a passed array.
 * [#12503](https://dev.ckeditor.com/ticket/12503): [Blink/Webkit] Fixed: Incorrect result of Select All and *Backspace* or *Delete*.
 * [#13001](https://dev.ckeditor.com/ticket/13001): [Firefox] Fixed: The `<br />` filler is placed in the wrong position by the [`range.fixBlock()`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_dom_range.html#method-fixBlock) method due to quirky Firefox behavior.
@@ -1616,7 +1616,7 @@ Fixed Issues:
 Other Changes:
 
 * [#12844](https://dev.ckeditor.com/ticket/12844) and [#13103](https://dev.ckeditor.com/ticket/13103): Upgraded the [testing environment](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_tests.html) to [Bender.js](https://github.com/benderjs/benderjs) `0.2.3`.
-* [#12930](https://dev.ckeditor.com/ticket/12930): Because of licensing issues, `truncated-mathjax/` is now removed from the `tests/` directory. Now `bender.config.mathJaxLibPath` must be configured manually in order to run [Mathematical Formulas](https://ckeditor.com/cke4/addon/mathjax) plugin tests.
+* [#12930](https://dev.ckeditor.com/ticket/12930): Because of licensing issues, `truncated-mathjax/` is now removed from the `tests/` directory. Now `bender.config.mathJaxLibPath` must be configured manually in orders to run [Mathematical Formulas](https://ckeditor.com/cke4/addon/mathjax) plugin tests.
 * [#13266](https://dev.ckeditor.com/ticket/13266): Added more shades of gray in the [Color Dialog](https://ckeditor.com/cke4/addon/colordialog) window. Thanks to [mizafish](https://github.com/mizafish)!
 
 
@@ -1692,7 +1692,7 @@ Fixed Issues:
 * [#12411](https://dev.ckeditor.com/ticket/12411): Fixed: [Page Break](https://ckeditor.com/cke4/addon/pagebreak) used directly in the editable breaks the editor.
 * [#12354](https://dev.ckeditor.com/ticket/12354): Fixed: Various issues in undo manager when holding keys.
 * [#12324](https://dev.ckeditor.com/ticket/12324): [IE8] Fixed: Undo steps are not recorded when changing the caret position by clicking below the body.
-* [#12332](https://dev.ckeditor.com/ticket/12332): Fixed: Lowered DOM events listeners' priorities in undo manager in order to avoid ambiguity.
+* [#12332](https://dev.ckeditor.com/ticket/12332): Fixed: Lowered DOM events listeners' priorities in undo manager in orders to avoid ambiguity.
 * [#12402](https://dev.ckeditor.com/ticket/12402): [Blink] Fixed: Workaround for Blink bug with `document.title` which breaks updating title in the full HTML mode.
 * [#12338](https://dev.ckeditor.com/ticket/12338): Fixed: The CKEditor package contains unoptimized images.
 
@@ -1833,7 +1833,7 @@ Other Changes:
 * Marked the [`editor.beforePaste`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#event-beforePaste) event as deprecated.
 * The default class of captioned images has changed to `image` (was: `caption`). Please note that once edited in CKEditor 4.4+, all existing images of the `caption` class (`<figure class="caption">`) will be [filtered out](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_advanced_content_filter.html) unless the [`config.image2_captionedClass`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html#cfg-image2_captionedClass) option is set to `caption`. For backward compatibility (i.e. when upgrading), it is highly recommended to use this setting, which also helps prevent CSS conflicts, etc. This does not apply to new CKEditor integrations.
 * Widgets without defined buttons are no longer registered automatically to the [Advanced Content Filter](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_advanced_content_filter.html). Before CKEditor 4.4 widgets were registered to the ACF which was an incorrect behavior ([#11567](https://dev.ckeditor.com/ticket/11567)). This change should not have any impact on standard scenarios, but if your button does not execute the widget command, you need to set [`allowedContent`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_feature.html#property-allowedContent) and [`requiredContent`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_feature.html#property-requiredContent) properties for it manually, because the editor will not be able to find them.
-* The [Show Borders](https://ckeditor.com/cke4/addon/showborders) plugin was added to the Standard installation package in order to ensure that unstyled tables are still visible for the user ([#11665](https://dev.ckeditor.com/ticket/11665)).
+* The [Show Borders](https://ckeditor.com/cke4/addon/showborders) plugin was added to the Standard installation package in orders to ensure that unstyled tables are still visible for the user ([#11665](https://dev.ckeditor.com/ticket/11665)).
 * Since CKEditor 4.4 the editor instance should be passed to [`CKEDITOR.style`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.style.html) methods to ensure full compatibility with other features (e.g. applying styles to widgets requires that). We ensured backward compatibility though, so the [`CKEDITOR.style`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.style.html) will work even when the editor instance is not provided.
 
 New Features:
@@ -2260,7 +2260,7 @@ Fixed Issues:
 
 * [#9779](https://dev.ckeditor.com/ticket/9779): Fixed overriding [`CKEDITOR.getUrl()`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR.html#method-getUrl) with `CKEDITOR_GETURL`.
 * [#9772](https://dev.ckeditor.com/ticket/9772): Custom buttons in the dialog window footer have different look and size ([Moono](https://ckeditor.com/cke4/addon/moono), [Kama](https://ckeditor.com/cke4/addon/kama) skins).
-* [#9029](https://dev.ckeditor.com/ticket/9029): Custom styles added with the [`stylesSet.add()`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_stylesSet.html#method-add) are displayed in the wrong order.
+* [#9029](https://dev.ckeditor.com/ticket/9029): Custom styles added with the [`stylesSet.add()`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_stylesSet.html#method-add) are displayed in the wrong orders.
 * [#9887](https://dev.ckeditor.com/ticket/9887): Disable [Magic Line](https://ckeditor.com/cke4/addon/magicline) when [`editor.readOnly`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#property-readOnly) is set.
 * [#9882](https://dev.ckeditor.com/ticket/9882): Fixed empty document title on [`editor.getData()`](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_editor.html#method-getData) if set via the Document Properties dialog window.
 * [#9773](https://dev.ckeditor.com/ticket/9773): Fixed rendering problems with selection fields in the Kama skin.
