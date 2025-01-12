@@ -38,6 +38,13 @@ public class UserDao {
         );
     }
 
+    public int countUser() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT COUNT(id) as tongSo FROM users WHERE status = 1").mapTo(Integer.class).one()
+        );
+    }
+
     public void updateUserProfile(User user) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         jdbi.useHandle(handle ->

@@ -52,7 +52,7 @@
                     </div>
                     <div class="content-entry">
                         <p class="big-title f-cl-black f-bold f-s-30">
-                            1.234.322
+                            <f:formatNumber value="${doanhThu}" type="number" maxFractionDigits="0"/>
                         </p>
                         <p class="less-title f-cl-black f-bold f-s-16">
                             VNĐ
@@ -67,7 +67,7 @@
                     </div>
                     <div class="content-entry">
                         <p class="big-title f-cl-black f-bold f-s-30">
-                            20.000
+                            <f:formatNumber value="${khachHang}" type="number" maxFractionDigits="0"/>
                         </p>
                         <p class="less-title f-cl-black f-bold f-s-16">
                             người
@@ -81,7 +81,7 @@
                     </div>
                     <div class="content-entry">
                         <p class="big-title f-cl-black f-bold f-s-30">
-                            200
+                            <f:formatNumber value="${TongSanPham}" type="number" maxFractionDigits="0"/>
                         </p>
                         <p class="less-title f-cl-black f-bold f-s-16">
                             sản phẩm
@@ -90,12 +90,12 @@
                 </div>
                 <div class="card _1c _2r">
                     <div class="title-icon">
-                        <p class="text_entry_title">Giao dịch một ngày</p>
+                        <p class="text_entry_title">Giao dịch trong ngày</p>
                         <i class="fa-solid fa-van-shuttle fa-lg"></i>
                     </div>
                     <div class="content-entry">
                         <p class="big-title f-cl-black f-bold f-s-30">
-                            200
+                            <f:formatNumber value="${GDMotNgay}" type="number" maxFractionDigits="0"/>
                         </p>
                         <p class="less-title f-cl-black f-bold f-s-16">
                             giao dịch
@@ -118,149 +118,53 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <c:forEach var="dh" items="${DonHang}">
                                 <tr>
-                                    <td>321432</td>
-                                    <td class="pcs">Vận chuyển</td>
-                                    <td class="cur">345.000 </td>
-                                    <td class="per">3241</td>
+                                    <td>${dh.id}</td>
+                                    <td class="pcs">${dh.status}</td>
+                                    <td >  <f:formatNumber value="${dh.totalPrice}" type="number" maxFractionDigits="0"/> đ </td>
+                                    <td class="per">${dh.userId}</td>
                                 </tr>
-                                <tr>
-                                    <td>435264</td>
-                                    <td class="pcs">Đã giao</td>
-                                    <td class="cur">6535178 </td>
-                                    <td class="per">3414</td>
-                                </tr>
-                                <tr>
-                                    <td>435264</td>
-                                    <td class="pcs">Đã giao</td>
-                                    <td class="cur">6535178 </td>
-                                    <td class="per">3414</td>
-                                </tr>
-                                <tr>
-                                    <td>435264</td>
-                                    <td class="pcs">Đã giao</td>
-                                    <td class="cur">6535178 </td>
-                                    <td class="per">3414</td>
-                                </tr>
-                                <tr>
-                                    <td>435264</td>
-                                    <td class="pcs">Đã giao</td>
-                                    <td class="cur">6535178 </td>
-                                    <td class="per">3414</td>
-                                </tr>
-                                <tr>
-                                    <td>435264</td>
-                                    <td class="pcs">Đã giao</td>
-                                    <td class="cur">6535178 </td>
-                                    <td class="per">3414</td>
-                                </tr>
-                                <tr>
-                                    <td>435264</td>
-                                    <td class="pcs">Đã giao</td>
-                                    <td class="cur">6535178 </td>
-                                    <td class="per">3414</td>
-                                </tr>
-                                <tr>
-                                    <td>435264</td>
-                                    <td class="pcs">Đã giao</td>
-                                    <td class="cur">6535178 </td>
-                                    <td class="per">3414</td>
-                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
+                </div>
+<%--                <div class="table _2c _4r">--%>
+<%--                    <div class="title-icon">--%>
+<%--                        <p class="text_entry_title">Sản phẩm hết hàng</p>--%>
+<%--                        <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>--%>
+<%--                    </div>--%>
+<%--                    <div class="fui-table-ui-basic-linh table-wrap">--%>
+<%--                        <table>--%>
+<%--                            <thead>--%>
+<%--                            <tr>--%>
+<%--                                <th>Mã Sản phẩm</th>--%>
+<%--                                <th>Loại Sản phẩm</th>--%>
+<%--                                <th>Ngày hết</th>--%>
+<%--                            </tr>--%>
+<%--                            </thead>--%>
+<%--                            <tbody>--%>
+<%--                            <tr>--%>
+<%--                                <td>432524</td>--%>
+<%--                                <td>Gạch ốp caitlyn</td>--%>
+<%--                                <td>31-10-2024</td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td>54324</td>--%>
+<%--                                <td>Gạch ốp ceramic</td>--%>
+<%--                                <td>30-10-2024</td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td>432523</td>--%>
+<%--                                <td>Gạch bóng</td>--%>
+<%--                                <td>12-10-2024</td>--%>
+<%--                            </tr>--%>
+<%--                            </tbody>--%>
+<%--                        </table>--%>
+<%--                    </div>--%>
+<%--                </div>--%>
 
-                </div>
-                <div class="table _2c _4r">
-                    <div class="title-icon">
-                        <p class="text_entry_title">Khách hàng mới</p>
-                        <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>
-                    </div>
-                    <div class="fui-table-ui-basic-linh table-wrap">
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Tên người dùng</th>
-                                <th>Ngày tạo</th>
-                                <th>Tình trạng</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>Đinh Thi</td>
-                                <td>22-11-2024</td>
-                                <td>Online</td>
-                            </tr>
-                            <tr>
-                                <td>Nhật</td>
-                                <td>25-11-2024</td>
-                                <td>Offline</td>
-                            </tr>
-                            <tr>
-                                <td>Nghi</td>
-                                <td>27-11-2024</td>
-                                <td>Online</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="table _2c _4r">
-                    <div class="title-icon">
-                        <p class="text_entry_title">Sản phẩm hết hàng</p>
-                        <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>
-                    </div>
-                    <div class="fui-table-ui-basic-linh table-wrap">
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Mã Sản phẩm</th>
-                                <th>Loại Sản phẩm</th>
-                                <th>Ngày hết</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>432524</td>
-                                <td>Gạch ốp caitlyn</td>
-                                <td>31-10-2024</td>
-                            </tr>
-                            <tr>
-                                <td>54324</td>
-                                <td>Gạch ốp ceramic</td>
-                                <td>30-10-2024</td>
-                            </tr>
-                            <tr>
-                                <td>432523</td>
-                                <td>Gạch bóng</td>
-                                <td>12-10-2024</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <div class="notifi-box" id="box">
-            <h2>Có <span>3 thông báo mới</span></h2>
-            <div class="notifi-item">
-                <i class="fa-solid fa-user-tag fa-2x"></i>
-                <div class="text">
-                    <h4>Có 4 khách hàng mới</h4>
-                </div>
-            </div>
-            <div class="notifi-item">
-                <i class="fa-solid fa-bookmark fa-2x"></i>
-                <div class="text">
-                    <h4>Đã có thêm 4 đơn đặt hàng mới</h4>
-                </div>
-            </div>
-            <div class="notifi-item">
-                <i class="fa-solid fa-thumbs-up fa-2x"></i>
-                <div class="text">
-                    <h4>Hôm qua làm việc tốt lắm</h4>
-                </div>
             </div>
         </div>
     </div>
