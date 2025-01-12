@@ -28,6 +28,11 @@ public class ProductDetailController extends HttpServlet {
             int productId = Integer.parseInt(pidParam);
             int colorId = colorParam != null ? Integer.parseInt(colorParam) : 0;
 
+            //Thêm lượt xem vào product_view
+            if (colorParam == null || colorParam.isEmpty()) {
+                productDao.updateProductView(productId);
+            }
+
             // Lấy thông tin sản phẩm từ DAO
             product = productDao.findById(productId);
 

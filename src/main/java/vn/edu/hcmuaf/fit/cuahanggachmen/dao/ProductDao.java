@@ -135,5 +135,76 @@ public class ProductDao {
                         .execute()
         );
     }
+
+// TOP BÁN CHẠY
+    public List<Product> findTopSellingProducts(int months, int limit) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        String query = "SELECT p.id, p.name, p.imgThumbnail, p.pricePerBox, p.rating, COUNT(od.productID) AS ProductCount " +
+                "FROM products p " +
+                "JOIN orderdetail od ON p.id = od.productID " +
+                "JOIN orders o ON od.orderID = o.id " +
+                "WHERE o.status = 'Delivered' " +
+                "AND TIMESTAMPDIFF(MONTH, o.orderDate, CURDATE()) <= :months " +
+                "GROUP BY p.id, p.name " +
+                "ORDER BY ProductCount DESC " +
+                "LIMIT :limit";
+        return jdbi.withHandle(handle ->
+                handle.createQuery(query)
+                        .bind("months", months)
+                        .bind("limit", limit)
+                        .mapToBean(Product.class)
+                        .list());
+    }
+// CÁC MẪU MỚI NHẤT
+    public List<Product> findLatestProducts() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery(
+                                "SELECT * FROM products " +
+                                        "WHERE YEAR(CreateDate) = YEAR(CURDATE()) " +
+                                        "AND MONTH(CreateDate) = MONTH(CURDATE()) " +
+                                        "ORDER BY CreateDate DESC " +
+                                        "LIMIT 3")
+                        .mapToBean(Product.class)
+                        .list()
+        );
+    }
+
+    // CẬP NHẬT VIEW
+    public void updateProductView(int productId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        jdbi.useHandle(handle ->
+                handle.createUpdate("INSERT INTO product_view (ProductID) VALUES (:productId)")
+                        .bind("productId", productId)
+                        .execute()
+        );
+    }
+// CÁC SẢN PHẨM XEM NHIỀU
+    public List<Product> findMostViewedProducts() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery(
+                                "SELECT p.imgThumbnail, p.name, p.pricePerBox, p.rating " +
+                                        "FROM products p " +
+                                        "JOIN product_view pv ON p.id = pv.ProductID " +
+                                        "GROUP BY p.id " +
+                                        "ORDER BY COUNT(pv.id) DESC " +
+                                        "LIMIT 3")
+                        .mapToBean(Product.class)
+                        .list()
+        );
+    }
+
+
+    public void updateProductRating(int productId, double newRating) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        jdbi.useHandle(handle ->
+                handle.createUpdate("UPDATE products SET Rating = :newRating WHERE ID = :productId")
+                        .bind("newRating", newRating)
+                        .bind("productId", productId)
+                        .execute()
+        );
+    }
+
 }
 
