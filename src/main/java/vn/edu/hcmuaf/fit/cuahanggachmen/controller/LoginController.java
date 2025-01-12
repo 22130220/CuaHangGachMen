@@ -46,6 +46,7 @@ public class LoginController extends HttpServlet {
             user.setPassword(null);
             user.setSalt(null);
             session.setAttribute("auth", user);
+
             response.sendRedirect("/");
         }else{
             request.setAttribute("error", "Email hoặc mật khẩu bạn vừa nhập chưa đúng");

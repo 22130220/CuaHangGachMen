@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Cart implements Serializable {
     private List<CartItem> items;
+    private double discount;
+    private int voucherId;
 
     public Cart() {
         items = new ArrayList<>();
@@ -69,6 +71,20 @@ public class Cart implements Serializable {
         return count;
     }
 
+    public double getDiscount() {
+        return discount;
+    }
 
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public int getVoucherId() {
+        return voucherId;
+    }
+
+    public void setVoucherId(int voucherId) {
+        this.voucherId = voucherId;
+    }
 }
 

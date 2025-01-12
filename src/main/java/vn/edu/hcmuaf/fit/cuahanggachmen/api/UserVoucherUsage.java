@@ -6,6 +6,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherUsageDAO;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Cart;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Voucher;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.VoucherUsage;
@@ -48,7 +49,12 @@ public class UserVoucherUsage extends HttpServlet {
                 throw new RuntimeException(e);
             }
             if(vs != null) {
+                HttpSession session = request.getSession();
+                Cart cart = (Cart)session.getAttribute("cart");
+                cart.setDiscount(vs.getDiscountValue().doubleValue());
+                cart.setVoucherId(vs.getId());
                 resp.addDouble("discount", vs.getDiscountValue().doubleValue());
+                resp.addInt("voucherID", vs.getId()); // Trả về ID của voucher
             } else status = true;
         }
         resp.addBool("status", status);

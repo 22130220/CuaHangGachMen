@@ -17,6 +17,41 @@ public class UserDao {
 
     public UserDao() {
     }
+    public void updatePassword(String email, String hashedPassword, String salt) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        jdbi.useHandle(handle ->
+                handle.createUpdate("UPDATE users SET password = :password, salt = :salt WHERE email = :email")
+                        .bind("password", hashedPassword)
+                        .bind("salt", salt)
+                        .bind("email", email)
+                        .execute()
+        );
+    }
+
+    public void updateUserProfileAvatar(User user) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        jdbi.useHandle(handle ->
+                handle.createUpdate("UPDATE users SET avatar = :avatar WHERE id = :id")
+                        .bind("avatar", user.getAvatar())
+                        .bind("id", user.getId())
+                        .execute()
+        );
+    }
+
+    public void updateUserProfile(User user) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        jdbi.useHandle(handle ->
+                handle.createUpdate("UPDATE users SET fullname = :fullname, phone = :phone, address = :address, birthtime = :birthtime, sex = :sex WHERE id = :id")
+                        .bind("fullname", user.getFullname())
+                        .bind("phone", user.getPhone())
+                        .bind("address", user.getAddress())
+                        .bind("birthtime", user.getBirthtime())
+                        .bind("sex", user.getSex())
+                        .bind("id", user.getId())
+                        .execute()
+        );
+    }
+
 
     // Lấy tất cả người dùng
     public List<User> getAllUsers() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {

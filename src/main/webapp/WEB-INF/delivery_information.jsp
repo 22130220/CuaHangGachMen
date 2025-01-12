@@ -32,29 +32,41 @@
         </nav>
         <h2>Thông tin giao hàng</h2>
         <p>Dưới đây là thông tin nhận hàng của bạn! <a href="#"><b>Thay đổi thông tin</b></a></p>
-        <form class="checkout-form">
+        <form action="thanhtoan" method="post" class="checkout-form">
             <div class="form-group">
                 <label for="name">Họ và tên</label>
-                <input type="text" id="name" placeholder="Họ và tên" required style="width: 700px;">
+                <input type="text" id="name" name="name" placeholder="Họ và tên" required style="width: 700px;">
 
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Email">
+                    <input type="email" name="email" id="email" placeholder="Email">
                 </div>
                 <div class="form-group sdt">
                     <label for="phone">Số điện thoại</label>
-                    <input type="tel" id="phone" placeholder="Số điện thoại" required>
+                    <input type="tel" name="phone" id="phone" placeholder="Số điện thoại" required>
 
                 </div>
             </div>
             <div class="form-group">
                 <label for="address">Địa chỉ</label>
-                <input type="text" id="address" placeholder="Địa chỉ" style="width: 700px;">
+                <input type="text" name="address" id="address" placeholder="Địa chỉ" style="width: 700px;">
+            </div>
+            <div class="form-group">
+                <label for="des">Ghi chú</label>
+                <input type="text" id="des" name="note" placeholder=" Nhập lưu ý của bạn " style="width: 700px;">
             </div>
 
-            <a href="./payment_method.html"  class="btn-primary">Tiếp tục đến phương thức thanh toán</a>
+
+            <input type="hidden" id="voucherID" name="voucherID" value="Không có mã voucher">
+            <input type="hidden" id="finalTotal" name="finalTotal" value="${cart.total + shippingFee}">
+
+
+
+            <button type="submit" class="btn-primary">Tiếp tục đến phương thức thanh toán</button>
+
+
         </form>
     </div>
     <aside class="sidebar">

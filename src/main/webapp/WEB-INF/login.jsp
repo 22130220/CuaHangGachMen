@@ -80,7 +80,7 @@
 
         <div class="options">
             <label><input type="checkbox"> Ghi nhớ đăng nhập</label>
-            <a href="forget_password">Quên mật khẩu?</a>
+            <a href="forgetpassword">Quên mật khẩu?</a>
         </div>
 
 <%--        <a href="./home.html"><div class="sign-in">Đăng Nhập</div></a>--%>
