@@ -3,6 +3,7 @@ import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.result.RowView;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.OrderDetail;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.OrderDetailWithName;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -47,6 +48,17 @@ public class OrderDetailDao {
                 handle.createQuery("SELECT * FROM orderdetail WHERE OrderID = :orderId")
                         .bind("orderId", orderId)
                         .map(this::mapRow)
+                        .list()
+        );
+    }
+
+    // Find all OrderDetails by OrderID
+    public List<OrderDetailWithName> findByOrderIdWithName(int orderId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT od.*, p.imgThumbnail as img, p.name as name FROM orderdetail od JOIN products p ON od.ProductID = p.id WHERE OrderID = :orderId")
+                        .bind("orderId", orderId)
+                        .mapToBean(OrderDetailWithName.class)
                         .list()
         );
     }

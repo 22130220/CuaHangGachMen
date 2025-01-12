@@ -270,7 +270,7 @@
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
                     <h2 class="modal__title">
-                        Cập nhật trạng thái
+                        Cập nhật mật khẩu
                     </h2>
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
