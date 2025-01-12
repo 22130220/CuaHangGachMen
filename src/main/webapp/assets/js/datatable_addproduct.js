@@ -99,148 +99,69 @@ const productMaterial = $('#productmaterial').val();
 const productManufacturer = $('#productmanufacturer').val();
 
 
-// Danh sách đã chọn để kiểm tra trùng lặp
-let selectedSpecs = new Set();
-
-// Xử lý thêm mới
-$('#add-spec-btn').click(function () {
-    $('#spec-type').val('');
-    $('#spec-value').val('');
-    $('#addSpecModal').modal('show');
-});
-
-// Xử lý submit form thêm/sửa
-$('#spec-form').submit(function (e) {
-    e.preventDefault();
-
-    let specType = $('#spec-type').val();
-    let specValue = $('#spec-value').val();
-
-    if (selectedSpecs.has(specType)) {
-        alert('Thông số này đã được chọn!');
-        return;
-    }
-
-    selectedSpecs.add(specType);
-
-    specTable.row.add({
-        specName: specType,
-        specValue: specValue,
-    }).draw();
-
-    $('#addSpecModal').modal('hide');
-});
-
-// Xử lý xóa
-$('#spec-table').on('click', '.btn-delete', function () {
-    let row = specTable.row($(this).parents('tr'));
-    let rowData = row.data();
-    selectedSpecs.delete(rowData.specName); // Xóa khỏi danh sách đã chọn
-    row.remove().draw();
-});
-
-// Xử lý sửa
-$('#spec-table').on('click', '.btn-edit', function () {
-    let row = specTable.row($(this).parents('tr'));
-    let rowData = row.data();
-
-    $('#spec-type').val(rowData.specName).prop('disabled', true); // Không cho sửa loại thông số
-    $('#spec-value').val(rowData.specValue);
-    $('#addSpecModal').modal('show');
-
-    $('#spec-form').off('submit').submit(function (e) {
-        e.preventDefault();
-        rowData.specValue = $('#spec-value').val();
-        row.data(rowData).draw();
-        $('#addSpecModal').modal('hide');
-    });
-});
-
 
 var specTable = new DataTable('#spec-table', {
-    ajax: {
-        url: '/admin/getspec',
-        dataSrc: function (json) {
-            json.specTypes.forEach(function (e) {
-                $('#update_spec_type').append(
-                    $('<option></option>').val(e.Id).text(e.Name)
-                );
-            });
-        }
-    },
     fixedHeader: true,
     layout: {
         topStart: {
             buttons: [
                 {
-                    text: 'Chỉnh Sửa',
-                    className: 'blue',
-                    action: function (e, dt, node, config) {
-                        let data = dt.row({ selected: true }).data(); // Lấy dữ liệu của hàng được chọn
-                        if (data) {
-                            // Hiển thị modal chỉnh sửa
-                            $('#update_spec_type').val(data.specName); // Gán giá trị tên thông số
-                            $('#update_spec_value').val(data.specValue); // Gán giá trị
-                            MicroModal.show('update_spec_modal', {
-                                onClose: function () {
-                                    specTable.rows().deselect(); // Hủy chọn sau khi đóng modal
-                                }
-                            });
-                        } else {
-                            notyf.error("Vui lòng chọn một dòng để chỉnh sửa.");
-                        }
-                    },
-                    enabled: false // Mặc định nút bị vô hiệu
-                },
-                {
                     text: 'Thêm',
                     className: 'green',
                     action: function (e, dt, node, config) {
                         action = addEle; // Gán hành động hiện tại là thêm
-                        var optionCount = $('#update_spec_type').find('option').length;
+                        var optionCount = $('#add_spec_type').find('option').length;
 
-                        if (optionCount > 0) {
+
                             // Hiển thị modal thêm
-                            MicroModal.show('add_spec', {
-                                onClose: function () {
-                                    specTable.rows().deselect(); // Hủy chọn khi đóng modal
-                                }
-                            });
-                        } else {
-                            notyf.error("Trường dữ liệu đã đầy");
-                        }
+                            MicroModal.show('add_spec');
                     },
-                    enabled: true // Nút luôn được bật
+                    enabled: true
                 },
                 {
                     text: 'Xoá',
                     className: 'red',
                     action: function (e, dt, node, config) {
-                        var data = dt.rows({ selected: true }).data(); // Lấy các hàng được chọn
-                        var specIdToDel = [];
+                        var data = dt.rows({ selected: true }).data();// Lấy các hàng được chọn
+                        //console.log(data);
+                        //var specIdToDel = [];
 
-                        // Thu thập tất cả specId của hàng đã chọn
-                        data.each(function (rowData) {
-                            specIdToDel.push(rowData.specId);
+                        data.each(function (rowData, index) {
+                            const text = rowData[0];
+                            const value = rowData[1];
+                            const sel = rowData[2];
+                            let valueMatches = value.match(/name="value".*?value="([^"]*)"/);
+                            let idMatches = sel.match(/name="id".*?value="([^"]*)"/);
+
+                            let extractedValue = valueMatches ? valueMatches[1] : null;
+                            let extractedId = idMatches ? idMatches[1] : null;
+                            $('#add_spec_type').append(
+                                $('<option></option>').val(extractedId).text(text)
+                            )
                         });
+                        specTable.rows({ selected: true }).remove().draw();
 
-                        if (specIdToDel.length > 0) {
-                            action = delEle; // Gán hành động hiện tại là xóa
-                            deleteSpec(specIdToDel); // Gọi hàm xóa
-                        } else {
-                            notyf.error("Vui lòng chọn ít nhất một dòng để xóa.");
-                        }
                     },
-                    enabled: false // Mặc định nút bị vô hiệu
+                    enabled: true
                 }
             ]
         },
     },
     select: true, // Bật chức năng chọn hàng
-    // columns: [
-    //     { data: 'specName', title: 'Tên Thông Số' }, // Tên cột
-    //     { data: 'specValue', title: 'Giá Trị' } // Giá trị cột
-    // ],
+    columnDefs: [
+        {
+            targets: 0,
+            className: 'dt-center'
+        },
+        {
+            targets: 1,
+            className: 'dt-center '
+        },
+        {
+            targets: 2,
+            visible: true,
+        }
+    ],
     autoWidth: false, // Tắt auto-width để dễ kiểm soát
     language: {
         lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
@@ -260,13 +181,123 @@ var specTable = new DataTable('#spec-table', {
     searching: false, // Tắt tìm kiếm
 });
 
-// Xử lý khi chọn hoặc hủy chọn các hàng
-specTable.on('select deselect', function () {
-    var selectedRows = specTable.rows({ selected: true }).count();
+$(document).ready(function () {
+    $.ajax({
+        url: '/admin/spec',
+        type: 'GET',
+        success: function (data) {
+            data.specTypes.forEach(function (e) {
+                $('#add_spec_type').append(
+                    $('<option></option>').val(e.Id).text(e.Name)
+                );
+            });
 
-    // Bật/tắt nút "Chỉnh Sửa" nếu chỉ có 1 hàng được chọn
-    specTable.button(0).enable(selectedRows === 1);
-
-    // Bật/tắt nút "Xoá" nếu có ít nhất 1 hàng được chọn
-    specTable.button(2).enable(selectedRows > 0);
+            data.colors.forEach(function (e) {
+                $('#add_color_type').append(
+                    $('<option></option>').val(e.Id).text(e.Name)
+                );
+            });
+        },
+        error: function () {
+            notyf.error(action + " thất bại");
+        }
+    })
 });
+
+$("#add_spec_btn").on('click', function () {
+    const value =  $("#add_spec_val").val();
+    const sel = $("#add_spec_type").val();
+    const text = $("#add_spec_type").find(`option[value=${sel}]`).text();
+    if((isNullOrEmptyOrWhitespace(value) || isNullOrEmptyOrWhitespace(sel))) {
+        notyf.error("Cần nhập đủ thông tin");
+    } else {
+       specTable.row.add([
+           text,
+           `<input type="text" name="value" value="${value}">`,
+           `<input type="number" name="id" value="${sel}" readonly>`]).draw();
+       $('#add_spec_type').find(`option[value=${sel}]`).remove();
+        MicroModal.close('add_spec');
+        $("#add_spec_val").val("");
+    }
+});
+
+var colorTable = new DataTable('#color', {
+    fixedHeader: true,
+    layout: {
+        topStart: {
+            buttons: [
+                {
+                    text: 'Thêm',
+                    className: 'green',
+                    action: function (e, dt, node, config) {
+                        action = addEle; // Gán hành động hiện tại là thêm
+                        var optionCount = $('#add_color_type').find('option').length;
+
+                        // Hiển thị modal thêm
+                        MicroModal.show('add_color');
+                    },
+                    enabled: true
+                },
+                {
+                    text: 'Xoá',
+                    className: 'red',
+                    action: function (e, dt, node, config) {
+                        var data = dt.rows({ selected: true }).data();
+                        colorTable.rows({ selected: true }).remove().draw();
+
+                    },
+                    enabled: true
+                }
+            ]
+        },
+    },
+    select: true, // Bật chức năng chọn hàng
+    columnDefs: [
+        {
+            targets: 0,
+            className: 'dt-center'
+        },
+        {
+            targets: 1,
+            className: 'dt-center '
+        },
+        {
+            targets: 2,
+            visible: true,
+        }
+    ],
+    autoWidth: false, // Tắt auto-width để dễ kiểm soát
+    language: {
+        lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
+        zeroRecords: "Không tìm thấy kết quả",
+        info: "Hiển thị trang _PAGE_ của _PAGES_",
+        infoEmpty: "Không có dữ liệu",
+        infoFiltered: "(lọc từ _MAX_ tổng mục)"
+    },
+    createdRow: function (row, data, dataIndex) {
+        // Căn giữa các ô
+        $('td', row).css({
+            'text-align': 'center',
+            'vertical-align': 'middle'
+        });
+    },
+    paging: false, // Tắt phân trang
+    searching: false, // Tắt tìm kiếm
+});
+
+$("#add_color_btn").on('click', function () {
+    const value =  $("#add_color_val").val();
+    const sel = $("#add_color_type").val();
+    const text = $("#add_color_type").find(`option[value=${sel}]`).text();
+    if((isNullOrEmptyOrWhitespace(value) || isNullOrEmptyOrWhitespace(sel))) {
+        notyf.error("Cần nhập đủ thông tin");
+    } else {
+        colorTable.row.add([
+            text,
+            `<input type="text" name="color" value="${value}">`,
+            `<input type="number" name="color_id" value="${sel}" readonly>`]).draw();
+        MicroModal.close('add_color');
+        $("#add_color_val").val("");
+    }
+});
+

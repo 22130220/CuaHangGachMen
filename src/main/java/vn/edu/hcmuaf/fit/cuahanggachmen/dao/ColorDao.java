@@ -117,6 +117,14 @@ public class ColorDao {
         );
     }
 
+    public List<Color> findAll() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM colors")
+                        .map(this::mapRow)
+                        .list()
+        );
+    }
     private Color mapRow(RowView rowView) {
         Color p = new Color();
         p.setID(rowView.getColumn("ID", Integer.class));
