@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Properties;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.CartItem;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Order;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 
 public class EmailService {
     // Phương thức gửi email
@@ -115,6 +116,45 @@ public class EmailService {
                 .append("<p>Hotline: 0376273026 | Email: support@gachmen.com</p>")
                 .append("</div>") // Đóng email-footer
                 .append("</div>") // Đóng email-container
+                .append("</body>")
+                .append("</html>");
+
+        return emailContent.toString();
+    }
+
+    // Phương thức xây dựng nội dung email xác thực
+    public String buildVerificationEmailContent(User user, String verificationLink) {
+        StringBuilder emailContent = new StringBuilder();
+
+        emailContent.append("<!DOCTYPE html>")
+                .append("<html lang='vi'>")
+                .append("<head>")
+                .append("<meta charset='UTF-8'>")
+                .append("<meta name='viewport' content='width=device-width, initial-scale=1.0'>")
+                .append("<title>Xác Thực Tài Khoản</title>")
+                .append("<style>")
+                .append("body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }")
+                .append(".container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 5px; }")
+                .append(".header { text-align: center; padding-bottom: 20px; }")
+                .append(".content { line-height: 1.6; }")
+                .append(".button { display: inline-block; padding: 10px 20px; color: #fff; background-color: #28a745; text-decoration: none; border-radius: 5px; }")
+                .append("</style>")
+                .append("</head>")
+                .append("<body>")
+                .append("<div class='container'>")
+                .append("<div class='header'>")
+                .append("<h2>Xin chào ").append(user.getFullname()).append(",</h2>")
+                .append("</div>")
+                .append("<div class='content'>")
+                .append("<p>Cảm ơn bạn đã đăng ký tài khoản tại Cửa hàng gạch men.</p>")
+                .append("<p>Vui lòng nhấp vào nút bên dưới để xác thực tài khoản của bạn:</p>")
+                .append("<p><a href='").append(verificationLink).append("' class='button'>Xác Thực Tài Khoản</a></p>")
+                .append("<p>Nếu bạn không đăng ký, vui lòng bỏ qua email này.</p>")
+                .append("</div>")
+                .append("<div class='footer' style='text-align:center; padding-top:20px; color:#777;'>")
+                .append("<p>&copy; 2025 Cửa hàng gạch men. Mọi quyền được bảo lưu.</p>")
+                .append("</div>")
+                .append("</div>")
                 .append("</body>")
                 .append("</html>");
 
