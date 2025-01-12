@@ -93,6 +93,13 @@ public class ProductDao {
         return product;
     }
 
+    public int countProduct() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT COUNT(id) as tongSo FROM products").mapTo(Integer.class).first()
+        );
+    }
+
     // Thêm sản phẩm mới
     public int insert(Product product) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
@@ -159,6 +166,8 @@ public class ProductDao {
                         .mapToBean(Product.class)
                         .list());
     }
+
+
 // CÁC MẪU MỚI NHẤT
     public List<Product> findLatestProducts() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();

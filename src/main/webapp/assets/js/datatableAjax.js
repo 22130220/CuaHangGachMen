@@ -506,6 +506,9 @@ function openColorModal(productForColorId) {
                         );
                     });
 
+                   json.productColors.forEach(function (e) {
+                       console.log(e);
+                   })
                     return json.productColors;
                 }
             },
