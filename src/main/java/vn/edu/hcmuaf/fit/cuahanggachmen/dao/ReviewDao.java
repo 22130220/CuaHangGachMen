@@ -116,5 +116,16 @@ public class ReviewDao {
             return query.mapToBean(Review.class).list();
         });
     }
+
+    public double calculateAverageRatingForProduct(int productId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT AVG(Rating) FROM review WHERE ProductID = :productId")
+                        .bind("productId", productId)
+                        .mapTo(Double.class)
+                        .one()
+        );
+    }
+
 }
 

@@ -152,7 +152,7 @@
                             <c:out value="${p.name}"/>
                         </p>
                         <div class="product-data-info">
-                            <p class="product-id product-text">#484040</p>
+                            <p class="product-id product-text">${p.rating}⭐</p>
                             <p class="product-des product-text">Mỗi hộp bao gồm <c:out value="${p.quantityPerBox}"/> thẻ</p>
                         </div>
 

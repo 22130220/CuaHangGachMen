@@ -60,6 +60,7 @@ public class CommentController extends HttpServlet {
         String productId = request.getParameter("productId");
         String rating = request.getParameter("rating");
         ReviewDao dao = new ReviewDao();
+        ProductDao productDao = new ProductDao();
         Review review = new Review();
         review.setUserId(user.getId());
         review.setProductId(Integer.parseInt(productId));
@@ -73,6 +74,13 @@ public class CommentController extends HttpServlet {
 
 
         if(rowAffect > 0) {
+            try {
+                // Tính toán và cập nhật rating trung bình
+                double averageRating = dao.calculateAverageRatingForProduct(Integer.parseInt(productId));
+                productDao.updateProductRating(Integer.parseInt(productId), averageRating);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             response.setStatus(HttpServletResponse.SC_OK);
             AjaxResponse resp = new AjaxResponse();
             resp.addBool("sucess", true);
