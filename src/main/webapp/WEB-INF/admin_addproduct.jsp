@@ -208,13 +208,62 @@
                         </div>
 
                     </div>
+                    <div class="product-spec _4c">
+                        <div class="flex-column gap-6">
+                            <label for="spec-table" class="f-bold f-s-14 f-cl-black">
+                                Thông số sản phẩm
+                            </label>
+                            <table id="spec-table" class="display table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Giá trị</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 
+    <div class="modal micromodal-slide" id="add_spec" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title">
+                        Thêm Thông Số
+                    </h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div class="modal-content-content">
+                    <div class="modal__content">
+                        <form id="spec-form">
+                            <div class="form-group">
+                                <label for="update_spec_type">Kích hoạt</label>
+                                <select id="update_spec_type" class="form-control" required>
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="update_spec_value">Giá trị</label>
+                                <input type="text" id="update_spec_value" class="form-control" required />
+                            </div>
+                            <button type="submit" class="btn btn-success">Cập nhật</button>
+                        </form>
+                    </div>
+                    <footer class="modal__footer">
+                        <button class="button bg_green f-cl-white" id="add_spec_btn">Cập nhật</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="/assets/js/notification.js"></script>
+<script src="/assets/js/script.js"></script>
 <script src="/assets/js/img-uploading.js"></script>
 <script src="/assets/js/accordion.js"></script>
 <script src="/assets/js/ckeditorLoadFile.js"></script>

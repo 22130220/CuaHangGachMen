@@ -1,0 +1,110 @@
+package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
+import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.result.RowView;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Order;
+
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+public class OrderDao {
+    // Insert a new Order
+    public int insert(Order order) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle -> {
+            var update = handle.createUpdate(
+                    "INSERT INTO orders (UserID, OrderDate, Address, TotalPrice, Des, FullName, Email, Phone, Payment) " +
+                            "VALUES (:userId, :orderDate, :address, :totalPrice, :description, :fullName, :email, :phone, :payment)"
+            );
+            update.bind("userId", order.getUserId())
+                    .bind("orderDate", order.getOrderDate())
+                    .bind("address", order.getAddress())
+                    .bind("totalPrice", order.getTotalPrice())
+                    .bind("description", order.getDescription())
+                    .bind("fullName", order.getFullName())
+                    .bind("email", order.getEmail())
+                    .bind("phone", order.getPhone())
+                    .bind("payment", order.getPayment());
+            update.execute();
+            return handle.createQuery("SELECT LAST_INSERT_ID()")
+                    .mapTo(Integer.class)
+                    .one();
+        });
+    }
+
+    // Find Order by ID
+    public Optional<Order> findById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM orders WHERE ID = :id")
+                        .bind("id", id)
+                        .map(this::mapRow)
+                        .findFirst()
+        );
+    }
+
+    // Find all Orders
+    public List<Order> findAll() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM orders")
+                        .map(this::mapRow)
+                        .list()
+        );
+    }
+
+    // Update an Order
+    public void update(Order order) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        jdbi.useHandle(handle -> {
+            handle.createUpdate(
+                            "UPDATE orders SET UserID = :userId, OrderDate = :orderDate, Address = :address, " +
+                                    "Status = :status, TotalPrice = :totalPrice, Des = :description, CreateDate = :createDate, " +
+                                    "FullName = :fullName, Email = :email, Phone = :phone, Payment = :payment WHERE ID = :id"
+                    )
+                    .bind("id", order.getId())
+                    .bind("userId", order.getUserId())
+                    .bind("orderDate", order.getOrderDate())
+                    .bind("address", order.getAddress())
+                    .bind("status", order.getStatus())
+                    .bind("totalPrice", order.getTotalPrice())
+                    .bind("description", order.getDescription())
+                    .bind("createDate", order.getCreateDate())
+                    .bind("fullName", order.getFullName())
+                    .bind("email", order.getEmail())
+                    .bind("phone", order.getPhone())
+                    .bind("payment", order.getPayment())
+                    .execute();
+        });
+    }
+
+    // Delete an Order
+    public void delete(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        jdbi.useHandle(handle ->
+                handle.createUpdate("DELETE FROM orders WHERE ID = :id")
+                        .bind("id", id)
+                        .execute()
+        );
+    }
+
+    // Map database row to Order object
+    private Order mapRow(RowView rowView) {
+        Order order = new Order();
+        order.setId(rowView.getColumn("ID", Integer.class));
+        order.setUserId(rowView.getColumn("UserID", Integer.class));
+        order.setOrderDate(rowView.getColumn("OrderDate", LocalDateTime.class));
+        order.setAddress(rowView.getColumn("Address", String.class));
+        order.setStatus(rowView.getColumn("Status", String.class));
+        order.setTotalPrice(rowView.getColumn("TotalPrice", BigDecimal.class));
+        order.setDescription(rowView.getColumn("Des", String.class));
+        order.setCreateDate(rowView.getColumn("CreateDate", LocalDateTime.class));
+        order.setFullName(rowView.getColumn("FullName", String.class));
+        order.setEmail(rowView.getColumn("Email", String.class));
+        order.setPhone(rowView.getColumn("Phone", String.class));
+        order.setPayment(rowView.getColumn("Payment", String.class));
+        return order;
+    }
+}

@@ -204,11 +204,11 @@
             <div class="user-info">
               <img src="${sessionScope.auth.avatar != null ? sessionScope.auth.avatar : 'https://via.placeholder.com/150'}"
                    alt="Avatar" class="avatar">
-              <span class="username">${sessionScope.auth.fullName}</span>
+              <span class="username">${sessionScope.auth.fullname}</span>
             </div>
             <div class="dropdown">
               <ul>
-                <li><a href="./hoso.html">Tài khoản của tôi</a></li>
+                <li><a href="/profile">Tài khoản của tôi</a></li>
                 <li><a href="./lichsudonhangthanhcong.html">Đơn mua</a></li>
                 <li><a href="logout">Đăng xuất</a></li>
               </ul>

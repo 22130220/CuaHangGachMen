@@ -21,30 +21,42 @@ public class GetProductSpec extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pid = request.getParameter("pid");
-        if(pid == null) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
         List<ProductSpec> ls = null;
         List<SpecType> specTypes = null;
         ProductSpecDao dao = new ProductSpecDao();
         SpecTypeDao spDao = new SpecTypeDao();
         AjaxResponse resp = new AjaxResponse();
 
-        try {
-            ls = dao.findByProductId(Integer.parseInt(pid));
-            specTypes = spDao.findByProduct(Integer.parseInt(pid));
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        if(pid == null) {
+            try {
+                specTypes = spDao.findAll();
+                resp.addSpecTypeList(specTypes);
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                PrintWriter out = response.getWriter();
+                out.print(resp.getText());
+                return;
+            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                ls = dao.findByProductId(Integer.parseInt(pid));
+                specTypes = spDao.findByProduct(Integer.parseInt(pid));
+            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
 
-        resp.addProductSpecList(ls);
-        resp.addSpecTypeList(specTypes);
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        out.print(resp.getText());
+            resp.addProductSpecList(ls);
+            resp.addSpecTypeList(specTypes);
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            out.print(resp.getText());
+            return;
+        }
     }
 
     @Override

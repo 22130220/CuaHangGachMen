@@ -1,5 +1,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,17 +28,7 @@
                 <span>Phương thức thanh toán</span>
             </nav>
         </div>
-        <section class="section">
-            <h2>Phương thức vận chuyển</h2>
-            <div class="shipping-option">
-                <input type="radio" id="shipping" name="shipping">
-                <label for="shipping">
-                    <span class="radio-icon"></span>
-                    Phí vận chuyển
-                </label>
-                <span class="price">0₫</span>
-            </div>
-        </section>
+
         <section class="section">
             <h2>Phương thức thanh toán</h2>
             <div class="payment-option">
@@ -67,67 +59,72 @@
             </div>
         </section>
 
-        <div class="ftne">
-            <a href="cart" class="link">Giỏ hàng</a>
-            <a href="./complete_order.html" class="submit-button">Hoàn tất đơn hàng</a>
-        </div>
-    </div>
-    <aside class="sidebar">
-        <ul class="cart-items">
-            <li class="chitietsanphamthanhtoan">
-                <div class="image-wrapper">
-                    <img class="img_small" src="https://sieuthigachmen.com/wp-content/uploads/2024/06/GACH-AN-DO-300x300.jpg" alt="">
-                    <span class="badge">1</span>
-                </div>
-                <span>Gạch lát nền cao cấp <br> MÀU ĐỎ  <br>   SỐ LƯỢNG: 1 HỘP </span>
-                <span>794,000đ</span>
-                <button class="btn_xoasp">x</button>
-            </li>
-
-            <li class="chitietsanphamthanhtoan">
-                <div class="image-wrapper">
-                    <img class="img_small" src="https://sieuthigachmen.com/wp-content/uploads/2024/06/GACH-AN-DO-300x300.jpg" alt="">
-                    <span class="badge">4</span>
-                </div>
-                <span>Gạch lát nền cao cấp</span>
-                <span>794,000đ</span>
-                <button class="btn_xoasp">x</button>
-            </li>
-            <li class="chitietsanphamthanhtoan">
-                <div class="image-wrapper">
-                    <img class="img_small" src="https://sieuthigachmen.com/wp-content/uploads/2024/06/GACH-AN-DO-300x300.jpg" alt="">
-                    <span class="badge">1</span>
-                </div>
-                <span>Gạch lát nền cao cấp</span>
-                <span>159,200đ</span>
-                <button class="btn_xoasp">x</button>
-            </li>
-
-            <li class="chitietsanphamthanhtoan">
-                <div class="image-wrapper">
-                    <img class="img_small" src="https://sieuthigachmen.com/wp-content/uploads/2024/06/GACH-AN-DO-300x300.jpg" alt="">
-                    <span class="badge">1</span>
-                </div>
-
-
-                <span>Gạch lát nền cao cấp</span>
-                <span>159,200đ</span>
-                <button class="btn_xoasp">x</button>
-            </li>
-        </ul>
-        <div class="discount">
-            <input type="text" id="discount" placeholder="Nhập mã giảm giá">
-            <div class="btn-secondary">Sử dụng</div>
-        </div>
-        <hr>
         <div class="price-summary">
-            <p>Tạm tính: 2,170,400đ</p>
-            <p>Phí vận chuyển: Miễn ship</p>
-            <p>Giảm giá: 50000đ </p>
-            <hr>
-            <h3>Tổng cộng: 2,170,400đ</h3>
+            <p>Mã voucher đã dùng: ${param.voucherID}</p>
+            <h3>Tổng cộng thanh toán: ${param.finalTotal}₫</h3>
         </div>
-    </aside>
+
+
+        <aside class="sidebar">
+            <ul class="cart-items">
+            <c:forEach var="item" items="${cart.items}">
+                <li class="chitietsanphamthanhtoan">
+                    <div class="image-wrapper">
+                        <img class="img_small" src="${item.productImage}" alt="">
+                        <span class="badge">${item.quantity}</span>
+                    </div>
+                    <span> ${item.productName}
+                    <br> MÀU ${item.productColor}
+                        <br> SỐ LƯỢNG: ${item.quantity}
+                    </span>
+                    <span><fmt:formatNumber value="${item.totalPrice}" type="number" maxFractionDigits="0"/>đ</span>
+
+                </li>
+
+            </c:forEach>
+
+            </ul>
+
+            <div>
+                <form action="CompleteOrderController" method="post">
+                <h3>Thông tin khách hàng</h3>
+
+                    <div class="form-group">
+                        <label for="name">Họ tên</label>
+                        <input type="text" id="name" name="name" value="${name}" required>
+                    </div>
+                <br>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="${email}" required>
+                    </div>
+                <br>
+                    <div class="form-group">
+                        <label for="phone">Số điện thoại</label>
+                        <input type="tel" id="phone" name="phone" value="${phone}" required>
+                    </div>
+                <br>
+                    <div class="form-group">
+                        <label for="address">Địa chỉ</label>
+                        <input type="text" id="address" name="address" value="${address}" required>
+                    </div>
+                <br>
+                    <div class="form-group">
+                        <label for="note">Ghi chú</label>
+                        <input type="text" id="note" name="note" value="${note}" required >
+                    </div>
+
+                    <div class="ftne">
+                        <a href="cart" class="link">Giỏ hàng</a>
+                        <button type="submit" class="submit-button">Hoàn tất đơn hàng</button>
+                    </div>
+                </form>
+            </div>
+
+
+        </aside>
+
+    </div>
 </div>
 
 <script>
