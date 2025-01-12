@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: MikeJohnP
-  Date: 1/11/2025
-  Time: 9:50 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -101,7 +94,6 @@
                     </div>
                 </div>
                 <div class="funcproduct">
-                    <div class="button bg_green f-cl-white">Thêm người dùng</div>
                 </div>
             </nav>
             <div class="product-table table _4c _6r">

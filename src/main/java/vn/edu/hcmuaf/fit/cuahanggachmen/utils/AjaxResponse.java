@@ -63,6 +63,11 @@ public class AjaxResponse {
     public void addVoucherList(List<Voucher> voucherList) {
         this.text.add(String.format("\"vouchers\":%s", voucherListToJson(voucherList)));
     }
+
+    public void addOrderList(List<Orders> ordersList) {
+        this.text.add(String.format("\"orders\":%s", orderListToJson(ordersList)));
+    }
+
     public void addInt(String fieldName, int value) {
         this.text.add(String.format("\"%s\":%d", fieldName, value));
     }
@@ -78,6 +83,7 @@ public class AjaxResponse {
     public void addDouble(String fieldName, double value) {
         this.text.add(String.format("\"%s\":%f", fieldName, value));
     }
+
 
     private String productListToJson(List<Product> productList) {
         StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
@@ -299,6 +305,30 @@ public class AjaxResponse {
 
             // Thêm đối tượng user vào mảng JSON
             jsonArrayJoiner.add(jsonUserJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
+
+    private String orderListToJson(List<Orders> ordersList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (Orders orders : ordersList) {
+            StringJoiner jsonOrderJoiner = new StringJoiner(",", "{", "}");
+
+            jsonOrderJoiner.add(String.format("\"id\":%d", orders.getId()))
+                    .add(String.format("\"userId\":%d", orders.getUserId()))
+                    .add(String.format("\"orderDate\":\"%s\"", orders.getOrderDate() != null ? orders.getOrderDate().toString() : null))
+                    .add(String.format("\"address\":\"%s\"", orders.getAddress()))
+                    .add(String.format("\"status\":\"%s\"", orders.getStatus()))
+                    .add(String.format("\"totalPrice\":%.2f", orders.getTotalPrice() != null ? orders.getTotalPrice() : 0.0))
+                    .add(String.format("\"description\":\"%s\"", orders.getDescription() != null ? orders.getDescription() : ""))
+                    .add(String.format("\"createDate\":\"%s\"", orders.getCreateDate() != null ? orders.getCreateDate().toString() : null))
+                     .add(String.format("\"fullName\":\"%s\"", orders.getFullName()));
+
+            // Add the JSON object for this order to the array
+            jsonArrayJoiner.add(jsonOrderJoiner.toString());
         }
 
         return jsonArrayJoiner.toString();

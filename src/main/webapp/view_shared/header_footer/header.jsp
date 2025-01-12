@@ -204,7 +204,7 @@
             <div class="user-info">
               <img src="${sessionScope.auth.avatar != null ? sessionScope.auth.avatar : 'https://via.placeholder.com/150'}"
                    alt="Avatar" class="avatar">
-              <span class="username">${sessionScope.auth.fullname}</span>
+              <span class="username">${sessionScope.auth.fullName}</span>
             </div>
             <div class="dropdown">
               <ul>
