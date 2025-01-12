@@ -51,7 +51,7 @@ public class UserDao {
     }
 
     // Thêm một người dùng mới
-    public ActionResult insertUser(String name, String email, String phone, String avatar, String address, LocalDateTime birthtime, String salt, String password, int sex, LocalDateTime createDate) {
+    public ActionResult insertUser(String name, String email, String phone, String avatar, String address, LocalDateTime birthtime, String salt, String password, int sex) {
         Jdbi jdbi = null;
         try {
             jdbi = DBConect.get();
@@ -60,8 +60,8 @@ public class UserDao {
         }
         try {
             jdbi.useHandle(handle ->
-                    handle.createUpdate("INSERT INTO users (fullname, email, phone, avatar, address, birthtime, salt, password, sex, createtime) " +
-                                    "VALUES (:fullname, :email, :phone, :avatar, :address, :birthtime, :salt, :password, :sex, :createtime)")
+                    handle.createUpdate("INSERT INTO users (fullname, email, phone, avatar, address, birthtime, salt, password, sex) " +
+                                    "VALUES (:fullname, :email, :phone, :avatar, :address, :birthtime, :salt, :password, :sex)")
                             .bind("fullname", name)
                             .bind("email", email)
                             .bind("phone", phone)
@@ -71,7 +71,6 @@ public class UserDao {
                             .bind("salt", salt)
                             .bind("password", password)
                             .bind("sex", sex)
-                            .bind("createtime", createDate)
                             .execute()
             );
             return Result.Ok();
@@ -85,15 +84,18 @@ public class UserDao {
     }
 
     // Cập nhật thông tin người dùng
-    public void updateUser(User user) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public int updateUser(User user) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
-        jdbi.useHandle(handle ->
-                handle.createUpdate("UPDATE users SET fullname = :fullname, email = :email, phone = :phone, address = :address WHERE id = :id")
+        return jdbi.withHandle(handle ->
+                handle.createUpdate("UPDATE users SET fullname = :fullname, email = :email, phone = :phone, address = :address, sex = :sex, birthtime = :birthtime, status = :status WHERE id = :id")
                         .bind("fullname", user.getFullname())
                         .bind("email", user.getEmail())
                         .bind("phone", user.getPhone())
                         .bind("address", user.getAddress())
                         .bind("id", user.getId())
+                        .bind("sex", user.getSex())
+                        .bind("birthtime", user.getBirthtime())
+                        .bind("status", user.isStatus())
                         .execute()
         );
     }
@@ -108,5 +110,15 @@ public class UserDao {
         );
     }
 
+    public int changePassword(int id, String hash, String salt) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createUpdate("UPDATE users SET password = :hash, salt = :salt WHERE id = :id")
+                        .bind("id", id)
+                        .bind("hash", hash)
+                        .bind("salt", salt)
+                        .execute()
+        );
+    }
 
 }

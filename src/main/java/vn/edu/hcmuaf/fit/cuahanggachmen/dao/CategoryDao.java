@@ -12,7 +12,7 @@ public class CategoryDao {
     public int insert(Category category) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi  = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("INSERT INTO Category (Name, Status) VALUES (:name, :status)")
+                handle.createUpdate("INSERT INTO category (Name, Status) VALUES (:name, :status)")
                         .bind("name", category.getName())
                         .bind("status", category.isStatus())
                         .execute()
@@ -23,7 +23,7 @@ public class CategoryDao {
     public Category findById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi  = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM Category WHERE ID = :id")
+                handle.createQuery("SELECT * FROM category WHERE ID = :id")
                         .bind("id", id)
                         .mapToBean(Category.class)
                         .findOne()
@@ -35,7 +35,7 @@ public class CategoryDao {
     public List<Category> findAll() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi  = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM Category")
+                handle.createQuery("SELECT * FROM category")
                         .mapToBean(Category.class)
                         .list()
         );
@@ -44,7 +44,7 @@ public class CategoryDao {
     public int update(Category category) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi  = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("UPDATE Category SET Name = :name, Status = :status WHERE ID = :id")
+                handle.createUpdate("UPDATE category SET Name = :name, Status = :status WHERE ID = :id")
                         .bind("name", category.getName())
                         .bind("status", category.isStatus())
                         .bind("id", category.getId())
@@ -56,7 +56,7 @@ public class CategoryDao {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
                 handle.createUpdate(
-                                "UPDATE Category SET status = :status WHERE Id = :id"
+                                "UPDATE category SET status = :status WHERE Id = :id"
                         )
                         .bind("id", id)
                         .bind("status", active)
@@ -67,7 +67,7 @@ public class CategoryDao {
     public int deleteById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi  = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("DELETE FROM Category WHERE ID = :id")
+                handle.createUpdate("DELETE FROM category WHERE ID = :id")
                         .bind("id", id)
                         .execute()
         );
