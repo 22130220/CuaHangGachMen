@@ -7,9 +7,11 @@ public class EmailProperty {
 
     public static final int TSL_PORT = 587;
 
+
     public static final String APP_EMAIL = "tailam164@gmail.com";
 
     public static final String APP_PASSWORD = "bdnpbtgnmmelluak";
+
 
 
 }
