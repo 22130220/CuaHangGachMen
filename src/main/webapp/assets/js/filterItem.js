@@ -63,7 +63,7 @@ function loadProducts() {
                     "       <div class=\"card-title\">\n" +
                     "           <span>" + item.name + "</span>\n" +
                     "       </div>\n" +
-                    "       <div class=\"card-price\">" + item.pricePerBox + " Vnđ/hộp</div>\n" +
+                    "       <div class=\"card-price\">" + item.pricePerBox.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + "/hộp</div>\n" +
                     "   </a>\n" +
                     "   <div class=\"button-gr\">\n" +
                     "       <button class=\"add-cart-button btn-left\">\n" +
