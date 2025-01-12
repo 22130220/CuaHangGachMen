@@ -6,8 +6,12 @@ import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
 
-import java.io.IOException;
+import java.io.*;
+import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @WebServlet(name = "productcrud", value = "/admin/productcrud")
@@ -35,7 +39,7 @@ public class ProductCrudController extends HttpServlet {
             sizes = sizeDao.findAll();
             manufacturers = manufacturerDao.findAll();
             materials = materialDao.findAll();
-            if(pid != null) {
+            if (pid != null) {
                 product = productDao.findById(Integer.parseInt(pid));
                 message = product.getName();
                 operation = "Cập nhật";
@@ -62,6 +66,99 @@ public class ProductCrudController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        String productName = request.getParameter("name");
+//        String productSize = request.getParameter("size");
+//        String productQuantity = request.getParameter("quantity");
+//        String productPrice = request.getParameter("price");
+//        String productPricePromotion = request.getParameter("price_promotion");
+//        String productCategory = request.getParameter("category");
+//        String productMaterial = request.getParameter("material");
+//        String productManufacturer = request.getParameter("manufacturer");
+//        String productDes = request.getParameter("editor");
+//        String path = null;
+//        int success = 0;
+//
+//        if (productName != null && !productName.isEmpty()) {
+//            ServletContext context = getServletContext();
+//            String serverPath = context.getRealPath("");
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+//            LocalDateTime now = LocalDateTime.now();
+//            path = "upload/ProductDes/" + now.format(formatter) + "_" + productName + ".jsp";
+//            String absolutePath = serverPath + path;
+//
+//            // Đọc file
+//            File file = new File(absolutePath);
+//            if (!file.exists()) {
+//                if (file.createNewFile()) {
+//                    PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(absolutePath), StandardCharsets.UTF_8), true);
+//                    out.println(productDes);
+//                    out.close();
+//                }
+//            }
+//
+//            ProductDao productDao = new ProductDao();
+//            Product product = new Product();
+//            product.setDescription(path);
+//            product.setName(productName);
+//            product.setSizeId(Integer.parseInt(productSize));
+//            product.setQuantityPerBox(Integer.parseInt(productQuantity));
+//            product.setPricePerBox(Integer.parseInt(productPrice));
+//            product.setPromotionPrice(BigDecimal.valueOf(Double.parseDouble(productPricePromotion)));
+//            product.setCategoryId(Integer.parseInt(productCategory));
+//            product.setManufacturerId(Integer.parseInt(productManufacturer));
+//            product.setMaterialId(Integer.parseInt(productMaterial));
+//
+//            try {
+//                success = productDao.insert(product);
+//            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//            if (success > 0) {
+//                String[] specValue = request.getParameterValues("value");
+//                String[] specId = request.getParameterValues("id");
+//
+//                String[] colorValue = request.getParameterValues("color");
+//                String[] colorId = request.getParameterValues("color_id");
+//
+//                if(specId != null) {
+//                    ProductSpecDao productSpecDao = new ProductSpecDao();
+//                    for(int i = 0; i < specValue.length; i++) {
+//                        ProductSpec productSpec = new ProductSpec();
+//                        productSpec.setSpecId(Integer.parseInt(specId[i]));
+//                        productSpec.setSpecName(specValue[i]);
+//                        productSpec.setProcuctId(success);
+//                        try {
+//                            productSpecDao.insert(productSpec);
+//                        } catch (SQLException | ClassNotFoundException | InstantiationException |
+//                                 IllegalAccessException e) {
+//                            throw new RuntimeException(e);
+//                        }
+//                    }
+//                }
+//
+//                if(colorId != null) {
+//                    ProductColorImgDao productColorImgDao = new ProductColorImgDao();
+//                    for(int i = 0; i < colorValue.length; i++) {
+//                        ProductColorImg productColorImg = new ProductColorImg();
+//                        productColorImg.setColorId(Integer.parseInt(colorId[i]));
+//                        productColorImg.setUrl(colorValue[i]);
+//                        productColorImg.setProductId(success);
+//
+//                        try {
+//                            productColorImgDao.insert(productColorImg.getColorId(), productColorImg.getProductId(), productColorImg.getUrl());
+//                        } catch (SQLException | ClassNotFoundException | InstantiationException |
+//                                 IllegalAccessException e) {
+//                            throw new RuntimeException(e);
+//                        }
+//                    }
+//                }
 
+                //request.setAttribute("success", success);
+                request.getRequestDispatcher("/WEB-INF/admin_manageproduct.jsp").forward(request, response);
+//            } else {
+//                response.setStatus(HttpServletResponse.SC_CONFLICT);
+//            }
+//        }
     }
 }

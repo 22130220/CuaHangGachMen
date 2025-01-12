@@ -88,8 +88,6 @@
 <body>
 <div class="admin-container grid-layout">
     <jsp:include page="../view_shared/admin/admin-grid.jsp"/>
-    <input type="hidden" id="pid" value="${p.id}">
-    <input type="hidden" id="desUrl" value="${p.description}">
     <div class="content grid-item content-grid">
         <div class="main-grid">
             <nav class="navbar tag-line _4c _1r">
@@ -102,21 +100,23 @@
                     </div>
                 </div>
                 <div class="funcproduct">
-                    <a href="#" class="button bg_green f-cl-white"> <c:out value="${operation}"/></a>
+                    <button type="submit" form="add_product_form" class="button bg_green f-cl-white"> <c:out value="${operation}"/></button>
                 </div>
             </nav>
             <div class="card _4c _10r">
-                <form action="" class="main-grid">
+                <form id="add_product_form" action="productcrud" method="post" class="main-grid">
+                    <input type="hidden" id="pid" value="${p.id}">
+                    <input type="hidden" id="desUrl" value="${p.description}">
                     <div class="product-name _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productname" class="f-bold f-s-14 f-cl-black">Tên sản phẩm</label>
-                            <input type="text" name="name" placeholder="Nhập tên sản phẩm" value="${p.name}" class="input input-bordered f-s-14" id="productname" autocomplete="off"/>
+                            <input type="text" name="name" placeholder="Nhập tên sản phẩm" value="${p.name}" class="input input-bordered f-s-14" id="productname" autocomplete="off" required/>
                         </div>
                     </div>
                     <div class="poduct-quantity _3c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="size" class="f-bold f-s-14 f-cl-black">Kích thước</label>
-                            <select name="size" id="size" class="input input-bordered f-s-14">
+                            <select name="size" id="size" class="input input-bordered f-s-14 required">
                                 <c:forEach items="${sizes}" var="size">
                                     <c:choose>
                                         <c:when test="${p.sizeId == size.id}">
@@ -133,25 +133,25 @@
                     <div class="poduct-quantity _1c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productquantity" class="f-bold f-s-14 f-cl-black">Số lượng</label>
-                            <input type="text" name="quantity" placeholder="Nhập số lượng" value="${p.quantityPerBox}" class="input input-bordered f-s-14" id="productquantity" autocomplete="off"/>
+                            <input type="text" name="quantity" placeholder="Nhập số lượng" value="${p.quantityPerBox}" class="input input-bordered f-s-14" id="productquantity" autocomplete="off" required/>
                         </div>
                     </div>
                     <div class="product-price _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productprice" class="f-bold f-s-14 f-cl-black">Giá Sản phẩm (1 hộp)</label>
-                            <input type="text" name="price" placeholder="Nhập giá" value="${p.pricePerBox}" class="input input-bordered f-s-14" id="productprice" autocomplete="off"/>
+                            <input type="text" name="price" placeholder="Nhập giá" value="${p.pricePerBox}" class="input input-bordered f-s-14" id="productprice" autocomplete="off" required/>
                         </div>
                     </div>
                     <div class="product-price-promotion _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="price_promotion" class="f-bold f-s-14 f-cl-black">Giá khuyến mãi</label>
-                            <input type="number" name="price_promotion" placeholder="Nhập giá khuyến mãi" class="input input-bordered f-s-14" id="price_promotion" autocomplete="off"/>
+                            <input type="number" name="price_promotion" placeholder="Nhập giá khuyến mãi" class="input input-bordered f-s-14" id="price_promotion" autocomplete="off" required/>
                         </div>
                     </div>
                     <div class="poduct-form _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productform" class="f-bold f-s-14 f-cl-black"> Loại sản phẩm</label>
-                            <select name="category" id="productform" class="input input-bordered f-s-14">
+                            <select name="category" id="productform" class="input input-bordered f-s-14" required>
                                 <c:forEach items="${categories}" var="category">
                                     <c:choose>
                                         <c:when test="${p.categoryId == category.id}">
@@ -168,7 +168,7 @@
                     <div class="poduct-material _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productmaterial" class="f-bold f-s-14 f-cl-black"> Chất liệu</label>
-                            <select name="material" id="productmaterial" class="input input-bordered f-s-14">
+                            <select name="material" id="productmaterial" class="input input-bordered f-s-14" required>
                                 <c:forEach items="${materials}" var="material">
                                     <c:choose>
                                         <c:when test="${p.materialId == material.id}">
@@ -185,7 +185,7 @@
                     <div class="poduct-manufacturer _4c">
                         <div class="fui-basic-input flex-column gap-6">
                             <label for="productmanufacturer" class="f-bold f-s-14 f-cl-black"> Nhà cung cấp</label>
-                            <select name="manufacturer" id="productmanufacturer" class="input input-bordered f-s-14">
+                            <select name="manufacturer" id="productmanufacturer" class="input input-bordered f-s-14" required>
                                 <c:forEach items="${manufacturers}" var="manufacturer">
                                     <c:choose>
                                         <c:when test="${p.manufacturerId == manufacturer.id}">
@@ -224,6 +224,24 @@
                         </div>
 
                     </div>
+
+                    <div class="product-spec _4c">
+                        <div class="flex-column gap-6">
+                            <label for="spec-table" class="f-bold f-s-14 f-cl-black">
+                                Màu sản phẩm
+                            </label>
+                            <table id="color" class="display compact" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Giá trị</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+
+                    </div>
+
                 </form>
             </div>
         </div>
@@ -239,20 +257,14 @@
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
                 <div class="modal-content-content">
-                    <div class="modal__content">
-                        <form id="spec-form">
-                            <div class="form-group">
-                                <label for="update_spec_type">Kích hoạt</label>
-                                <select id="update_spec_type" class="form-control" required>
-
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="update_spec_value">Giá trị</label>
-                                <input type="text" id="update_spec_value" class="form-control" required />
-                            </div>
-                            <button type="submit" class="btn btn-success">Cập nhật</button>
-                        </form>
+                    <div class="fui-basic-input" style="width: 100%">
+                        <label for="add_spec_type" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+                        <select name="add_spec_type" id="add_spec_type" class="input input-bordered f-s-14" required>
+                        </select>
+                    </div>
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label for="add_spec_val" class="f-bold f-s-14 f-cl-black">Giá trị</label>
+                        <input type="text" name="add_spec_val" placeholder="Nhập giá trị" class="input input-bordered f-s-14" id="add_spec_val" autocomplete="off"/>
                     </div>
                     <footer class="modal__footer">
                         <button class="button bg_green f-cl-white" id="add_spec_btn">Cập nhật</button>
@@ -261,13 +273,42 @@
             </div>
         </div>
     </div>
+
+    <div class="modal micromodal-slide" id="add_color" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title">
+                        Thêm Thông Số
+                    </h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div class="modal-content-content">
+                    <div class="fui-basic-input" style="width: 100%">
+                        <label for="add_color_type" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+                        <select name="add_color_type" id="add_color_type" class="input input-bordered f-s-14" required>
+                        </select>
+                    </div>
+                    <div class="fui-basic-input flex-column gap-6">
+                        <label for="add_color_val" class="f-bold f-s-14 f-cl-black">Giá trị</label>
+                        <input type="text" name="add_color_val" placeholder="Nhập giá trị" class="input input-bordered f-s-14" id="add_color_val" autocomplete="off"/>
+                    </div>
+                    <footer class="modal__footer">
+                        <button class="button bg_green f-cl-white" id="add_color_btn">Cập nhật</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="/assets/js/ckeditorLoadFile.js"></script>
+<script src="/assets/js/datatable_addproduct.js"></script>
 <script src="/assets/js/notification.js"></script>
 <script src="/assets/js/script.js"></script>
 <script src="/assets/js/img-uploading.js"></script>
 <script src="/assets/js/accordion.js"></script>
-<script src="/assets/js/ckeditorLoadFile.js"></script>
-<script src="/assets/js/datatable_addproduct.js"></script>
+
 
 </body>
 

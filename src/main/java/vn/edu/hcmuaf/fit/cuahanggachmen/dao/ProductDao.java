@@ -94,13 +94,17 @@ public class ProductDao {
     }
 
     // Thêm sản phẩm mới
-    public void insert(Product product) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public int insert(Product product) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
-        jdbi.useHandle(handle ->
-                handle.createUpdate("INSERT INTO products (Name, PricePerBox, Stock, Des, Status, Rating, Discount, PromotionPrice, QuantityPerBox, CreateDate, CategoryID, SizeID, MaterialID, ManufacturerID, ImgThumbnail) " +
-                                "VALUES (:name, :pricePerBox, :stock, :description, :status, :rating, :discount, :promotionPrice, :quantityPerBox, :createDate, :categoryId, :sizeId, :materialId, :manufacturerId, :imgThumbnail)")
-                        .bindBean(product)
-                        .execute()
+        return jdbi.withHandle(handle -> {
+                    handle.createUpdate("INSERT INTO products (Name, PricePerBox, Stock, Description, Status, Rating, Discount, PromotionPrice, QuantityPerBox, CategoryID, SizeID, MaterialID, ManufacturerID, ImgThumbnail) " +
+                                    "VALUES (:name, :pricePerBox, :stock, :description, :status, :rating, :discount, :promotionPrice, :quantityPerBox, :categoryId, :sizeId, :materialId, :manufacturerId, :imgThumbnail)")
+                            .bindBean(product)
+                            .execute();
+                    return handle.createQuery("SELECT LAST_INSERT_ID()")
+                    .mapTo(Integer.class)
+                    .one();
+                }
         );
     }
 

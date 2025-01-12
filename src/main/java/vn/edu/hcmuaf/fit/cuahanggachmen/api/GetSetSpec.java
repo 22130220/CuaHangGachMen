@@ -3,9 +3,11 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ColorDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductSpecDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.SizeDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.SpecTypeDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.ProductSpec;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Size;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.SpecType;
@@ -15,6 +17,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "GetSetSpec", value = "/admin/spec")
@@ -22,16 +25,21 @@ public class GetSetSpec extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SpecTypeDao dao = new SpecTypeDao();
-        List<SpecType> ls = null;
+        ColorDao clDao = new ColorDao();
+        List<SpecType> ls = new ArrayList<>();
+        List<Color> cl = new ArrayList<>();
 
         try {
+            cl = clDao.findAll();
             ls = dao.findAll();
+
         } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
 
         AjaxResponse resp = new AjaxResponse();
         resp.addSpecTypeList(ls);
+        resp.addColorList(cl);
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
