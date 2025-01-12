@@ -197,7 +197,7 @@ public class ProductDao {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
                 handle.createQuery(
-                                "SELECT p.imgThumbnail, p.name, p.pricePerBox, p.rating " +
+                                "SELECT p.id,p.imgThumbnail, p.name, p.pricePerBox, p.rating " +
                                         "FROM products p " +
                                         "JOIN product_view pv ON p.id = pv.ProductID " +
                                         "GROUP BY p.id " +

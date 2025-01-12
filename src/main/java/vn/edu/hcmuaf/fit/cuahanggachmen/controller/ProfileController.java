@@ -75,8 +75,8 @@ public class ProfileController extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("message", "Cập nhật thông tin thất bại!");
         }
-
-        request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
+doGet(request, response);
+//        request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
 
     }
 }
