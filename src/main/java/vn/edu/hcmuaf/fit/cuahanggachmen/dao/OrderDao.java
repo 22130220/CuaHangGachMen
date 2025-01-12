@@ -80,6 +80,19 @@ public class OrderDao {
         });
     }
 
+    // Update an Order
+    public int updateStatus(int orderId, String active) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+            handle.createUpdate(
+                            "UPDATE orders SET Status = :status WHERE ID = :id"
+                    )
+                    .bind("id", orderId)
+                    .bind("status", active)
+                    .execute()
+        );
+    }
+
     // Delete an Order
     public void delete(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();

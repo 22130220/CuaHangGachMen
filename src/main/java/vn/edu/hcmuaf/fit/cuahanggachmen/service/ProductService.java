@@ -16,28 +16,28 @@ public class ProductService {
 
         //price
         if (filter.havePriceRangeFilter()) {
-            products = products.stream().filter(product -> filter.isPrice(product.getPricePerBox())).collect(Collectors.toList());
+            products = products.parallelStream().filter(product -> filter.isPrice(product.getPricePerBox())).collect(Collectors.toList());
         }
 
 
         //Manufacturer
         if(filter.haveOriginsFilter()) {
-            products = products.stream().filter(product -> filter.isManufacturer(product.getManufacturerId())).collect(Collectors.toList());
+            products = products.parallelStream().filter(product -> filter.isManufacturer(product.getManufacturerId())).collect(Collectors.toList());
         }
 
         //size
         if (filter.haveSizesFilter()) {
-            products = products.stream().filter(product -> filter.isSize(product.getSizeId())).collect(Collectors.toList());
+            products = products.parallelStream().filter(product -> filter.isSize(product.getSizeId())).collect(Collectors.toList());
         }
 
         //category
         if(filter.haveCategoryFilter()) {
-            products = products.stream().filter(product -> filter.isCategory(product.getCategoryId())).collect(Collectors.toList());
+            products = products.parallelStream().filter(product -> filter.isCategory(product.getCategoryId())).collect(Collectors.toList());
         }
 
         //material
         if(filter.haveMaterialFilter()) {
-            products = products.stream().filter(product -> filter.isMaterial(product.getMaterialId())).collect(Collectors.toList());
+            products = products.parallelStream().filter(product -> filter.isMaterial(product.getMaterialId())).collect(Collectors.toList());
         }
 
 
@@ -54,9 +54,9 @@ public class ProductService {
 
     private List<Product> sortItem(List<Product> products, ProductFilter filter) {
         return switch (filter.getSort()) {
-            case 1 -> products.stream().sorted(Comparator.comparing(Product::getName)).collect(Collectors.toList());
-            case 2 -> products.stream().sorted(Comparator.comparing(Product::getPricePerBox)).collect(Collectors.toList());
-            case 3 -> products.stream().sorted(Comparator.comparing(Product::getPricePerBox).reversed()).collect(Collectors.toList());
+            case 1 -> products.parallelStream().sorted(Comparator.comparing(Product::getName)).collect(Collectors.toList());
+            case 2 -> products.parallelStream().sorted(Comparator.comparing(Product::getPricePerBox)).collect(Collectors.toList());
+            case 3 -> products.parallelStream().sorted(Comparator.comparing(Product::getPricePerBox).reversed()).collect(Collectors.toList());
             default -> products;
         };
     }

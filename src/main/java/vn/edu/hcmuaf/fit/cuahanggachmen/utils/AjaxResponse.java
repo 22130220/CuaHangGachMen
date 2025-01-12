@@ -68,6 +68,10 @@ public class AjaxResponse {
         this.text.add(String.format("\"orders\":%s", orderListToJson(ordersList)));
     }
 
+    public void addOrderDetailList(List<OrderDetailWithName> ordersList) {
+        this.text.add(String.format("\"orderdetail\":%s", orderDetailListToJson(ordersList)));
+    }
+
     public void addInt(String fieldName, int value) {
         this.text.add(String.format("\"%s\":%d", fieldName, value));
     }
@@ -331,6 +335,31 @@ public class AjaxResponse {
             jsonArrayJoiner.add(jsonOrderJoiner.toString());
         }
 
+        return jsonArrayJoiner.toString();
+    }
+
+    public String orderDetailListToJson(List<OrderDetailWithName> orderDetailList) {
+        // Sử dụng StringJoiner để xây dựng mảng JSON
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (OrderDetailWithName detail : orderDetailList) {
+            // Sử dụng StringJoiner để xây dựng từng đối tượng JSON
+            StringJoiner jsonOrderJoiner = new StringJoiner(",", "{", "}");
+
+            jsonOrderJoiner.add(String.format("\"orderId\":%d", detail.getOrderId()))
+                    .add(String.format("\"productId\":%d", detail.getProductId()))
+                    .add(String.format("\"quantity\":%d", detail.getQuantity()))
+                    .add(String.format("\"price\":%d", detail.getPrice()))
+                    .add(String.format("\"createDate\":\"%s\"", detail.getCreateDate() != null ? detail.getCreateDate().toString() : null))
+                    .add(String.format("\"color\":\"%s\"", detail.getColor() != null ? detail.getColor() : ""))
+                    .add(String.format("\"name\":\"%s\"", detail.getName() != null ? detail.getName() : ""))
+                    .add(String.format("\"img\":\"%s\"", detail.getImg() != null ? detail.getImg() : ""));
+
+            // Thêm đối tượng JSON này vào mảng JSON
+            jsonArrayJoiner.add(jsonOrderJoiner.toString());
+        }
+
+        // Trả về chuỗi JSON hoàn chỉnh
         return jsonArrayJoiner.toString();
     }
 

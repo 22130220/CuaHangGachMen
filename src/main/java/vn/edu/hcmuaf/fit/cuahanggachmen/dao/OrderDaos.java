@@ -105,9 +105,8 @@ public class OrderDaos {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
                 handle.createQuery("""
-            SELECT o.*, u.fullname AS fullName
-            FROM orders o
-            JOIN users u ON o.UserID = u.id
+            SELECT o.*
+            FROM orders o;
         """).mapToBean(Orders.class)
                         .list()
         );

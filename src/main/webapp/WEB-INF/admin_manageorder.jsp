@@ -90,7 +90,7 @@
                         <div class="breadcumb-icon f-s-25">
                             <i class="fa-solid fa-user-tag"></i>
                         </div>
-                        <a href="#" class="f-bold f-s-25 breadcumb-text">Quản lý người dùng</a>
+                        <a href="#" class="f-bold f-s-25 breadcumb-text">Quản lý đơn hàng</a>
                     </div>
                 </div>
                 <div class="funcproduct">
@@ -114,78 +114,18 @@
         </div>
     </div>
 
-    <div class="modal micromodal-slide" id="add_modal" aria-hidden="true">
+    <div class="modal micromodal-slide" id="detail" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
                     <h2 class="modal__title">
-                        Cập nhật trạng thái
+                        Chi tiết đơn hàng
                     </h2>
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
                 <div class="modal-content-content">
                     <div class="modal__content">
-                        <form id="add_form" class="main-grid">
-                            <div class="user-name _4c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="add_fullname" class="f-bold f-s-14 f-cl-black">Tên người dùng</label>
-                                    <input type="text" name="add_fullname" placeholder="" class="input input-bordered f-s-14" id="add_fullname" autocomplete="off"/>
-                                </div>
-                            </div>
-                            <div class="poduct-material _2c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="add_status" class="f-bold f-s-14 f-cl-black"> Trạng thái</label>
-                                    <select name="add_status" id="add_status" class="input input-bordered f-s-14">
-                                        <option value="1">Hiển thị</option>
-                                        <option value="2">Ẩn</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="user-sex _2c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="add_sex" class="f-bold f-s-14 f-cl-black">Giới tính</label>
-                                    <select name="add_sex" id="add_sex" class="input input-bordered f-s-14">
-                                        <option value="0">Nam</option>
-                                        <option value="1">Nữ</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="user-phone _2c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="userphone" class="f-bold f-s-14 f-cl-black">Số điện thoại</label>
-                                    <input type="number" name="userphone" placeholder="" class="input input-bordered f-s-14" id="userphone" autocomplete="off"/>
-                                </div>
-                            </div>
-                            <div class="user-email _2c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="add_birth" class="f-bold f-s-14 f-cl-black">Ngày sinh</label>
-                                    <input type="date" name="add_birth" placeholder="" class="input input-bordered f-s-14" id="add_birth" autocomplete="off"/>
-                                </div>
-                            </div>
 
-                            <div class="user-email _4c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="add_email" class="f-bold f-s-14 f-cl-black">Email</label>
-                                    <input type="email" name="add_email" placeholder="" class="input input-bordered f-s-14" id="add_email" autocomplete="off"/>
-                                </div>
-                            </div>
-                            <div class="user-address _4c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="add_address" class="f-bold f-s-14 f-cl-black">Địa chỉ</label>
-                                    <input type="text" name="add_address" placeholder="" class="input input-bordered f-s-14" id="add_address" autocomplete="off"/>
-                                </div>
-                            </div>
-                            <div class="user-password _4c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="add_password" class="f-bold f-s-14 f-cl-black">Mật khẩu</label>
-                                    <input type="password" name="add_password" placeholder="" class="input input-bordered f-s-14" id="add_password" autocomplete="off"/>
-                                </div>
-                            </div>
-
-                            <div class="_1c">
-                                <button class="button bg_green f-cl-white" type="submit" id="add_btn">Thêm</button>
-                            </div>
-                        </form>
                     </div>
                     <footer class="modal__footer">
                     </footer>
@@ -266,7 +206,37 @@
         </div>
     </div>
 
-    <div class="modal micromodal-slide" id="update_password_modal" aria-hidden="true">
+    <div class="modal micromodal-slide" id="show_detail" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title">
+                        Chi tiết đơn hàng
+                    </h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div class="modal-content-content">
+                    <div class="modal__content">
+                        <table id="orderdetail" class="display" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Img</th>
+                                <th>Tên SP</th>
+                                <th>Số lượng</th>
+                                <th>Tổng giá</th>
+                                <th>Màu</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <footer class="modal__footer">
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal micromodal-slide" id="update_status_modal" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
@@ -277,17 +247,16 @@
                 </header>
                 <div class="modal-content-content">
                     <div class="modal__content">
-                        <form id="update_password_form" class="main-grid">
-                            <div class="user-password _4c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="update_password" class="f-bold f-s-14 f-cl-black">Mật khẩu</label>
-                                    <input type="password" name="update_password" placeholder="" class="input input-bordered f-s-14" id="update_password" autocomplete="off"/>
-                                </div>
-                            </div>
-                        </form>
+                        <div class="fui-basic-input" style="width: 100%">
+                            <label for="update_active_id" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+                            <select name="update_active_id" id="update_active_id" class="input input-bordered f-s-14" required>
+                                <option value="Delivered">Đã vận chuyển</option>
+                                <option value="Cancelled">Đã huỷ</option>
+                            </select>
+                        </div>
                     </div>
                     <footer class="modal__footer">
-                        <button class="button bg_green f-cl-white" id="update_password_btn">Cập nhật</button>
+                        <button class="button bg_green f-cl-white" id="update_id_btn">Cập nhật</button>
                     </footer>
                 </div>
             </div>
