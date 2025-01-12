@@ -12,7 +12,7 @@ public class MaterialDao {
     public int insert(Material material) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("INSERT INTO Material (Name) VALUES (:name)")
+                handle.createUpdate("INSERT INTO material (Name) VALUES (:name)")
                         .bind("name", material.getName())
                         .execute()
         );
@@ -21,7 +21,7 @@ public class MaterialDao {
     public Material findById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM Material WHERE ID = :id")
+                handle.createQuery("SELECT * FROM material WHERE ID = :id")
                         .bind("id", id)
                         .mapToBean(Material.class)
                         .findOne()
@@ -32,7 +32,7 @@ public class MaterialDao {
     public List<Material> findAll() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM Material")
+                handle.createQuery("SELECT * FROM material")
                         .mapToBean(Material.class)
                         .list()
         );
@@ -42,7 +42,7 @@ public class MaterialDao {
     public int update(Material material) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("UPDATE Material SET Name = :name WHERE ID = :id")
+                handle.createUpdate("UPDATE material SET Name = :name WHERE ID = :id")
                         .bind("name", material.getName())
                         .bind("id", material.getId())
                         .execute()
@@ -53,7 +53,7 @@ public class MaterialDao {
     public int deleteById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("DELETE FROM Material WHERE ID = :id")
+                handle.createUpdate("DELETE FROM material WHERE ID = :id")
                         .bind("id", id)
                         .execute()
         );

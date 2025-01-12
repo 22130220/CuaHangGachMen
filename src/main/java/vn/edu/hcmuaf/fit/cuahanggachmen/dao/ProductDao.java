@@ -128,7 +128,7 @@ public class ProductDao {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
                 handle.createUpdate(
-                                "UPDATE Products SET status = :status WHERE Id = :id"
+                                "UPDATE products SET status = :status WHERE Id = :id"
                         )
                         .bind("id", id)
                         .bind("status", active)

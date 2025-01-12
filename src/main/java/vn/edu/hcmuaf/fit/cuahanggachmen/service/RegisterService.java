@@ -52,7 +52,7 @@ public class RegisterService {
     }
 
     public ActionResult addUser(User user) {
-        return new UserDao().insertUser(user.getFullname(), user.getEmail(), user.getPhone(), user.getAvatar(), user.getAddress(), user.getBirthtime(), user.getSalt(), user.getPassword(), user.getSex(), user.getCreatetime());
+        return new UserDao().insertUser(user.getFullname(), user.getEmail(), user.getPhone(), user.getAvatar(), user.getAddress(), user.getBirthtime(), user.getSalt(), user.getPassword(), user.getSex());
     }
 
     public Timestamp convertToTimestamp(String dateTime) {

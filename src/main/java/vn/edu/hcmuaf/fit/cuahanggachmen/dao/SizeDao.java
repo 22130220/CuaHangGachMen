@@ -13,7 +13,7 @@ public class SizeDao {
     public int insert(Size size) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("INSERT INTO Size (Name) VALUES (:name)")
+                handle.createUpdate("INSERT INTO size (Name) VALUES (:name)")
                         .bind("name", size.getName())
                         .execute()
         );
@@ -23,7 +23,7 @@ public class SizeDao {
     public Size findById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM Size WHERE ID = :id")
+                handle.createQuery("SELECT * FROM size WHERE ID = :id")
                         .bind("id", id)
                         .mapToBean(Size.class)
                         .findOne()
@@ -35,7 +35,7 @@ public class SizeDao {
     public List<Size> findAll() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM Size")
+                handle.createQuery("SELECT * FROM size")
                         .mapToBean(Size.class)
                         .list()
         );
@@ -45,7 +45,7 @@ public class SizeDao {
     public int update(Size size) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("UPDATE Size SET Name = :name WHERE ID = :id")
+                handle.createUpdate("UPDATE size SET Name = :name WHERE ID = :id")
                         .bind("name", size.getName())
                         .bind("id", size.getId())
                         .execute()
@@ -56,7 +56,7 @@ public class SizeDao {
     public int deleteById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("DELETE FROM Size WHERE ID = :id")
+                handle.createUpdate("DELETE FROM size WHERE ID = :id")
                         .bind("id", id)
                         .execute()
         );

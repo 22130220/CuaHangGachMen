@@ -16,7 +16,7 @@ public class SpecTypeDao {
     public List<SpecType> findAll() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM SpecType;")
+                handle.createQuery("SELECT * FROM spectype;")
                         .mapToBean(SpecType.class)
                         .list()
         );
@@ -25,7 +25,7 @@ public class SpecTypeDao {
     public List<SpecType> findByProduct(int productId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT st.* FROM specType st LEFT JOIN product_spec ps ON st.ID = ps.SpecID AND ps.ProductID = :productId WHERE ps.SpecID IS NULL;")
+                handle.createQuery("SELECT st.* FROM spectype st LEFT JOIN product_spec ps ON st.ID = ps.SpecID AND ps.ProductID = :productId WHERE ps.SpecID IS NULL;")
                         .bind("productId", productId)
                         .mapToBean(SpecType.class)
                         .list()
@@ -36,7 +36,7 @@ public class SpecTypeDao {
     public int insert(SpecType c) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("INSERT INTO SpecType (Name) VALUES (:name)")
+                handle.createUpdate("INSERT INTO spectype (Name) VALUES (:name)")
                         .bind("name", c.getName())
                         .execute()
         );
@@ -45,7 +45,7 @@ public class SpecTypeDao {
     public int update(SpecType c) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("UPDATE SpecType SET Name = :name WHERE ID = :id")
+                handle.createUpdate("UPDATE spectype SET Name = :name WHERE ID = :id")
                         .bind("name", c.getName())
                         .bind("id", c.getId())
                         .execute()
@@ -55,7 +55,7 @@ public class SpecTypeDao {
     public int deleteById(int i) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createUpdate("DELETE FROM SpecType WHERE ID = :id")
+                handle.createUpdate("DELETE FROM spectype WHERE ID = :id")
                         .bind("id", i)
                         .execute()
         );

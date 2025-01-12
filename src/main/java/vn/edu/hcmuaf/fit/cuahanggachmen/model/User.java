@@ -173,13 +173,6 @@ public class User implements Serializable {
         this.sex = sex;
     }
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        UserDao service = new UserDao();
-
-        ActionResult rs  = service.insertUser("nguyen", "com@gamil.com", "0213432", null, null, null, "", "", 1, LocalDateTime.now());
-        //service.insertUser("phuc", "com1@gamil.com", "0213432", null, null, null, "", "");
-
-    }
 }
 
 
