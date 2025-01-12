@@ -76,7 +76,7 @@
             Quản lý thành phần
         </p>
     </a>
-    <a href="admin_manageorder.html" class="sidebar-button">
+    <a href="/admin/manage-order" class="sidebar-button">
         <div class="sidebar-icon">
             <i class="fa-solid fa-arrow-down-up-across-line"></i>
         </div>
