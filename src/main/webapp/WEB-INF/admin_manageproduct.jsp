@@ -98,7 +98,7 @@
                         </div>
                     </div>
                     <div class="funcproduct">
-                        <a href="admin_addproduct.jsp" class="button bg_green f-cl-white">Thêm mới</a>
+                        <a href="/admin/productcrud" class="button bg_green f-cl-white">Thêm mới</a>
                     </div>
                 </nav>
                 <div class="product-table table _4c _6r">

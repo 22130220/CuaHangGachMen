@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lỗi 404</title>
-    <link rel="stylesheet" href="./assets/css/error_404.css">
+    <link rel="stylesheet" href="/assets/css/error_404.css">
     <!-- Nhúng phông chữ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,14 +18,14 @@
     <link
             rel="icon"
             type="image/x-icon"
-            href="./assets/icons/logo2_no_text.svg"
+            href="/assets/icons/logo2_no_text.svg"
     />
 
 </head>
 <body>
 <div class="error-container">
     <div class="error-message">
-        <img src="./assets/img/404_loi.webp" alt="404 Error" class="error-image">
+        <img src="/assets/img/404_loi.webp" alt="404 Error" class="error-image">
         <p>Trang bạn tìm không tồn tại hoặc đã bị xóa!</p>
         <a href="/" class="home-button">Quay lại trang chủ</a>
     </div>

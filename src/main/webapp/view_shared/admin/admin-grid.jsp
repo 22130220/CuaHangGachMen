@@ -23,13 +23,15 @@
             <i class="fa-regular fa-bell fa-2x"></i>
         </div>
         <div class="logout-icon icon-hover">
+            <a href="/logout">
             <i class="fa-solid fa-arrow-right-from-bracket fa-2x"></i>
+            </a>
         </div>
     </div>
     <div class="acount-info">
         <i class="fa-regular fa-circle-user fa-2x"></i>
         <div class="account-label">
-            <p class="text text-name"> Tạ Hoàng Phúc</p>
+            <p class="text text-name"> ${sessionScope.auth.fullname} </p>
             <p class="text text-permission"> Admin</p>
         </div>
     </div>
