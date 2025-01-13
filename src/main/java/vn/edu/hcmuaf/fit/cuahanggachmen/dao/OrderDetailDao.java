@@ -4,6 +4,7 @@ import org.jdbi.v3.core.result.RowView;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.OrderDetail;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.OrderDetailWithName;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 public class OrderDetailDao {
+
 
     // Insert a new OrderDetail
     public int insert(OrderDetail orderDetail) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
@@ -91,6 +93,22 @@ public class OrderDetailDao {
         );
     }
 
+    public List<OrderDetail> findDeliveredOrderDetailsByUserId(int userId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery(
+                                "SELECT od.OrderID, od.ProductID, od.Quantity, od.Price, od.Color, od.CreateDate, p.imgThumbnail, p.name " +
+
+                                        "FROM orderdetail od " +
+                                        "JOIN products p ON p.id = od.ProductID " +
+                                        "JOIN orders o ON od.OrderID = o.ID " +
+                                        "WHERE o.UserID = :userId AND o.Status = 'Delivered'")
+                        .bind("userId", userId)
+                        .map(this::mapRow)
+                        .list()
+        );
+    }
+
     // Map database row to OrderDetail object
     private OrderDetail mapRow(RowView rowView) {
         OrderDetail orderDetail = new OrderDetail();
@@ -99,6 +117,9 @@ public class OrderDetailDao {
         orderDetail.setQuantity(rowView.getColumn("Quantity", Integer.class));
         orderDetail.setPrice(rowView.getColumn("Price", Integer.class));
         orderDetail.setCreateDate(rowView.getColumn("CreateDate", LocalDateTime.class));
+        orderDetail.setColor(rowView.getColumn("Color", String.class));
+        orderDetail.setProductName(rowView.getColumn("name", String.class));
+        orderDetail.setProductImg(rowView.getColumn("imgThumbnail", String.class));
         return orderDetail;
     }
 }

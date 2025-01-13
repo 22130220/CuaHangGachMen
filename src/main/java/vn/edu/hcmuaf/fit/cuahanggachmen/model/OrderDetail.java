@@ -1,15 +1,18 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class OrderDetail {
+public class OrderDetail implements Serializable {
     private int orderId;
     private int productId;
     private int quantity;
     private int price;
     private LocalDateTime createDate;
     private String Color;
+    private String productImg;
+    private String productName;
 
     public OrderDetail() {
     }
@@ -21,6 +24,22 @@ public class OrderDetail {
         this.price = price;
         this.createDate = createDate;
         Color = color;
+    }
+
+    public String getProductImg() {
+        return productImg;
+    }
+
+    public void setProductImg(String productImg) {
+        this.productImg = productImg;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     // Getters and Setters
@@ -81,6 +100,8 @@ public class OrderDetail {
                 ", price=" + price +
                 ", createDate=" + createDate +
                 ", Color='" + Color + '\'' +
+                ", productImg='" + productImg + '\'' +
+                ", productName='" + productName + '\'' +
                 '}';
     }
 }
