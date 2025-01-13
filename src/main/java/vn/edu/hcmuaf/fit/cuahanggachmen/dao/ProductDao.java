@@ -53,7 +53,7 @@ public class ProductDao {
         Jdbi jdbi = DBConect.get();
 
         Handle handle = jdbi.open();
-        Product product = handle.createQuery("SELECT * FROM products WHERE ID = :id")
+        Product product = handle.createQuery("SELECT * FROM products WHERE ID = :id AND status=1")
                         .bind("id", id)
                         .map(new ProductMapper())
                         .first();

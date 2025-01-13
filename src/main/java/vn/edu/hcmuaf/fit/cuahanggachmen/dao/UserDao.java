@@ -74,7 +74,7 @@ public class UserDao {
     public User getUserById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM users WHERE id = :id")
+                handle.createQuery("SELECT * FROM users WHERE id = :id AND status=1")
                         .bind("id", id) // Gắn giá trị id
                         .map(new UserMapper())
                         .findOne()
@@ -84,7 +84,7 @@ public class UserDao {
     public User findByEmail(String email) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM users WHERE email = :email")
+                handle.createQuery("SELECT * FROM users WHERE email = :email AND status=1")
                         .bind("email", email) // Gắn giá trị id
                         .map(new UserMapper())
                         .findOne()

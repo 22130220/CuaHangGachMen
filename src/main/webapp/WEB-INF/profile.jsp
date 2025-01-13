@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
-    <link rel="stylesheet" href="./assets/css/hoso.css">
+    <link rel="stylesheet" href="/assets/css/hoso.css">
     <!-- Nhúng phông chữ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,15 +16,15 @@
             rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css">
-    <link rel="stylesheet" href="./assets/css/giohang.css">
-    <link rel="stylesheet" href="./assets/css/dropdown_user_menu.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/cacthanhphancodinh.css">
+    <link rel="stylesheet" href="/assets/css/giohang.css">
+    <link rel="stylesheet" href="/assets/css/dropdown_user_menu.css">
     <!-- Thêm favicon -->
     <link
             rel="icon"
             type="image/x-icon"
-            href="./assets/icons/logo2_no_text.svg"
+            href="/assets/icons/logo2_no_text.svg"
 
     />
 
@@ -73,9 +73,9 @@
 
             <hr>
 
-            <a href="./lichsudonhangthanhcong.html"><li>Đơn Mua</li></a>
+            <a href="/lichsudonhangthanhcong.html"><li>Đơn Mua</li></a>
             <hr>
-            <a href="./home.html"><li>Quay về trang chủ</li></a>
+            <a href="/home.html"><li>Quay về trang chủ</li></a>
 
         </ul>
     </aside>
@@ -174,7 +174,14 @@
                 <button type="submit" class="save-btn">Đổi mật khẩu</button>
             </form>
 
+
+
         </div>
+        <c:if test="${not empty message}">
+            <div class="alert">
+                    ${message}
+            </div>
+        </c:if>
     </main>
 </div>
 

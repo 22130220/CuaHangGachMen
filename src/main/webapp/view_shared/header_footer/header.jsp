@@ -209,7 +209,7 @@
             <div class="dropdown">
               <ul>
                 <li><a href="/profile">Tài khoản của tôi</a></li>
-                <li><a href="./lichsudonhangthanhcong.html">Đơn mua</a></li>
+                <li><a href="completeorderhistory">Đơn mua</a></li>
                 <li><a href="logout">Đăng xuất</a></li>
               </ul>
             </div>
