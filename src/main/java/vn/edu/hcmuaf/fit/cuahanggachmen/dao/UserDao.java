@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class UserDao {
-
+        
     public UserDao() {
     }
     public void updatePassword(String email, String hashedPassword, String salt) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {

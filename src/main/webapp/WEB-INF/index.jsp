@@ -4,12 +4,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Cửa hàng gạch men</title>
 
     <!-- Reset CSS -->
-    <link rel="stylesheet" href="/assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/reset.css"/>
 
     <!-- Thêm favicon -->
     <link
@@ -19,8 +19,8 @@
     />
 
     <!-- Nhúng phông chữ -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
             href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             rel="stylesheet"
@@ -41,20 +41,20 @@
             referrerpolicy="no-referrer"
     ></script>
 
-<%--    <!-- Kiểu CSS -->--%>
-    <link rel="stylesheet" href="/assets/css/style.css" />
-    <link rel="stylesheet" href="/assets/css/banner.css" />
-    <link rel="stylesheet" href="/assets/css/danhmucgachmen.css" />
-    <link rel="stylesheet" href="/assets/css/popular.css" />
-    <link rel="stylesheet" href="/assets/css/cacthanhphancodinh.css" />
+    <%--    <!-- Kiểu CSS -->--%>
+    <link rel="stylesheet" href="/assets/css/style.css"/>
+    <link rel="stylesheet" href="/assets/css/banner.css"/>
+    <link rel="stylesheet" href="/assets/css/danhmucgachmen.css"/>
+    <link rel="stylesheet" href="/assets/css/popular.css"/>
+    <link rel="stylesheet" href="/assets/css/cacthanhphancodinh.css"/>
     <link rel="stylesheet" href="/assets/css/dropdown_user_menu.css">
 
-<%--    <style><%@include file="assets/css/style.css"%></style>--%>
-<%--    <style><%@include file="assets/css/banner.css"%></style>--%>
-<%--    <style><%@include file="assets/css/danhmucgachmen.css"%></style>--%>
-<%--    <style><%@include file="assets/css/popular.css"%></style>--%>
-<%--    <style><%@include file="assets/css/cacthanhphancodinh.css"%></style>--%>
-<%--    <style><%@include file="assets/css/dropdown_user_menu.css"%></style>--%>
+    <%--    <style><%@include file="assets/css/style.css"%></style>--%>
+    <%--    <style><%@include file="assets/css/banner.css"%></style>--%>
+    <%--    <style><%@include file="assets/css/danhmucgachmen.css"%></style>--%>
+    <%--    <style><%@include file="assets/css/popular.css"%></style>--%>
+    <%--    <style><%@include file="assets/css/cacthanhphancodinh.css"%></style>--%>
+    <%--    <style><%@include file="assets/css/dropdown_user_menu.css"%></style>--%>
 
 </head>
 <body>
@@ -64,13 +64,13 @@
 <div class="slider">
     <div class="slides">
         <div class="slide">
-            <img src="/assets/img/ceramic-india-1-1.jpg" alt="Ảnh 1" />
+            <img src="/assets/img/ceramic-india-1-1.jpg" alt="Ảnh 1"/>
         </div>
         <div class="slide">
-            <img src="/assets/img/banner-home-1.png" alt="Ảnh 2" />
+            <img src="/assets/img/banner-home-1.png" alt="Ảnh 2"/>
         </div>
         <div class="slide">
-            <img src="/assets/img/banner-home-2.png" alt="Ảnh 3" />
+            <img src="/assets/img/banner-home-2.png" alt="Ảnh 3"/>
         </div>
         <!-- Thêm ảnh tùy thích -->
     </div>
@@ -87,7 +87,6 @@
 </div>
 
 
-
 <!-- Popular -->
 <div class="popular" id="popular">
     <div class="main-content">
@@ -100,73 +99,76 @@
         </div>
 
         <div class="course-list">
-        <c:forEach var="product" items="${productList}">
-            <!-- Course item 1 -->
-            <div class="course-item">
-                <a href="/pdetail?pid=${product.id}">
-                    <img
-                            src="${product.imgThumbnail}"
-                            alt="${product.name}"
-                            class="thumb"
-                    />
-                </a>
-                <div class="info">
-                    <div class="head">
-                        <div class="title">
-                            <a href="#!" class="line-clamp break-all">
-                                    ${product.name}
-                            </a>
+            <c:forEach var="product" items="${productList}">
+                <!-- Course item 1 -->
+                <div class="course-item">
+                    <a href="/pdetail?pid=${product.id}">
+                        <img
+                                src="${product.imgThumbnail}"
+                                alt="${product.name}"
+                                class="thumb"
+                        />
+                    </a>
+                    <div class="info">
+                        <div class="head">
+                            <div class="title">
+                                <a href="#!" class="line-clamp break-all">
+                                        ${product.name}
+                                </a>
+                            </div>
+                            <div class="rating">
+                                <img
+                                        src="/assets/img/star.svg"
+                                        alt="Star"
+                                        class="star"
+                                />
+                                <span class="value">${product.rating}</span>
+                            </div>
                         </div>
-                        <div class="rating">
-                            <img
-                                    src="/assets/img/star.svg"
-                                    alt="Star"
-                                    class="star"
-                            />
-                            <span class="value">${product.rating}</span>
-                        </div>
-                    </div>
 
-                    <div class="foot">
-                        <span class="price"><f:formatNumber value="${product.pricePerBox}" type="number" maxFractionDigits="0"/>₫</span>
-                        <a href="/pdetail?pid=${product.id}"
-                        >
-
-                            <svg
-                                    class="icon"
-                                    width="30"
-                                    height="30"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
+                        <div class="foot">
+                            <span class="price"><f:formatNumber value="${product.pricePerBox}" type="number"
+                                                                maxFractionDigits="0"/>₫</span>
+                            <a href="/pdetail?pid=${product.id}"
                             >
-                                <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
-                                        d="M10 20C10 21.6569 8.65685 23 7 23C5.34315 23 4 21.6569 4 20C4 18.3431 5.34315 17 7 17C8.65685 17 10 18.3431 10 20ZM8 20C8 20.5523 7.55228 21 7 21C6.44772 21 6 20.5523 6 20C6 19.4477 6.44772 19 7 19C7.55228 19 8 19.4477 8 20Z"
-                                        fill="#2e2100ff"
-                                />
-                                <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
-                                        d="M20 20C20 21.6569 18.6569 23 17 23C15.3431 23 14 21.6569 14 20C14 18.3431 15.3431 17 17 17C18.6569 17 20 18.3431 20 20ZM18 20C18 20.5523 17.5523 21 17 21C16.4477 21 16 20.5523 16 20C16 19.4477 16.4477 19 17 19C17.5523 19 18 19.4477 18 20Z"
-                                        fill="#2e2100ff"
-                                />
-                                <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
-                                        d="M2.10557 2.55276C2.35256 2.05878 2.95323 1.85856 3.44721 2.10555L4.45072 2.6073C5.37999 3.07193 6.0027 3.98429 6.09676 5.01898L6.1446 5.54524C6.16801 5.80278 6.38394 5.99997 6.64255 5.99997H19.8355C21.581 5.99997 22.7892 7.74341 22.1763 9.37778L20.423 14.0533C19.9839 15.2243 18.8645 16 17.614 16H7.82643C6.27482 16 4.97922 14.8168 4.83875 13.2716L4.10497 5.20005C4.07362 4.85515 3.86605 4.55103 3.55629 4.39616L2.55278 3.8944C2.05881 3.64741 1.85858 3.04674 2.10557 2.55276ZM6.91527 7.99997C6.62126 7.99997 6.39071 8.25243 6.41733 8.54524L6.83053 13.0905C6.87736 13.6056 7.30922 14 7.82643 14H17.614C18.0308 14 18.404 13.7414 18.5503 13.3511L20.3037 8.67554C20.4262 8.34866 20.1846 7.99997 19.8355 7.99997H6.91527Z"
-                                        fill="#2e2100ff"
-                                />
-                            </svg>
-                        </a>
 
-                        <a href="/pdetail?pid=${product.id}"><button class="btn book-btn">Đặt ngay</button></a>
+                                <svg
+                                        class="icon"
+                                        width="30"
+                                        height="30"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M10 20C10 21.6569 8.65685 23 7 23C5.34315 23 4 21.6569 4 20C4 18.3431 5.34315 17 7 17C8.65685 17 10 18.3431 10 20ZM8 20C8 20.5523 7.55228 21 7 21C6.44772 21 6 20.5523 6 20C6 19.4477 6.44772 19 7 19C7.55228 19 8 19.4477 8 20Z"
+                                            fill="#2e2100ff"
+                                    />
+                                    <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M20 20C20 21.6569 18.6569 23 17 23C15.3431 23 14 21.6569 14 20C14 18.3431 15.3431 17 17 17C18.6569 17 20 18.3431 20 20ZM18 20C18 20.5523 17.5523 21 17 21C16.4477 21 16 20.5523 16 20C16 19.4477 16.4477 19 17 19C17.5523 19 18 19.4477 18 20Z"
+                                            fill="#2e2100ff"
+                                    />
+                                    <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M2.10557 2.55276C2.35256 2.05878 2.95323 1.85856 3.44721 2.10555L4.45072 2.6073C5.37999 3.07193 6.0027 3.98429 6.09676 5.01898L6.1446 5.54524C6.16801 5.80278 6.38394 5.99997 6.64255 5.99997H19.8355C21.581 5.99997 22.7892 7.74341 22.1763 9.37778L20.423 14.0533C19.9839 15.2243 18.8645 16 17.614 16H7.82643C6.27482 16 4.97922 14.8168 4.83875 13.2716L4.10497 5.20005C4.07362 4.85515 3.86605 4.55103 3.55629 4.39616L2.55278 3.8944C2.05881 3.64741 1.85858 3.04674 2.10557 2.55276ZM6.91527 7.99997C6.62126 7.99997 6.39071 8.25243 6.41733 8.54524L6.83053 13.0905C6.87736 13.6056 7.30922 14 7.82643 14H17.614C18.0308 14 18.404 13.7414 18.5503 13.3511L20.3037 8.67554C20.4262 8.34866 20.1846 7.99997 19.8355 7.99997H6.91527Z"
+                                            fill="#2e2100ff"
+                                    />
+                                </svg>
+                            </a>
 
+                            <a href="/pdetail?pid=${product.id}">
+                                <button class="btn book-btn">Đặt ngay</button>
+                            </a>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-</c:forEach>
+            </c:forEach>
         </div>
 
 
@@ -186,76 +188,77 @@
         </div>
 
         <div class="course-list">
-<c:forEach var="product" items="${latestProducts}">
-            <!-- Course item 1 -->
-            <div class="course-item">
-                <a href="/pdetail?pid=${product.id}">
-                    <img
-                            src="${product.imgThumbnail}"
-                            alt="Basic web design"
-                            class="thumb"
-                    />
-                </a>
-                <div class="info">
-                    <div class="head">
-                        <div class="title">
-                            <a href="#!" class="line-clamp break-all">
-                                    ${product.name}
-                            </a>
+            <c:forEach var="product" items="${latestProducts}">
+                <!-- Course item 1 -->
+                <div class="course-item">
+                    <a href="/pdetail?pid=${product.id}">
+                        <img
+                                src="${product.imgThumbnail}"
+                                alt="Basic web design"
+                                class="thumb"
+                        />
+                    </a>
+                    <div class="info">
+                        <div class="head">
+                            <div class="title">
+                                <a href="#!" class="line-clamp break-all">
+                                        ${product.name}
+                                </a>
+                            </div>
+                            <div class="rating">
+                                <img
+                                        src="/assets/img/star.svg"
+                                        alt="Star"
+                                        class="star"
+                                />
+                                <span class="value">${product.rating}</span>
+                            </div>
                         </div>
-                        <div class="rating">
-                            <img
-                                    src="/assets/img/star.svg"
-                                    alt="Star"
-                                    class="star"
-                            />
-                            <span class="value">${product.rating}</span>
-                        </div>
-                    </div>
 
-                    <div class="foot">
-                        <span class="price"><f:formatNumber value="${product.pricePerBox}" type="number" maxFractionDigits="0"/>₫</span>
-                        <a href="/pdetail?pid=${product.id}"
-                        >
-
-                            <svg
-                                    class="icon"
-                                    width="30"
-                                    height="30"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
+                        <div class="foot">
+                            <span class="price"><f:formatNumber value="${product.pricePerBox}" type="number"
+                                                                maxFractionDigits="0"/>₫</span>
+                            <a href="/pdetail?pid=${product.id}"
                             >
-                                <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
-                                        d="M10 20C10 21.6569 8.65685 23 7 23C5.34315 23 4 21.6569 4 20C4 18.3431 5.34315 17 7 17C8.65685 17 10 18.3431 10 20ZM8 20C8 20.5523 7.55228 21 7 21C6.44772 21 6 20.5523 6 20C6 19.4477 6.44772 19 7 19C7.55228 19 8 19.4477 8 20Z"
-                                        fill="#2e2100ff"
-                                />
-                                <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
-                                        d="M20 20C20 21.6569 18.6569 23 17 23C15.3431 23 14 21.6569 14 20C14 18.3431 15.3431 17 17 17C18.6569 17 20 18.3431 20 20ZM18 20C18 20.5523 17.5523 21 17 21C16.4477 21 16 20.5523 16 20C16 19.4477 16.4477 19 17 19C17.5523 19 18 19.4477 18 20Z"
-                                        fill="#2e2100ff"
-                                />
-                                <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
-                                        d="M2.10557 2.55276C2.35256 2.05878 2.95323 1.85856 3.44721 2.10555L4.45072 2.6073C5.37999 3.07193 6.0027 3.98429 6.09676 5.01898L6.1446 5.54524C6.16801 5.80278 6.38394 5.99997 6.64255 5.99997H19.8355C21.581 5.99997 22.7892 7.74341 22.1763 9.37778L20.423 14.0533C19.9839 15.2243 18.8645 16 17.614 16H7.82643C6.27482 16 4.97922 14.8168 4.83875 13.2716L4.10497 5.20005C4.07362 4.85515 3.86605 4.55103 3.55629 4.39616L2.55278 3.8944C2.05881 3.64741 1.85858 3.04674 2.10557 2.55276ZM6.91527 7.99997C6.62126 7.99997 6.39071 8.25243 6.41733 8.54524L6.83053 13.0905C6.87736 13.6056 7.30922 14 7.82643 14H17.614C18.0308 14 18.404 13.7414 18.5503 13.3511L20.3037 8.67554C20.4262 8.34866 20.1846 7.99997 19.8355 7.99997H6.91527Z"
-                                        fill="#2e2100ff"
-                                />
-                            </svg>
-                        </a>
 
-                        <a href="/pdetail?pid=${product.id}"><button class="btn book-btn">Đặt ngay</button></a>
+                                <svg
+                                        class="icon"
+                                        width="30"
+                                        height="30"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M10 20C10 21.6569 8.65685 23 7 23C5.34315 23 4 21.6569 4 20C4 18.3431 5.34315 17 7 17C8.65685 17 10 18.3431 10 20ZM8 20C8 20.5523 7.55228 21 7 21C6.44772 21 6 20.5523 6 20C6 19.4477 6.44772 19 7 19C7.55228 19 8 19.4477 8 20Z"
+                                            fill="#2e2100ff"
+                                    />
+                                    <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M20 20C20 21.6569 18.6569 23 17 23C15.3431 23 14 21.6569 14 20C14 18.3431 15.3431 17 17 17C18.6569 17 20 18.3431 20 20ZM18 20C18 20.5523 17.5523 21 17 21C16.4477 21 16 20.5523 16 20C16 19.4477 16.4477 19 17 19C17.5523 19 18 19.4477 18 20Z"
+                                            fill="#2e2100ff"
+                                    />
+                                    <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M2.10557 2.55276C2.35256 2.05878 2.95323 1.85856 3.44721 2.10555L4.45072 2.6073C5.37999 3.07193 6.0027 3.98429 6.09676 5.01898L6.1446 5.54524C6.16801 5.80278 6.38394 5.99997 6.64255 5.99997H19.8355C21.581 5.99997 22.7892 7.74341 22.1763 9.37778L20.423 14.0533C19.9839 15.2243 18.8645 16 17.614 16H7.82643C6.27482 16 4.97922 14.8168 4.83875 13.2716L4.10497 5.20005C4.07362 4.85515 3.86605 4.55103 3.55629 4.39616L2.55278 3.8944C2.05881 3.64741 1.85858 3.04674 2.10557 2.55276ZM6.91527 7.99997C6.62126 7.99997 6.39071 8.25243 6.41733 8.54524L6.83053 13.0905C6.87736 13.6056 7.30922 14 7.82643 14H17.614C18.0308 14 18.404 13.7414 18.5503 13.3511L20.3037 8.67554C20.4262 8.34866 20.1846 7.99997 19.8355 7.99997H6.91527Z"
+                                            fill="#2e2100ff"
+                                    />
+                                </svg>
+                            </a>
 
+                            <a href="/pdetail?pid=${product.id}">
+                                <button class="btn book-btn">Đặt ngay</button>
+                            </a>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-</c:forEach>
+            </c:forEach>
         </div>
-
-
 
 
     </div>
@@ -273,77 +276,78 @@
         </div>
 
         <div class="course-list">
-<c:forEach items="${mostViewedProducts}" var="product">
-            <!-- Course item 1 -->
-            <div class="course-item">
-                <a href="/pdetail?pid=${product.id}">
-                    <img
-                            src="${product.imgThumbnail}"
-                            alt="${product.name}"
-                            class="thumb"
-                    />
-                </a>
-                <div class="info">
-                    <div class="head">
-                        <div class="title">
-                            <a href="/pdetail?pid=${product.id}" class="line-clamp break-all">
-                                    ${product.name}
-                            </a>
+            <c:forEach items="${mostViewedProducts}" var="product">
+                <!-- Course item 1 -->
+                <div class="course-item">
+                    <a href="/pdetail?pid=${product.id}">
+                        <img
+                                src="${product.imgThumbnail}"
+                                alt="${product.name}"
+                                class="thumb"
+                        />
+                    </a>
+                    <div class="info">
+                        <div class="head">
+                            <div class="title">
+                                <a href="/pdetail?pid=${product.id}" class="line-clamp break-all">
+                                        ${product.name}
+                                </a>
+                            </div>
+                            <div class="rating">
+                                <img
+                                        src="/assets/img/star.svg"
+                                        alt="Star"
+                                        class="star"
+                                />
+                                <span class="value">${product.rating}</span>
+                            </div>
                         </div>
-                        <div class="rating">
-                            <img
-                                    src="/assets/img/star.svg"
-                                    alt="Star"
-                                    class="star"
-                            />
-                            <span class="value">${product.rating}</span>
-                        </div>
-                    </div>
 
-                    <div class="foot">
-                        <span class="price"><f:formatNumber value="${product.pricePerBox}" type="number" maxFractionDigits="0"/>₫</span>
-                        <a href="/pdetail?pid=${product.id}"
-                        >
-
-                            <svg
-                                    class="icon"
-                                    width="30"
-                                    height="30"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
+                        <div class="foot">
+                            <span class="price"><f:formatNumber value="${product.pricePerBox}" type="number"
+                                                                maxFractionDigits="0"/>₫</span>
+                            <a href="/pdetail?pid=${product.id}"
                             >
-                                <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
-                                        d="M10 20C10 21.6569 8.65685 23 7 23C5.34315 23 4 21.6569 4 20C4 18.3431 5.34315 17 7 17C8.65685 17 10 18.3431 10 20ZM8 20C8 20.5523 7.55228 21 7 21C6.44772 21 6 20.5523 6 20C6 19.4477 6.44772 19 7 19C7.55228 19 8 19.4477 8 20Z"
-                                        fill="#2e2100ff"
-                                />
-                                <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
-                                        d="M20 20C20 21.6569 18.6569 23 17 23C15.3431 23 14 21.6569 14 20C14 18.3431 15.3431 17 17 17C18.6569 17 20 18.3431 20 20ZM18 20C18 20.5523 17.5523 21 17 21C16.4477 21 16 20.5523 16 20C16 19.4477 16.4477 19 17 19C17.5523 19 18 19.4477 18 20Z"
-                                        fill="#2e2100ff"
-                                />
-                                <path
-                                        fill-rule="evenodd"
-                                        clip-rule="evenodd"
-                                        d="M2.10557 2.55276C2.35256 2.05878 2.95323 1.85856 3.44721 2.10555L4.45072 2.6073C5.37999 3.07193 6.0027 3.98429 6.09676 5.01898L6.1446 5.54524C6.16801 5.80278 6.38394 5.99997 6.64255 5.99997H19.8355C21.581 5.99997 22.7892 7.74341 22.1763 9.37778L20.423 14.0533C19.9839 15.2243 18.8645 16 17.614 16H7.82643C6.27482 16 4.97922 14.8168 4.83875 13.2716L4.10497 5.20005C4.07362 4.85515 3.86605 4.55103 3.55629 4.39616L2.55278 3.8944C2.05881 3.64741 1.85858 3.04674 2.10557 2.55276ZM6.91527 7.99997C6.62126 7.99997 6.39071 8.25243 6.41733 8.54524L6.83053 13.0905C6.87736 13.6056 7.30922 14 7.82643 14H17.614C18.0308 14 18.404 13.7414 18.5503 13.3511L20.3037 8.67554C20.4262 8.34866 20.1846 7.99997 19.8355 7.99997H6.91527Z"
-                                        fill="#2e2100ff"
-                                />
-                            </svg>
-                        </a>
 
-                        <a href="/pdetail?pid=${product.id}"><button class="btn book-btn">Đặt ngay</button></a>
+                                <svg
+                                        class="icon"
+                                        width="30"
+                                        height="30"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M10 20C10 21.6569 8.65685 23 7 23C5.34315 23 4 21.6569 4 20C4 18.3431 5.34315 17 7 17C8.65685 17 10 18.3431 10 20ZM8 20C8 20.5523 7.55228 21 7 21C6.44772 21 6 20.5523 6 20C6 19.4477 6.44772 19 7 19C7.55228 19 8 19.4477 8 20Z"
+                                            fill="#2e2100ff"
+                                    />
+                                    <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M20 20C20 21.6569 18.6569 23 17 23C15.3431 23 14 21.6569 14 20C14 18.3431 15.3431 17 17 17C18.6569 17 20 18.3431 20 20ZM18 20C18 20.5523 17.5523 21 17 21C16.4477 21 16 20.5523 16 20C16 19.4477 16.4477 19 17 19C17.5523 19 18 19.4477 18 20Z"
+                                            fill="#2e2100ff"
+                                    />
+                                    <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M2.10557 2.55276C2.35256 2.05878 2.95323 1.85856 3.44721 2.10555L4.45072 2.6073C5.37999 3.07193 6.0027 3.98429 6.09676 5.01898L6.1446 5.54524C6.16801 5.80278 6.38394 5.99997 6.64255 5.99997H19.8355C21.581 5.99997 22.7892 7.74341 22.1763 9.37778L20.423 14.0533C19.9839 15.2243 18.8645 16 17.614 16H7.82643C6.27482 16 4.97922 14.8168 4.83875 13.2716L4.10497 5.20005C4.07362 4.85515 3.86605 4.55103 3.55629 4.39616L2.55278 3.8944C2.05881 3.64741 1.85858 3.04674 2.10557 2.55276ZM6.91527 7.99997C6.62126 7.99997 6.39071 8.25243 6.41733 8.54524L6.83053 13.0905C6.87736 13.6056 7.30922 14 7.82643 14H17.614C18.0308 14 18.404 13.7414 18.5503 13.3511L20.3037 8.67554C20.4262 8.34866 20.1846 7.99997 19.8355 7.99997H6.91527Z"
+                                            fill="#2e2100ff"
+                                    />
+                                </svg>
+                            </a>
 
+                            <a href="/pdetail?pid=${product.id}">
+                                <button class="btn book-btn">Đặt ngay</button>
+                            </a>
+
+                        </div>
                     </div>
                 </div>
-            </div>
-</c:forEach>
+            </c:forEach>
 
         </div>
-
-
 
 
     </div>

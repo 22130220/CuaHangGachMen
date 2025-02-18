@@ -3,6 +3,8 @@
 *.iws
 out/
 .smarttomcat
+.classpath
+.project
 
 # Các file cấu hình Maven/Gradle (nếu sử dụng)
 target/
