@@ -1,19 +1,21 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen;
 
-import java.io.*;
-import java.sql.SQLException;
-import java.util.List;
-
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("")
 public class HelloServlet extends HttpServlet {
     private String message;
+
 
     public void init() {
         message = "Hello World!";
