@@ -11,6 +11,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,7 +40,12 @@ public class FilterController extends HttpServlet {
         productFilter.setSort(AjaxParseRequest.parseInt(sort));
 
         ProductService pService = new ProductService();
-        List<Product> ls = pService.findByFilter(productFilter);
+        List<Product> ls = null;
+        try {
+            ls = pService.findByFilter(productFilter);
+        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
 
         AjaxResponse resp = new AjaxResponse();
 

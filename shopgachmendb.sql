@@ -1,7 +1,7 @@
 /*
  Navicat Premium Dump SQL
 
- Source Server         : MySql
+ Source Server         : mysql
  Source Server Type    : MySQL
  Source Server Version : 90100 (9.1.0)
  Source Host           : localhost:3307
@@ -11,7 +11,7 @@
  Target Server Version : 90100 (9.1.0)
  File Encoding         : 65001
 
- Date: 06/01/2025 12:42:16
+ Date: 18/02/2025 16:00:56
 */
 
 SET NAMES utf8mb4;
@@ -142,7 +142,7 @@ CREATE TABLE `orders`  (
   `Des` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `CreateDate` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of orders
@@ -162,13 +162,12 @@ CREATE TABLE `product_color_img`  (
   INDEX `fk_productid`(`ProductId` ASC) USING BTREE,
   CONSTRAINT `fk_colorid` FOREIGN KEY (`ColorId`) REFERENCES `colors` (`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_productid` FOREIGN KEY (`ProductId`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of product_color_img
 -- ----------------------------
 INSERT INTO `product_color_img` VALUES (15, 1, 1, 'https://tileshop.scene7.com/is/image/TileShop/484017?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (16, 2, 1, 'https://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (17, 3, 1, 'https://tileshop.scene7.com/is/image/TileShop/484272?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (18, 4, 1, 'https://tileshop.scene7.com/is/image/TileShop/484286?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (19, 5, 1, 'https://tileshop.scene7.com/is/image/TileShop/667724?$ExtraLarge$');
@@ -180,7 +179,6 @@ INSERT INTO `product_color_img` VALUES (24, 1, 6, 'https://tileshop.scene7.com/i
 INSERT INTO `product_color_img` VALUES (25, 1, 7, 'https://tileshop.scene7.com/is/image/TileShop/667753?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (26, 1, 8, 'https://tileshop.scene7.com/is/image/TileShop/484054?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (27, 1, 9, 'https://tileshop.scene7.com/is/image/TileShop/484214?$ExtraLarge$');
-INSERT INTO `product_color_img` VALUES (30, 2, 1, 'https://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$\r\nhttps://tileshop.scene7.com/is/image/TileShop/484436?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (31, 3, 1, 'https://tileshop.scene7.com/is/image/TileShop/484272?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (32, 4, 1, 'https://tileshop.scene7.com/is/image/TileShop/484286?$ExtraLarge$');
 INSERT INTO `product_color_img` VALUES (33, 5, 1, 'https://tileshop.scene7.com/is/image/TileShop/667724?$ExtraLarge$');
@@ -773,15 +771,47 @@ INSERT INTO `product_spec` VALUES (91, 6, 'Việt Nam');
 -- ----------------------------
 DROP TABLE IF EXISTS `product_view`;
 CREATE TABLE `product_view`  (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `ProductID` int NULL DEFAULT NULL,
   `CreateDate` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of product_view
 -- ----------------------------
+INSERT INTO `product_view` VALUES (1, 2, '2025-02-18 14:11:52');
+INSERT INTO `product_view` VALUES (2, 3, '2025-02-18 14:13:06');
+INSERT INTO `product_view` VALUES (3, 3, '2025-02-18 14:13:42');
+INSERT INTO `product_view` VALUES (4, 4, '2025-02-18 14:14:01');
+INSERT INTO `product_view` VALUES (5, 3, '2025-02-18 15:09:21');
+INSERT INTO `product_view` VALUES (6, 1, '2025-02-18 15:09:34');
+INSERT INTO `product_view` VALUES (7, 1, '2025-02-18 15:17:40');
+INSERT INTO `product_view` VALUES (8, 39, '2025-02-18 15:21:31');
+INSERT INTO `product_view` VALUES (9, 39, '2025-02-18 15:21:31');
+INSERT INTO `product_view` VALUES (10, 39, '2025-02-18 15:21:31');
+INSERT INTO `product_view` VALUES (11, 39, '2025-02-18 15:22:05');
+INSERT INTO `product_view` VALUES (12, 39, '2025-02-18 15:22:05');
+INSERT INTO `product_view` VALUES (13, 39, '2025-02-18 15:22:05');
+INSERT INTO `product_view` VALUES (14, 39, '2025-02-18 15:44:41');
+INSERT INTO `product_view` VALUES (15, 39, '2025-02-18 15:44:41');
+INSERT INTO `product_view` VALUES (16, 39, '2025-02-18 15:44:41');
+INSERT INTO `product_view` VALUES (17, 1, '2025-02-18 15:45:12');
+INSERT INTO `product_view` VALUES (18, 6, '2025-02-18 15:45:20');
+INSERT INTO `product_view` VALUES (19, 4, '2025-02-18 15:45:24');
+INSERT INTO `product_view` VALUES (20, 5, '2025-02-18 15:45:27');
+INSERT INTO `product_view` VALUES (21, 1, '2025-02-18 15:45:42');
+INSERT INTO `product_view` VALUES (22, 1, '2025-02-18 15:46:20');
+INSERT INTO `product_view` VALUES (23, 3, '2025-02-18 15:46:22');
+INSERT INTO `product_view` VALUES (24, 4, '2025-02-18 15:47:19');
+INSERT INTO `product_view` VALUES (25, 45, '2025-02-18 15:49:43');
+INSERT INTO `product_view` VALUES (26, 45, '2025-02-18 15:49:43');
+INSERT INTO `product_view` VALUES (27, 45, '2025-02-18 15:49:43');
+INSERT INTO `product_view` VALUES (28, 45, '2025-02-18 15:50:03');
+INSERT INTO `product_view` VALUES (29, 45, '2025-02-18 15:50:03');
+INSERT INTO `product_view` VALUES (30, 45, '2025-02-18 15:50:04');
+INSERT INTO `product_view` VALUES (31, 87, '2025-02-18 15:50:48');
+INSERT INTO `product_view` VALUES (32, 87, '2025-02-18 15:50:48');
 
 -- ----------------------------
 -- Table structure for products
@@ -858,11 +888,11 @@ INSERT INTO `products` VALUES (37, 'Gạch ốp tường MAXTOT MT4804D', 384000
 INSERT INTO `products` VALUES (38, 'Gạch ốp tường MAXTOT MT4805', 457000, NULL, 'view_shared/product_des/maxtot/maxtot.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 2, 3, 2, 1, 'https://tileshop.scene7.com/is/image/TileShop/484019?$ExtraLarge$');
 INSERT INTO `products` VALUES (39, 'Gạch lát sàn BAMBU BB66.1008', 622000, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 4, 2, 2, 'https://tileshop.scene7.com/is/image/TileShop/484359?$ExtraLarge$');
 INSERT INTO `products` VALUES (40, 'Gạch lát sàn BAMBU BB66.1011', 379000, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 4, 2, 2, 'https://tileshop.scene7.com/is/image/TileShop/658498?$ExtraLarge$');
-INSERT INTO `products` VALUES (41, 'Gạch lát sàn BAMBU BB66.1014', 496000, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 4, 2, 2, 'https://tileshop.scene7.com/is/image/TileShop/494440?$ExtraLarge$');
+INSERT INTO `products` VALUES (41, 'Gạch lát sàn BAMBU BB66.1014', 496000, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'0', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 4, 2, 2, 'https://tileshop.scene7.com/is/image/TileShop/494440?$ExtraLarge$');
 INSERT INTO `products` VALUES (42, 'Gạch lát sàn BAMBU BB66.1015', 972000, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 4, 2, 2, 'https://tileshop.scene7.com/is/image/TileShop/441955?$ExtraLarge$');
 INSERT INTO `products` VALUES (43, 'Gạch lát sàn BAMBU BB66.1016', 218000, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 4, 2, 2, 'https://tileshop.scene7.com/is/image/TileShop/484431?$ExtraLarge$');
 INSERT INTO `products` VALUES (44, 'Gạch lát sàn BAMBU BB66.6003', 360000, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 4, 2, 2, 'https://tileshop.scene7.com/is/image/TileShop/615826?$ExtraLarge$');
-INSERT INTO `products` VALUES (45, 'Gạch lát sàn BAMBU BB66.6010', 719000, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 4, 2, 2, 'https://tileshop.scene7.com/is/image/TileShop/484038?$ExtraLarge$');
+INSERT INTO `products` VALUES (45, 'Gạch lát sàn BAMBU BB66.6010', 719000, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 5, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 4, 2, 2, 'https://tileshop.scene7.com/is/image/TileShop/484038?$ExtraLarge$');
 INSERT INTO `products` VALUES (46, 'Gạch lát sàn BAMBU BB66.6011', 197000, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 4, 2, 2, 'https://tileshop.scene7.com/is/image/TileShop/484285?$ExtraLarge$');
 INSERT INTO `products` VALUES (47, 'Gạch lát sàn BAMBU BB66.6012', 643000, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 4, 2, 2, 'https://tileshop.scene7.com/is/image/TileShop/615817?$ExtraLarge$');
 INSERT INTO `products` VALUES (48, 'Gạch lát sàn BAMBU BB66.6013', 689000, NULL, 'view_shared/product_des/bambu/bambu.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 4, 2, 2, 'https://tileshop.scene7.com/is/image/TileShop/484002?$ExtraLarge$');
@@ -908,7 +938,7 @@ INSERT INTO `products` VALUES (87, 'Gạch lát nền granite cao cấp IVICASA 
 INSERT INTO `products` VALUES (88, 'Gạch lát nền granite cao cấp IVICASA GA-P66004 600×600', 355000, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 2, 3, 4, 'https://tileshop.scene7.com/is/image/TileShop/658498?$ExtraLarge$');
 INSERT INTO `products` VALUES (89, 'Gạch lát nền granite cao cấp IVICASA GA-P66005 600×600', 905000, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 2, 3, 4, 'https://tileshop.scene7.com/is/image/TileShop/494440?$ExtraLarge$');
 INSERT INTO `products` VALUES (90, 'Gạch lát nền granite cao cấp IVICASA GA-P66006 600×600', 949000, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 2, 3, 4, 'https://tileshop.scene7.com/is/image/TileShop/441955?$ExtraLarge$');
-INSERT INTO `products` VALUES (91, 'Gạch lát nền granite cao cấp IVICASA GA-P66007 600×600', 651000, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 2, 3, 4, 'https://tileshop.scene7.com/is/image/TileShop/484431?$ExtraLarge$');
+INSERT INTO `products` VALUES (91, 'Gạch lát nền granite cao cấp IVICASA GA-P66007 600×600', 651000, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'0', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 2, 3, 4, 'https://tileshop.scene7.com/is/image/TileShop/484431?$ExtraLarge$');
 
 -- ----------------------------
 -- Table structure for review
@@ -935,6 +965,7 @@ INSERT INTO `review` VALUES (8, 3, 0, 'fsdfkjgdf', '2024-12-23 16:00:35', 1);
 INSERT INTO `review` VALUES (8, 10, 3, 'fdsgdfsf', '2024-12-23 16:22:28', 1);
 INSERT INTO `review` VALUES (8, 14, 0, 'fdsfsd', '2024-12-23 16:26:06', 1);
 INSERT INTO `review` VALUES (8, 22, 0, 'fkjdklgjklsjflksad', '2024-12-23 15:57:24', 1);
+INSERT INTO `review` VALUES (8, 45, 5, 'Hello mấy cưng', '2025-02-18 15:49:57', 1);
 INSERT INTO `review` VALUES (8, 47, 4, 'Hom nay an gi', '2024-12-24 09:31:48', 1);
 INSERT INTO `review` VALUES (8, 48, 3, 'Hôm nay chơi gi đây', '2024-12-24 09:33:32', 1);
 INSERT INTO `review` VALUES (8, 81, 0, 'Fame tao to', '2024-12-23 15:58:18', 1);
@@ -1035,13 +1066,13 @@ INSERT INTO `users` VALUES (2, 'Anh Nguyên', 'com@gamil.com', '0213432', NULL, 
 INSERT INTO `users` VALUES (3, 'Trang Trang', 'com1@gamil.com', '0213432', 'https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-con-gai-24.jpg', NULL, '2024-12-10 16:20:54', b'1', '2024-12-15 17:08:26', '', 0, '123', 1);
 INSERT INTO `users` VALUES (4, 'Trương Diếm', 'com3@gamil.com', '0213432', 'https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-44.jpg.webp', NULL, '2024-12-04 16:20:58', b'1', '2024-12-15 17:08:36', '', 0, '123', 1);
 INSERT INTO `users` VALUES (5, 'phuc', 'com4@gamil.com', '0213432', NULL, NULL, '2024-12-11 16:21:03', b'1', '2024-12-14 16:21:11', '', 0, '123', 0);
-INSERT INTO `users` VALUES (6, 'Ngân cuti', 'ngan@gmail.com', '0376272024', NULL, 'bình định', NULL, b'1', NULL, NULL, 0, 'N123456789', 0);
-INSERT INTO `users` VALUES (7, 'Phạm Tài', 'tai@gmail.com', '022222222', 'https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-con-gai-24.jpg', 'bình định', NULL, b'1', NULL, NULL, 0, 'T123456789', 0);
-INSERT INTO `users` VALUES (8, 'Ta Phuc', 'taphuc@gmail.com', '0987991500', 'https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-44.jpg.webp', '231241234123', '2024-12-05 00:00:00', b'1', '2024-12-19 13:29:11', '030087edc3869834eccd84e131e363a5', 0, '5eb7fb8425878afce1b965b3e4f8f27f627ac111d8087189a266b6dd15120117', 0);
-INSERT INTO `users` VALUES (9, 'Ngân cuti', 'nguyenhaisuper8@gmail.com', '0376272024', 'https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-con-gai-24.jpg', 'bình định', '2024-12-14 00:00:00', b'1', '2024-12-20 12:19:21', 'ee38298a3ab54677f47c7b689c6dfc1f', 0, '2575028f1907c8395603908a280207c043d751b3275291733360c1e0cc1214bc', 0);
+INSERT INTO `users` VALUES (6, 'Ngân cuti', 'ngan@gmail.com', '0376272024', NULL, 'bình định', '2025-02-06 14:23:42', b'1', '2025-02-12 14:23:30', NULL, 0, 'N123456789', 0);
+INSERT INTO `users` VALUES (7, 'Phạm Tài', 'tai@gmail.com', '022222222', 'https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-con-gai-24.jpg', 'bình định', '2025-02-21 14:23:47', b'1', '2025-02-20 14:23:36', NULL, 0, 'T123456789', 0);
+INSERT INTO `users` VALUES (8, 'Ta Phuc', 'taphuc@gmail.com', '0987991500', 'https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-44.jpg.webp', '231241234123', '2024-12-05 00:00:00', b'1', '2024-12-19 13:29:11', '030087edc3869834eccd84e131e363a5', 1, '5eb7fb8425878afce1b965b3e4f8f27f627ac111d8087189a266b6dd15120117', 0);
+INSERT INTO `users` VALUES (9, 'Ngân cuti', 'nguyenhaisuper8@gmail.com', '0376272024', 'https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-con-gai-24.jpg', 'bình định', '2024-12-14 00:00:00', b'1', '2024-12-20 12:19:21', 'ee38298a3ab54677f47c7b689c6dfc1f', 1, '2575028f1907c8395603908a280207c043d751b3275291733360c1e0cc1214bc', 0);
 INSERT INTO `users` VALUES (10, 'bgfbfgb', 'a@gmail.com', '0987991500', 'https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-44.jpg.webp', 'cdcsdc', '2024-12-12 00:00:00', b'1', '2024-12-21 02:07:40', 'b46b671d8db9754dbcb140308c35c7a4', 0, '635b4fc85439b34a75b0b7615f27391b11b78e084ab3789ea0e880e3b5212b5b', 0);
 INSERT INTO `users` VALUES (11, 'j  b hbhui', 'z@gmail.com', '05151858', NULL, ' m cvxnm cbkvjx', '2024-12-13 00:00:00', b'1', '2024-12-23 15:19:37', '0da9145129e9a98efbbecdbad093bcd1', 0, '16a8ab548b3e5447ae7778102de303f9bf282b5b02bed252a2979e8ba4efa320', 1);
-INSERT INTO `users` VALUES (12, ' jhnjhinhjkjgdnnnnnnnnnnnnnnnnnnnnnnnnnnnn', 'com100@gmail.com', '0376272029', NULL, 'bfgbfgfgfg', '2024-12-06 00:00:00', b'1', '2024-12-23 15:26:57', 'e14f42825c897b2935c5417235e57521', 0, 'f0dae3464cc3f20b18c19753542e7bf51dac56073dfd824fadd1eb90d269384f', 1);
+INSERT INTO `users` VALUES (12, 'heloo', 'com100@gmail.com', '0376272029', NULL, 'bfgbfgfgfg', '2024-12-06 00:00:00', b'1', '2024-12-23 15:26:57', 'e14f42825c897b2935c5417235e57521', 0, 'f0dae3464cc3f20b18c19753542e7bf51dac56073dfd824fadd1eb90d269384f', 1);
 INSERT INTO `users` VALUES (13, 'Ta Phuc', 'ta@gmail.com', '4234234', NULL, '324234', '2024-12-19 00:00:00', b'1', '2024-12-23 15:38:09', '67e5e5b13e8f60044d09e4e83782ac48', 0, '20c0a121f2c72afe8198637b67647dfb05da7c5edb94eb27fb528f56768cde6d', 1);
 
 -- ----------------------------
@@ -1049,18 +1080,19 @@ INSERT INTO `users` VALUES (13, 'Ta Phuc', 'ta@gmail.com', '4234234', NULL, '324
 -- ----------------------------
 DROP TABLE IF EXISTS `vouchers`;
 CREATE TABLE `vouchers`  (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL AUTO_INCREMENT,
   `Code` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `DiscountValue` decimal(18, 2) NULL DEFAULT NULL,
   `ExpireDate` datetime NULL DEFAULT NULL,
   `IsActive` bit(1) NULL DEFAULT NULL,
-  `CreateDate` datetime NULL DEFAULT NULL,
+  `CreateDate` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of vouchers
 -- ----------------------------
+INSERT INTO `vouchers` VALUES (1, '200K', 200000.00, '2025-02-20 00:00:00', b'1', '2025-02-18 15:40:36');
 
 -- ----------------------------
 -- Table structure for voucherusage
