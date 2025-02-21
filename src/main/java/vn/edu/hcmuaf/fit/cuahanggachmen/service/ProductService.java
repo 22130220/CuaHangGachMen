@@ -1,18 +1,20 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.service;
 
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.view_model.ProductFilter;
 import vn.edu.hcmuaf.fit.cuahanggachmen.storage.ProductStorage;
 
+import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductService {
 
-    public List<Product> findByFilter(ProductFilter filter) {
-        ProductStorage storage = new ProductStorage();
-        List<Product> products = storage.getAll();
+    public List<Product> findByFilter(ProductFilter filter) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+//        ProductStorage storage = new ProductStorage();
+        List<Product> products = new ProductDao().findAll();
 
         //price
         if (filter.havePriceRangeFilter()) {
