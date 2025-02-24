@@ -20,17 +20,17 @@ public class AdminFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
 
-//        HttpServletRequest httpRequest = (HttpServletRequest) request;
-//        HttpServletResponse httpResponse = (HttpServletResponse) response;
-//
-//        HttpSession session = httpRequest.getSession(false);
-//
-//        User u = (User) session.getAttribute("auth");
-//
-//        if (session != null  && u != null && u.getRole() == 1) {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+
+        HttpSession session = httpRequest.getSession(false);
+
+        User u = (User) session.getAttribute("auth");
+
+        if (session != null  && u != null && u.getRole() == 1) {
             chain.doFilter(request, response);
-//        } else {
-//            httpResponse.sendRedirect(httpRequest.getContextPath() + "/WEB-INF/404.jsp");
-//        }
+        } else {
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/WEB-INF/404.jsp");
+        }
     }
 }
