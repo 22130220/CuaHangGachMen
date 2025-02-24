@@ -1,17 +1,17 @@
 /*
  Navicat Premium Dump SQL
 
- Source Server         : mysql
+ Source Server         : DigitalOcean
  Source Server Type    : MySQL
- Source Server Version : 90100 (9.1.0)
- Source Host           : localhost:3307
+ Source Server Version : 80041 (8.0.41-0ubuntu0.24.04.1)
+ Source Host           : 159.223.35.43:3307
  Source Schema         : shopgachmendb
 
  Target Server Type    : MySQL
- Target Server Version : 90100 (9.1.0)
+ Target Server Version : 80041 (8.0.41-0ubuntu0.24.04.1)
  File Encoding         : 65001
 
- Date: 18/02/2025 16:00:56
+ Date: 24/02/2025 21:38:52
 */
 
 SET NAMES utf8mb4;
@@ -25,7 +25,7 @@ CREATE TABLE `category`  (
   `ID` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `Status` bit(1) NULL DEFAULT b'1',
-  `CreateDate` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `CreateDate` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
@@ -43,7 +43,7 @@ CREATE TABLE `colors`  (
   `ID` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of colors
@@ -120,13 +120,15 @@ CREATE TABLE `orderdetail`  (
   `ProductID` int NOT NULL,
   `Quantity` int NULL DEFAULT NULL,
   `Price` decimal(18, 2) NULL DEFAULT NULL,
-  `CreateDate` datetime NULL DEFAULT NULL,
+  `CreateDate` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `Color` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`OrderID`, `ProductID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of orderdetail
 -- ----------------------------
+INSERT INTO `orderdetail` VALUES (2, 1, 1, 124000.00, '2025-02-24 14:30:11', 'Đỏ');
 
 -- ----------------------------
 -- Table structure for orders
@@ -140,13 +142,19 @@ CREATE TABLE `orders`  (
   `Status` enum('Delivered','Cancelled') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `TotalPrice` decimal(18, 2) NULL DEFAULT NULL,
   `Des` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `CreateDate` datetime NULL DEFAULT NULL,
+  `CreateDate` datetime NULL DEFAULT CURRENT_TIMESTAMP,
+  `FullName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `Email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `Phone` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `Payment` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
+INSERT INTO `orders` VALUES (1, 8, '2025-02-24 21:25:30', 'dsfsd', NULL, 0.00, 'sadf', '2025-02-24 14:25:42', 'Tạ Hoàng Phúc', '22130220@st.hcmuaf.edu.vn', '0985326700', 'COD');
+INSERT INTO `orders` VALUES (2, 8, '2025-02-24 21:30:05', 'dsfsd', NULL, 0.00, 'sadf', '2025-02-24 14:29:58', 'Tạ Hoàng Phúc', '22130220@st.hcmuaf.edu.vn', '0985326700', 'COD');
 
 -- ----------------------------
 -- Table structure for product_color_img
@@ -446,7 +454,6 @@ INSERT INTO `product_spec` VALUES (38, 2, 'Ceramic');
 INSERT INTO `product_spec` VALUES (38, 3, 'Men bóng');
 INSERT INTO `product_spec` VALUES (38, 4, 'Bóng');
 INSERT INTO `product_spec` VALUES (38, 5, 'MAXTOT');
-INSERT INTO `product_spec` VALUES (38, 6, 'Việt Nam');
 INSERT INTO `product_spec` VALUES (39, 1, '600×600 mm');
 INSERT INTO `product_spec` VALUES (39, 2, 'Ceramic');
 INSERT INTO `product_spec` VALUES (39, 3, 'Men bóng');
@@ -775,7 +782,7 @@ CREATE TABLE `product_view`  (
   `ProductID` int NULL DEFAULT NULL,
   `CreateDate` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 231 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of product_view
@@ -812,6 +819,204 @@ INSERT INTO `product_view` VALUES (29, 45, '2025-02-18 15:50:03');
 INSERT INTO `product_view` VALUES (30, 45, '2025-02-18 15:50:04');
 INSERT INTO `product_view` VALUES (31, 87, '2025-02-18 15:50:48');
 INSERT INTO `product_view` VALUES (32, 87, '2025-02-18 15:50:48');
+INSERT INTO `product_view` VALUES (33, 3, '2025-02-20 15:25:36');
+INSERT INTO `product_view` VALUES (34, 4, '2025-02-20 15:27:44');
+INSERT INTO `product_view` VALUES (35, 2, '2025-02-20 15:27:59');
+INSERT INTO `product_view` VALUES (36, 1, '2025-02-20 15:28:16');
+INSERT INTO `product_view` VALUES (37, 78, '2025-02-20 15:29:56');
+INSERT INTO `product_view` VALUES (38, 78, '2025-02-20 15:30:04');
+INSERT INTO `product_view` VALUES (39, 14, '2025-02-20 15:31:33');
+INSERT INTO `product_view` VALUES (40, 14, '2025-02-20 15:31:40');
+INSERT INTO `product_view` VALUES (41, 1, '2025-02-20 15:34:25');
+INSERT INTO `product_view` VALUES (42, 2, '2025-02-20 16:08:47');
+INSERT INTO `product_view` VALUES (43, 1, '2025-02-20 16:10:45');
+INSERT INTO `product_view` VALUES (44, 9, '2025-02-20 16:13:21');
+INSERT INTO `product_view` VALUES (45, 1, '2025-02-20 16:15:05');
+INSERT INTO `product_view` VALUES (46, 2, '2025-02-20 16:15:56');
+INSERT INTO `product_view` VALUES (47, 1, '2025-02-20 16:28:52');
+INSERT INTO `product_view` VALUES (48, 42, '2025-02-20 16:29:12');
+INSERT INTO `product_view` VALUES (49, 42, '2025-02-20 16:29:13');
+INSERT INTO `product_view` VALUES (50, 9, '2025-02-20 16:37:35');
+INSERT INTO `product_view` VALUES (51, 11, '2025-02-20 16:37:50');
+INSERT INTO `product_view` VALUES (52, 11, '2025-02-20 16:37:55');
+INSERT INTO `product_view` VALUES (53, 9, '2025-02-20 16:38:06');
+INSERT INTO `product_view` VALUES (54, 51, '2025-02-20 16:39:22');
+INSERT INTO `product_view` VALUES (55, 51, '2025-02-20 16:39:27');
+INSERT INTO `product_view` VALUES (56, 1, '2025-02-20 16:39:35');
+INSERT INTO `product_view` VALUES (57, 56, '2025-02-20 16:42:00');
+INSERT INTO `product_view` VALUES (58, 56, '2025-02-20 16:42:05');
+INSERT INTO `product_view` VALUES (59, 40, '2025-02-20 16:53:45');
+INSERT INTO `product_view` VALUES (60, 40, '2025-02-20 16:53:52');
+INSERT INTO `product_view` VALUES (61, 43, '2025-02-20 16:53:58');
+INSERT INTO `product_view` VALUES (62, 43, '2025-02-20 16:53:59');
+INSERT INTO `product_view` VALUES (63, 44, '2025-02-20 16:54:04');
+INSERT INTO `product_view` VALUES (64, 44, '2025-02-20 16:54:05');
+INSERT INTO `product_view` VALUES (65, 47, '2025-02-20 16:54:12');
+INSERT INTO `product_view` VALUES (66, 47, '2025-02-20 16:54:13');
+INSERT INTO `product_view` VALUES (67, 9, '2025-02-20 16:54:27');
+INSERT INTO `product_view` VALUES (68, 13, '2025-02-20 16:55:02');
+INSERT INTO `product_view` VALUES (69, 13, '2025-02-20 16:55:04');
+INSERT INTO `product_view` VALUES (70, 2, '2025-02-20 17:00:48');
+INSERT INTO `product_view` VALUES (71, 5, '2025-02-20 17:01:10');
+INSERT INTO `product_view` VALUES (72, 10, '2025-02-20 17:01:21');
+INSERT INTO `product_view` VALUES (73, 5, '2025-02-20 17:01:38');
+INSERT INTO `product_view` VALUES (74, 43, '2025-02-20 17:01:47');
+INSERT INTO `product_view` VALUES (75, 43, '2025-02-20 17:01:52');
+INSERT INTO `product_view` VALUES (76, 40, '2025-02-20 17:02:04');
+INSERT INTO `product_view` VALUES (77, 40, '2025-02-20 17:02:07');
+INSERT INTO `product_view` VALUES (78, 2, '2025-02-20 17:02:24');
+INSERT INTO `product_view` VALUES (79, 1, '2025-02-20 17:04:35');
+INSERT INTO `product_view` VALUES (80, 4, '2025-02-20 17:05:03');
+INSERT INTO `product_view` VALUES (81, 1, '2025-02-20 17:05:26');
+INSERT INTO `product_view` VALUES (82, 1, '2025-02-20 17:05:34');
+INSERT INTO `product_view` VALUES (83, 44, '2025-02-20 17:05:59');
+INSERT INTO `product_view` VALUES (84, 44, '2025-02-20 17:06:04');
+INSERT INTO `product_view` VALUES (85, 39, '2025-02-20 17:11:53');
+INSERT INTO `product_view` VALUES (86, 39, '2025-02-20 17:12:02');
+INSERT INTO `product_view` VALUES (87, 39, '2025-02-20 17:18:48');
+INSERT INTO `product_view` VALUES (88, 39, '2025-02-20 17:18:59');
+INSERT INTO `product_view` VALUES (89, 44, '2025-02-20 17:19:06');
+INSERT INTO `product_view` VALUES (90, 44, '2025-02-20 17:19:08');
+INSERT INTO `product_view` VALUES (91, 1, '2025-02-20 17:35:17');
+INSERT INTO `product_view` VALUES (92, 1, '2025-02-20 17:35:59');
+INSERT INTO `product_view` VALUES (93, 6, '2025-02-20 17:36:05');
+INSERT INTO `product_view` VALUES (94, 5, '2025-02-20 17:36:11');
+INSERT INTO `product_view` VALUES (95, 6, '2025-02-20 17:44:41');
+INSERT INTO `product_view` VALUES (96, 2, '2025-02-20 17:55:56');
+INSERT INTO `product_view` VALUES (97, 1, '2025-02-20 18:02:20');
+INSERT INTO `product_view` VALUES (98, 43, '2025-02-21 01:46:07');
+INSERT INTO `product_view` VALUES (99, 43, '2025-02-21 01:46:10');
+INSERT INTO `product_view` VALUES (100, 1, '2025-02-21 01:46:19');
+INSERT INTO `product_view` VALUES (101, 40, '2025-02-21 01:46:47');
+INSERT INTO `product_view` VALUES (102, 40, '2025-02-21 01:46:49');
+INSERT INTO `product_view` VALUES (103, 87, '2025-02-21 01:47:06');
+INSERT INTO `product_view` VALUES (104, 87, '2025-02-21 01:47:09');
+INSERT INTO `product_view` VALUES (105, 88, '2025-02-21 01:47:19');
+INSERT INTO `product_view` VALUES (106, 88, '2025-02-21 01:47:22');
+INSERT INTO `product_view` VALUES (107, 40, '2025-02-21 01:47:29');
+INSERT INTO `product_view` VALUES (108, 40, '2025-02-21 01:47:32');
+INSERT INTO `product_view` VALUES (109, 1, '2025-02-21 02:59:18');
+INSERT INTO `product_view` VALUES (110, 2, '2025-02-21 02:59:30');
+INSERT INTO `product_view` VALUES (111, 66, '2025-02-21 03:00:11');
+INSERT INTO `product_view` VALUES (112, 66, '2025-02-21 03:00:14');
+INSERT INTO `product_view` VALUES (113, 40, '2025-02-21 06:49:10');
+INSERT INTO `product_view` VALUES (114, 40, '2025-02-21 06:49:13');
+INSERT INTO `product_view` VALUES (115, 39, '2025-02-21 06:49:25');
+INSERT INTO `product_view` VALUES (116, 39, '2025-02-21 06:49:28');
+INSERT INTO `product_view` VALUES (117, 76, '2025-02-21 06:49:32');
+INSERT INTO `product_view` VALUES (118, 76, '2025-02-21 06:49:35');
+INSERT INTO `product_view` VALUES (119, 1, '2025-02-21 14:12:02');
+INSERT INTO `product_view` VALUES (120, 13, '2025-02-21 14:15:55');
+INSERT INTO `product_view` VALUES (121, 13, '2025-02-21 14:16:14');
+INSERT INTO `product_view` VALUES (122, 1, '2025-02-21 14:20:32');
+INSERT INTO `product_view` VALUES (123, 39, '2025-02-21 14:21:00');
+INSERT INTO `product_view` VALUES (124, 39, '2025-02-21 14:21:03');
+INSERT INTO `product_view` VALUES (125, 39, '2025-02-21 14:21:04');
+INSERT INTO `product_view` VALUES (126, 39, '2025-02-21 14:22:38');
+INSERT INTO `product_view` VALUES (127, 39, '2025-02-21 14:22:41');
+INSERT INTO `product_view` VALUES (128, 39, '2025-02-21 14:22:42');
+INSERT INTO `product_view` VALUES (129, 41, '2025-02-21 14:22:48');
+INSERT INTO `product_view` VALUES (130, 40, '2025-02-21 14:22:59');
+INSERT INTO `product_view` VALUES (131, 40, '2025-02-21 14:23:01');
+INSERT INTO `product_view` VALUES (132, 1, '2025-02-21 14:23:24');
+INSERT INTO `product_view` VALUES (133, 1, '2025-02-21 14:23:47');
+INSERT INTO `product_view` VALUES (134, 40, '2025-02-21 14:26:38');
+INSERT INTO `product_view` VALUES (135, 40, '2025-02-21 14:26:40');
+INSERT INTO `product_view` VALUES (136, 40, '2025-02-21 14:30:46');
+INSERT INTO `product_view` VALUES (137, 40, '2025-02-21 14:30:49');
+INSERT INTO `product_view` VALUES (138, 39, '2025-02-21 14:31:14');
+INSERT INTO `product_view` VALUES (139, 39, '2025-02-21 14:31:16');
+INSERT INTO `product_view` VALUES (140, 11, '2025-02-21 14:39:19');
+INSERT INTO `product_view` VALUES (141, 11, '2025-02-21 14:39:21');
+INSERT INTO `product_view` VALUES (142, 8, '2025-02-21 14:39:34');
+INSERT INTO `product_view` VALUES (143, 9, '2025-02-21 14:39:42');
+INSERT INTO `product_view` VALUES (144, 1, '2025-02-21 16:06:23');
+INSERT INTO `product_view` VALUES (145, 2, '2025-02-21 16:12:13');
+INSERT INTO `product_view` VALUES (146, 2, '2025-02-21 16:18:53');
+INSERT INTO `product_view` VALUES (147, 3, '2025-02-21 16:20:43');
+INSERT INTO `product_view` VALUES (148, 1, '2025-02-21 16:20:46');
+INSERT INTO `product_view` VALUES (149, 6, '2025-02-21 16:20:58');
+INSERT INTO `product_view` VALUES (150, 1, '2025-02-22 01:49:54');
+INSERT INTO `product_view` VALUES (151, 40, '2025-02-22 02:57:03');
+INSERT INTO `product_view` VALUES (152, 40, '2025-02-22 02:57:05');
+INSERT INTO `product_view` VALUES (153, 40, '2025-02-22 02:57:06');
+INSERT INTO `product_view` VALUES (154, 7, '2025-02-22 02:58:49');
+INSERT INTO `product_view` VALUES (155, 19, '2025-02-22 02:59:00');
+INSERT INTO `product_view` VALUES (156, 19, '2025-02-22 02:59:00');
+INSERT INTO `product_view` VALUES (157, 39, '2025-02-22 15:15:51');
+INSERT INTO `product_view` VALUES (158, 1, '2025-02-22 15:16:42');
+INSERT INTO `product_view` VALUES (159, 41, '2025-02-22 15:17:38');
+INSERT INTO `product_view` VALUES (160, 39, '2025-02-22 15:17:42');
+INSERT INTO `product_view` VALUES (161, 39, '2025-02-22 15:17:42');
+INSERT INTO `product_view` VALUES (162, 47, '2025-02-22 15:17:46');
+INSERT INTO `product_view` VALUES (163, 47, '2025-02-22 15:17:46');
+INSERT INTO `product_view` VALUES (164, 39, '2025-02-22 15:17:58');
+INSERT INTO `product_view` VALUES (165, 39, '2025-02-22 15:17:58');
+INSERT INTO `product_view` VALUES (166, 1, '2025-02-22 15:27:02');
+INSERT INTO `product_view` VALUES (167, 2, '2025-02-22 15:27:05');
+INSERT INTO `product_view` VALUES (168, 4, '2025-02-22 15:27:07');
+INSERT INTO `product_view` VALUES (169, 1, '2025-02-22 15:30:04');
+INSERT INTO `product_view` VALUES (170, 3, '2025-02-22 15:30:06');
+INSERT INTO `product_view` VALUES (171, 4, '2025-02-22 15:30:08');
+INSERT INTO `product_view` VALUES (172, 5, '2025-02-22 15:30:11');
+INSERT INTO `product_view` VALUES (173, 10, '2025-02-22 15:30:19');
+INSERT INTO `product_view` VALUES (174, 1, '2025-02-22 15:56:04');
+INSERT INTO `product_view` VALUES (175, 1, '2025-02-22 16:22:48');
+INSERT INTO `product_view` VALUES (176, 39, '2025-02-22 16:22:52');
+INSERT INTO `product_view` VALUES (177, 39, '2025-02-22 16:22:52');
+INSERT INTO `product_view` VALUES (178, 72, '2025-02-22 16:23:09');
+INSERT INTO `product_view` VALUES (179, 72, '2025-02-22 16:23:10');
+INSERT INTO `product_view` VALUES (180, 1, '2025-02-23 03:06:12');
+INSERT INTO `product_view` VALUES (181, 1, '2025-02-23 03:06:15');
+INSERT INTO `product_view` VALUES (182, 3, '2025-02-23 03:06:17');
+INSERT INTO `product_view` VALUES (183, 4, '2025-02-23 03:06:21');
+INSERT INTO `product_view` VALUES (184, 1, '2025-02-23 03:06:32');
+INSERT INTO `product_view` VALUES (185, 56, '2025-02-23 03:07:12');
+INSERT INTO `product_view` VALUES (186, 56, '2025-02-23 03:07:12');
+INSERT INTO `product_view` VALUES (187, 39, '2025-02-23 05:20:21');
+INSERT INTO `product_view` VALUES (188, 39, '2025-02-23 05:20:22');
+INSERT INTO `product_view` VALUES (189, 85, '2025-02-23 05:20:32');
+INSERT INTO `product_view` VALUES (190, 85, '2025-02-23 05:20:33');
+INSERT INTO `product_view` VALUES (191, 43, '2025-02-23 05:20:39');
+INSERT INTO `product_view` VALUES (192, 43, '2025-02-23 05:20:40');
+INSERT INTO `product_view` VALUES (193, 1, '2025-02-23 05:28:45');
+INSERT INTO `product_view` VALUES (194, 2, '2025-02-23 05:28:47');
+INSERT INTO `product_view` VALUES (195, 1, '2025-02-23 05:28:50');
+INSERT INTO `product_view` VALUES (196, 9, '2025-02-23 05:28:56');
+INSERT INTO `product_view` VALUES (197, 2, '2025-02-23 07:55:29');
+INSERT INTO `product_view` VALUES (198, 39, '2025-02-23 07:58:30');
+INSERT INTO `product_view` VALUES (199, 39, '2025-02-23 07:58:30');
+INSERT INTO `product_view` VALUES (200, 1, '2025-02-23 07:59:53');
+INSERT INTO `product_view` VALUES (201, 1, '2025-02-23 08:25:39');
+INSERT INTO `product_view` VALUES (202, 4, '2025-02-23 08:25:46');
+INSERT INTO `product_view` VALUES (203, 2, '2025-02-23 14:17:38');
+INSERT INTO `product_view` VALUES (204, 9, '2025-02-23 14:21:28');
+INSERT INTO `product_view` VALUES (205, 1, '2025-02-24 01:48:58');
+INSERT INTO `product_view` VALUES (206, 1, '2025-02-24 07:26:27');
+INSERT INTO `product_view` VALUES (207, 1, '2025-02-24 07:26:48');
+INSERT INTO `product_view` VALUES (208, 2, '2025-02-24 13:17:34');
+INSERT INTO `product_view` VALUES (209, 1, '2025-02-24 13:24:01');
+INSERT INTO `product_view` VALUES (210, 10, '2025-02-24 13:45:32');
+INSERT INTO `product_view` VALUES (211, 11, '2025-02-24 13:45:43');
+INSERT INTO `product_view` VALUES (212, 11, '2025-02-24 13:45:44');
+INSERT INTO `product_view` VALUES (213, 11, '2025-02-24 13:45:55');
+INSERT INTO `product_view` VALUES (214, 11, '2025-02-24 13:45:55');
+INSERT INTO `product_view` VALUES (215, 1, '2025-02-24 13:46:08');
+INSERT INTO `product_view` VALUES (216, 1, '2025-02-24 13:46:26');
+INSERT INTO `product_view` VALUES (217, 39, '2025-02-24 13:52:14');
+INSERT INTO `product_view` VALUES (218, 39, '2025-02-24 13:52:14');
+INSERT INTO `product_view` VALUES (219, 39, '2025-02-24 13:53:49');
+INSERT INTO `product_view` VALUES (220, 39, '2025-02-24 13:53:49');
+INSERT INTO `product_view` VALUES (221, 1, '2025-02-24 13:58:45');
+INSERT INTO `product_view` VALUES (222, 39, '2025-02-24 13:58:47');
+INSERT INTO `product_view` VALUES (223, 39, '2025-02-24 13:58:47');
+INSERT INTO `product_view` VALUES (224, 40, '2025-02-24 13:58:50');
+INSERT INTO `product_view` VALUES (225, 40, '2025-02-24 13:58:50');
+INSERT INTO `product_view` VALUES (226, 1, '2025-02-24 14:01:20');
+INSERT INTO `product_view` VALUES (227, 1, '2025-02-24 14:04:29');
+INSERT INTO `product_view` VALUES (228, 1, '2025-02-24 14:08:43');
+INSERT INTO `product_view` VALUES (229, 1, '2025-02-24 14:11:40');
+INSERT INTO `product_view` VALUES (230, 1, '2025-02-24 14:15:44');
 
 -- ----------------------------
 -- Table structure for products
@@ -938,7 +1143,7 @@ INSERT INTO `products` VALUES (87, 'Gạch lát nền granite cao cấp IVICASA 
 INSERT INTO `products` VALUES (88, 'Gạch lát nền granite cao cấp IVICASA GA-P66004 600×600', 355000, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 2, 3, 4, 'https://tileshop.scene7.com/is/image/TileShop/658498?$ExtraLarge$');
 INSERT INTO `products` VALUES (89, 'Gạch lát nền granite cao cấp IVICASA GA-P66005 600×600', 905000, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 2, 3, 4, 'https://tileshop.scene7.com/is/image/TileShop/494440?$ExtraLarge$');
 INSERT INTO `products` VALUES (90, 'Gạch lát nền granite cao cấp IVICASA GA-P66006 600×600', 949000, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 2, 3, 4, 'https://tileshop.scene7.com/is/image/TileShop/441955?$ExtraLarge$');
-INSERT INTO `products` VALUES (91, 'Gạch lát nền granite cao cấp IVICASA GA-P66007 600×600', 651000, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'0', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 2, 3, 4, 'https://tileshop.scene7.com/is/image/TileShop/484431?$ExtraLarge$');
+INSERT INTO `products` VALUES (91, 'Gạch lát nền granite cao cấp IVICASA GA-P66007 600×600', 651000, NULL, 'view_shared/product_des/ivicasa/ivicasa.jsp', b'1', 1, b'0', NULL, 10, '2024-12-19 18:28:28', 1, 2, 3, 4, 'https://tileshop.scene7.com/is/image/TileShop/484431?$ExtraLarge$');
 
 -- ----------------------------
 -- Table structure for review
@@ -1068,7 +1273,7 @@ INSERT INTO `users` VALUES (4, 'Trương Diếm', 'com3@gamil.com', '0213432', '
 INSERT INTO `users` VALUES (5, 'phuc', 'com4@gamil.com', '0213432', NULL, NULL, '2024-12-11 16:21:03', b'1', '2024-12-14 16:21:11', '', 0, '123', 0);
 INSERT INTO `users` VALUES (6, 'Ngân cuti', 'ngan@gmail.com', '0376272024', NULL, 'bình định', '2025-02-06 14:23:42', b'1', '2025-02-12 14:23:30', NULL, 0, 'N123456789', 0);
 INSERT INTO `users` VALUES (7, 'Phạm Tài', 'tai@gmail.com', '022222222', 'https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-con-gai-24.jpg', 'bình định', '2025-02-21 14:23:47', b'1', '2025-02-20 14:23:36', NULL, 0, 'T123456789', 0);
-INSERT INTO `users` VALUES (8, 'Ta Phuc', 'taphuc@gmail.com', '0987991500', 'https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-44.jpg.webp', '231241234123', '2024-12-05 00:00:00', b'1', '2024-12-19 13:29:11', '030087edc3869834eccd84e131e363a5', 1, '5eb7fb8425878afce1b965b3e4f8f27f627ac111d8087189a266b6dd15120117', 0);
+INSERT INTO `users` VALUES (8, 'Ta Phuc', 'taphuc@gmail.com', '0987991500', 'https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-44.jpg.webp', 'hehe', '2004-01-05 00:00:00', b'1', '2024-12-19 13:29:11', '33c0274c7ee944c97cc2c34fc1e87348', 1, '4b279089002036e38b16247faeb2827c54db0fd43497e5f1d3eb3693cbf317a2', 0);
 INSERT INTO `users` VALUES (9, 'Ngân cuti', 'nguyenhaisuper8@gmail.com', '0376272024', 'https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/04/anh-con-gai-24.jpg', 'bình định', '2024-12-14 00:00:00', b'1', '2024-12-20 12:19:21', 'ee38298a3ab54677f47c7b689c6dfc1f', 1, '2575028f1907c8395603908a280207c043d751b3275291733360c1e0cc1214bc', 0);
 INSERT INTO `users` VALUES (10, 'bgfbfgb', 'a@gmail.com', '0987991500', 'https://noithatbinhminh.com.vn/wp-content/uploads/2022/08/anh-dep-44.jpg.webp', 'cdcsdc', '2024-12-12 00:00:00', b'1', '2024-12-21 02:07:40', 'b46b671d8db9754dbcb140308c35c7a4', 0, '635b4fc85439b34a75b0b7615f27391b11b78e084ab3789ea0e880e3b5212b5b', 0);
 INSERT INTO `users` VALUES (11, 'j  b hbhui', 'z@gmail.com', '05151858', NULL, ' m cvxnm cbkvjx', '2024-12-13 00:00:00', b'1', '2024-12-23 15:19:37', '0da9145129e9a98efbbecdbad093bcd1', 0, '16a8ab548b3e5447ae7778102de303f9bf282b5b02bed252a2979e8ba4efa320', 1);
@@ -1087,12 +1292,13 @@ CREATE TABLE `vouchers`  (
   `IsActive` bit(1) NULL DEFAULT NULL,
   `CreateDate` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of vouchers
 -- ----------------------------
 INSERT INTO `vouchers` VALUES (1, '200K', 200000.00, '2025-02-20 00:00:00', b'1', '2025-02-18 15:40:36');
+INSERT INTO `vouchers` VALUES (2, '300K', 300000.00, '2025-02-28 12:00:00', b'1', '2025-02-23 05:24:21');
 
 -- ----------------------------
 -- Table structure for voucherusage
@@ -1109,5 +1315,6 @@ CREATE TABLE `voucherusage`  (
 -- ----------------------------
 -- Records of voucherusage
 -- ----------------------------
+INSERT INTO `voucherusage` VALUES (1, 8, 2, '2025-02-24 21:30:26');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -7,7 +7,6 @@
               url="jdbc:mysql://159.223.35.43:3307/shopgachmendb"
               username="shopgachmen"
               password="@abc123456"
-              initialSize="2"
               minIdle="5"
               maxIdle="10"
               maxTotal="50"
