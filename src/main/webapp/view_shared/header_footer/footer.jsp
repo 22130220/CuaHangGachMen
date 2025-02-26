@@ -51,71 +51,40 @@
                         >Đánh giá khách hàng</a
                         >
                     </li>
-                    <li>
-                        <a href="#!" class="footer__link">Tuyển dụng</a>
-                    </li>
-                    <li>
-                        <a href="#!" class="footer__link"
-                        >Giấy phép kinh doanh</a
-                        >
-                    </li>
-                    <li>
-                        <a href="#!" class="footer__link"
-                        >Các bộ phận</a
-                        >
-                    </li>
+
+
+
                 </ul>
             </div>
 
             <!-- Footer column 3 -->
             <div class="footer__col">
-                <h3 class="footer__heading">Hỗ trợ</h3>
+                <h3 class="footer__heading">DANH MỤC</h3>
                 <ul class="footer__list">
                     <li>
                         <a href="#!" class="footer__link"
-                        >Trạng thái đơn hàng</a
+                        >Gạch lát sàn</a
                         >
                     </li>
                     <li>
-                        <a href="#!" class="footer__link">Bảo hành</a>
+                        <a href="#!" class="footer__link">Gạch ốp tường</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="footer__link">Gạch trang trí</a>
                     </li>
                 </ul>
             </div>
 
             <!-- Footer column 4 -->
             <div class="footer__col">
-                <h3 class="footer__heading">Chính Sách</h3>
+                <h3 class="footer__heading">ĐƠN HÀNG</h3>
                 <ul class="footer__list">
                     <li>
                         <a href="#!" class="footer__link"
-                        >Dịch vụ khách hàng</a
+                        >Lịch sử đơn hàng</a
                         >
                     </li>
-                    <li>
-                        <a href="#!" class="footer__link"
-                        >Hướng dẫn mua hàng</a
-                        >
-                    </li>
-                    <li>
-                        <a href="#!" class="footer__link"
-                        >Hướng dẫn thanh toán</a
-                        >
-                    </li>
-                    <li>
-                        <a href="#!" class="footer__link"
-                        >Giao hàng và nhận hàng</a
-                        >
-                    </li>
-                    <li>
-                        <a href="#!" class="footer__link"
-                        >Chính sách đổi trả</a
-                        >
-                    </li>
-                    <li>
-                        <a href="#!" class="footer__link"
-                        >Chính sách bảo mật</a
-                        >
-                    </li>
+
                 </ul>
             </div>
 

@@ -48,6 +48,7 @@
     border-radius: 12px;
     border: 1px solid #e2dfda;
     background: #ffffff;
+    max-width: 380px;
 }
 
 .popular .course-item:hover {
