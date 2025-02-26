@@ -195,6 +195,8 @@
 
 
                                 <!-- Số lượng -->
+                                <div class ="card-labelis">
+
                                 <div class="box-quantity input-sample border-type">
                                     <label for="quantity">Số lượng</label>
                                     <span class="seperate">|</span>
@@ -203,6 +205,7 @@
 
                                 <div class="add-cart">
                                     <button type="submit" class="input-sample add-cart-btn" name="action" value="addToCart">Thêm vào giỏ</button>
+                                </div>
                                 </div>
                             </form>
 
