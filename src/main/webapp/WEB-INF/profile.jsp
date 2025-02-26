@@ -42,6 +42,12 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     ></script>
+
+    <style>
+        .noibatthu3{
+            margin-top: -26px;
+        }
+    </style>
 </head>
 <body>
 

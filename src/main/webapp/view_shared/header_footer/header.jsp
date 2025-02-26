@@ -284,7 +284,7 @@
               <a href="./store.html">CỬA HÀNG</a>
             </li>
             <li>
-              <a href="./contact.html">LIÊN HỆ</a>
+              <a href="/AboutController">LIÊN HỆ</a>
             </li>
           </ul>
         </nav>

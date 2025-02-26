@@ -77,7 +77,7 @@ public class CommentController extends HttpServlet {
             try {
                 // Tính toán và cập nhật rating trung bình
                 double averageRating = dao.calculateAverageRatingForProduct(Integer.parseInt(productId));
-                productDao.updateProductRating(Integer.parseInt(productId), averageRating);
+                productDao.updateProductRating(Integer.parseInt(productId), (int) averageRating);
             } catch (Exception e) {
                 e.printStackTrace();
             }

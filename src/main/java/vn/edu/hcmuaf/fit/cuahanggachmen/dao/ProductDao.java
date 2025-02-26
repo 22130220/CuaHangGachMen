@@ -209,7 +209,7 @@ public class ProductDao {
     }
 
 
-    public void updateProductRating(int productId, double newRating) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void updateProductRating(int productId, int newRating) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();
         jdbi.useHandle(handle ->
                 handle.createUpdate("UPDATE products SET Rating = :newRating WHERE ID = :productId")

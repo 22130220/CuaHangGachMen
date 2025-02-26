@@ -3,7 +3,7 @@
     display: inline-flex;
     position: absolute;
     top: 50%;
-    right: 350px; /* Adjust based on layout */
+    right: 400px; /* Adjust based on layout */
     transform: translateY(-50%);
     color: #2e2100ff;
    
@@ -13,7 +13,7 @@
     justify-content: center;
     cursor: pointer;
     font-size: 1.6rem;
-border: 1px solid #2e2100ff;
+    border: 1px solid #2e2100ff;
     
     border-radius: 50%; /* Circular border */
     padding: 8px; /* Space between SVG and border */
