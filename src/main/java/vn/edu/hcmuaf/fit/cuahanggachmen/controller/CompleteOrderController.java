@@ -6,6 +6,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.OrderDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.OrderDetailDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherUsageDAO;
 import vn.edu.hcmuaf.fit.cuahanggachmen.mail.EmailService;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
@@ -42,6 +43,7 @@ public class CompleteOrderController extends HttpServlet {
 
         Order order = new Order();
         OrderDao dao = new OrderDao();
+
 
         order.setFullName(name);
         order.setEmail(email);

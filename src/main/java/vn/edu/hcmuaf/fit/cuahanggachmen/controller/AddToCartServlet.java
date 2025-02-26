@@ -26,13 +26,7 @@ public class AddToCartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-//        User user = (User) session.getAttribute("auth"); // Kiểm tra xem người dùng đã đăng nhập chưa
-//
-//        if (user == null) {
-//            // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
-//            response.sendRedirect(request.getContextPath() + "/login");
-//            return;
-//        }
+
         // Lấy tham số
         String pidStr = request.getParameter("productId");
         String colorIdStr = request.getParameter("colorId");
