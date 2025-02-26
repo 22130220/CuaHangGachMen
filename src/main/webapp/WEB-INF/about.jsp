@@ -1,0 +1,144 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: DELL
+  Date: 26/02/2025
+  Time: 2:20 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liên hệ</title>
+
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+
+    <!-- Thêm favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/icons/logo2_no_text.svg">
+
+
+    <!-- Nhúng phông chữ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js" integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Kiểu CSS -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/contact.css" />
+    <link rel="stylesheet" href="./assets/css/basicinput.css"/>
+    <link rel="stylesheet" href="./assets/css/basictextarea.css"/>
+    <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css" />
+
+</head>
+<body>
+<jsp:include page="/view_shared/header_footer/header.jsp" />
+
+<div class="withus">
+    <div class="main-content layout-flex">
+        <div class="fit-title">
+            <p class="bg-title">
+                Liên hệ với chúng tôi
+            </p>
+            <p class="des">
+                Để biết thêm thông tin về sản phẩm và dịch vụ của chúng tôi. Xin vui lòng gửi email cho chúng tôi. Nhân viên của chúng tôi luôn có mặt để giúp đỡ bạn. Đừng ngần ngại!
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<div class="contact-label">
+    <div class="main-content">
+        <form action="" class="contact-form">
+            <div class="infor-label">
+                <div class="label">
+                    <div class="label-logo">
+                        <i class="fa-solid fa-location-dot fa-lg"></i>
+                    </div>
+                    <div class="label-content">
+                        <div class="text-head heading">
+                            Địa chỉ
+                        </div>
+                        <div class="text-infor">
+                            <p>
+                                236 5th SE Avenue, New York NY10000, United States
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="label">
+                    <div class="label-logo">
+                        <i class="fa-solid fa-phone fa-lg"></i>
+                    </div>
+                    <div class="label-content">
+                        <div class="text-head heading">
+                            Đường dây nóng
+                        </div>
+                        <div class="text-infor">
+                            <p>
+                                Mobile: +(84) 546-6789
+                                <br>
+                                Hotline: +(84) 456-6789
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="label">
+                    <div class="label-logo">
+                        <i class="fa-solid fa-clock fa-lg"></i>
+                    </div>
+                    <div class="label-content">
+                        <div class="text-head heading">
+                            Thời gian làm việc
+                        </div>
+                        <div class="text-infor">
+                            <p>
+                                Monday-Friday: 9:00 - 22:00
+                                <br>
+                                Saturday-Sunday: 9:00 - 21:00
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="inputform">
+                <div class="fui-basic-input input-field">
+                    <label for="name" class="">Họ và tên</label>
+                    <input type="text" name="name" placeholder="" class="input input-height" id="name" autocomplete="off"/>
+                </div>
+                <div class="fui-basic-input input-field">
+                    <label for="email" class="">Email</label>
+                    <input type="text" name="name" placeholder="" class="input input-height" id="email" autocomplete="off"/>
+                </div>
+                <div class="fui-basic-input input-field">
+                    <label for="subject" class="">Tiêu đề</label>
+                    <input type="text" name="name" placeholder="" class="input input-height" id="subject" autocomplete="off"/>
+                </div>
+                <div class="fui-basic-textarea input-field">
+                    <label for="content" class="">Nội dung</label>
+                    <textarea id="content" name="content" class="tarea area-height" rows="4" cols="50"></textarea>
+                </div>
+
+                <div class="submit-btn">
+                    <button class="btn">Gửi yêu cầu</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+<jsp:include page="/view_shared/header_footer/footer.jsp" />
+<script src="./assets/js/scrollTop.js"></script>
+</body>
+</html>
