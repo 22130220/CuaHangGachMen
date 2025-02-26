@@ -160,7 +160,6 @@
     grid-template-columns: repeat(auto-fit, 200px);
     column-gap: 1.5rem;
     row-gap: 1.5rem;
-
     grid-auto-flow: column;
     grid-auto-columns: minmax(200px, 1fr);
     align-items: center;
@@ -168,6 +167,34 @@
     overflow: auto;
     position: relative;
 }
+
+/*.like-slider1{*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(auto-fit, 200px);*/
+/*    column-gap: 1.5rem;*/
+/*    row-gap: 1.5rem;*/
+/*    grid-auto-flow: column;*/
+/*    grid-auto-columns: minmax(200px, 1fr);*/
+/*    align-items: center;*/
+/*    justify-content: flex-start;*/
+/*    overflow: auto;*/
+/*    position: relative;*/
+/*}*/
+
+
+
+
+/*#like-slider1{*/
+/*    grid-template-columns: repeat(auto-fit, 400px);*/
+/*    column-gap: 1.5rem;*/
+/*    row-gap: 1.5rem;*/
+/*    grid-auto-flow: column;*/
+/*    grid-auto-columns: minmax(400px, 1fr);*/
+/*    align-items: center;*/
+/*    justify-content: flex-start;*/
+/*    overflow: auto;*/
+/*    position: relative;*/
+/*}*/
 
 .like-item{
     margin-bottom: 1rem;
@@ -292,7 +319,7 @@
     height: 500px;
     gap: 2rem;
     flex-direction: column;
-    justify-content: space-between;
+
     flex-wrap: nowrap;
     overflow-x: auto;
 
@@ -373,15 +400,17 @@
     display: flex;
     flex-direction: row;
     gap: 2rem;
+    flex-wrap: wrap;
+    max-width: 100%;
 }
 
 .card-color{
     padding: 1.5rem;
-    width: 11rem;
-    height: 13rem;
+    /*width: 11rem;*/
+    /*height: 13rem;*/
     border-radius: 0.5rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1rem;
     align-items: center;
     cursor: pointer;
@@ -401,6 +430,7 @@
     height: 80%;
     object-fit: contain;
     border-radius: 1rem;
+    max-width: 5rem;
 }
 
 .cart{
@@ -426,7 +456,7 @@
     flex: 50%;
     display: flex;
     flex-direction: row;
-    gap: 6.5rem;
+    gap: 2.5rem;
     align-items: center;
     justify-content: center;
 }

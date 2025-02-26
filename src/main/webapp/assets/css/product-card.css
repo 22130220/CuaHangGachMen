@@ -11,6 +11,9 @@
     transition: 0.25s ease;
     border-radius: 0.5rem;
 }
+.product-card :hover{
+   cursor: pointer;
+}
 
 
 .card-img{
