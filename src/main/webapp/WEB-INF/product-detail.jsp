@@ -181,8 +181,17 @@
                             </div>
                                 </a>
                             </c:forEach>
+
                         </div>
+
+
+
+
+
                     </div>
+
+
+
 
                     <div class="cart">
                         <div class="cart-label">
@@ -276,21 +285,23 @@
 
                 </div>
 
+
                 <div class="like like-grid">
                     <div class="like-title">Có thể bạn cũng thích</div>
                     <div class="like-slider" id="like-slider">
                         <c:forEach items="${relatedProducts}" var="related">
                             <div class="like-item">
-                                <div class="product-card">
+                                <a href="pdetail?pid=${related.id}" class="product-card">
                                     <div class="card-img">
                                         <img src="${related.imgThumbnail}" alt="${related.name}">
                                     </div>
                                     <div class="card-title">${related.name}</div>
                                     <div class="card-price">${related.pricePerBox}đ/1 hộp</div>
-                                    <a href="pdetail?pid=${related.id}">
-                                        <button class="add-cart-button">Xem chi tiết</button>
-                                    </a>
-                                </div>
+                                    <form action="pdetail" method="GET">
+                                        <input type="hidden" name="pid" value="${related.id}">
+                                        <button type="submit" class="add-cart-button">Xem chi tiết</button>
+                                    </form>
+                                </a>
                             </div>
                         </c:forEach>
                     </div>
@@ -302,6 +313,11 @@
                         <img src="/assets/img/arrow-right.png" alt="">
                     </button>
                 </div>
+
+
+
+
+
             </div>
 
         </div>
