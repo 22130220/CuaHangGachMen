@@ -3,7 +3,6 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.service;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.view_model.ProductFilter;
-import vn.edu.hcmuaf.fit.cuahanggachmen.storage.ProductStorage;
 
 import java.sql.SQLException;
 import java.util.Comparator;

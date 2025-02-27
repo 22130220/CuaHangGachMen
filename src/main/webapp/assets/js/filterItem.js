@@ -53,28 +53,65 @@ function loadProducts() {
         success: function (data) {
             $("#product_list").empty();
 
+            var selectedValue = $('input[type="radio"][name="layout"]:checked').attr('id');
+            console.log("Radio button được chọn ban đầu: " + selectedValue);
+
             let htmlContent = '';
-            data.products.forEach(function (item) {
-                htmlContent += "<div class=\"product-card\">\n" +
-                    "   <a href=\"pdetail?pid=" + item.id + "\" class=\"product-card-link\">\n" +
-                    "       <div class=\"card-img\">\n" +
-                    "           <img src=\"" + item.imgThumbnail + "\" alt=\"\">\n" +
-                    "       </div>\n" +
-                    "       <div class=\"card-title\">\n" +
-                    "           <span>" + item.name + "</span>\n" +
-                    "       </div>\n" +
-                    "       <div class=\"card-price\">" + item.pricePerBox.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + "/hộp</div>\n" +
-                    "   </a>\n" +
-                    "   <div class=\"button-gr\">\n" +
-                    "       <button class=\"add-cart-button btn-left\">\n" +
-                    "           <a href=\"pdetail?pid=" + item.id + "\">Xem chi tiết</a>\n" +
-                    "       </button>\n" +
-                    "       <button class=\"buy-now btn-right\">\n" +
-                    "           <a href=\"giohang.html\"><i class=\"fa-solid fa-plus fa-lg\"></i></a>\n" +
-                    "       </button>\n" +
-                    "   </div>\n" +
-                    "</div>";
-            });
+
+            if(selectedValue === "grid") {
+                $("#product_list").removeClass("product-list-detail");
+                $("#product_list").addClass("product-list");
+                data.products.forEach(function (item) {
+                    htmlContent += "<div class=\"product-card\">\n" +
+                        "   <a href=\"pdetail?pid=" + item.id + "\" class=\"product-card-link\">\n" +
+                        "       <div class=\"card-img\">\n" +
+                        "           <img src=\"" + item.imgThumbnail + "\" alt=\"\">\n" +
+                        "       </div>\n" +
+                        "       <div class=\"card-title\">\n" +
+                        "           <span>" + item.name + "</span>\n" +
+                        "       </div>\n" +
+                        "       <div class=\"card-price\">" + item.pricePerBox.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + "/hộp</div>\n" +
+                        "   </a>\n" +
+                        "   <div class=\"button-gr\">\n" +
+                        "       <button class=\"add-cart-button btn-left\">\n" +
+                        "           <a href=\"pdetail?pid=" + item.id + "\">Xem chi tiết</a>\n" +
+                        "       </button>\n" +
+                        "       <button class=\"buy-now btn-right\">\n" +
+                        "           <a href=\"giohang.html\"><i class=\"fa-solid fa-plus fa-lg\"></i></a>\n" +
+                        "       </button>\n" +
+                        "   </div>\n" +
+                        "</div>";
+                });
+
+            } else if(selectedValue === "detail") {
+                $("#product_list").removeClass("product-list");
+                $("#product_list").addClass("product-list-detail");
+                data.products.forEach(function (item) {
+                    const numStar = "⭐".repeat(item.rating);
+                    htmlContent += "<div class=\"product-card-detail\">\n" +
+                        "   <a href=\"pdetail?pid=" + item.id + "\" class=\"product-card-link-detail\">\n" +
+                        "       <div class=\"card-img-detail\">\n" +
+                        "           <img src=\"" + item.imgThumbnail + "\" alt=\"\">\n" +
+                        "       </div>\n" +
+                        "    <div class='info-tag'> \n" +
+                        "       <div class=\"card-title-detail\">\n" +
+                        "           <span>" + item.name + "</span>\n" +
+                        "       </div>\n" +
+                        "       <div class=\"card-rating-detail\">" + numStar + "</div> \n " +
+                        "       <div class=\"card-price-detail\">" + item.pricePerBox.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + "/hộp</div>\n" +
+                        "   </div>\n" +
+                        "   </a>\n" +
+                        "   <div class=\"button-gr-detail\">\n" +
+                        "       <button class=\"add-cart-button btn-left\">\n" +
+                        "           <a href=\"pdetail?pid=" + item.id + "\">Xem chi tiết</a>\n" +
+                        "       </button>\n" +
+                        "       <button class=\"buy-now btn-right\">\n" +
+                        "           <a href=\"giohang.html\">Thêm vào giỏ</a>\n" +
+                        "       </button>\n" +
+                        "   </div>\n" +
+                        "</div>";
+                });
+            }
 
             $("#product_list").html(htmlContent);
 
@@ -180,6 +217,12 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('#sort').on('change', function () {
         currentPage = 1;
+        loadProducts();
+    });
+});
+
+$(document).ready(function() {
+    $('.view-type input[type="radio"]').on('change', function() {
         loadProducts();
     });
 });
