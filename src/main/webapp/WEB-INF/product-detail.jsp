@@ -34,6 +34,10 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
     <script
             src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"
             integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw=="
@@ -61,7 +65,10 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
-<jsp:include page="../view_shared/header_footer/header.jsp"/>
+<div id="menuContainer">
+    <jsp:include page="../view_shared/header_footer/header.jsp"/>
+</div>
+
 
 <input type="hidden" value="${p.id}" id="pid">
 
@@ -169,52 +176,59 @@
                         </p>
                     </div>
 
+<%--                    <div class="producttype">--%>
+<%--                        <p class="color">Màu sắc</p>--%>
+<%--                        <div class="card-color-container">--%>
+<%--                            <c:forEach items="${p.lsColor}" var="items" >--%>
+<%--                                <a href="pdetail?pid=${p.id}&color=${items.ID}" class="color-active">--%>
+<%--                            <div class="card-color ">--%>
+<%--                                <img src="${items.url}" alt="" class="img-color">--%>
+<%--                                <div class="color-name">${items.name}</div>--%>
+<%--                            </div>--%>
+<%--                                </a>--%>
+<%--                            </c:forEach>--%>
+
+<%--                        </div>--%>
+
+<%--                    </div>--%>
                     <div class="producttype">
                         <p class="color">Màu sắc</p>
-                        <div class="card-color-container">
-                            <c:forEach items="${p.lsColor}" var="items" >
-                                <a href="pdetail?pid=${p.id}&color=${items.ID}">
-                            <div class="card-color color-active">
-                                <img src="${items.url}" alt="" class="img-color">
-                                <div class="color-name">${items.name}</div>
-
-                            </div>
+                        <div class="card-color-container" id="color-container">
+                            <c:forEach items="${p.lsColor}" var="items">
+                                <a href="javascript:void(0);" class="color-item color-active" data-pid="${p.id}" data-color="${items.ID}" data-url="${items.url}" data-name="${items.name}">
+                                    <div class="card-color">
+                                        <img src="${items.url}" alt="" class="img-color">
+                                        <div class="color-name">${items.name}</div>
+                                    </div>
                                 </a>
                             </c:forEach>
-
                         </div>
-
-
-
-
-
                     </div>
 
 
 
 
-                    <div class="cart">
+
+                    <div class="cart" id="cart1">
                         <div class="cart-label">
                             <!-- Form submit đến /add-to-cart -->
-                            <form action="${pageContext.request.contextPath}/add-to-cart" method="post" onsubmit="return checkColor();">
+                            <form id="addToCartForm" action="${pageContext.request.contextPath}/add-to-cart" method="post">
                                 <!-- productId -->
                                 <input type="hidden" name="productId" value="${p.id}">
 
                                 <input type="hidden" name="colorId" id="colorIdInput" value="${param.color}">
 
-
                                 <!-- Số lượng -->
-                                <div class ="card-labelis">
+                                <div class="card-labelis">
+                                    <div class="box-quantity input-sample border-type">
+                                        <label for="quantity">Số lượng</label>
+                                        <span class="seperate">|</span>
+                                        <input type="number" name="quantity" class="quantity" value="1" min="1" id="quantity">
+                                    </div>
 
-                                <div class="box-quantity input-sample border-type">
-                                    <label for="quantity">Số lượng</label>
-                                    <span class="seperate">|</span>
-                                    <input type="number" name="quantity" class="quantity" value="1" min="1" id="quantity">
-                                </div>
-
-                                <div class="add-cart">
-                                    <button type="submit" class="input-sample add-cart-btn" name="action" value="addToCart">Thêm vào giỏ</button>
-                                </div>
+                                    <div class="add-cart">
+                                        <button type="submit" class="input-sample add-cart-btn" name="action" value="addToCart">Thêm vào giỏ</button>
+                                    </div>
                                 </div>
                             </form>
 
@@ -324,6 +338,109 @@
     </div>
 
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
+
+
+<script>$(document).ready(function() {
+
+    $(".color-item").click(function(e) {
+        e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+
+        var productId = $(this).data('pid'); // Lấy ID sản phẩm
+        var colorId = $(this).data('color'); // Lấy ID màu sắc được chọn
+
+        // Gửi yêu cầu AJAX
+        $.ajax({
+            url: "pdetail", // Địa chỉ URL
+            type: "GET",
+            data: {
+                pid: productId, // ID sản phẩm
+                color: colorId // ID màu sắc được chọn
+            },
+            success: function(response) {
+                console.log(response);  // Kiểm tra phản hồi từ server
+
+                // Cập nhật giá trị colorId vào input
+                $('#colorIdInput').val(colorId);
+            },
+            error: function(xhr, status, error) {
+                console.log("Đã xảy ra lỗi: " + error); // Xử lý lỗi
+            }
+        });
+    });
+
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Lắng nghe sự kiện submit của form
+        $('#addToCartForm').submit(function(e) {
+            e.preventDefault(); // Ngăn chặn hành động mặc định (submit form)
+
+            // Lấy dữ liệu từ form
+            var formData = $(this).serialize();
+
+            // Gửi yêu cầu AJAX
+            $.ajax({
+                url: $(this).attr('action'), // Lấy URL từ thuộc tính action của form
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    $('#menuContainer').load('/view_shared/header_footer/header.jsp', function() {
+                        // Tùy chọn: Hiển thị thông báo thành công
+                    });
+
+
+                    const notyf= new Notyf()
+                    notyf.open({
+                        duration:1000,
+                        position:{
+                            x: 'right',
+                            y: 'bottom',
+                        },
+                        type: "success",
+                        message : "Thêm vào giỏ hàng thành công",
+                    });
+
+
+                },
+                error: function(xhr, status, error) {
+                    // Xử lý lỗi khi gửi yêu cầu
+                    console.log('Đã xảy ra lỗi: ' + error);
+                    alert('Có lỗi xảy ra, vui lòng thử lại!');
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script src="/assets/js/comment_ajax.js"></script>
 
     <script type="text/javascript">

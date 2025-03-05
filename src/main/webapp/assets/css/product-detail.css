@@ -403,12 +403,17 @@
     flex-wrap: wrap;
     max-width: 100%;
 }
+.card-color-container > a:focus{
+    border: 1px solid gray
+}
+
+
 
 .card-color{
     padding: 1.5rem;
     /*width: 11rem;*/
     /*height: 13rem;*/
-    border-radius: 0.5rem;
+
     display: flex;
     flex-direction: row;
     gap: 1rem;
@@ -418,7 +423,13 @@
 
 .color-active{
     border: 1px solid gray;
+    border-radius: 0.5rem;
 }
+
+
+
+
+
 
 .color{
     font-size: 2rem;
