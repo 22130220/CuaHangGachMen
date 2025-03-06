@@ -183,6 +183,21 @@ public class ProductDao {
         );
     }
 
+    public List<Product> findLatestProducts(int amount) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        Jdbi jdbi = DBConect.get();
+        return jdbi.withHandle(handle ->
+                handle.createQuery(
+                                "SELECT * FROM products " +
+                                        "WHERE YEAR(CreateDate) = YEAR(CURDATE()) " +
+                                        "AND MONTH(CreateDate) = MONTH(CURDATE()) " +
+                                        "ORDER BY CreateDate DESC " +
+                                        "LIMIT 3 OFFSET :amount")
+                        .bind("amount", amount)
+                        .mapToBean(Product.class)
+                        .list()
+        );
+    }
+
     // CẬP NHẬT VIEW
     public void updateProductView(int productId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         Jdbi jdbi = DBConect.get();

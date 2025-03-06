@@ -1,7 +1,7 @@
 /* Popular */
 .popular {
-    padding: 20px 0;
-    margin-top: 50px;
+    padding: 0 0;
+    margin-top: 0px;
 }
 .popular-top {
     display: flex;
@@ -39,8 +39,9 @@
 
 .popular .course-list {
     display: flex;
+    flex-wrap: wrap;
     gap: 30px;
-    margin-top: 55px;
+    margin-top: 0px;
 }
 
 .popular .course-item {

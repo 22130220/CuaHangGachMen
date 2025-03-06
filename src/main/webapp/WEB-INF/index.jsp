@@ -49,6 +49,8 @@
     <link rel="stylesheet" href="/assets/css/cacthanhphancodinh.css"/>
     <link rel="stylesheet" href="/assets/css/dropdown_user_menu.css">
 
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
     <%--    <style><%@include file="assets/css/style.css"%></style>--%>
     <%--    <style><%@include file="assets/css/banner.css"%></style>--%>
     <%--    <style><%@include file="assets/css/danhmucgachmen.css"%></style>--%>
@@ -190,10 +192,10 @@
             </div>
         </div>
 
-        <div class="course-list">
+        <div class="course-list" id="course_list">
             <c:forEach var="product" items="${latestProducts}">
                 <!-- Course item 1 -->
-                <div class="course-item">
+                <div class="course-item cc">
                     <a href="/pdetail?pid=${product.id}">
                         <img
                                 src="${product.imgThumbnail}"
@@ -271,6 +273,32 @@
 
     </div>
 </div>
+
+
+<div class="load-more" style="text-align: center; margin-top: 30px;">
+    <div id="load-more-btn" class="btn" onclick="loadMore()">Xem thêm</div>
+</div>
+
+<script>
+    var amount = 3;
+    function loadMore() {
+        $.ajax({
+            url: "/loadmore",
+            type: "GET",
+            data: {
+                exist: amount
+            },
+            success: function(data) {
+                // Thêm khối popular mới trước nút "Xem thêm"
+                $("#load-more-btn").before(data);
+            },
+            error: function(xhr) {
+                console.error("Có lỗi xảy ra khi thêm dữ liệu:", xhr);
+            }
+        });
+        amount += 3;
+    }
+</script>
 
 <!-- Popular -->
 <div class="popular" id="popular">
@@ -373,5 +401,6 @@
 <script src="../assets/js/left_right.js"></script>
 <script src="../assets/js/slider.js"></script>
 <script src="../assets/js/scrollTop.js"></script>
+<script src="../assets/js/index_ajax.js"></script>
 </body>
 </html>
