@@ -340,7 +340,8 @@
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
 
 
-<script>$(document).ready(function() {
+<script>
+    $(document).ready(function() {
 
     $(".color-item").click(function(e) {
         e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>

@@ -9,6 +9,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet(name = "AddToCartServlet", value = "/add-to-cart")
 public class AddToCartServlet extends HttpServlet {
@@ -67,6 +68,8 @@ public class AddToCartServlet extends HttpServlet {
 
             // Lưu cart lại session
             session.setAttribute("cart", cart);
+            List<CartItem> list = cart.getItems();
+            session.setAttribute("quantity", list.size());
 
 
 
