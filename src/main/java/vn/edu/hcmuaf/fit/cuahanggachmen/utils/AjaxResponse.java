@@ -87,6 +87,32 @@ public class AjaxResponse {
     public void addDouble(String fieldName, double value) {
         this.text.add(String.format("\"%s\":%f", fieldName, value));
     }
+    
+    public void addCartItem(List<CartItem> cartItemList) {
+        this.text.add(String.format("\"cart_item\":%s", cartItemListToJson(cartItemList)));
+    }
+
+    private String cartItemListToJson(List<CartItem> cartItemList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (CartItem cartItem : cartItemList) {
+            StringJoiner jsonCartItemJoiner = new StringJoiner(",", "{", "}");
+
+            jsonCartItemJoiner.add(String.format("\"productId\":%d", cartItem.getProductId()))
+                    .add(String.format("\"productName\":\"%s\"", cartItem.getProductName()))
+                    .add(String.format("\"productColor\":\"%s\"", cartItem.getProductColor()))
+                    .add(String.format("\"productImage\":\"%s\"", cartItem.getProductImage()))
+                    .add(String.format("\"pricePerBox\":%d", cartItem.getPricePerBox()))
+                    .add(String.format("\"quantity\":%d", cartItem.getQuantity()))
+                    .add(String.format("\"quantityPerBox\":%d", cartItem.getQuantityPerBox()))
+                    .add(String.format("\"totalPrice\":%d", cartItem.getTotalPrice()));
+
+            // Thêm đối tượng cartItem vào mảng JSON
+            jsonArrayJoiner.add(jsonCartItemJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
 
 
     private String productListToJson(List<Product> productList) {

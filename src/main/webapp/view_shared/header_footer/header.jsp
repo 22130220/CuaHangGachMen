@@ -247,7 +247,7 @@
           </svg>
           <!-- Giả sử chúng ta hiển thị count trên 1 "badge" nhỏ -->
           <span class="cart-count">
-        <c:out value="${empty cart ? 0 : cart.totalItems}"/>
+        <c:out value="${empty sessionScope.quantity ? 0 : sessionScope.quantity}"/>
     </span>
         </a>
       </div>
