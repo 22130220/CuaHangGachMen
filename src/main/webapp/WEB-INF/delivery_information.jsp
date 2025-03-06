@@ -35,23 +35,23 @@
         <form action="thanhtoan" method="post" class="checkout-form">
             <div class="form-group">
                 <label for="name">Họ và tên</label>
-                <input type="text" id="name" name="name" placeholder="Họ và tên" required style="width: 700px;">
+                <input type="text" id="name" name="name" placeholder="Họ và tên" value="${sessionScope.auth.fullname}" required style="width: 700px;">
 
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email" placeholder="Email">
+                    <input type="email" name="email" id="email" value="${sessionScope.auth.email}" placeholder="Email">
                 </div>
                 <div class="form-group sdt">
                     <label for="phone">Số điện thoại</label>
-                    <input type="tel" name="phone" id="phone" placeholder="Số điện thoại" required>
+                    <input type="tel" name="phone" id="phone" placeholder="Số điện thoại" value="${sessionScope.auth.phone}" required>
 
                 </div>
             </div>
             <div class="form-group">
                 <label for="address">Địa chỉ</label>
-                <input type="text" name="address" id="address" placeholder="Địa chỉ" style="width: 700px;">
+                <input type="text" name="address" id="address" placeholder="Địa chỉ" value="${sessionScope.auth.address}" style="width: 700px;">
             </div>
             <div class="form-group">
                 <label for="des">Ghi chú</label>

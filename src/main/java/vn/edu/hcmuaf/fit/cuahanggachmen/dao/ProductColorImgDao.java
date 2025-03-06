@@ -1,23 +1,21 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
-import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.result.RowView;
 import org.jdbi.v3.core.statement.Query;
 import org.jdbi.v3.core.statement.Update;
-import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.ProductColorImg;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.Voucher;
 
-import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 
-public class ProductColorImgDao {
+public class ProductColorImgDao extends BaseDao {
 
-    public int insert(int colorId, int productId, String url) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle -> {
+    public ProductColorImgDao(Handle handle) {
+        super(handle);
+    }
+
+    public int insert(int colorId, int productId, String url) {
             Update update = handle.createUpdate(
                     "INSERT INTO product_color_img (ColorId, ProductId, Url) VALUES (:colorId, :productId, :url)"
             );
@@ -26,54 +24,39 @@ public class ProductColorImgDao {
             update.bind("url", url);
             update.execute();
             return handle.createQuery("SELECT LAST_INSERT_ID()").mapTo(Integer.class).one();
-        });
     }
 
 
-    public ProductColorImg findById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle -> {
+    public ProductColorImg findById(int id) {
             Query query = handle.createQuery("SELECT * FROM product_color_img WHERE id = :id");
             query.bind("id", id);
             return query.mapToBean(ProductColorImg.class).one();
-        });
     }
 
-    public List<ProductColorImg> findAll() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM product_color_img")
+    public List<ProductColorImg> findAll() {
+            return handle.createQuery("SELECT * FROM product_color_img")
                         .mapToBean(ProductColorImg.class)
-                        .list()
-        );
+                        .list();
     }
 
-    public List<ProductColorImg> findByProductId(int productId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM product_color_img i JOIN colors c ON i.ColorId = c.ID WHERE ProductId = :productId")
+    public List<ProductColorImg> findByProductId(int productId) {
+            return handle.createQuery("SELECT * FROM product_color_img i JOIN colors c ON i.ColorId = c.ID WHERE ProductId = :productId")
                         .bind("productId", productId)
                         .map(this::mapRow)
-                        .list()
-        );
+                        .list();
     }
 
-    public int update(int id, String url) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle -> handle.createUpdate("UPDATE product_color_img SET Url = :url WHERE id = :id")
+    public int update(int id, String url) {
+        return handle.createUpdate("UPDATE product_color_img SET Url = :url WHERE id = :id")
             .bind("id", id)
             .bind("url", url)
-            .execute()
-        );
+            .execute();
     }
 
-    public int deleteById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-            handle.createUpdate("DELETE FROM product_color_img WHERE id = :id")
+    public int deleteById(int id) {
+        return handle.createUpdate("DELETE FROM product_color_img WHERE id = :id")
             .bind("id", id)
-            .execute()
-        );
+            .execute();
     }
 
     private ProductColorImg mapRow(RowView rowView) {
@@ -84,12 +67,6 @@ public class ProductColorImgDao {
         p.setColorName(rowView.getColumn("Name",String.class));
         p.setUrl(rowView.getColumn("Url", String.class));
         return p;
-    }
-
-    public static void main(String[] args) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        DBConect.mySqlDataSource();
-        List<ProductColorImg> ls = new ProductColorImgDao().findByProductId(1);
-        ls.forEach(System.out::println);
     }
 }
 
