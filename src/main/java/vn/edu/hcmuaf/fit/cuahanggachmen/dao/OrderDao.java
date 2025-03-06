@@ -1,4 +1,5 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.result.RowView;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
@@ -10,11 +11,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-public class OrderDao {
+public class OrderDao extends BaseDao {
+    public OrderDao(Handle handle) {
+        super(handle);
+    }
+
     // Insert a new Order
-    public int insert(Order order) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle -> {
+    public int insert(Order order)  {
             var update = handle.createUpdate(
                     "INSERT INTO orders (UserID, OrderDate, Address, TotalPrice, Des, FullName, Email, Phone, Payment) " +
                             "VALUES (:userId, :orderDate, :address, :totalPrice, :description, :fullName, :email, :phone, :payment)"
@@ -32,38 +35,29 @@ public class OrderDao {
             return handle.createQuery("SELECT LAST_INSERT_ID()")
                     .mapTo(Integer.class)
                     .one();
-        });
     }
 
 
 
 
     // Find Order by ID
-    public Optional<Order> findById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM orders WHERE ID = :id")
+    public Optional<Order> findById(int id)  {
+        return handle.createQuery("SELECT * FROM orders WHERE ID = :id")
                         .bind("id", id)
                         .map(this::mapRow)
-                        .findFirst()
-        );
+                        .findFirst();
     }
 
     // Find all Orders
-    public List<Order> findAll() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM orders")
+    public List<Order> findAll()  {
+        return handle.createQuery("SELECT * FROM orders")
                         .map(this::mapRow)
-                        .list()
-        );
+                        .list();
     }
 
     // Update an Order
-    public void update(Order order) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        jdbi.useHandle(handle -> {
-            handle.createUpdate(
+    public int update(Order order)  {
+        return handle.createUpdate(
                             "UPDATE orders SET UserID = :userId, OrderDate = :orderDate, Address = :address, " +
                                     "Status = :status, TotalPrice = :totalPrice, Des = :description, CreateDate = :createDate, " +
                                     "FullName = :fullName, Email = :email, Phone = :phone, Payment = :payment WHERE ID = :id"
@@ -81,64 +75,46 @@ public class OrderDao {
                     .bind("phone", order.getPhone())
                     .bind("payment", order.getPayment())
                     .execute();
-        });
     }
 
     // Update an Order
-    public int updateStatus(int orderId, String active) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
+    public int updateStatus(int orderId, String active)  {
         if(active.equals("Delivered")){
-            return jdbi.withHandle(handle ->
-                    handle.createUpdate(
+            return handle.createUpdate(
                                     "UPDATE orders SET Status = :status WHERE ID = :id"
                             )
                             .bind("id", orderId)
                             .bind("status", active)
-                            .execute()
-            );
+                            .execute();
         } else {
-            return jdbi.withHandle(handle ->
-                    handle.createUpdate(
+            return handle.createUpdate(
                                     "UPDATE orders SET Status = :status, TotalPrice = :price WHERE ID = :id"
                             )
                             .bind("id", orderId)
                             .bind("status", active)
                             .bind("price", 0.0)
-                            .execute()
-            );
+                            .execute();
         }
 
     }
 
     // Delete an Order
-    public void delete(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        jdbi.useHandle(handle ->
-                handle.createUpdate("DELETE FROM orders WHERE ID = :id")
+    public int delete(int id) {
+        return handle.createUpdate("DELETE FROM orders WHERE ID = :id")
                         .bind("id", id)
-                        .execute()
-        );
+                        .execute();
     }
 
-    public double sumDoanhThu() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT SUM(TotalPrice) FROM orders").mapTo(Double.class).one()
-        );
+    public double sumDoanhThu()  {
+        return handle.createQuery("SELECT SUM(TotalPrice) FROM orders").mapTo(Double.class).one();
     }
 
-    public List<Order> backToOrder() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT ID,Status, TotalPrice, UserID FROM orders LIMIT 10;").mapToBean(Order.class).list()
-        );
+    public List<Order> backToOrder()  {
+        return handle.createQuery("SELECT ID,Status, TotalPrice, UserID FROM orders LIMIT 10;").mapToBean(Order.class).list();
     }
 
-    public int transcPerDay() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT COUNT(*) FROM orders WHERE DATE(OrderDate) = :targetDate;").bind("targetDate", LocalDate.now()).mapTo(Integer.class).one()
-        );
+    public int transcPerDay()  {
+        return handle.createQuery("SELECT COUNT(*) FROM orders WHERE DATE(OrderDate) = :targetDate;").bind("targetDate", LocalDate.now()).mapTo(Integer.class).one();
     }
 
     // Map database row to Order object

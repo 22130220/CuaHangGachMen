@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Size;
@@ -7,59 +8,48 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.model.Size;
 import java.sql.SQLException;
 import java.util.List;
 
-public class SizeDao {
+public class SizeDao extends BaseDao {
+
+    public SizeDao(Handle handle) {
+        super(handle);
+    }
 
     // Insert a new Size
-    public int insert(Size size) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createUpdate("INSERT INTO size (Name) VALUES (:name)")
+    public int insert(Size size) {
+        return handle.createUpdate("INSERT INTO size (Name) VALUES (:name)")
                         .bind("name", size.getName())
-                        .execute()
-        );
+                        .execute();
     }
 
     // Find a Size by ID
-    public Size findById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM size WHERE ID = :id")
+    public Size findById(int id) {
+        return handle.createQuery("SELECT * FROM size WHERE ID = :id")
                         .bind("id", id)
                         .mapToBean(Size.class)
                         .findOne()
-                        .orElse(null)
-        );
+                        .orElse(null);
     }
 
     // Find all Sizes
-    public List<Size> findAll() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM size")
+    public List<Size> findAll() {
+        return handle.createQuery("SELECT * FROM size")
                         .mapToBean(Size.class)
-                        .list()
-        );
+                        .list();
     }
 
     // Update a Size
-    public int update(Size size) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createUpdate("UPDATE size SET Name = :name WHERE ID = :id")
+    public int update(Size size) {
+        return handle.createUpdate("UPDATE size SET Name = :name WHERE ID = :id")
                         .bind("name", size.getName())
                         .bind("id", size.getId())
-                        .execute()
-        );
+                        .execute();
     }
 
     // Delete a Size by ID
-    public int deleteById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createUpdate("DELETE FROM size WHERE ID = :id")
+    public int deleteById(int id) {
+        return handle.createUpdate("DELETE FROM size WHERE ID = :id")
                         .bind("id", id)
-                        .execute()
-        );
+                        .execute();
     }
 }
 

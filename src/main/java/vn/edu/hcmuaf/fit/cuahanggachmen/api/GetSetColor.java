@@ -20,11 +20,7 @@ public class GetSetColor extends HttpServlet {
         ColorDao dao = new ColorDao();
         List<Color> ls = null;
 
-        try {
-            ls = dao.getAllColors();
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        ls = dao.getAllColors();
 
         AjaxResponse resp = new AjaxResponse();
         resp.addColorList(ls);
@@ -46,27 +42,15 @@ public class GetSetColor extends HttpServlet {
 
         if(action.equalsIgnoreCase("Thêm")) {
             c.setName(data);
-            try {
-                success = dao.insertColor(c);
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.insertColor(c);
         } else if(action.equalsIgnoreCase("Cập nhật")) {
             c.setID(Integer.parseInt(id));
             c.setName(data);
-            try {
-                success = dao.updateColor(c);
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.updateColor(c);
         } else if(action.equalsIgnoreCase("Xoá")) {
             String[] deleteId = AjaxParseRequest.parse(data);
             for(int i = 0; i < deleteId.length; i++) {
-                try {
-                    success += dao.deleteColor(Integer.parseInt(deleteId[i]));
-                } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                success += dao.deleteColor(Integer.parseInt(deleteId[i]));
             }
 
         }

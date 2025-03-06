@@ -1,61 +1,48 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
-import org.jdbi.v3.core.Jdbi;
-import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Material;
 
-import java.sql.SQLException;
 import java.util.List;
 
-public class MaterialDao {
+public class MaterialDao extends BaseDao {
 
-    public int insert(Material material) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createUpdate("INSERT INTO material (Name) VALUES (:name)")
-                        .bind("name", material.getName())
-                        .execute()
-        );
+    public MaterialDao(Handle handle) {
+        super(handle);
     }
 
-    public Material findById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM material WHERE ID = :id")
+    public int insert(Material material)  {
+        return handle.createUpdate("INSERT INTO material (Name) VALUES (:name)")
+                        .bind("name", material.getName())
+                        .execute();
+    }
+
+    public Material findById(int id)  {
+        return handle.createQuery("SELECT * FROM material WHERE ID = :id")
                         .bind("id", id)
                         .mapToBean(Material.class)
                         .findOne()
-                        .orElse(null)
-        );
+                        .orElse(null);
     }
 
-    public List<Material> findAll() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT * FROM material")
+    public List<Material> findAll()  {
+        return handle.createQuery("SELECT * FROM material")
                         .mapToBean(Material.class)
-                        .list()
-        );
+                        .list();
     }
 
 
-    public int update(Material material) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createUpdate("UPDATE material SET Name = :name WHERE ID = :id")
+    public int update(Material material)  {
+        return handle.createUpdate("UPDATE material SET Name = :name WHERE ID = :id")
                         .bind("name", material.getName())
                         .bind("id", material.getId())
-                        .execute()
-        );
+                        .execute();
     }
 
 
-    public int deleteById(int id) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        Jdbi jdbi = DBConect.get();
-        return jdbi.withHandle(handle ->
-                handle.createUpdate("DELETE FROM material WHERE ID = :id")
+    public int deleteById(int id)  {
+        return handle.createUpdate("DELETE FROM material WHERE ID = :id")
                         .bind("id", id)
-                        .execute()
-        );
+                        .execute();
     }
 }

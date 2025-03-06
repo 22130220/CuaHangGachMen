@@ -26,11 +26,7 @@ public class GetSetCategory extends HttpServlet {
         CategoryDao dao = new CategoryDao();
         List<Category> ls = null;
 
-        try {
-            ls = dao.findAll();
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        ls = dao.findAll();
 
         AjaxResponse resp = new AjaxResponse();
         resp.addCategoryList(ls);
@@ -54,29 +50,17 @@ public class GetSetCategory extends HttpServlet {
         if(action.equalsIgnoreCase("Thêm")) {
             c.setName(name);
             c.setStatus(getBoolVal(active));
-            try {
-                success = dao.insert(c);
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.insert(c);
         } else if(action.equalsIgnoreCase("Cập nhật")) {
             c.setId(Integer.parseInt(id));
             c.setName(name);
             c.setStatus(getBoolVal(active));
-            try {
-                success = dao.update(c);
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.update(c);
         } else if(action.equalsIgnoreCase("Xoá")) {
             String[] deleteId = AjaxParseRequest.parse(id);
             boolean realAcive = getBoolVal(active);
             for (String s : deleteId) {
-                try {
-                    success += dao.updateActive(Integer.parseInt(s), realAcive);
-                } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                success += dao.updateActive(Integer.parseInt(s), realAcive);
             }
 
         }

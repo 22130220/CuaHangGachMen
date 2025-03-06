@@ -24,7 +24,7 @@ public class DBConect {
         }
     }
 
-    public static Jdbi get() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public static Jdbi get() {
         return jdbi;
     }
 
