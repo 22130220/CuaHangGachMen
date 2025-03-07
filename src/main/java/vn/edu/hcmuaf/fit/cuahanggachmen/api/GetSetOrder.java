@@ -3,7 +3,9 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.OrderDaos;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Orders;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 
@@ -16,13 +18,10 @@ import java.util.List;
 public class GetSetOrder extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        OrderDaos pDao = new OrderDaos();
+        Handle handle  = DBConect.get().open();
+        OrderDaos pDao = new OrderDaos(handle);
         List<Orders> ls = null;
-        try {
-            ls = pDao.getOrdersWithFullNames();
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        ls = pDao.getOrdersWithFullNames();
 
         AjaxResponse resp = new AjaxResponse();
         resp.addOrderList(ls);
@@ -31,6 +30,7 @@ public class GetSetOrder extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 
     @Override

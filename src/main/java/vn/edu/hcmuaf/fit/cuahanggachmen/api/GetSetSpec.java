@@ -3,10 +3,12 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ColorDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductSpecDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.SizeDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.SpecTypeDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.ProductSpec;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Size;
@@ -24,18 +26,14 @@ import java.util.List;
 public class GetSetSpec extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        SpecTypeDao dao = new SpecTypeDao();
-        ColorDao clDao = new ColorDao();
+        Handle handle = DBConect.get().open();
+        SpecTypeDao dao = new SpecTypeDao(handle);
+        ColorDao clDao = new ColorDao(handle);
         List<SpecType> ls = new ArrayList<>();
         List<Color> cl = new ArrayList<>();
 
-        try {
-            cl = clDao.findAll();
-            ls = dao.findAll();
-
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        cl = clDao.findAll();
+        ls = dao.findAll();
 
         AjaxResponse resp = new AjaxResponse();
         resp.addSpecTypeList(ls);
@@ -45,6 +43,7 @@ public class GetSetSpec extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 
     @Override
@@ -53,32 +52,23 @@ public class GetSetSpec extends HttpServlet {
         String action = request.getParameter("action");
         String id = request.getParameter("id");
         int success = 0;
-        SpecTypeDao dao = new SpecTypeDao();
+
+        Handle handle = DBConect.get().open();
+        SpecTypeDao dao = new SpecTypeDao(handle);
         SpecType c = new SpecType();
 
         if(action.equalsIgnoreCase("Thêm")) {
             c.setName(data);
-            try {
-                success = dao.insert(c);
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.insert(c);
+
         } else if(action.equalsIgnoreCase("Cập nhật")) {
             c.setId(Integer.parseInt(id));
             c.setName(data);
-            try {
-                success = dao.update(c);
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.update(c);
         } else if(action.equalsIgnoreCase("Xoá")) {
             String[] deleteId = AjaxParseRequest.parse(data);
             for (String s : deleteId) {
-                try {
-                    success += dao.deleteById(Integer.parseInt(s));
-                } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                success += dao.deleteById(Integer.parseInt(s));
             }
 
         }
@@ -91,5 +81,6 @@ public class GetSetSpec extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 }

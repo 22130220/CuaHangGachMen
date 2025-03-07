@@ -3,9 +3,11 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.SpecTypeDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.SpecType;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Voucher;
@@ -28,12 +30,9 @@ public class GetSetUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<User> ls = new ArrayList<>();
-        UserDao dao = new UserDao();
-        try {
-            ls = dao.getAllUsers();
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        Handle handle = DBConect.get().open();
+        UserDao dao = new UserDao(handle);
+        ls = dao.getAllUsers();
 
         AjaxResponse resp = new AjaxResponse();
         resp.addUserList(ls);
@@ -42,6 +41,7 @@ public class GetSetUser extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 
     @Override
@@ -58,7 +58,9 @@ public class GetSetUser extends HttpServlet {
         String phone = request.getParameter("phone");
         String id = request.getParameter("id");
         int success = 0;
-        UserDao dao = new UserDao();
+
+        Handle handle = DBConect.get().open();
+        UserDao dao = new UserDao(handle);
         User c = new User();
 
         if(action.equalsIgnoreCase("Thêm")) {
@@ -83,20 +85,12 @@ public class GetSetUser extends HttpServlet {
             c.setStatus(getBoolVal(status));
             c.setPhone((phone.replaceAll("[^0-9]", "")));
             c.setId(Integer.parseInt(id));
-            try {
-                success = dao.updateUser(c);
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        } else if(action.equalsIgnoreCase("Đổi MK")) {
-                try {
-                    String salt = PasswordUtils.generateSalt();
-                    String hash = PasswordUtils.hashPassword(password, salt);
-                    success += dao.changePassword(Integer.parseInt(id), hash, salt);
-                } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
 
+            success = dao.updateUser(c);
+        } else if(action.equalsIgnoreCase("Đổi MK")) {
+                String salt = PasswordUtils.generateSalt();
+                String hash = PasswordUtils.hashPassword(password, salt);
+                success += dao.changePassword(Integer.parseInt(id), hash, salt);
         }
 
 
@@ -107,6 +101,7 @@ public class GetSetUser extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 
     private boolean getBoolVal(String value) {

@@ -4,7 +4,9 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 
@@ -30,13 +32,10 @@ public class GetIndexProduct extends HttpServlet {
 
         String amount = request.getParameter("exist");
         int iamount = Integer.parseInt(amount);
-        ProductDao pd = new ProductDao();
+        Handle handle = DBConect.get().open();
+        ProductDao pd = new ProductDao(handle);
         List<Product> list = null;
-        try {
-            list = pd.findLatestProducts(iamount);
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        list = pd.findLatestProducts(iamount);
 
         PrintWriter out = response.getWriter();
         // Bắt đầu khối popular mới
@@ -79,20 +78,18 @@ public class GetIndexProduct extends HttpServlet {
 
         // Kết thúc khối popular
         out.println("</div></div></div>");
+        handle.close();
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Handle handle = DBConect.get().open();
         String defaultShow = request.getParameter("defaultshow");
         String funcProduct = request.getParameter("func_product");
         List<Product> ls = new ArrayList<>();
-        ProductDao dao = new ProductDao();
+        ProductDao dao = new ProductDao(handle);
         if (funcProduct.equals("nw_product")) {
-            try {
-                ls = dao.findLatestProducts(Integer.parseInt(defaultShow));
-            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
+            ls = dao.findLatestProducts(Integer.parseInt(defaultShow));
         }
 
         AjaxResponse resp = new AjaxResponse();
@@ -103,5 +100,6 @@ public class GetIndexProduct extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 }

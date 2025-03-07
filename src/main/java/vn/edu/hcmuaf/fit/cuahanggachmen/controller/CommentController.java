@@ -4,8 +4,10 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ReviewDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Review;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
@@ -23,15 +25,12 @@ public class CommentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Handle handle = DBConect.get().open();
         String pid = request.getParameter("productId");
         Integer id = Integer.parseInt(pid);
-        ReviewDao dao = new ReviewDao();
+        ReviewDao dao = new ReviewDao(handle);
         List<Review> rv = null;
-        try {
-           rv = dao.findReviewsByProductId(id);
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+       rv = dao.findReviewsByProductId(id);
 
         AjaxResponse resp =  new AjaxResponse();
         resp.addReviewList(rv);
@@ -40,6 +39,7 @@ public class CommentController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 
     @Override
@@ -59,8 +59,10 @@ public class CommentController extends HttpServlet {
         String comment_text = request.getParameter("comment_text");
         String productId = request.getParameter("productId");
         String rating = request.getParameter("rating");
-        ReviewDao dao = new ReviewDao();
-        ProductDao productDao = new ProductDao();
+
+        Handle handle = DBConect.get().open();
+        ReviewDao dao = new ReviewDao(handle);
+        ProductDao productDao = new ProductDao(handle);
         Review review = new Review();
         review.setUserId(user.getId());
         review.setProductId(Integer.parseInt(productId));
@@ -91,5 +93,6 @@ public class CommentController extends HttpServlet {
             resp.addBool("sucess", false);
             response.getWriter().write(resp.getText());
         }
+        handle.close();
     }
 }

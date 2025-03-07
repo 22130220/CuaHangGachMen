@@ -3,7 +3,9 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ColorDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxParseRequest;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
@@ -17,7 +19,8 @@ import java.util.List;
 public class GetSetColor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ColorDao dao = new ColorDao();
+        Handle handle = DBConect.get().open();
+        ColorDao dao = new ColorDao(handle);
         List<Color> ls = null;
 
         ls = dao.getAllColors();
@@ -29,15 +32,17 @@ public class GetSetColor extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Handle handle = DBConect.get().open();
         String data = request.getParameter("data");
         String action = request.getParameter("action");
         String id = request.getParameter("id");
         int success = 0;
-        ColorDao dao = new ColorDao();
+        ColorDao dao = new ColorDao(handle);
         Color c = new Color();
 
         if(action.equalsIgnoreCase("Thêm")) {
@@ -63,5 +68,6 @@ public class GetSetColor extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 }

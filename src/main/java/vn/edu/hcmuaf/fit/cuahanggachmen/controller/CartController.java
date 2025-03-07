@@ -7,7 +7,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Cart;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.CartItem;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Voucher;
@@ -25,12 +27,9 @@ public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Handle handle = DBConect.get().open();
         List<Voucher> vs = new ArrayList<>();
-        try {
-            vs = new VoucherDao().findAll();
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        vs = new VoucherDao(handle).findAll();
         request.setAttribute("vs", vs);
 
         HttpSession session = request.getSession();

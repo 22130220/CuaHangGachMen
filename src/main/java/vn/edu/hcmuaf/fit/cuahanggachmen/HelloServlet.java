@@ -5,7 +5,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 
 import java.io.IOException;
@@ -22,37 +24,26 @@ public class HelloServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        ProductDao productDao = new ProductDao();
+        Handle handle = DBConect.get().open();
+        ProductDao productDao = new ProductDao(handle);
 
         // BÁN CHẠY
         List<Product> productList = null;
-        try {
-            productList = productDao.findTopSellingProducts(1, 3);
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        productList = productDao.findTopSellingProducts(1, 3);
         request.setAttribute("productList", productList);
 
         // MOI NHAT
         List<Product> latestProducts = null;
-        try {
-            latestProducts = productDao.findLatestProducts();
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        latestProducts = productDao.findLatestProducts();
         request.setAttribute("latestProducts", latestProducts);
 
         // XEM NHIEU
         List<Product> mostViewedProducts = null;
-        try {
-            mostViewedProducts = productDao.findMostViewedProducts();
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-
-        }
+        mostViewedProducts = productDao.findMostViewedProducts();
 
         request.setAttribute("mostViewedProducts", mostViewedProducts);
 
-
+        handle.close();
         request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
     }
 
