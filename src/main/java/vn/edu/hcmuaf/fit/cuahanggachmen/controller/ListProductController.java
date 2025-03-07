@@ -4,9 +4,11 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.ActionResult;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.StatusCode;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.*;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Category;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Size;
@@ -23,31 +25,31 @@ public class ListProductController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String danhMuc = request.getParameter("danhmuc");
-        MaterialDao materialDao = new MaterialDao();
-        ManufacturerDao manufacturerDao  = new ManufacturerDao();
-        SizeDao sizeDao = new SizeDao();
 
+        Handle handle = DBConect.get().open();
+        MaterialDao materialDao = new MaterialDao(handle);
+        ManufacturerDao manufacturerDao  = new ManufacturerDao(handle);
+        SizeDao sizeDao = new SizeDao(handle);
+        CategoryDao categoryDao = new CategoryDao(handle);
         ActionResult rs = new ActionResult();
         rs.setCode(StatusCode.OK);
-        try (CategoryDao categoryDao = new CategoryDao()) {
-            rs.put("category", categoryDao.findAll());
-            rs.put("material", materialDao.findAll());
-            rs.put("manufacturer", manufacturerDao.findAll());
-            rs.put("size", sizeDao.findAll());
-            Category category = new Category();
-            if(danhMuc != null) {
-                rs.put("categoryMain", categoryDao.findById(Integer.parseInt(danhMuc)));
-            } else {
-                category.setName("TẤT CẢ SẢN PHẨM");
-                category.setId(0);
-                rs.put("categoryMain", category);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+
+        rs.put("category", categoryDao.findAll());
+        rs.put("material", materialDao.findAll());
+        rs.put("manufacturer", manufacturerDao.findAll());
+        rs.put("size", sizeDao.findAll());
+        Category category = new Category();
+        if(danhMuc != null) {
+            rs.put("categoryMain", categoryDao.findById(Integer.parseInt(danhMuc)));
+        } else {
+            category.setName("TẤT CẢ SẢN PHẨM");
+            category.setId(0);
+            rs.put("categoryMain", category);
         }
 
 
         request.setAttribute("rs", rs);
+        handle.close();
         request.getRequestDispatcher("/WEB-INF/list_product.jsp").forward(request,response);
     }
 

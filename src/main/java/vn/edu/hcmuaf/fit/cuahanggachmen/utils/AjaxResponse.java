@@ -394,28 +394,4 @@ public class AjaxResponse {
         return text.toString();
     }
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        DBConect.mySqlDataSource();
-
-        ProductDao dao = new ProductDao();
-
-        ReviewDao rvDao = new ReviewDao();
-
-        List<Product> ls = dao.findAll();
-
-        List<Review> rv = rvDao.findReviewsByProductId(1);
-
-        AjaxResponse ajaxResponse = new AjaxResponse();
-
-//        ajaxResponse.addInt("age", 34);
-//        ajaxResponse.addString("name", "phuc");
-//        ajaxResponse.addBool("sex", true);
-
-       // ajaxResponse.addProductList(ls);
-
-        ajaxResponse.addReviewList(rv);
-        System.out.println(ajaxResponse.getText());
-
-
-    }
 }

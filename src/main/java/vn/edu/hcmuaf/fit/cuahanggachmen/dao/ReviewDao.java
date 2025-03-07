@@ -39,20 +39,20 @@ public class ReviewDao extends BaseDao {
     }
 
     // Lấy tất cả các review
-    public List<Review> getAllReviews() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public List<Review> getAllReviews() {
             Query query = handle.createQuery("SELECT * FROM review");
             return query.mapToBean(Review.class).list();
     }
 
     // Tìm các review theo UserID
-    public List<Review> findReviewsByUserId(int userId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public List<Review> findReviewsByUserId(int userId) {
             Query query = handle.createQuery("SELECT * FROM review WHERE UserID = :userId");
             query.bind("userId", userId);
             return query.mapToBean(Review.class).list();
     }
 
     // Tìm các review theo ProductID
-    public List<Review> findReviewsByProductId(int productId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public List<Review> findReviewsByProductId(int productId) {
             Query query = handle.createQuery("select us.fullname, us.avatar, rv.*\n" +
                     "from products p JOIN review rv on p.id = rv.ProductID\n" +
                     "join users us on us.id = rv.UserID\n" +
@@ -62,7 +62,7 @@ public class ReviewDao extends BaseDao {
     }
 
     // Cập nhật rating và nội dung review
-    public void updateReview(int userId, int productId, int rating, String reviewText) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void updateReview(int userId, int productId, int rating, String reviewText) {
             Update update = handle.createUpdate("UPDATE review SET Rating = :rating, ReviewText = :reviewText " +
                     "WHERE UserID = :userId AND ProductID = :productId");
             update.bind("userId", userId)
@@ -73,7 +73,7 @@ public class ReviewDao extends BaseDao {
     }
 
     // Xóa review theo UserID và ProductID
-    public void deleteReview(int userId, int productId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void deleteReview(int userId, int productId) {
             Update update = handle.createUpdate("DELETE FROM review WHERE UserID = :userId AND ProductID = :productId");
             update.bind("userId", userId)
                     .bind("productId", productId)
@@ -81,13 +81,13 @@ public class ReviewDao extends BaseDao {
     }
 
     // Lấy danh sách các review gần đây nhất
-    public List<Review> getRecentReviews(int limit) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public List<Review> getRecentReviews(int limit) {
             Query query = handle.createQuery("SELECT * FROM review ORDER BY ReviewDate DESC LIMIT :limit");
             query.bind("limit", limit);
             return query.mapToBean(Review.class).list();
     }
 
-    public double calculateAverageRatingForProduct(int productId) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public double calculateAverageRatingForProduct(int productId) {
         return handle.createQuery("SELECT AVG(Rating) FROM review WHERE ProductID = :productId")
                         .bind("productId", productId)
                         .mapTo(Double.class)

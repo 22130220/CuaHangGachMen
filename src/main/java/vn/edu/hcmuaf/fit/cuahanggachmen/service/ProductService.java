@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.service;
 
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.view_model.ProductFilter;
 
@@ -13,7 +15,8 @@ public class ProductService {
 
     public List<Product> findByFilter(ProductFilter filter) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 //        ProductStorage storage = new ProductStorage();
-        List<Product> products = new ProductDao().findAll();
+        Handle handle = DBConect.get().open();
+        List<Product> products = new ProductDao(handle).findAll();
 
         //price
         if (filter.havePriceRangeFilter()) {
@@ -49,7 +52,7 @@ public class ProductService {
         int toIndex = Math.min(fromIndex + filter.getPageSize(), products.size());
 
         products = products.subList(fromIndex, toIndex);
-
+        handle.close();
         return sortItem(products, filter);
     }
 

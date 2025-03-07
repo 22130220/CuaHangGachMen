@@ -3,8 +3,10 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.CategoryDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Category;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxParseRequest;
@@ -20,13 +22,10 @@ import java.util.List;
 public class GetProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ProductDao pDao = new ProductDao();
+        Handle handle = DBConect.get().open();
+        ProductDao pDao = new ProductDao(handle);
         List<Product> ls = null;
-        try {
-             ls = pDao.findAll();
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        ls = pDao.findAll();
 
         AjaxResponse resp = new AjaxResponse();
         resp.addProductList(ls);
@@ -36,6 +35,7 @@ public class GetProduct extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
 
+        handle.close();
     }
 
     @Override
@@ -56,9 +56,9 @@ public class GetProduct extends HttpServlet {
         String img = request.getParameter("img");
 
 
-
+        Handle handle = DBConect.get().open();
         int success = 0;
-        ProductDao dao = new ProductDao();
+        ProductDao dao = new ProductDao(handle);
         Product c = new Product();
 
         if(action.equalsIgnoreCase("Thêm")) {
@@ -85,20 +85,12 @@ public class GetProduct extends HttpServlet {
             }
             c.setQuantityPerBox(Integer.parseInt(quantity.replaceAll("[^0-9]", "")));
             c.setImgThumbnail(img);
-            try {
-                success = dao.update(c);
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.update(c);
         } else if(action.equalsIgnoreCase("Xoá")) {
             String[] deleteId = AjaxParseRequest.parse(vid);
             boolean realAcive = getBoolVal(active);
             for (String s : deleteId) {
-                try {
-                    success += dao.updateActive(Integer.parseInt(s), realAcive);
-                } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                success += dao.updateActive(Integer.parseInt(s), realAcive);
             }
 
         }
@@ -111,6 +103,8 @@ public class GetProduct extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+
+        handle.close();
     }
     private boolean getBoolVal(String value) {
         if(value.equalsIgnoreCase("true")) return true;

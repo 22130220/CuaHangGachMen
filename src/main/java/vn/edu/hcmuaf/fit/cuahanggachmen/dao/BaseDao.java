@@ -15,4 +15,8 @@ public abstract class BaseDao implements AutoCloseable{
     public void close() throws Exception {
         handle.close();
     }
+
+    public Handle getHandle() {
+        return handle;
+    }
 }

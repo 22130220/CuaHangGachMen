@@ -3,8 +3,10 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductSpecDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.SpecTypeDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.ProductSpec;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.SpecType;
@@ -20,15 +22,15 @@ import java.util.List;
 public class GetProductSpec extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Handle handle = DBConect.get().open();
         String pid = request.getParameter("pid");
         List<ProductSpec> ls = null;
         List<SpecType> specTypes = null;
-        ProductSpecDao dao = new ProductSpecDao();
-        SpecTypeDao spDao = new SpecTypeDao();
+        ProductSpecDao dao = new ProductSpecDao(handle);
+        SpecTypeDao spDao = new SpecTypeDao(handle);
         AjaxResponse resp = new AjaxResponse();
 
         if(pid == null) {
-            try {
                 specTypes = spDao.findAll();
                 resp.addSpecTypeList(specTypes);
                 response.setStatus(HttpServletResponse.SC_OK);
@@ -36,17 +38,11 @@ public class GetProductSpec extends HttpServlet {
                 response.setCharacterEncoding("UTF-8");
                 PrintWriter out = response.getWriter();
                 out.print(resp.getText());
+                handle.close();
                 return;
-            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
         } else {
-            try {
-                ls = dao.findByProductId(Integer.parseInt(pid));
-                specTypes = spDao.findByProduct(Integer.parseInt(pid));
-            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
+            ls = dao.findByProductId(Integer.parseInt(pid));
+            specTypes = spDao.findByProduct(Integer.parseInt(pid));
 
             resp.addProductSpecList(ls);
             resp.addSpecTypeList(specTypes);
@@ -55,12 +51,15 @@ public class GetProductSpec extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             PrintWriter out = response.getWriter();
             out.print(resp.getText());
+            handle.close();
             return;
         }
+
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Handle handle = DBConect.get().open();
         String action = request.getParameter("action");
         String value = request.getParameter("value");
         String sel = request.getParameter("sel");
@@ -69,7 +68,7 @@ public class GetProductSpec extends HttpServlet {
         String specId = request.getParameter("specId");
         String specIdToDel = request.getParameter("specIdToDel");
 
-        ProductSpecDao dao = new ProductSpecDao();
+        ProductSpecDao dao = new ProductSpecDao(handle);
         ProductSpec c = new ProductSpec();
 
         int success = 0;
@@ -78,31 +77,18 @@ public class GetProductSpec extends HttpServlet {
             c.setSpecId(Integer.parseInt(sel));
             c.setValue(value);
             c.setProcuctId(Integer.parseInt(pid));
-            try {
-                success = dao.insert(c);
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.insert(c);
         } else if(action.equalsIgnoreCase("Cập nhật")) {
             c.setProcuctId(Integer.parseInt(pid));
             c.setValue(value);
             c.setSpecId(Integer.parseInt(specId));
-            try {
-                success = dao.update(c);
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.update(c);
         } else if(action.equalsIgnoreCase("Xoá")) {
             String[] deleteId = AjaxParseRequest.parse(specIdToDel);
             int realPid = Integer.parseInt(pid);
             for (String s : deleteId) {
-                try {
-                    success += dao.deleteById(realPid, Integer.parseInt(s));
-                } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                success += dao.deleteById(realPid, Integer.parseInt(s));
             }
-
         }
 
 
@@ -113,5 +99,6 @@ public class GetProductSpec extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 }

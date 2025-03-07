@@ -3,7 +3,9 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.*;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
 
 import java.io.*;
@@ -22,11 +24,12 @@ public class ProductCrudController extends HttpServlet {
         String message = null;
         String operation = null;
 
-        CategoryDao categoryDao = new CategoryDao();
-        MaterialDao materialDao = new MaterialDao();
-        ManufacturerDao manufacturerDao = new ManufacturerDao();
-        SizeDao sizeDao = new SizeDao();
-        ProductDao productDao = new ProductDao();
+        Handle handle = DBConect.get().open();
+        CategoryDao categoryDao = new CategoryDao(handle);
+        MaterialDao materialDao = new MaterialDao(handle);
+        ManufacturerDao manufacturerDao = new ManufacturerDao(handle);
+        SizeDao sizeDao = new SizeDao(handle);
+        ProductDao productDao = new ProductDao(handle);
         Product product = null;
 
         List<Category> categories = null;
@@ -34,7 +37,6 @@ public class ProductCrudController extends HttpServlet {
         List<Manufacturer> manufacturers = null;
         List<Material> materials = null;
 
-        try {
             categories = categoryDao.findAll();
             sizes = sizeDao.findAll();
             manufacturers = manufacturerDao.findAll();
@@ -49,9 +51,6 @@ public class ProductCrudController extends HttpServlet {
                 operation = "Thêm";
             }
 
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
 
         request.setAttribute("categories", categories);
         request.setAttribute("sizes", sizes);
@@ -60,7 +59,7 @@ public class ProductCrudController extends HttpServlet {
         request.setAttribute("operation", operation);
         request.setAttribute("p", product);
         request.setAttribute("message", message);
-
+        handle.close();
         request.getRequestDispatcher("/WEB-INF/admin_addproduct.jsp").forward(request, response);
     }
 
@@ -96,7 +95,8 @@ public class ProductCrudController extends HttpServlet {
                 }
             }
 
-            ProductDao productDao = new ProductDao();
+            Handle handle = DBConect.get().open();
+            ProductDao productDao = new ProductDao(handle);
             Product product = new Product();
             product.setDescription(path);
             product.setName(productName);
@@ -108,11 +108,7 @@ public class ProductCrudController extends HttpServlet {
             product.setManufacturerId(Integer.parseInt(productManufacturer));
             product.setMaterialId(Integer.parseInt(productMaterial));
 
-            try {
-                success = productDao.insert(product);
-            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
+            success = productDao.insert(product);
 
             if (success > 0) {
                 String[] specValue = request.getParameterValues("value");
@@ -122,41 +118,33 @@ public class ProductCrudController extends HttpServlet {
                 String[] colorId = request.getParameterValues("color_id");
 
                 if(specId != null) {
-                    ProductSpecDao productSpecDao = new ProductSpecDao();
+                    ProductSpecDao productSpecDao = new ProductSpecDao(handle);
                     for(int i = 0; i < specValue.length; i++) {
                         ProductSpec productSpec = new ProductSpec();
                         productSpec.setSpecId(Integer.parseInt(specId[i]));
                         productSpec.setSpecName(specValue[i]);
                         productSpec.setProcuctId(success);
-                        try {
-                            productSpecDao.insert(productSpec);
-                        } catch (SQLException | ClassNotFoundException | InstantiationException |
-                                 IllegalAccessException e) {
-                            throw new RuntimeException(e);
-                        }
+                        productSpecDao.insert(productSpec);
                     }
                 }
 
                 if(colorId != null) {
-                    ProductColorImgDao productColorImgDao = new ProductColorImgDao();
+                    ProductColorImgDao productColorImgDao = new ProductColorImgDao(handle);
                     for(int i = 0; i < colorValue.length; i++) {
                         ProductColorImg productColorImg = new ProductColorImg();
                         productColorImg.setColorId(Integer.parseInt(colorId[i]));
                         productColorImg.setUrl(colorValue[i]);
                         productColorImg.setProductId(success);
 
-                        try {
-                            productColorImgDao.insert(productColorImg.getColorId(), productColorImg.getProductId(), productColorImg.getUrl());
-                        } catch (SQLException | ClassNotFoundException | InstantiationException |
-                                 IllegalAccessException e) {
-                            throw new RuntimeException(e);
-                        }
+                        productColorImgDao.insert(productColorImg.getColorId(), productColorImg.getProductId(), productColorImg.getUrl());
                     }
                 }
 
                 //request.setAttribute("success", success);
+                handle.close();
                 request.getRequestDispatcher("/WEB-INF/admin_manageproduct.jsp").forward(request, response);
             } else {
+                handle.close();
                 response.setStatus(HttpServletResponse.SC_CONFLICT);
             }
         }

@@ -3,7 +3,9 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Category;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 
@@ -21,7 +23,8 @@ public class ProductDetailController extends HttpServlet {
         String colorParam = request.getParameter("color");
 
         Product product = null;
-        ProductDao productDao = new ProductDao();
+        Handle handle = DBConect.get().open();
+        ProductDao productDao = new ProductDao(handle);
 
         try {
             // Lấy ID sản phẩm từ request
@@ -48,15 +51,14 @@ public class ProductDetailController extends HttpServlet {
 
         } catch (NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid product or color ID");
+            handle.close();
             return;
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException("Error fetching product details", e);
         }
 
         // Đặt sản phẩm vào request attribute để hiển thị trên JSP
         request.setAttribute("p", product);
 
-
+        handle.close();
         // Chuyển tiếp đến trang chi tiết sản phẩm
         request.getRequestDispatcher("/WEB-INF/product-detail.jsp").forward(request, response);
     }

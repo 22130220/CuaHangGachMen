@@ -67,19 +67,19 @@ public class ProductDao extends BaseDao {
 
         product.setImgList(lsImg);
 
-        ReviewDao rvDao = new ReviewDao();
+        ReviewDao rvDao = new ReviewDao(handle);
 
         List<Review> lsReview = rvDao.findReviewsByProductId(id);
 
         product.setLsReview(lsReview);
 
-        ColorDao colorDao = new ColorDao();
+        ColorDao colorDao = new ColorDao(handle);
 
         List<Color> lsColor = colorDao.findColorByIds(id);
 
         product.setLsColor(lsColor);
 
-        product.setCategory(new CategoryDao().findById(product.getCategoryId()));
+        product.setCategory(new CategoryDao(handle).findById(product.getCategoryId()));
 
         return product;
     }
@@ -154,7 +154,7 @@ public class ProductDao extends BaseDao {
                         .list();
     }
 
-    public List<Product> findLatestProducts(int amount) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public List<Product> findLatestProducts(int amount) {
         Jdbi jdbi = DBConect.get();
         return jdbi.withHandle(handle ->
                 handle.createQuery(

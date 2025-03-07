@@ -4,7 +4,9 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.PasswordUtils;
 
 import java.io.IOException;
@@ -42,13 +44,15 @@ public class ResetPassword extends HttpServlet {
                 String hashedPassword = PasswordUtils.hashPassword(newPassword, salt);
 
                 // Cập nhật mật khẩu người dùng
-                UserDao userDao = new UserDao();
+                Handle handle = DBConect.get().open();
+                UserDao userDao = new UserDao(handle);
                 userDao.updatePassword(email, hashedPassword, salt);
 
                 // Xóa token khỏi bộ nhớ
                 ForgetPassword.removeToken(token);
 
                 request.setAttribute("message", "Mật khẩu của bạn đã được đặt lại thành công.");
+                handle.close();
                 request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             } catch (Exception e) {
                 e.printStackTrace();

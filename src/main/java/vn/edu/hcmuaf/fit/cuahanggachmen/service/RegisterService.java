@@ -1,8 +1,10 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.service;
 
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.ActionResult;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.StatusCode;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 
 import java.sql.Timestamp;
@@ -52,7 +54,10 @@ public class RegisterService {
     }
 
     public ActionResult addUser(User user) {
-        return new UserDao().insertUser(user.getFullname(), user.getEmail(), user.getPhone(), user.getAvatar(), user.getAddress(), user.getBirthtime(), user.getSalt(), user.getPassword(), user.getSex());
+        Handle handle = DBConect.get().open();
+        ActionResult rs = new UserDao(handle).insertUser(user.getFullname(), user.getEmail(), user.getPhone(), user.getAvatar(), user.getAddress(), user.getBirthtime(), user.getSalt(), user.getPassword(), user.getSex());
+        handle.close();
+        return rs;
     }
 
     public Timestamp convertToTimestamp(String dateTime) {

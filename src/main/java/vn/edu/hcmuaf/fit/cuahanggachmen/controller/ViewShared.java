@@ -3,7 +3,9 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 
 import java.io.IOException;
@@ -23,13 +25,10 @@ public class ViewShared extends HttpServlet {
 
         // Ghi đè xử lý nếu cần
         if (path != null && pid != null) {
-            ProductDao dao = new ProductDao();
+            Handle handle = DBConect.get().open();
+            ProductDao dao = new ProductDao(handle);
             Product p = null;
-            try {
-                p = dao.findById(Integer.parseInt(pid));
-            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
+            p = dao.findById(Integer.parseInt(pid));
             request.setAttribute("p", p);
             request.getRequestDispatcher(path).forward(request, response);
 

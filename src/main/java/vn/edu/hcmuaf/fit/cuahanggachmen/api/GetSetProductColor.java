@@ -3,10 +3,12 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ColorDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductColorImgDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductSpecDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.SpecTypeDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.ProductColorImg;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.ProductSpec;
@@ -30,16 +32,13 @@ public class GetSetProductColor extends HttpServlet {
         }
         List<ProductColorImg> ls = null;
         List<Color> colorLs = null;
-        ProductColorImgDao dao = new ProductColorImgDao();
-        ColorDao spDao = new ColorDao();
+        Handle handle = DBConect.get().open();
+        ProductColorImgDao dao = new ProductColorImgDao(handle);
+        ColorDao spDao = new ColorDao(handle);
         AjaxResponse resp = new AjaxResponse();
 
-        try {
-            ls = dao.findByProductId(Integer.parseInt(pid));
-            colorLs = spDao.getAllColors();
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        ls = dao.findByProductId(Integer.parseInt(pid));
+        colorLs = spDao.getAllColors();
 
         resp.addProductColorList(ls);
         resp.addColorList(colorLs);
@@ -48,6 +47,7 @@ public class GetSetProductColor extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 
     @Override
@@ -61,7 +61,8 @@ public class GetSetProductColor extends HttpServlet {
         String colorRowId = request.getParameter("colorRowId");
         String colorIdToDel = request.getParameter("colorIdToDel");
 
-        ProductColorImgDao dao = new ProductColorImgDao();
+        Handle handle = DBConect.get().open();
+        ProductColorImgDao dao = new ProductColorImgDao(handle);
         ProductColorImg c = new ProductColorImg();
 
         int success = 0;
@@ -70,27 +71,15 @@ public class GetSetProductColor extends HttpServlet {
             c.setColorId(Integer.parseInt(sel));
             c.setUrl(value);
             c.setProductId(Integer.parseInt(pid));
-            try {
-                success = dao.insert(c.getColorId(), c.getProductId(),c.getUrl());
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.insert(c.getColorId(), c.getProductId(),c.getUrl());
         } else if(action.equalsIgnoreCase("Cập nhật")) {
             c.setId(Integer.parseInt(colorRowId));
             c.setUrl(value);
-            try {
-                success = dao.update(c.getId(), c.getUrl());
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.update(c.getId(), c.getUrl());
         } else if(action.equalsIgnoreCase("Xoá")) {
             String[] deleteId = AjaxParseRequest.parse(colorIdToDel);
             for (String s : deleteId) {
-                try {
-                    success += dao.deleteById(Integer.parseInt(s));
-                } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                success += dao.deleteById(Integer.parseInt(s));
             }
 
         }
@@ -103,5 +92,6 @@ public class GetSetProductColor extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 }

@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.view_model.ProductFilter;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.ProductService;
-import vn.edu.hcmuaf.fit.cuahanggachmen.storage.ProductStorage;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxParseRequest;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 

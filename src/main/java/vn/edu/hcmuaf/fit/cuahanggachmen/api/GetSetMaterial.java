@@ -3,8 +3,10 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ColorDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.MaterialDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Material;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxParseRequest;
@@ -19,14 +21,11 @@ import java.util.List;
 public class GetSetMaterial extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        MaterialDao dao = new MaterialDao();
+        Handle handle = DBConect.get().open();
+        MaterialDao dao = new MaterialDao(handle);
         List<Material> ls = null;
 
-        try {
-            ls = dao.findAll();
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        ls = dao.findAll();
 
         AjaxResponse resp = new AjaxResponse();
         resp.addMaterialList(ls);
@@ -35,40 +34,30 @@ public class GetSetMaterial extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Handle handle = DBConect.get().open();
         String data = request.getParameter("data");
         String action = request.getParameter("action");
         String id = request.getParameter("id");
         int success = 0;
-        MaterialDao dao = new MaterialDao();
+        MaterialDao dao = new MaterialDao(handle);
         Material c = new Material();
 
         if(action.equalsIgnoreCase("Thêm")) {
             c.setName(data);
-            try {
-                success = dao.insert(c);
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.insert(c);
         } else if(action.equalsIgnoreCase("Cập nhật")) {
             c.setId(Integer.parseInt(id));
             c.setName(data);
-            try {
-                success = dao.update(c);
-            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            success = dao.update(c);
         } else if(action.equalsIgnoreCase("Xoá")) {
             String[] deleteId = AjaxParseRequest.parse(data);
             for (String s : deleteId) {
-                try {
-                    success += dao.deleteById(Integer.parseInt(s));
-                } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                success += dao.deleteById(Integer.parseInt(s));
             }
 
         }
@@ -81,5 +70,6 @@ public class GetSetMaterial extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 }

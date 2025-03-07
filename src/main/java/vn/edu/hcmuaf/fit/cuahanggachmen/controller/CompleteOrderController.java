@@ -4,10 +4,12 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.OrderDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.OrderDetailDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherUsageDAO;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.mail.EmailService;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
 
@@ -42,7 +44,8 @@ public class CompleteOrderController extends HttpServlet {
         Cart c = (Cart) session.getAttribute("cart");
 
         Order order = new Order();
-        OrderDao dao = new OrderDao();
+        Handle handle = DBConect.get().open();
+        OrderDao dao = new OrderDao(handle);
 
 
         order.setFullName(name);
@@ -60,17 +63,14 @@ public class CompleteOrderController extends HttpServlet {
         } else totalPrice = c.getTotal();
 
         order.setTotalPrice(BigDecimal.valueOf(totalPrice));
-        try {
-            lastRowId = dao.insert(order);
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        lastRowId = dao.insert(order);
 
         if(lastRowId <= 0) {
+            handle.close();
             response.sendRedirect("/WEB-INF/404.jsp");
         } else {
             int rowCount = 0;
-            OrderDetailDao dDao = new OrderDetailDao();
+            OrderDetailDao dDao = new OrderDetailDao(handle);
             for(CartItem item : c.getItems()) {
                 OrderDetail oDetail = new OrderDetail();
                 oDetail.setOrderId(lastRowId);
@@ -78,11 +78,7 @@ public class CompleteOrderController extends HttpServlet {
                 oDetail.setQuantity(item.getQuantity());
                 oDetail.setPrice(item.getPricePerBox());
                 oDetail.setColor(item.getProductColor());
-                try {
-                    rowCount += dDao.insert(oDetail);
-                } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
+                rowCount += dDao.insert(oDetail);
             }
 
             if(rowCount == c.getItems().size()) {
@@ -94,15 +90,8 @@ public class CompleteOrderController extends HttpServlet {
                     voucherUsage.setOrderId(lastRowId);
                     voucherUsage.setUsageDate(LocalDateTime.now());
 
-                    VoucherUsageDAO voucherUsageDAO = new VoucherUsageDAO();
-                    try {
-                        voucherUsageDAO.insert(voucherUsage);
-                    } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                        // Xử lý lỗi khi lưu VoucherUsage (có thể rollback đơn hàng nếu cần)
-                        e.printStackTrace();
-                        response.sendRedirect("/WEB-INF/404.jsp");
-                        return;
-                    }
+                    VoucherUsageDAO voucherUsageDAO = new VoucherUsageDAO(handle);
+                    voucherUsageDAO.insert(voucherUsage);
                 }
 
                 // Gửi email xác nhận đơn hàng
@@ -119,8 +108,12 @@ public class CompleteOrderController extends HttpServlet {
                 request.setAttribute("address", address);
                 request.setAttribute("payment", "COD");
                 request.setAttribute("totalPrice", totalPrice);
+                handle.close();
                 doGet(request,response);
-            } else response.sendRedirect("/WEB-INF/404.jsp");
+            } else {
+                handle.close();
+                response.sendRedirect("/WEB-INF/404.jsp");
+            }
         }
 
     }

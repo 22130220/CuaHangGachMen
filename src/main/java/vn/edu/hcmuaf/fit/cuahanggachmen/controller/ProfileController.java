@@ -3,7 +3,9 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 
 import java.io.IOException;
@@ -24,12 +26,13 @@ public class ProfileController extends HttpServlet {
         }
 
         try {
-            UserDao userDao = new UserDao();
+            Handle handle = DBConect.get().open();
+            UserDao userDao = new UserDao(handle);
             User fullUserInfo = userDao.getUserById(user.getId()); // Lấy thông tin đầy đủ từ DB
             request.setAttribute("user", fullUserInfo); // Truyền thông tin qua JSP
             String birthDate = fullUserInfo.getBirthtime().toLocalDate().toString(); // Định dạng yyyy-MM-dd
             request.setAttribute("birthtime", birthDate);
-
+            handle.close();
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/error.jsp");
@@ -65,11 +68,13 @@ public class ProfileController extends HttpServlet {
         user.setSex("male".equals(gender) ? 1 : 0);
 
         try {
-            UserDao userDao = new UserDao();
+            Handle handle = DBConect.get().open();
+            UserDao userDao = new UserDao(handle);
             userDao.updateUserProfile(user); // Cập nhật trong database
             session.setAttribute("auth", user); // Cập nhật lại trong session
 
             request.setAttribute("message", "Cập nhật thông tin thành công!");
+            handle.close();
 
         } catch (Exception e) {
             e.printStackTrace();

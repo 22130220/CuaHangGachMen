@@ -4,7 +4,9 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 
 import java.io.*;
@@ -43,7 +45,8 @@ public class UploadAvatarController extends HttpServlet {
 
             // Cập nhật thông tin avatar trong database
             String avatarUrl = "assets/img/" + uniqueFileName; // Đường dẫn dùng để hiển thị
-            UserDao userDao = new UserDao();
+            Handle handle = DBConect.get().open();
+            UserDao userDao = new UserDao(handle);
             user.setAvatar(avatarUrl);
             userDao.updateUserProfileAvatar(user);
 
@@ -51,6 +54,7 @@ public class UploadAvatarController extends HttpServlet {
             session.setAttribute("auth", user);
 
             response.sendRedirect("/profile?success=1");
+            handle.close();
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/profile?error=1");

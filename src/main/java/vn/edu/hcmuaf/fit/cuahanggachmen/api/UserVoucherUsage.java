@@ -4,8 +4,10 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherUsageDAO;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Cart;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Voucher;
@@ -22,6 +24,7 @@ public class UserVoucherUsage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Handle handle = DBConect.get().open();
         String code = request.getParameter("code");
         User u = (User) request.getSession().getAttribute("auth");
         VoucherUsage voucherUsage = new VoucherUsage();
@@ -29,25 +32,17 @@ public class UserVoucherUsage extends HttpServlet {
         boolean status = false;
         double discount = 0;
 
-        VoucherUsageDAO dao = new VoucherUsageDAO();
-        try {
-            voucherUsage = dao.findByCodeAndUser(code, id).orElse(null);
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        VoucherUsageDAO dao = new VoucherUsageDAO(handle);
+        voucherUsage = dao.findByCodeAndUser(code, id).orElse(null);
 
         status = voucherUsage != null;
 
         AjaxResponse resp = new AjaxResponse();
 
         if(!status) {
-            VoucherDao vDao = new VoucherDao();
+            VoucherDao vDao = new VoucherDao(handle);
             Voucher vs = null;
-            try {
-                vs = vDao.findByName(code).orElse(null);
-            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
+            vs = vDao.findByName(code).orElse(null);
             if(vs != null) {
                 HttpSession session = request.getSession();
                 Cart cart = (Cart)session.getAttribute("cart");
@@ -63,6 +58,7 @@ public class UserVoucherUsage extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
+        handle.close();
     }
 
     @Override
