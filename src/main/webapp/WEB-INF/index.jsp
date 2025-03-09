@@ -325,7 +325,7 @@
 </script>
 
 <!-- Popular -->
-<div class="popular" id="popular">
+<div class="popular" id="popular3">
     <div class="main-content">
         <div class="popular-top">
             <div class="info">
@@ -418,9 +418,41 @@
     </div>
 </div>
 
+
+
 <div class="load-more" style="text-align: center; margin-top: 30px;">
-    <div id="load-more-btn" class="btn" onclick="">Xem thêm</div>
+    <div id="load-more-btn3" class="btn" onclick="loadMoreView()">Xem thêm</div>
 </div>
+
+<script>
+    var amount3 = 3;
+    function loadMoreView() {
+        if (amount3 >= 9) {
+            $("#load-more-btn3").hide(); // Ẩn nút "Xem thêm"
+            return; // Dừng hàm, không thực hiện AJAX
+        }
+
+        $.ajax({
+            url: "/loadmoreview",
+            type: "GET",
+            data: {
+                exist: amount3
+            },
+            success: function(data) {
+                $("#load-more-btn3").before(data);
+                amount3 += 3; // Cập nhật biến sau khi thêm dữ liệu
+
+                if (amount3 >= 9) {
+                    $("#load-more-btn3").hide(); // Kiểm tra lại sau khi cập nhật
+                }
+            },
+            error: function(xhr) {
+                console.error("Có lỗi xảy ra khi thêm dữ liệu:", xhr);
+            }
+        });
+    }
+</script>
+
 
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
 
