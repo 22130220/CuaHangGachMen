@@ -1,32 +1,32 @@
 // Xử lý tăng/giảm số lượng sản phẩm
-document.querySelectorAll('.quantity-control').forEach(control => {
-    const decreaseButton = control.querySelector('button:nth-child(1)');
-    const quantityInput = control.querySelector('input');
-    const increaseButton = control.querySelector('button:nth-child(3)');
+// document.querySelectorAll('.quantity-control').forEach(control => {
+//     const decreaseButton = control.querySelector('button:nth-child(1)');
+//     const quantityInput = control.querySelector('input');
+//     const increaseButton = control.querySelector('button:nth-child(3)');
 
-    decreaseButton.addEventListener('click', () => {
-        let currentValue = parseInt(quantityInput.value, 10) || 0;
-        if (currentValue > 1) {
-            quantityInput.value = currentValue - 1;
-            updateTotal(control, currentValue - 1);
-        }
-    });
+    // decreaseButton.addEventListener('click', () => {
+    //     let currentValue = parseInt(quantityInput.value, 10) || 0;
+    //     if (currentValue > 1) {
+    //         quantityInput.value = currentValue - 1;
+    //         updateTotal(control, currentValue - 1);
+    //     }
+    // });
+    //
+    // increaseButton.addEventListener('click', () => {
+    //     let currentValue = parseInt(quantityInput.value, 10) || 0;
+    //     quantityInput.value = currentValue + 1;
+    //     updateTotal(control, currentValue + 1);
+    // });
 
-    increaseButton.addEventListener('click', () => {
-        let currentValue = parseInt(quantityInput.value, 10) || 0;
-        quantityInput.value = currentValue + 1;
-        updateTotal(control, currentValue + 1);
-    });
-
-    quantityInput.addEventListener('input', () => {
-        let currentValue = parseInt(quantityInput.value, 10);
-        if (isNaN(currentValue) || currentValue < 1) {
-            quantityInput.value = 1;
-            currentValue = 1;
-        }
-        updateTotal(control, currentValue);
-    });
-});
+//     quantityInput.addEventListener('input', () => {
+//         let currentValue = parseInt(quantityInput.value, 10);
+//         if (isNaN(currentValue) || currentValue < 1) {
+//             quantityInput.value = 1;
+//             currentValue = 1;
+//         }
+//         updateTotal(control, currentValue);
+//     });
+// });
 
 // Xử lý sự kiện xóa sản phẩm
 document.querySelectorAll('.btn-remove').forEach(button => {

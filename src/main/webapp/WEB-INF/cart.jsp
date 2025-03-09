@@ -28,7 +28,7 @@
 <body>
 <!-- Header chung -->
 <jsp:include page="/view_shared/header_footer/header.jsp"/>
-
+<f:setLocale value="vi_VN" />
 <div class="cart-page">
     <!-- Đường dẫn -->
     <div class="breadcrumb">
@@ -95,8 +95,8 @@
                                 <div class="item-price">
                                     <!-- Giá/hộp -->
                                     <span class="current-price">
-                                        <f:formatNumber value="${item.pricePerBox}" type="number"
-                                                        maxFractionDigits="0"/>₫
+                                        <f:formatNumber value="${item.pricePerBox}" type="currency" currencyCode="VND" currencySymbol="₫"
+                                                        maxFractionDigits="0"/>
                                     </span>
 
                                 </div>
@@ -105,8 +105,7 @@
                             <!-- Bộ điều chỉnh số lượng -->
                             <div class="quantity-control">
                                 <!-- Ta chỉ để nút trừ/tăng ở đây, hoặc bỏ đi nếu không cần -->
-                                <button type="button"
-                                        onclick="this.parentElement.querySelector('input[type=number]').stepDown(); triggerUpdate(this.parentElement.querySelector('input[type=number]'));">
+                                <button type="button" class="quantity_stepdown">
                                     -
                                 </button>
 
@@ -114,20 +113,21 @@
                                         type="number"
                                         value="${item.quantity}"
                                         min="1"
-                                        onchange="triggerUpdate(this)"
                                         data-productid="${item.productId}"
                                         data-color="${item.productColor}"
+                                        id="quantity_input"
+                                        name="quantity_input"
+                                        class="quantity_input"
                                 />
 
-                                <button type="button"
-                                        onclick="this.parentElement.querySelector('input[type=number]').stepUp(); triggerUpdate(this.parentElement.querySelector('input[type=number]'));">
+                                <button type="button" class="quantity_stepup">
                                     +
                                 </button>
                             </div>
 
                             <!-- Giá tổng -->
                             <p class="item-total">
-                                <f:formatNumber value="${item.totalPrice}" type="number" maxFractionDigits="0"/>₫
+                                <f:formatNumber value="${item.totalPrice}" type="currency" currencyCode="VND" currencySymbol="₫" maxFractionDigits="0"/>
                             </p>
                         </div>
                     </c:forEach>
@@ -188,8 +188,8 @@
                 <h2>Thông tin đơn hàng</h2>
                 <div class="summary">
                     <p>Tổng tiền:</p>
-                    <p class="total-price">
-                        <f:formatNumber value="${cart.total}" type="number" maxFractionDigits="0"/>₫
+                    <p class="total-price" id="total_price">
+                        <f:formatNumber value="${cart.total}" type="currency" currencyCode="VND" currencySymbol="₫" maxFractionDigits="0"/>
                     </p>
                 </div>
                 <p>Phí vận chuyển sẽ được tính ở trang Thanh toán.</p>
@@ -341,7 +341,21 @@
 
 
 <script>
-    function triggerUpdate(inputElement) {
+    function debounce(callback, delay) {
+        let timeoutId; // Biến lưu trữ timeout
+
+        return function (...args) {
+            clearTimeout(timeoutId);
+
+            timeoutId = setTimeout(() => {
+                callback(...args);
+            }, delay);
+        };
+    }
+
+    function triggerUpdate(element) {
+        let parentElement = element.closest("div");
+        let inputElement = parentElement.querySelector('#quantity_input');
         const quantity = inputElement.value;
         const productId = inputElement.dataset.productid;
         const color = inputElement.dataset.color;
@@ -363,16 +377,64 @@
                 if (!response.ok) {
                     throw new Error('Cập nhật thất bại');
                 }
-                // Reload trang để cập nhật lại giao diện
-                window.location.reload();
+                return response.json();
+            })
+            .then(data => {
+                console.log(data);
+                $('#total_price').text(data.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }))
+                let allParrentElement = parentElement.parentElement;
+                let totalPriceElement = allParrentElement.querySelector(".item-total");
+                totalPriceElement.textContent = data.thisElementPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
             })
             .catch(err => {
                 console.error(err);
                 alert('Không thể cập nhật giỏ hàng!');
             });
-
-
     }
+
+    const debouncedUpdateCart = debounce(triggerUpdate, 200);
+
+    $(".quantity_input").on('change', (event) => {
+        let a = event.currentTarget;
+        console.log([a])
+        debouncedUpdateCart(event.currentTarget)
+    });
+    // Xử lý sự kiện input
+    $(".quantity_input").on("input", function() {
+        let value = parseFloat($(this).val());
+
+        if (value <= 0) {
+            $(this).val(1);
+        }
+    });
+    $(".quantity_input").on("keydown", function(event) {
+        // Cho phép các phím: số, phím điều hướng, phím xóa
+        if (
+            (event.key >= '0' && event.key <= '9') ||
+            event.key === 'ArrowLeft' || event.key === 'ArrowRight' ||
+            event.key === 'Home' || event.key === 'End' ||
+            event.key === 'Backspace' || event.key === 'Delete'
+        ) {
+            return; // Cho phép
+        } else {
+            event.preventDefault(); // Chặn các phím khác
+        }
+    });
+
+    $(".quantity_stepup").on('click', (event) => {
+        let parentElement = event.currentTarget.closest("div");
+        let inputElement = parentElement.querySelector('#quantity_input');
+        // document.querySelector('input[type=number][name="quantity_input"]').stepUp();
+        inputElement.stepUp();
+        debouncedUpdateCart(event.currentTarget);
+    })
+    $('.quantity_stepdown').on('click', (event) => {
+        let parentElement = event.currentTarget.closest("div");
+        let inputElement = parentElement.querySelector('#quantity_input');
+        // document.querySelector('input[type=number][name="quantity_input"]').stepUp();
+        inputElement.stepDown();
+        debouncedUpdateCart(event.currentTarget);
+    });
 </script>
 
 <script>
@@ -399,7 +461,7 @@
                     throw new Error('Remove failed');
                 }
                 // Nếu xóa thành công => reload trang để cập nhật
-                window.location.reload();
+                // window.location.reload();
             })
             .catch(err => {
                 console.error(err);
