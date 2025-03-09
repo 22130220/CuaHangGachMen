@@ -1,6 +1,10 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,6 +24,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "CartController", value = "/cart")
 public class CartController extends HttpServlet {
@@ -54,21 +59,9 @@ public class CartController extends HttpServlet {
         end = Math.min(page * numperpage, size);
 
         ArrayList<CartItem> list1 =getListBypage(list, start, end);
-//        AjaxResponse resp = new AjaxResponse();
         request.setAttribute("listo", list1);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
-//        resp.addInt("page", page);
-//        resp.addInt("num", num);
-//
-//
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        response.setContentType("application/json");
-//        response.setCharacterEncoding("UTF-8");
-//        PrintWriter out = response.getWriter();
-//        out.print(resp.getText());
-
-
 
         request.getRequestDispatcher("/WEB-INF/cart.jsp").forward(request, response);
 
@@ -85,24 +78,37 @@ public class CartController extends HttpServlet {
         if (cart == null) {
             cart = new Cart();
         }
-
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        String color = request.getParameter("color");
         if ("remove".equals(action)) {
-            int productId = Integer.parseInt(request.getParameter("productId"));
-            String color = request.getParameter("color");
             cart.removeItem(productId, color);
         }
 
         if ("update".equals(action)) {
-            int productId = Integer.parseInt(request.getParameter("productId"));
-            String color = request.getParameter("color");
             int newQuantity = Integer.parseInt(request.getParameter("quantity"));
             cart.updateQuantity(productId, color, newQuantity);
-
-
         }
 
         session.setAttribute("cart", cart);
-        response.sendRedirect("cart");
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//        JsonObject object1 = JsonParser.parseString(gson.toJson(cart)).getAsJsonObject();
+        JsonObject object2 = JsonParser.parseString(gson.toJson(Map.of(
+                "status", true,
+                "totalPrice", cart.getTotal(),
+                "thisElementPrice", cart.getItems().stream().filter(n -> n.getProductId() == productId && n.getProductColor().equals(color)).findFirst().orElse(null).getTotalPrice()
+        ))).getAsJsonObject();
+
+//        for (String key : object2.keySet()) {
+//            object1.add(key, object2.get(key));
+//        }
+
+        String resp = gson.toJson(object2);
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print(resp);
     }
 
     public static ArrayList<CartItem> getListBypage(List<CartItem> list, int start, int end) {
