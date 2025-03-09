@@ -141,6 +141,24 @@ public class ProductDao extends BaseDao {
                         .list();
     }
 
+    public List<Product> findTopSellingProducts(int months, int limit, int amount) {
+        String query = "SELECT p.id, p.name, p.imgThumbnail, p.pricePerBox, p.rating, COUNT(od.productID) AS ProductCount " +
+                "FROM products p " +
+                "JOIN orderdetail od ON p.id = od.productID " +
+                "JOIN orders o ON od.orderID = o.id " +
+                "WHERE o.status = 'Delivered' " +
+                "AND TIMESTAMPDIFF(MONTH, o.orderDate, CURDATE()) <= :months " +
+                "GROUP BY p.id, p.name " +
+                "ORDER BY ProductCount DESC " +
+                "LIMIT :limit OFFSET :amount";
+        return handle.createQuery(query)
+                .bind("amount", amount)
+                .bind("months", months)
+                .bind("limit", limit)
+                .mapToBean(Product.class)
+                .list();
+    }
+
 
 // CÁC MẪU MỚI NHẤT
     public List<Product> findLatestProducts() {

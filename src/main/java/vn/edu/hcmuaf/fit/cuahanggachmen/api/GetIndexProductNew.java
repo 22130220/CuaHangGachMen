@@ -12,20 +12,24 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.text.NumberFormat;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 @WebServlet(name = "GetIndexProduct", value = "/loadmore")
-public class GetIndexProduct extends HttpServlet {
+public class GetIndexProductNew extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Locale userLocale = request.getLocale();
-        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(userLocale);
+//        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(userLocale);
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.'); // Dùng dấu chấm thay vì dấu phẩy
+
+        DecimalFormat currencyFormat = new DecimalFormat("#,###đ", symbols);
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");

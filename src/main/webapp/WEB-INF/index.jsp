@@ -90,7 +90,7 @@
 
 
 <!-- Popular -->
-<div class="popular" id="popular">
+<div class="popular" id="popular1">
     <div class="main-content">
         <div class="popular-top">
             <div class="info">
@@ -180,6 +180,30 @@
     </div>
 </div>
 
+<div class="load-more" style="text-align: center; margin-top: 30px;">
+    <div id="load-more-btn1" class="btn" onclick="loadMoreSell()">Xem thêm</div>
+</div>
+
+<script>
+    var amount1 = 3;
+    function loadMoreSell() {
+        $.ajax({
+            url: "/loadmoresell",
+            type: "GET",
+            data: {
+                exist: amount1
+            },
+            success: function(data) {
+                // Thêm khối popular mới trước nút "Xem thêm"
+                $("#load-more-btn1").before(data);
+            },
+            error: function(xhr) {
+                console.error("Có lỗi xảy ra khi thêm dữ liệu:", xhr);
+            }
+        });
+        amount1 += 3;
+    }
+</script>
 
 <!-- Popular -->
 <div class="popular" id="popular">
@@ -276,7 +300,7 @@
 
 
 <div class="load-more" style="text-align: center; margin-top: 30px;">
-    <div id="load-more-btn" class="btn" onclick="loadMore()">Xem thêm</div>
+    <div id="load-more-btn2" class="btn" onclick="loadMore()">Xem thêm</div>
 </div>
 
 <script>
@@ -290,7 +314,7 @@
             },
             success: function(data) {
                 // Thêm khối popular mới trước nút "Xem thêm"
-                $("#load-more-btn").before(data);
+                $("#load-more-btn2").before(data);
             },
             error: function(xhr) {
                 console.error("Có lỗi xảy ra khi thêm dữ liệu:", xhr);
@@ -392,6 +416,10 @@
 
 
     </div>
+</div>
+
+<div class="load-more" style="text-align: center; margin-top: 30px;">
+    <div id="load-more-btn" class="btn" onclick="">Xem thêm</div>
 </div>
 
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
