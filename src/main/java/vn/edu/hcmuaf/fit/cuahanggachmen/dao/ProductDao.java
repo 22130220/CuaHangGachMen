@@ -206,6 +206,19 @@ public class ProductDao extends BaseDao {
                         .list();
     }
 
+    public List<Product> findMostViewedProducts(int amount) {
+        return handle.createQuery(
+                        "SELECT p.id,p.imgThumbnail, p.name, p.pricePerBox, p.rating " +
+                                "FROM products p " +
+                                "JOIN product_view pv ON p.id = pv.ProductID " +
+                                "GROUP BY p.id " +
+                                "ORDER BY COUNT(pv.id) DESC " +
+                                "LIMIT 3 OFFSET :amount")
+                .bind("amount", amount)
+                .mapToBean(Product.class)
+                .list();
+    }
+
 
     public void updateProductRating(int productId, int newRating) {
             handle.createUpdate("UPDATE products SET Rating = :newRating WHERE ID = :productId")
