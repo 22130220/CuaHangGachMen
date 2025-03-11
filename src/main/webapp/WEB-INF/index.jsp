@@ -90,7 +90,7 @@
 
 
 <!-- Popular -->
-<div class="popular" id="popular1">
+<div class="popular tile-sell" id="popular1">
     <div class="main-content">
         <div class="popular-top">
             <div class="info">
@@ -138,7 +138,7 @@
                                 <input type="hidden" name="colorId" value="1"> <!-- Default color ID = 1 -->
                                 <input type="hidden" name="quantity" value="1"> <!-- Default quantity = 1 -->
 
-                                <a href="javascript:void(0)" onclick="this.closest('form').submit();">
+                                <a href="javascript:void(0)" class="add-to-cart-btn">
                                     <svg
                                             class="icon"
                                             width="30"
@@ -195,7 +195,7 @@
             },
             success: function(data) {
                 // Thêm khối popular mới trước nút "Xem thêm"
-                $("#load-more-btn1").before(data);
+                $(".tile-sell").last().append(data);
             },
             error: function(xhr) {
                 console.error("Có lỗi xảy ra khi thêm dữ liệu:", xhr);
@@ -206,7 +206,7 @@
 </script>
 
 <!-- Popular -->
-<div class="popular" id="popular">
+<div class="popular tile-new" id="popular">
     <div class="main-content">
         <div class="popular-top">
             <div class="info">
@@ -254,7 +254,7 @@
                                 <input type="hidden" name="colorId" value="1"> <!-- Default color ID = 1 -->
                                 <input type="hidden" name="quantity" value="1"> <!-- Default quantity = 1 -->
 
-                                <a href="javascript:void(0)" onclick="this.closest('form').submit();">
+                                <a href="javascript:void(0)" class="add-to-cart-btn">
                                     <svg
                                             class="icon"
                                             width="30"
@@ -299,7 +299,7 @@
 </div>
 
 
-<div class="load-more" style="text-align: center; margin-top: 30px;">
+<div class="load-more" style="text-align: center; margin-top: 30px; margin-bottom: 30px">
     <div id="load-more-btn2" class="btn" onclick="loadMore()">Xem thêm</div>
 </div>
 
@@ -313,8 +313,8 @@
                 exist: amount
             },
             success: function(data) {
-                // Thêm khối popular mới trước nút "Xem thêm"
-                $("#load-more-btn2").before(data);
+                // Thêm khối popular mới
+                $(".tile-new").last().append(data);
             },
             error: function(xhr) {
                 console.error("Có lỗi xảy ra khi thêm dữ liệu:", xhr);
@@ -325,7 +325,7 @@
 </script>
 
 <!-- Popular -->
-<div class="popular" id="popular3">
+<div class="popular tile-view" id="popular3">
     <div class="main-content">
         <div class="popular-top">
             <div class="info">
@@ -373,7 +373,7 @@
                                 <input type="hidden" name="colorId" value="1"> <!-- Default color ID = 1 -->
                                 <input type="hidden" name="quantity" value="1"> <!-- Default quantity = 1 -->
 
-                                <a href="javascript:void(0)" onclick="this.closest('form').submit();">
+                                <a href="javascript:void(0)" class="add-to-cart-btn">
                                     <svg
                                             class="icon"
                                             width="30"
@@ -425,38 +425,62 @@
 </div>
 
 <script>
-    var amount3 = 3;
+    var amount = 3;
     function loadMoreView() {
-        if (amount3 >= 9) {
-            $("#load-more-btn3").hide(); // Ẩn nút "Xem thêm"
-            return; // Dừng hàm, không thực hiện AJAX
-        }
-
         $.ajax({
             url: "/loadmoreview",
             type: "GET",
             data: {
-                exist: amount3
+                exist: amount
             },
             success: function(data) {
-                $("#load-more-btn3").before(data);
-                amount3 += 3; // Cập nhật biến sau khi thêm dữ liệu
-
-                if (amount3 >= 9) {
-                    $("#load-more-btn3").hide(); // Kiểm tra lại sau khi cập nhật
-                }
+                // Thêm khối popular mới
+                $(".tile-view").last().append(data);
             },
             error: function(xhr) {
                 console.error("Có lỗi xảy ra khi thêm dữ liệu:", xhr);
             }
         });
+        amount += 3;
     }
 </script>
 
 
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
 
+<!-- Thêm Notyf  -->
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+<script>
+    var notyf = new Notyf();
+    $(document).ready(function() {
+        // Sử dụng event delegation cho .add-to-cart-btn
+        $(document).on('click', '.add-to-cart-btn', function(e) {
+            e.preventDefault();
 
+            var form = $(this).closest('.add-to-cart-form');
+            var formData = form.serialize();
+
+            $.ajax({
+                url: '${pageContext.request.contextPath}/add-to-cart',
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('.cart-count').text(response.quantity);
+                        notyf.success('Đã thêm sản phẩm vào giỏ hàng!');
+                    } else {
+                        notyf.error(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    notyf.error('Có lỗi xảy ra khi thêm vào giỏ hàng');
+                }
+            });
+        });
+    });
+</script>
 <script src="../assets/js/chuyendoicacnut.js"></script>
 <script src="../assets/js/left_right.js"></script>
 <script src="../assets/js/slider.js"></script>
