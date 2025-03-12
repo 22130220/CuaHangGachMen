@@ -261,7 +261,7 @@
         <nav class="nav">
           <ul>
             <li>
-              <a href="./introduction.html">GIỚI THIỆU</a>
+              <a href="/introduction">GIỚI THIỆU</a>
             </li>
             <li>
               <a href="./trademark.html">THƯƠNG HIỆU</a>
