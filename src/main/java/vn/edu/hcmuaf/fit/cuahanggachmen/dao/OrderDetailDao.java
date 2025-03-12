@@ -12,6 +12,17 @@ public class OrderDetailDao extends BaseDao {
         super(handle);
     }
 
+    public boolean hasUserPurchasedProduct(int userId, int productId) {
+        String query = "SELECT COUNT(*) FROM orderdetail od " +
+                "JOIN orders o ON od.OrderID = o.ID " +
+                "WHERE o.UserID = :userId AND od.ProductID = :productId AND o.Status = 'Delivered'";
+        int count = handle.createQuery(query)
+                .bind("userId", userId)
+                .bind("productId", productId)
+                .mapTo(Integer.class)
+                .one();
+        return count > 0;
+    }
     // Insert a new OrderDetail
     public int insert(OrderDetail orderDetail)  {
             return handle.createUpdate(

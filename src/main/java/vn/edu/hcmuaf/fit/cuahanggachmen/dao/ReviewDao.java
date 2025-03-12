@@ -43,6 +43,15 @@ public class ReviewDao extends BaseDao {
             Query query = handle.createQuery("SELECT * FROM review");
             return query.mapToBean(Review.class).list();
     }
+    public boolean hasUserReviewedProduct(int userId, int productId) {
+        String query = "SELECT COUNT(*) FROM review WHERE UserID = :userId AND ProductID = :productId";
+        int count = handle.createQuery(query)
+                .bind("userId", userId)
+                .bind("productId", productId)
+                .mapTo(Integer.class)
+                .one();
+        return count > 0;
+    }
 
     // Tìm các review theo UserID
     public List<Review> findReviewsByUserId(int userId) {

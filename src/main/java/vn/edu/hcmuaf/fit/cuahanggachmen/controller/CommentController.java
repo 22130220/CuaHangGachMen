@@ -5,6 +5,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.OrderDetailDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ReviewDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
@@ -48,10 +49,9 @@ public class CommentController extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        User user =(User) session.getAttribute("auth");
+        User user = (User) session.getAttribute("auth");
 
-        if(session == null || user == null) {
-            //response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        if (session == null || user == null) {
             response.getWriter().write("{\"redirectUrl\": \"/login\"}");
             return;
         }
@@ -61,36 +61,53 @@ public class CommentController extends HttpServlet {
         String rating = request.getParameter("rating");
 
         Handle handle = DBConect.get().open();
-        ReviewDao dao = new ReviewDao(handle);
+        ReviewDao reviewDao = new ReviewDao(handle);
+        OrderDetailDao orderDetailDao = new OrderDetailDao(handle);
         ProductDao productDao = new ProductDao(handle);
+
+        int userId = user.getId();
+        int productIdInt = Integer.parseInt(productId);
+
+        // Kiểm tra xem người dùng đã mua sản phẩm chưa
+        if (!orderDetailDao.hasUserPurchasedProduct(userId, productIdInt)) {
+            response.getWriter().write("{\"error\": \"Vui lòng mua sản phẩm trước khi bình luận\"}");
+            handle.close();
+            return;
+        }
+
+        // Kiểm tra xem người dùng đã bình luận trước đó chưa
+        if (reviewDao.hasUserReviewedProduct(userId, productIdInt)) {
+            response.getWriter().write("{\"error\": \"Bạn đã bình luận trước đó rồi\"}");
+            handle.close();
+            return;
+        }
+
         Review review = new Review();
-        review.setUserId(user.getId());
-        review.setProductId(Integer.parseInt(productId));
+        review.setUserId(userId);
+        review.setProductId(productIdInt);
         review.setRating(rating != null ? Integer.parseInt(rating) : 5);
         review.setReviewDate(LocalDateTime.now());
-        review.setOrderId(1);
+        review.setOrderId(1); // Giả sử orderId là 1, bạn cần thay đổi logic này nếu cần
         review.setReviewText(comment_text);
 
-        int rowAffect = 0;
-        rowAffect =  dao.insertReview(review);
+        int rowAffect = reviewDao.insertReview(review);
 
-
-        if(rowAffect > 0) {
+        if (rowAffect > 0) {
             try {
                 // Tính toán và cập nhật rating trung bình
-                double averageRating = dao.calculateAverageRatingForProduct(Integer.parseInt(productId));
-                productDao.updateProductRating(Integer.parseInt(productId), (int) averageRating);
+                double averageRating = reviewDao.calculateAverageRatingForProduct(productIdInt);
+                productDao.updateProductRating(productIdInt, (int) averageRating);
             } catch (Exception e) {
                 e.printStackTrace();
             }
             response.setStatus(HttpServletResponse.SC_OK);
             AjaxResponse resp = new AjaxResponse();
-            resp.addBool("sucess", true);
+            resp.addBool("success", true);
             response.getWriter().write(resp.getText());
         } else {
             response.setStatus(HttpServletResponse.SC_OK);
             AjaxResponse resp = new AjaxResponse();
-            resp.addBool("sucess", false);
+            resp.addBool("success", false);
             response.getWriter().write(resp.getText());
         }
         handle.close();
