@@ -76,8 +76,12 @@ public class GetIndexProductBestSell extends HttpServlet {
                 out.println("<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M20 20C20 21.6569 18.6569 23 17 23C15.3431 23 14 21.6569 14 20C14 18.3431 15.3431 17 17 17C18.6569 17 20 18.3431 20 20ZM18 20C18 20.5523 17.5523 21 17 21C16.4477 21 16 20.5523 16 20C16 19.4477 16.4477 19 17 19C17.5523 19 18 19.4477 18 20Z\" fill=\"#2e2100ff\"/>");
                 out.println("<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M2.10557 2.55276C2.35256 2.05878 2.95323 1.85856 3.44721 2.10555L4.45072 2.6073C5.37999 3.07193 6.0027 3.98429 6.09676 5.01898L6.1446 5.54524C6.16801 5.80278 6.38394 5.99997 6.64255 5.99997H19.8355C21.581 5.99997 22.7892 7.74341 22.1763 9.37778L20.423 14.0533C19.9839 15.2243 18.8645 16 17.614 16H7.82643C6.27482 16 4.97922 14.8168 4.83875 13.2716L4.10497 5.20005C4.07362 4.85515 3.86605 4.55103 3.55629 4.39616L2.55278 3.8944C2.05881 3.64741 1.85858 3.04674 2.10557 2.55276ZM6.91527 7.99997C6.62126 7.99997 6.39071 8.25243 6.41733 8.54524L6.83053 13.0905C6.87736 13.6056 7.30922 14 7.82643 14H17.614C18.0308 14 18.404 13.7414 18.5503 13.3511L20.3037 8.67554C20.4262 8.34866 20.1846 7.99997 19.8355 7.99997H6.91527Z\" fill=\"#2e2100ff\"/>");
                 out.println("</svg></a></form>");
-                out.println("<a href=\"/pdetail?pid=" + p.getId() + "\">");
-                out.println("<button class=\"btn book-btn\">Đặt ngay</button>");
+                out.println("<form action=\""+request.getContextPath() + "/buynow\" method=\"get\">");
+                out.println("<input type=\"hidden\" name=\"pid\" value=\"" + p.getId() + "\">");
+                out.println("<input type=\"hidden\" name=\"colorId\" value=\"1\">");
+                out.println("<input type=\"hidden\" name=\"quantity\" value=\"1\">");
+                out.println("<button type=\"submit\" class=\"btn book-btn\">Đặt ngay</button>");
+                out.println("</form>");
                 out.println("</a></div></div></div>");
             }
 
