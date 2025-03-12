@@ -169,9 +169,12 @@
                                 </a>
                             </form>
 
-                            <a href="/pdetail?pid=${product.id}">
-                                <button class="btn book-btn">Đặt ngay</button>
-                            </a>
+                            <form action="${pageContext.request.contextPath}/buynow" method="get">
+                                <input type="hidden" name="pid" value="${product.id}">
+                                <input type="hidden" name="colorId" value="1">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn book-btn">Đặt ngay</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -285,9 +288,12 @@
                                 </a>
                             </form>
 
-                            <a href="/pdetail?pid=${product.id}">
-                                <button class="btn book-btn">Đặt ngay</button>
-                            </a>
+                            <form action="${pageContext.request.contextPath}/buynow" method="get">
+                                <input type="hidden" name="pid" value="${product.id}">
+                                <input type="hidden" name="colorId" value="1">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn book-btn">Đặt ngay</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -404,9 +410,12 @@
                                 </a>
                             </form>
 
-                            <a href="/pdetail?pid=${product.id}">
-                                <button class="btn book-btn">Đặt ngay</button>
-                            </a>
+                            <form action="${pageContext.request.contextPath}/buynow" method="get">
+                                <input type="hidden" name="pid" value="${product.id}">
+                                <input type="hidden" name="colorId" value="1">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn book-btn">Đặt ngay</button>
+                            </form>
                         </div>
                     </div>
                 </div>

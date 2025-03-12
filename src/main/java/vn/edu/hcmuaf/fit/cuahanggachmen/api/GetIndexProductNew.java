@@ -77,9 +77,12 @@ public class GetIndexProductNew extends HttpServlet {
                 out.println("</svg>");
                 out.println("</a>");
                 out.println("</form>");  // Đóng thẻ form
-                out.println("<a href=\"/pdetail?pid=" + p.getId() + "\">");
-                out.println("<button class=\"btn book-btn\">Đặt ngay</button>");
-                out.println("</a>");
+                out.println("<form action=\""+request.getContextPath() + "/buynow\" method=\"get\">");
+                out.println("<input type=\"hidden\" name=\"pid\" value=\"" + p.getId() + "\">");
+                out.println("<input type=\"hidden\" name=\"colorId\" value=\"1\">");
+                out.println("<input type=\"hidden\" name=\"quantity\" value=\"1\">");
+                out.println("<button type=\"submit\" class=\"btn book-btn\">Đặt ngay</button>");
+                out.println("</form>");
                 out.println("</div>");  // Đóng thẻ foot
                 out.println("</div>");  // Đóng thẻ info
                 out.println("</div>");  // Đóng thẻ course-item

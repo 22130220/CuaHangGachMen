@@ -234,7 +234,12 @@
 
 
                         </div>
-                        <button class="input-sample buy-btn">Mua ngay</button>
+                        <form action="/buynow" method="get">
+                            <input type="hidden" name="pid" value="${p.id}">
+                            <input type="hidden" name="colorId" id="colorIdInput1" value="1">
+                            <input type="hidden" name="quantity" id="quantityInput" value="1">
+                            <button type="submit" class="input-sample buy-btn">Mua ngay</button>
+                        </form>
                     </div>
 
                 </div>
@@ -338,7 +343,13 @@
     </div>
 
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
-
+<script>
+    // Lắng nghe sự kiện 'input' trên thẻ có id 'quantity'
+    document.getElementById('quantity').addEventListener('input', function() {
+        // Cập nhật giá trị của thẻ 'quantityInput' với giá trị mới của 'quantity'
+        document.getElementById('quantityInput').value = this.value;
+    });
+</script>
 
 <script>
     $(document).ready(function() {
@@ -362,6 +373,7 @@
 
                 // Cập nhật giá trị colorId vào input
                 $('#colorIdInput').val(colorId);
+                $('#colorIdInput1').val(colorId);
             },
             error: function(xhr, status, error) {
                 console.log("Đã xảy ra lỗi: " + error); // Xử lý lỗi
