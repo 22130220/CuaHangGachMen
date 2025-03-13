@@ -264,7 +264,7 @@
               <a href="/introduction">GIỚI THIỆU</a>
             </li>
             <li>
-              <a href="./trademark.html">THƯƠNG HIỆU</a>
+              <a href="/trademark">THƯƠNG HIỆU</a>
             </li>
             <li>
               <a href="list-product">DANH MỤC</a>
