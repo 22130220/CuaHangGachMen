@@ -274,9 +274,7 @@
                   </c:forEach>
                 </ul>
               </div>
-            <li>
-              <a href="/trademark">THƯƠNG HIỆU</a>
-            </li>
+           
             <li class="has-dropdown">
               <a href="list-product">DANH MỤC</a>
               <div class="dropdown">
