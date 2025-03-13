@@ -31,6 +31,12 @@ public class MaterialDao extends BaseDao {
                         .list();
     }
 
+    public List<Material> findAllWithStatus()  {
+        return handle.createQuery("SELECT * FROM material WHERE status=1")
+                .mapToBean(Material.class)
+                .list();
+    }
+
 
     public int update(Material material)  {
         return handle.createUpdate("UPDATE material SET Name = :name WHERE ID = :id")

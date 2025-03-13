@@ -263,11 +263,32 @@
             <li>
               <a href="/introduction">GIỚI THIỆU</a>
             </li>
+            <li class="has-dropdown">
+              <a href="#">THƯƠNG HIỆU</a>
+              <div class="dropdown">
+                <ul>
+                  <c:forEach var="manufacturerwithstatus" items="${manufacturers}">
+                    <li>
+                      <a href="list-product?thuonghieu=${manufacturerwithstatus.id}">${manufacturerwithstatus.name}</a>
+                    </li>
+                  </c:forEach>
+                </ul>
+              </div>
             <li>
               <a href="/trademark">THƯƠNG HIỆU</a>
             </li>
-            <li>
+            <li class="has-dropdown">
               <a href="list-product">DANH MỤC</a>
+              <div class="dropdown">
+                <ul>
+                  <!-- Lặp qua danh sách danh mục từ cơ sở dữ liệu -->
+                  <c:forEach var="category" items="${categories}">
+                      <li>
+                        <a href="list-product?danhmuc=${category.id}">${category.name}</a>
+                      </li>
+                  </c:forEach>
+                </ul>
+              </div>
             </li>
             <li>
               <a href="list-product?danhmuc=1">GẠCH LÁT SÀN</a>
@@ -276,8 +297,18 @@
               <a href="list-product?danhmuc=2">GẠCH ỐP TƯỜNG</a>
             </li>
 
-            <li>
-              <a href="list-product">GẠCH TRANG TRÍ</a>
+            <li class="has-dropdown">
+              <a href="list-product">CHẤT LIỆU GẠCH</a>
+              <div class="dropdown">
+                <ul>
+                  <!-- Lặp qua danh sách danh mục từ cơ sở dữ liệu -->
+                  <c:forEach var="materialwithstatus" items="${sessionScope.materials}">
+                    <li>
+                      <a href="list-product?chatlieu=${materialwithstatus.id}">${materialwithstatus.name}</a>
+                    </li>
+                  </c:forEach>
+                </ul>
+              </div>
             </li>
 
             <li>

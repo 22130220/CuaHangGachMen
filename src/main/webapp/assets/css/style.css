@@ -254,7 +254,80 @@ color: #000;
   pointer-events: none; /* Đảm bảo icon không ảnh hưởng đến việc nhập */
 }
 
+.nav .has-dropdown {
+  position: relative;
+}
 
+.nav .dropdown {
+  position: absolute;
+  top: 230%; /* Giữ nguyên khoảng cách bạn muốn */
+  left: 70%;
+  transform: translateX(-50%) translateY(-10px);
+  display: none;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  width: 200px;
+}
+
+/* Vùng vô hình để lấp khoảng trống */
+.nav .dropdown::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background: transparent;
+}
+
+.nav .dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav .dropdown ul li {
+  padding: 10px 15px;
+  border-bottom: 1px solid #a0a0a0;
+  transition: background-color 0.3s ease; /* Thêm hiệu ứng mượt mà cho background */
+}
+
+.nav .dropdown ul li:last-child {
+  border-bottom: none;
+}
+
+.nav .dropdown ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 400;
+  transition: color 0.2s ease; /* Hiệu ứng mượt mà cho màu chữ */
+  display: block;
+}
+
+/* Khi hover vào mục con */
+.nav .dropdown ul li:hover {
+  background-color: #2e2100; /* Background đổi thành #2e2100 */
+}
+
+.nav .dropdown ul li:hover a {
+  color: #fff; /* Chữ đổi thành màu trắng */
+}
+
+/* Hiệu ứng hover cho dropdown */
+.nav .has-dropdown:hover .dropdown,
+.nav .dropdown:hover {
+  display: block;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 
 
 /* Footer */

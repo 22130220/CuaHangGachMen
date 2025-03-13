@@ -223,11 +223,28 @@
                         <div class="filter-item">
                             <div class="fui-checkbox-custom">
                                 <div class="input-wrap">
-                                    <input type="checkbox" name="material" value="${material.id}" id="${material.name}"
-                                           class="input-checkbox filter"/>
-                                    <span class="check-icon">
-                                    <i class="fa-solid fa-check"></i>
-                                 </span>
+                                        <%--                                    <input type="checkbox" name="material" value="${material.id}" id="${material.name}"--%>
+                                        <%--                                           class="input-checkbox filter"/>--%>
+                                        <%--                                    <span class="check-icon">--%>
+                                        <%--                                    <i class="fa-solid fa-check"></i>--%>
+                                        <%--                                 </span>--%>
+
+                                    <c:choose>
+                                        <c:when test="${p.materialMain.id == material.id}">
+                                            <input type="checkbox" name="material" value="${material.id}"
+                                                   id="${material.name}" class="input-checkbox filter" checked/>
+                                            <span class="check-icon">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="checkbox" name="material" value="${material.id}"
+                                                   id="${material.name}" class="input-checkbox filter"/>
+                                            <span class="check-icon">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                                 <label class="label s-12 cl-brown" for="${material.name}"><c:out
                                         value="${material.name}"/></label>
@@ -242,11 +259,27 @@
                         <div class="filter-item">
                             <div class="fui-checkbox-custom">
                                 <div class="input-wrap">
-                                    <input type="checkbox" name="nsx" value="${manufacturer.id}"
-                                           id="${manufacturer.name}" class="input-checkbox filter"/>
-                                    <span class="check-icon">
-                                    <i class="fa-solid fa-check"></i>
-                                 </span>
+                                        <%--                                    <input type="checkbox" name="nsx" value="${manufacturer.id}"--%>
+                                        <%--                                           id="${manufacturer.name}" class="input-checkbox filter"/>--%>
+                                        <%--                                    <span class="check-icon">--%>
+                                        <%--                                    <i class="fa-solid fa-check"></i>--%>
+                                        <%--                                 </span>--%>
+                                    <c:choose>
+                                        <c:when test="${p.manufacturerMain.id == manufacturer.id}">
+                                            <input type="checkbox" name="nsx" value="${manufacturer.id}"
+                                                   id="${manufacturer.name}" class="input-checkbox filter" checked/>
+                                            <span class="check-icon">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <input type="checkbox" name="nsx" value="${manufacturer.id}"
+                                                   id="${manufacturer.name}" class="input-checkbox filter"/>
+                                            <span class="check-icon">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                                 <label class="label s-12 cl-brown" for="${manufacturer.name}"><c:out
                                         value="${manufacturer.name}"/></label>
@@ -257,7 +290,7 @@
             </div>
         </div>
         <div class="ls-product">
-            <div class="panel-title cl-brown s-18 bold"><c:out value="${p.categoryMain.name}"/></div>
+            <div class="panel-title cl-brown s-18 bold"><c:out value="${p.categoryMain.name}"/><c:out value="${p.manufacturerMain.name}"/><c:out value="${p.materialMain.name}"/></div>
             <div class="panel-title view bg-brown cl-white s-16 normal">
                 <div class="view-type">
                     <%--                        <div class="view-func view-grid">--%>
@@ -266,7 +299,7 @@
                     <%--                        <div class="view-func view-detail">--%>
                     <%--                            <i class="fa-solid fa-bars"></i>--%>
                     <%--                        </div>--%>
-                    <input type="radio" name="layout" id="grid" />
+                    <input type="radio" name="layout" id="grid"/>
                     <label for="grid">
                         <i class="fa-solid fa-border-all"></i>
                         Lưới

@@ -31,6 +31,12 @@ public class ManufacturerDao extends BaseDao {
                         .list();
     }
 
+    public List<Manufacturer> findAllWithStatus()  {
+        return handle.createQuery("SELECT * FROM manufacturer WHERE status=1")
+                .mapToBean(Manufacturer.class)
+                .list();
+    }
+
 
     public int update(Manufacturer manufacturer)  {
             return handle.createUpdate("UPDATE manufacturer SET Name = :name WHERE ID = :id")
