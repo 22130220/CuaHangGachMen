@@ -25,6 +25,8 @@ public class ListProductController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String danhMuc = request.getParameter("danhmuc");
+        String thuongHieu = request.getParameter("thuonghieu");
+        String chatLieu = request.getParameter("chatlieu");
 
         Handle handle = DBConect.get().open();
         MaterialDao materialDao = new MaterialDao(handle);
@@ -41,10 +43,16 @@ public class ListProductController extends HttpServlet {
         Category category = new Category();
         if(danhMuc != null) {
             rs.put("categoryMain", categoryDao.findById(Integer.parseInt(danhMuc)));
+        }
+        if(thuongHieu != null) {
+            rs.put("manufacturerMain", manufacturerDao.findById(Integer.parseInt(thuongHieu)));
+        }
+        if(chatLieu != null) {
+            rs.put("materialMain", materialDao.findById(Integer.parseInt(chatLieu)));
         } else {
-            category.setName("TẤT CẢ SẢN PHẨM");
-            category.setId(0);
-            rs.put("categoryMain", category);
+//            category.setName("TẤT CẢ SẢN PHẨM");
+//            category.setId(0);
+//            rs.put("categoryMain", category);
         }
 
 

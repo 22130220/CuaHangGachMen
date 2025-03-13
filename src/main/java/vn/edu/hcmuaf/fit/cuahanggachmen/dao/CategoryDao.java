@@ -35,6 +35,12 @@ public class CategoryDao extends BaseDao{
                         .list();
     }
 
+    public List<Category> findAllWithStatus() {
+        return handle.createQuery("SELECT * FROM category WHERE Status=1")
+                .mapToBean(Category.class)
+                .list();
+    }
+
     public int update(Category category) {
             return handle.createUpdate("UPDATE category SET Name = :name, Status = :status WHERE ID = :id")
                         .bind("name", category.getName())
