@@ -356,32 +356,44 @@
 <script>
     $(document).ready(function() {
 
-    $(".color-item").click(function(e) {
-        e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+        $(".color-item").click(function(e) {
+            e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
 
-        var productId = $(this).data('pid'); // Lấy ID sản phẩm
-        var colorId = $(this).data('color'); // Lấy ID màu sắc được chọn
+            var productId = $(this).data('pid'); // Lấy ID sản phẩm
+            var colorId = $(this).data('color'); // Lấy ID màu sắc được chọn
+            const url = new URL('/pdetail', window.location.origin);
+            // Chuyển dữ liệu thành form data
+            const params = new URLSearchParams();
+            params.append('pid', productId);
+            params.append('color', colorId);
+            fetch(url, {
+                method: 'POST', // Thay đổi phương thức thành POST
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded' // Đảm bảo đúng định dạng
+                },
+                body: params.toString() // Chuyển tham số thành query string và gửi trong body của POST request
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log([data])
+                    // Cập nhật giá trị colorId vào input
+                    $('#colorIdInput').val(colorId);
+                    $('#colorIdInput1').val(colorId);
+                    $('#slider').empty();
+                   var check=true;
+                    var content = '';
+                    data.listImg.forEach(function (item) {
+                        if(check){
+                            document.getElementById('featured').src = item;
+                            check=false;
+                        }
+                        content += '<img class="thumbnail active" src="' + item + '">';
 
-        // Gửi yêu cầu AJAX
-        $.ajax({
-            url: "pdetail", // Địa chỉ URL
-            type: "GET",
-            data: {
-                pid: productId, // ID sản phẩm
-                color: colorId // ID màu sắc được chọn
-            },
-            success: function(response) {
-                console.log(response);  // Kiểm tra phản hồi từ server
+                    });
 
-                // Cập nhật giá trị colorId vào input
-                $('#colorIdInput').val(colorId);
-                $('#colorIdInput1').val(colorId);
-            },
-            error: function(xhr, status, error) {
-                console.log("Đã xảy ra lỗi: " + error); // Xử lý lỗi
-            }
+                    $('#slider').html(content);
+                });
         });
-    });
 
 });
 </script>
