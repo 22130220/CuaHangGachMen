@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
-    <link rel="stylesheet" href="./assets/css/lichsudonhangthanhcong.css">
+    <link rel="stylesheet" href="../assets/css/lichsudonhangthanhcong.css">
     <!-- Nhúng phông chữ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -15,15 +15,15 @@
             rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css">
-    <link rel="stylesheet" href="./assets/css/giohang.css">
-    <link rel="stylesheet" href="./assets/css/dropdown_user_menu.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/cacthanhphancodinh.css">
+    <link rel="stylesheet" href="../assets/css/giohang.css">
+    <link rel="stylesheet" href="../assets/css/dropdown_user_menu.css">
     <!-- Thêm favicon -->
     <link
             rel="icon"
             type="image/x-icon"
-            href="./assets/icons/logo2_no_text.svg"
+            href="../assets/icons/logo2_no_text.svg"
 
     />
 
@@ -51,7 +51,7 @@
             <!-- Logo -->
             <a href="./index.html">
                 <img
-                        src="./assets/icons/logo2.svg"
+                        src="../assets/icons/logo2.svg"
                         alt="Logo"
                         class="logo"
                 />
@@ -277,7 +277,7 @@
                 <!-- Logo -->
                 <a href="#" class="logo footer__logo">
                     <img
-                            src="./assets/icons/logo2_2.svg"
+                            src="../assets/icons/logo2_2.svg"
                             alt="grocerymart"
                             class="logo__img"
                     />
@@ -429,7 +429,7 @@
                         class="footer__social-link footer__social-link--facebook"
                 >
                     <img
-                            src="./assets/icons/facebook.svg"
+                            src="../assets/icons/facebook.svg"
                             alt=""
                             class="footer__social-icon"
                     />
@@ -439,7 +439,7 @@
                         class="footer__social-link footer__social-link--youtube"
                 >
                     <img
-                            src="./assets/icons/youtube.svg"
+                            src="../assets/icons/youtube.svg"
                             alt=""
                             class="footer__social-icon"
                     />
@@ -449,7 +449,7 @@
                         class="footer__social-link footer__social-link--tiktok"
                 >
                     <img
-                            src="./assets/icons/tiktok.svg"
+                            src="../assets/icons/tiktok.svg"
                             alt=""
                             class="footer__social-icon"
                     />
@@ -459,7 +459,7 @@
                         class="footer__social-link footer__social-link--twitter"
                 >
                     <img
-                            src="./assets/icons/twitter.svg"
+                            src="../assets/icons/twitter.svg"
                             alt=""
                             class="footer__social-icon"
                     />
@@ -469,7 +469,7 @@
                         class="footer__social-link footer__social-link--linkedin"
                 >
                     <img
-                            src="./assets/icons/linkedin.svg"
+                            src="../assets/icons/linkedin.svg"
                             alt=""
                             class="footer__social-icon"
                     />

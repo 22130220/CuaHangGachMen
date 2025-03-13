@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="./assets/css/introduction.css">
+    <link rel="stylesheet" href="../assets/css/introduction.css">
     <!-- Nhúng phông chữ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,13 +17,13 @@
             href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             rel="stylesheet"
     />
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/cacthanhphancodinh.css">
     <!-- Thêm favicon -->
     <link
             rel="icon"
             type="image/x-icon"
-            href="./assets/icons/logo2_no_text.svg"
+            href="../assets/icons/logo2_no_text.svg"
 
     />
 </head>
@@ -36,24 +36,24 @@
         <a href="./index.html" class="btn_001">Khám Phá Ngay</a>
     </div>
     <div class="intro-image">
-        <img src="./assets/img/gt01.webp" alt="Gạch Men Cửa Hàng">
+        <img src="../assets/img/gt01.webp" alt="Gạch Men Cửa Hàng">
     </div>
 </section>
 
 <section class="features">
     <h2>Các Sản Phẩm Nổi Bật</h2>
     <div class="feature-item">
-        <img src="./assets/img/gt01.webp" alt="Gạch Men Sang Trọng">
+        <img src="../assets/img/gt01.webp" alt="Gạch Men Sang Trọng">
         <h3>Gạch Men Sang Trọng</h3>
         <p>Đem lại vẻ đẹp tinh tế cho không gian sống của bạn với những mẫu gạch men chất lượng, thiết kế đẹp mắt, bền bỉ.</p>
     </div>
     <div class="feature-item">
-        <img src="./assets/img/gt02.webp" alt="Gạch Men Ốp Tường">
+        <img src="../assets/img/gt02.webp" alt="Gạch Men Ốp Tường">
         <h3>Gạch Men Ốp Tường</h3>
         <p>Được sản xuất với công nghệ tiên tiến, gạch men ốp tường sẽ giúp không gian của bạn thêm hiện đại và sạch sẽ.</p>
     </div>
     <div class="feature-item">
-        <img src="./assets/img/gt03.webp" alt="Gạch Men Sàn Nhà">
+        <img src="../assets/img/gt03.webp" alt="Gạch Men Sàn Nhà">
         <h3>Gạch Men Sàn Nhà</h3>
         <p>Chất liệu gạch men sàn nhà bền đẹp, chống trơn trượt, phù hợp với mọi loại diện tích và phong cách thiết kế, nâng tầm không gian sống.</p>
     </div>

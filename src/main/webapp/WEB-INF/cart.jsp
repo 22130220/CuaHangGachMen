@@ -27,7 +27,9 @@
 </head>
 <body>
 <!-- Header chung -->
+<div id="menuContainer">
 <jsp:include page="/view_shared/header_footer/header.jsp"/>
+</div>
 <f:setLocale value="vi_VN" />
 <div class="cart-page">
     <!-- Đường dẫn -->
@@ -66,7 +68,7 @@
                 <h2>Giỏ hàng của bạn</h2>
                 <!-- Số lượng sản phẩm (tính theo tổng hộp) -->
                 <p>Bạn đang có
-                    <span class="highlight">${cart.totalItems}</span> sản phẩm
+                    <span id="quantity12" class="highlight">${sessionScope.quantity}</span> sản phẩm
                     trong giỏ hàng
                 </p>
 
@@ -77,13 +79,7 @@
                     <c:forEach var="item" items="${listo}">
                         <div class="cart-item" id="item${item.productId}-${item.productColor}">
                             <!-- Nút Xóa -->
-                            <button
-                                    class="btn-remove"
-                                    type="button"
-                                    onclick="removeItem(${item.productId}, '${item.productColor}')"
-                            >
-                                x
-                            </button>
+                            <button class="btn-remove" type="button" onclick="confirmRemove(${item.productId}, '${item.productColor}')">x</button>
 
                             <!-- Hình ảnh sản phẩm -->
                             <img src="${item.productImage}" alt="Sản phẩm">
@@ -96,7 +92,7 @@
                                     <!-- Giá/hộp -->
                                     <span class="current-price">
                                         <f:formatNumber value="${item.pricePerBox}" type="currency" currencyCode="VND" currencySymbol="₫"
-                                                        maxFractionDigits="0"/>
+                                                        maxFractionDigits="0"/>/hộp
                                     </span>
 
                                 </div>
@@ -186,11 +182,13 @@
             <!-- Phần thông tin đơn hàng -->
             <div class="cart-right">
                 <h2>Thông tin đơn hàng</h2>
-                <div class="summary">
+                <div id="sumary1">
+                    <div class="summary" >
                     <p>Tổng tiền:</p>
                     <p class="total-price" id="total_price">
                         <f:formatNumber value="${cart.total}" type="currency" currencyCode="VND" currencySymbol="₫" maxFractionDigits="0"/>
                     </p>
+                    </div>
                 </div>
                 <p>Phí vận chuyển sẽ được tính ở trang Thanh toán.</p>
                 <p>Mã giảm giá được nhập ở trang Thanh toán.</p>
@@ -269,6 +267,93 @@
 
 <jsp:include page="/view_shared/header_footer/footer.jsp"/>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmRemove(productId, productColor) {
+        // Sử dụng SweetAlert2 để hiển thị modal xác nhận
+        Swal.fire({
+            title: 'Bạn có chắc chắn muốn xóa sản phẩm này?',
+            text: `Sản phẩm màu ${productColor} sẽ bị xóa!`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Xóa',
+            cancelButtonText: 'Hủy',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Gửi dữ liệu qua AJAX đến controller
+                sendRemoveRequest(productId, productColor);
+            }
+        });
+    }
+
+    function sendRemoveRequest(productId, productColor) {
+        const url = new URL('/deleteproduct', window.location.origin);
+        const params = new URLSearchParams({
+            productId: productId,
+            productColor: productColor
+        });
+
+        url.search = params.toString(); // Chuyển tham số thành query string
+
+        fetch(url, {
+            method: 'GET', // Vẫn giữ GET method
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+               $('#total_price').text(data.totalPrice1.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
+                $('#menuContainer').load('/view_shared/header_footer/header.jsp')
+                $('#quantity12').text(data.quantity)
+                $("#cart-left1").empty();
+                var content='';
+                data.listItems.forEach(function (item){
+                    content += "<div class=\"cart-item\" id=\"item" + item.productId + "-" + item.productColor + "\">\n" +
+                        "    <!-- Nút Xóa -->\n" +
+                        "    <button class=\"btn-remove\" type=\"button\" onclick=\"confirmRemove(" + item.productId + ", '" + item.productColor + "')\">\n" +
+                        "        x\n" +
+                        "    </button>\n" +
+                        "    <!-- Hình ảnh sản phẩm -->\n" +
+                        "    <img src=\"" + item.productImage + "\" alt=\"Sản phẩm\">\n" +
+                        "    <!-- Thông tin sản phẩm -->\n" +
+                        "    <div class=\"item-info\">\n" +
+                        "        <p class=\"item-title\">" + item.productName + "</p>\n" +
+                        "        <p class=\"item-color\">" + item.productColor + "</p>\n" +
+                        "        <div class=\"item-price\">\n" +
+                        "            <span class=\"current-price\">" + item.pricePerBox.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + "/hộp</span>\n" +
+                        "        </div>\n" +
+                        "    </div>\n" +
+                        "    <!-- Bộ điều chỉnh số lượng -->\n" +
+                        "    <div class=\"quantity-control\">\n" +
+                        "        <button type=\"button\" onclick=\"this.parentElement.querySelector('input[type=number]').stepDown(); triggerUpdate(this.parentElement.querySelector('input[type=number]'));\">\n" +
+                        "            -\n" +
+                        "        </button>\n" +
+                        "        <input type=\"number\" value=\"" + item.quantity + "\" min=\"1\" onchange=\"triggerUpdate(this)\" data-productid=\"" + item.productId + "\" data-color=\"" + item.productColor + "\"/>\n" +
+                        "        <button type=\"button\" onclick=\"this.parentElement.querySelector('input[type=number]').stepUp(); triggerUpdate(this.parentElement.querySelector('input[type=number]'));\">\n" +
+                        "            +\n" +
+                        "        </button>\n" +
+                        "    </div>\n" +
+                        "    <!-- Giá tổng -->\n" +
+                        "    <p class=\"item-total\">" + (item.quantity*item.pricePerBox).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) + "</p>\n" +
+                        "</div>";
+                });
+                $("#cart-left1").html(content);
+
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+
+    }
+</script>
+
+
+
+
 <script>
     function loadPage(element, event) {
         event.preventDefault(); // Ngăn hành động mặc định của thẻ <a>
@@ -287,7 +372,7 @@
                     data.cart_item.forEach(function (item) {
                         content += "<div class=\"cart-item\" id=\"item" + item.productId + "-" + item.productColor + "\">\n" +
                             "    <!-- Nút Xóa -->\n" +
-                            "    <button class=\"btn-remove\" type=\"button\" onclick=\"removeItem(" + item.productId + ", '" + item.productColor + "')\">\n" +
+                            "    <button class=\"btn-remove\" type=\"button\" onclick=\"confirmRemove(" + item.productId + ", '" + item.productColor + "')\">\n" +
                             "        x\n" +
                             "    </button>\n" +
                             "    <!-- Hình ảnh sản phẩm -->\n" +
@@ -317,6 +402,8 @@
                     })
 
                     $("#cart-left1").html(content);
+
+
                     // Lấy tất cả các phần tử pagination-link
                     const paginationLinks = document.querySelectorAll('.pagination-link');
 
@@ -371,7 +458,7 @@
                 productId: productId,
                 color: color,
                 quantity: quantity
-            })
+            }).toString()
         })
             .then(response => {
                 if (!response.ok) {
@@ -384,7 +471,7 @@
                 $('#total_price').text(data.totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }))
                 let allParrentElement = parentElement.parentElement;
                 let totalPriceElement = allParrentElement.querySelector(".item-total");
-                totalPriceElement.textContent = data.thisElementPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                totalPriceElement.textContent = data.thisElementPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }+"/hộp");
             })
             .catch(err => {
                 console.error(err);
@@ -437,37 +524,37 @@
     });
 </script>
 
-<script>
-    function removeItem(productId, color) {
-        if (!confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
-            return;
-        }
+<%--<script>--%>
+<%--    function removeItem(productId, color) {--%>
+<%--        if (!confirm('Bạn có chắc muốn xóa sản phẩm này?')) {--%>
+<%--            return;--%>
+<%--        }--%>
 
-        // Gửi request xóa bằng fetch
-        fetch('<c:url value="/cart"/>', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                action: 'remove',
-                productId: productId,
-                color: color
-            })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    // Nếu status không phải 2xx thì ném lỗi
-                    throw new Error('Remove failed');
-                }
-                // Nếu xóa thành công => reload trang để cập nhật
-                // window.location.reload();
-            })
-            .catch(err => {
-                console.error(err);
-                alert('Không thể xóa sản phẩm!');
-            });
-    }
-</script>
+<%--        // Gửi request xóa bằng fetch--%>
+<%--        fetch('<c:url value="/cart"/>', {--%>
+<%--            method: 'POST',--%>
+<%--            headers: {--%>
+<%--                'Content-Type': 'application/x-www-form-urlencoded'--%>
+<%--            },--%>
+<%--            body: new URLSearchParams({--%>
+<%--                action: 'remove',--%>
+<%--                productId: productId,--%>
+<%--                color: color--%>
+<%--            })--%>
+<%--        })--%>
+<%--            .then(response => {--%>
+<%--                if (!response.ok) {--%>
+<%--                    // Nếu status không phải 2xx thì ném lỗi--%>
+<%--                    throw new Error('Remove failed');--%>
+<%--                }--%>
+<%--                // Nếu xóa thành công => reload trang để cập nhật--%>
+<%--                // window.location.reload();--%>
+<%--            })--%>
+<%--            .catch(err => {--%>
+<%--                console.error(err);--%>
+<%--                alert('Không thể xóa sản phẩm!');--%>
+<%--            });--%>
+<%--    }--%>
+<%--</script>--%>
 </body>
 </html>

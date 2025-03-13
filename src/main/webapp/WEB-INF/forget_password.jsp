@@ -6,12 +6,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quên mật khẩu</title>
-  <link rel="stylesheet" href="./assets/css/quenmatkhau.css">
+  <link rel="stylesheet" href="../assets/css/quenmatkhau.css">
   <!-- Thêm favicon -->
   <link
           rel="icon"
           type="image/x-icon"
-          href="./assets/icons/logo2_no_text.svg"
+          href="../assets/icons/logo2_no_text.svg"
   />
 
   <!-- Nhúng phông chữ -->
@@ -27,7 +27,7 @@
 <header>
   <a href="./index.html">
     <div class="logo">
-      <img src="./assets/icons/logo2.svg" alt="Logo Shop" />
+      <img src="../assets/icons/logo2.svg" alt="Logo Shop" />
     </div>
   </a>
 
