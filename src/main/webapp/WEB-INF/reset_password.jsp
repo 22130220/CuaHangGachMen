@@ -7,7 +7,7 @@
     <title>Đặt lại mật khẩu</title>
     <link rel="stylesheet" href="./assets/css/resetpassword.css">
     <!-- Thêm favicon -->
-    <link rel="icon" type="image/x-icon" href="./assets/icons/logo2_no_text.svg" />
+    <link rel="icon" type="image/x-icon" href="../assets/icons/logo2_no_text.svg" />
 
     <!-- Nhúng phông chữ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -117,7 +117,7 @@
 <header>
     <a href="./index.html">
         <div class="logo">
-            <img src="./assets/icons/logo2.svg" alt="Logo Shop" />
+            <img src="../assets/icons/logo2.svg" alt="Logo Shop" />
         </div>
     </a>
 </header>

@@ -14,10 +14,10 @@
     <title>Liên hệ</title>
 
     <!-- Reset CSS -->
-    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="../assets/css/reset.css" />
 
     <!-- Thêm favicon -->
-    <link rel="icon" type="image/x-icon" href="./assets/icons/logo2_no_text.svg">
+    <link rel="icon" type="image/x-icon" href="../assets/icons/logo2_no_text.svg">
 
 
     <!-- Nhúng phông chữ -->
@@ -34,11 +34,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js" integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- Kiểu CSS -->
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <link rel="stylesheet" href="./assets/css/contact.css" />
-    <link rel="stylesheet" href="./assets/css/basicinput.css"/>
-    <link rel="stylesheet" href="./assets/css/basictextarea.css"/>
-    <link rel="stylesheet" href="./assets/css/cacthanhphancodinh.css" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/contact.css" />
+    <link rel="stylesheet" href="../assets/css/basicinput.css"/>
+    <link rel="stylesheet" href="../assets/css/basictextarea.css"/>
+    <link rel="stylesheet" href="../assets/css/cacthanhphancodinh.css" />
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -148,7 +148,7 @@
 </div>
 <jsp:include page="/view_shared/header_footer/footer.jsp" />
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-<script src="./assets/js/scrollTop.js"></script>
+<script src="../assets/js/scrollTop.js"></script>
 <script>
     $(document).ready(function() {
         // Khi form được submit

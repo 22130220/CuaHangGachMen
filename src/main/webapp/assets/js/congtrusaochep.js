@@ -29,14 +29,14 @@
 // });
 
 // Xử lý sự kiện xóa sản phẩm
-document.querySelectorAll('.btn-remove').forEach(button => {
-    button.addEventListener('click', () => {
-        const cartItem = button.closest('.cart-item');
-        cartItem.remove(); // Xóa phần tử sản phẩm khỏi giao diện
-        updateCartSummary(); // Cập nhật tổng giá tiền
-        updateProductCount(); // Cập nhật số lượng sản phẩm
-    });
-});
+// document.querySelectorAll('.btn-remove').forEach(button => {
+//     button.addEventListener('click', () => {
+//         const cartItem = button.closest('.cart-item');
+//         cartItem.remove(); // Xóa phần tử sản phẩm khỏi giao diện
+//         updateCartSummary(); // Cập nhật tổng giá tiền
+//         updateProductCount(); // Cập nhật số lượng sản phẩm
+//     });
+// });
 
 
 
