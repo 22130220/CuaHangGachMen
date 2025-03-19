@@ -95,7 +95,11 @@
 
     <!-- Nút đăng nhập qua Google và Facebook -->
     <div class="social-login">
-        <a href="google-login-url" class="social-button google">
+        <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
+&redirect_uri=http://localhost:8080/CuaHangGachMen/googlelogin
+&response_type=code
+&client_id=233124927573-igpg8cdj1cigkg7mmkju7p8o8ms0j8v2.apps.googleusercontent.com
+&approval_prompt=force" class="social-button google">
             <i class="fa-brands fa-google"></i> Đăng nhập với Google
         </a>
         <a href="facebook-login-url" class="social-button facebook">
