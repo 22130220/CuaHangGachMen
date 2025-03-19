@@ -160,3 +160,11 @@ input[type="password"] {
 .create-account:hover {
     background-color: #f0f0f0;
 }
+.social-login{
+    display: flex;
+}
+
+
+
+
+

@@ -186,7 +186,6 @@ $("#update_id_btn").on('click', function () {
         })
     }
 });
-
 function openUpdateProductModal(id) {
     let rowIndex = table.rows().data().toArray().findIndex(function (data) {
         return data.id === id;
