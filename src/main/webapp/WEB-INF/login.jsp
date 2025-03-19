@@ -79,7 +79,7 @@
         <input type="password" id="password" name="password" placeholder="Mật khẩu" required>
 
         <div class="options">
-            <label><input type="checkbox"> Ghi nhớ đăng nhập</label>
+            <label><input type="checkbox" name="remember"> Ghi nhớ đăng nhập</label>
             <a href="forgetpassword">Quên mật khẩu?</a>
         </div>
 
@@ -92,6 +92,23 @@
         <span>Bạn chưa có tài khoản? </span>
         <span><a href="register">Đăng ký ngay.</a></span>
     </div>
+
+    <!-- Nút đăng nhập qua Google và Facebook -->
+    <div class="social-login">
+        <a href="google-login-url" class="social-button google">
+            <i class="fa-brands fa-google"></i> Đăng nhập với Google
+        </a>
+        <a href="facebook-login-url" class="social-button facebook">
+            <i class="fa-brands fa-facebook"></i> Đăng nhập với Facebook
+        </a>
+    </div>
+
+    <div class="separator">
+        <span>Bạn chưa có tài khoản? </span>
+        <span><a href="register">Đăng ký ngay.</a></span>
+    </div>
+
+
 
     <button class="create-account"><a href="register">Tạo Tài Khoản</a></button>
 </div>

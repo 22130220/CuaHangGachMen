@@ -3,8 +3,12 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.AuthService;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.PasswordUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -33,6 +37,7 @@ public class LoginController extends HttpServlet {
         User user = null;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String remember = request.getParameter("remember");
 
         AuthService service = new AuthService();
 
