@@ -42,14 +42,17 @@
 
                 <div> Thanh toán khi giao hàng (COD) </div>
             </div>
-            <div class="payment-option">
-                <div><input type="checkbox" id="chuyenkhoan" name="payment"  ></div>
-                <div>
-                    <img src="https://hstatic.net/0/0/global/design/seller/image/payment/other.svg?v=6" alt="Ngân hàng">
-                </div>
+            <a href="/payment-vnpay">
+                <div class="payment-option">
+                    <div><input type="checkbox" id="chuyenkhoan" name="payment"  ></div>
+                    <div>
+                        <img src="https://hstatic.net/0/0/global/design/seller/image/payment/other.svg?v=6" alt="Ngân hàng">
+                    </div>
 
-                <div>Chuyển khoản qua ngân hàng</div>
-            </div>
+                    <div>Chuyển khoản qua VNPAY</div>
+                </div>
+            </a>
+
             <div class="bank-info" id="bank-info" style="display: none;">
                 <p>Quý khách vui lòng chuyển khoản trước số tiền cần thanh toán, sau đó chúng tôi tiến hành giao hàng theo thỏa thuận hoặc hợp đồng với Quý khách.</p>
                 <p><strong>Thông tin tài khoản:</strong></p>
@@ -63,8 +66,6 @@
             <p>Mã voucher đã dùng: ${param.voucherID}</p>
             <h3>Tổng cộng thanh toán: ${param.finalTotal}₫</h3>
         </div>
-
-
         <aside class="sidebar">
             <ul class="cart-items">
             <c:forEach var="item" items="${cart.items}">
