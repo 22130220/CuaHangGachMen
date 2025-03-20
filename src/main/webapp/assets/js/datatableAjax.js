@@ -1,4 +1,3 @@
-var notyf = new Notyf();
 let addEle = 'Thêm';
 let updateEle = 'Cập nhật';
 let delEle = 'Xoá';
