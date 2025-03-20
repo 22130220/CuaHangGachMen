@@ -6,6 +6,8 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class UserMapper implements RowMapper<User> {
     @Override
@@ -17,7 +19,8 @@ public class UserMapper implements RowMapper<User> {
         user.setPhone(rs.getString("phone"));
         user.setAvatar(rs.getString("avatar"));
         user.setAddress(rs.getString("address"));
-        user.setBirthtime(rs.getTimestamp("birthtime").toLocalDateTime());
+        Timestamp ts= rs.getTimestamp("birthtime");
+        user.setBirthtime(ts==null?null:ts.toLocalDateTime());
         user.setStatus(rs.getBoolean("status"));
         user.setCreatetime(rs.getTimestamp("createtime").toLocalDateTime());
         user.setSalt(rs.getString("salt"));

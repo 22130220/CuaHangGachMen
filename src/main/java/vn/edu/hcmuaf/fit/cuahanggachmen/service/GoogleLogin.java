@@ -6,9 +6,22 @@ import org.apache.hc.client5.http.fluent.Request;
 import org.apache.hc.client5.http.fluent.Form;
 import org.apache.hc.client5.http.ClientProtocolException;
 import java.io.IOException;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.GoogleAccount;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.Iconstant;
 
 public class GoogleLogin {
+
+    public GoogleAccount getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+
+        String link = Iconstant.GOOGLE_LINK_GET_USER_INFO + accessToken;
+
+        String response = Request.get(link).execute().returnContent().asString();
+
+        GoogleAccount googlePojo = new Gson().fromJson(response, GoogleAccount.class);
+
+        return googlePojo;
+
+    }
 
     public  String getToken(String code) throws ClientProtocolException, IOException {
 
