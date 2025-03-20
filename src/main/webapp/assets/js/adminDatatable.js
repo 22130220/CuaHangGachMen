@@ -1,9 +1,10 @@
 var notyf = new Notyf();
 
-function initDataTable(tableId, ajaxUrl, dataSrc, columns, buttonConfigs, extraOptions = {}) {
+function initDataTable(tableId, ajaxUrl, dataSrc, sendData, columns, buttonConfigs, buttonShow, extraOptions = {}) {
     const table = new DataTable(tableId, {
         ajax: {
             url: ajaxUrl,
+            data: sendData,
             dataSrc: dataSrc
         },
         fixedHeader: true,
@@ -31,11 +32,7 @@ function initDataTable(tableId, ajaxUrl, dataSrc, columns, buttonConfigs, extraO
         paging: extraOptions.paging || false,
         searching: extraOptions.searching || false
     });
-    table.on('select deselect', function (e, dt) {
-        const selectedRows = dt.rows({ selected: true }).count();
-        dt.button(1).enable(selectedRows === 1); // Button chỉnh sửa
-        dt.button(2).enable(selectedRows > 0); // Button xóa
-    });
+    table.on('select deselect', buttonShow);
 
     return table;
 }
@@ -43,7 +40,9 @@ function initDataTable(tableId, ajaxUrl, dataSrc, columns, buttonConfigs, extraO
 
 function openModalWithData(modalId, inputValues = {}, onClose) {
     MicroModal.show(modalId, { onClose });
-    Object.entries(inputValues).forEach(([inputId, value]) => $(`#${inputId}`).val(value));
+    if (inputValues) {
+        Object.entries(inputValues).forEach(([inputId, value]) => $(`#${inputId}`).val(value));
+    }
 }
 
 function sendAjaxRequest(config) {
