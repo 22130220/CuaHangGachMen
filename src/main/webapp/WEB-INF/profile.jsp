@@ -43,6 +43,8 @@
             referrerpolicy="no-referrer"
     ></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <style>
         .noibatthu3{
             margin-top: -26px;
@@ -95,7 +97,7 @@
         <p>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
         <div class="content">
             <!-- Form Section -->
-            <form method="POST" action="/profile">
+            <form method="POST" action="/profile" id="validationHoSo">
                 <div class="form-group">
                     <label for="fullname">Tên</label>
                     <input type="text" id="fullname" name="fullname" value="${user.fullname}" required>
@@ -193,6 +195,76 @@
 
 
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Hàm kiểm tra email có đuôi @gmail.com, @yahoo.com hoặc @outlook.com
+        $.validator.addMethod("validEmail", function(value, element) {
+            return this.optional(element) || /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)$/.test(value);
+        }, "Email phải thuộc @gmail.com, @yahoo.com hoặc @outlook.com");
+
+        // Hàm kiểm tra số điện thoại có đúng 10 chữ số
+        $.validator.addMethod("validPhone", function(value, element) {
+            return this.optional(element) || /^[0-9]{10}$/.test(value);
+        }, "Số điện thoại phải có đúng 10 chữ số");
+
+        $("#validationHoSo").validate({
+            onkeyup: function(element) {
+                $(element).valid(); // Kiểm tra lỗi ngay khi nhập
+            },
+            rules: {
+                fullname: {
+                    required: true,
+                    minlength: 2
+                },
+                email: {
+                    required: true,
+                    email: true, // Kiểm tra định dạng email
+                    validEmail: true // Kiểm tra tên miền email hợp lệ
+                },
+                phone: {
+                    required: true,
+                    validPhone: true // Chỉ chấp nhận số có 10 chữ số
+                },
+                address: {
+                    required: true,
+                    minlength: 2
+                }
+            },
+            messages: {
+                fullname: {
+                    required: "Vui lòng nhập họ tên",
+                    minlength: "Họ tên phải dài ít nhất 2 ký tự"
+                },
+                email: {
+                    required: "Vui lòng nhập email",
+                    email: "Vui lòng nhập đúng định dạng email",
+                    validEmail: "Email phải thuộc @gmail.com, @yahoo.com hoặc @outlook.com"
+                },
+                phone: {
+                    required: "Vui lòng nhập số điện thoại",
+                    validPhone: "Số điện thoại phải có đúng 10 chữ số"
+                },
+                address: {
+                    required: "Vui lòng nhập địa chỉ",
+                    minlength: "Địa chỉ phải dài ít nhất 2 ký tự"
+                }
+            },
+            errorPlacement: function(error, element) {
+                error.css("color", "red"); // Màu đỏ cho thông báo lỗi
+                error.insertAfter(element); // Hiển thị lỗi ngay dưới input
+            }
+        });
+    });
+</script>
+
+
+
+
+
+
+
 
 <script>
     document.getElementById('fileInput').addEventListener('change', function(event) {
