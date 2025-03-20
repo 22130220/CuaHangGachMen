@@ -64,7 +64,7 @@
 
 <div class="contact-label">
     <div class="main-content">
-        <form action="/AboutController" class="contact-form" method="post">
+        <form action="/AboutController" id="validationAbout" class="contact-form" method="post">
             <div class="infor-label">
                 <div class="label">
                     <div class="label-logo">
@@ -123,21 +123,20 @@
             <div class="inputform">
                 <div class="fui-basic-input input-field">
                     <label for="name" class="">Họ và tên</label>
-                    <input type="text" name="name" placeholder="" class="input input-height" id="name" autocomplete="off"/>
+                    <input type="text" name="name" placeholder="" class="input input-height" id="name" autocomplete="off" required/>
                 </div>
                 <div class="fui-basic-input input-field">
                     <label for="email" class="">Email</label>
-                    <input type="text" name="Email" placeholder="" class="input input-height" id="email" autocomplete="off"/>
+                    <input type="text" name="Email" placeholder="" class="input input-height" id="email" autocomplete="off" required/>
                 </div>
                 <div class="fui-basic-input input-field">
                     <label for="subject" class="">Tiêu đề</label>
-                    <input type="text" name="TieuDe" placeholder="" class="input input-height" id="subject" autocomplete="off"/>
+                    <input type="text" name="TieuDe" placeholder="" class="input input-height" id="subject" autocomplete="off" required/>
                 </div>
                 <div class="fui-basic-textarea input-field">
                     <label for="content" class="">Nội dung</label>
-                    <textarea id="content" name="content" class="tarea area-height" rows="4" cols="50"></textarea>
+                    <textarea id="content" name="content" class="tarea area-height" rows="4" cols="50" required></textarea>
                 </div>
-
                 <div class="submit-btn">
                     <button class="btn">Gửi yêu cầu</button>
                 </div>
@@ -147,8 +146,71 @@
 
 </div>
 <jsp:include page="/view_shared/header_footer/footer.jsp" />
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="../assets/js/scrollTop.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Hàm kiểm tra email có đuôi @gmail.com, @yahoo.com hoặc @outlook.com
+        $.validator.addMethod("validEmail", function(value, element) {
+            return this.optional(element) || /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)$/.test(value);
+        }, "Email phải thuộc @gmail.com, @yahoo.com hoặc @outlook.com");
+
+        $("#validationAbout").validate({
+            onkeyup: function(element) {
+                $(element).valid(); // Kiểm tra lỗi ngay khi nhập
+            },
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 2
+                },
+                Email: {
+                    required: true,
+                    email: true, // Kiểm tra định dạng email
+                    validEmail: true // Kiểm tra tên miền email hợp lệ
+                },
+                TieuDe: {
+                    required: true,
+                    minlength: 2
+                },
+                content: {
+                    required: true,
+                    minlength: 2
+                }
+            },
+            messages: {
+                name: {
+                    required: "Vui lòng nhập tên sản phẩm",
+                    minlength: "Tên sản phẩm phải dài ít nhất 2 ký tự"
+                },
+                Email: {
+                    required: "Vui lòng nhập email",
+                    email: "Vui lòng nhập đúng định dạng email",
+                    validEmail: "Email phải thuộc @gmail.com, @yahoo.com hoặc @outlook.com"
+                },
+                TieuDe: {
+                    required: "Vui lòng nhập tiêu đề",
+                    minlength: "Tiêu đề phải dài ít nhất 2 ký tự"
+                },
+                content: {
+                    required: "Vui lòng nhập nội dung",
+                    minlength: "Nội dung phải dài ít nhất 2 ký tự"
+                }
+            },
+            errorPlacement: function(error, element) {
+                error.css("color", "red"); // Màu đỏ cho thông báo lỗi
+                error.insertAfter(element); // Hiển thị lỗi ngay dưới input
+            }
+        });
+    });
+</script>
+
+
+
+
+
 <script>
     $(document).ready(function() {
         // Khi form được submit
