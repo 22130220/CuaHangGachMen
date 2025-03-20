@@ -16,6 +16,11 @@ public class MaterialDao extends BaseDao {
                         .bind("name", material.getName())
                         .execute();
     }
+    public List<Material> findAllWithStatus()  {
+        return handle.createQuery("SELECT * FROM material WHERE status=1")
+                .mapToBean(Material.class)
+                .list();
+    }
 
     public Material findById(int id)  {
         return handle.createQuery("SELECT * FROM material WHERE ID = :id")

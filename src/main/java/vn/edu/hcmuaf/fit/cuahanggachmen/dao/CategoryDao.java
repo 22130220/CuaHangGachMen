@@ -18,7 +18,11 @@ public class CategoryDao extends BaseDao{
                         .bind("status", category.isStatus())
                         .execute();
     }
-
+    public List<Category> findAllWithStatus() {
+        return handle.createQuery("SELECT * FROM category WHERE Status=1")
+                .mapToBean(Category.class)
+                .list();
+    }
 
     public Category findById(int id) {
             return handle.createQuery("SELECT * FROM category WHERE ID = :id")

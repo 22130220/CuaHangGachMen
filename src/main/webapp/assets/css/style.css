@@ -6,23 +6,23 @@
   --mauChu1:#000;
   --mauChu2: #242424;
   --mauChuMoTa:#9F9F9F;
- --fontMoTaSanPham: 1.6rem;
- --fontTenSanPham:2.4rem;
- --fontGiaSanPham: 2rem;
- --mauchudao1:#fff;
+  --fontMoTaSanPham: 1.6rem;
+  --fontTenSanPham:2.4rem;
+  --fontGiaSanPham: 2rem;
+  --mauchudao1:#fff;
   --mauchudao2:#fff;
- --mauchudao3: #FCF8F3;
+  --mauchudao3: #FCF8F3;
   --mauchudao4: #F9F1E7;
   --mauchudao5:#FAF3EA;
   --maucuabutton: #B88E2F;
 
   --footer-bg-color: #FCF8F3;
---footer-text-color: #9e9da6;
+  --footer-text-color: #9e9da6;
 
 
 
 
- 
+
 }
 html {
   font-size: 62.5%;
@@ -71,7 +71,7 @@ a {
   font-size: 2.5rem;
   line-height: 1.26; /* 126.316% */
   margin: 20px 0 20px 0;
-  
+
 }
 
 .main-content {
@@ -97,29 +97,29 @@ a {
 
 /* ScrollTop*/
 .scrollTop{
-position: fixed;
-bottom: 30px;
-right: 30px;
-padding: 10px 15px;
-background-color: #000;
-color: #fff;
-border-radius: 5px;
-border-radius: 1px solid #fff;
-cursor: pointer;
-transition: all 0.5s ease 0s;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 10px 15px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 5px;
+  border-radius: 1px solid #fff;
+  cursor: pointer;
+  transition: all 0.5s ease 0s;
 }
 
 .scrollTop:hover{
-background-color: #f7f7f7;
-color: #000;
+  background-color: #f7f7f7;
+  color: #000;
 }
 
 /* Header */
 
 .header {
   background-color: #fff;
-  
-  
+
+
 }
 .header.fixed {
   position: sticky;
@@ -178,17 +178,17 @@ color: #000;
 
 .gioithieu{
   color: #fff;
- margin-left: 30px;
- font-size: 1.2rem;
+  margin-left: 30px;
+  font-size: 1.2rem;
 }
 
 
 .noibatthu3{
   background-color: #2e2100ff;
- 
+
 }
 .noibat{
-  
+
   height: 40px;
   display: flex;
   align-items: center;
@@ -206,9 +206,9 @@ color: #000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
-  
-  
+
+
+
 }
 
 .noibat2 nav{
@@ -249,17 +249,90 @@ color: #000;
   left: 215px; /* Căn chỉnh icon cách mép trái */
   top: 50%;
   transform: translateY(-50%);
-  
+
   font-size: 1.6rem;
   pointer-events: none; /* Đảm bảo icon không ảnh hưởng đến việc nhập */
 }
 
+.nav .has-dropdown {
+  position: relative;
+}
 
+.nav .dropdown {
+  position: absolute;
+  top: 230%; /* Giữ nguyên khoảng cách bạn muốn */
+  left: 70%;
+  transform: translateX(-50%) translateY(-10px);
+  display: none;
+  background-color: #fff;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  width: 200px;
+}
+
+/* Vùng vô hình để lấp khoảng trống */
+.nav .dropdown::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background: transparent;
+}
+
+.nav .dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav .dropdown ul li {
+  padding: 10px 15px;
+  border-bottom: 1px solid #a0a0a0;
+  transition: background-color 0.3s ease; /* Thêm hiệu ứng mượt mà cho background */
+}
+
+.nav .dropdown ul li:last-child {
+  border-bottom: none;
+}
+
+.nav .dropdown ul li a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 400;
+  transition: color 0.2s ease; /* Hiệu ứng mượt mà cho màu chữ */
+  display: block;
+}
+
+/* Khi hover vào mục con */
+.nav .dropdown ul li:hover {
+  background-color: #2e2100; /* Background đổi thành #2e2100 */
+}
+
+.nav .dropdown ul li:hover a {
+  color: #fff; /* Chữ đổi thành màu trắng */
+}
+
+/* Hiệu ứng hover cho dropdown */
+.nav .has-dropdown:hover .dropdown,
+.nav .dropdown:hover {
+  display: block;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 
 
 /* Footer */
 .footer {
-  
+
   padding: 96px 135px 0;
   background-color: var(--footer-bg-color);
   margin-top: 100px;
@@ -380,7 +453,7 @@ color: #000;
 .footer__link, .footer__text {
   padding: 8px 0;
   line-height: 1.4;
-  
+
 }
 .footer__link {
   display: inline-block;
@@ -422,7 +495,7 @@ color: #000;
   border: 2px solid #d2d1d6;
   font-size: 1.5rem;
   font-weight: 500;
-  
+
 }
 .footer__input::placeholder {
   font-weight: 400;
