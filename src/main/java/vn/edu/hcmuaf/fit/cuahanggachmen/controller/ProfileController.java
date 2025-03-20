@@ -30,8 +30,10 @@ public class ProfileController extends HttpServlet {
             UserDao userDao = new UserDao(handle);
             User fullUserInfo = userDao.getUserById(user.getId()); // Lấy thông tin đầy đủ từ DB
             request.setAttribute("user", fullUserInfo); // Truyền thông tin qua JSP
-            String birthDate = fullUserInfo.getBirthtime().toLocalDate().toString(); // Định dạng yyyy-MM-dd
-            request.setAttribute("birthtime", birthDate);
+            if(fullUserInfo.getBirthtime() != null) {
+                String birthDate = fullUserInfo.getBirthtime().toLocalDate().toString();// Định dạng yyyy-MM-dd
+                request.setAttribute("birthtime", birthDate);
+            }
             handle.close();
         } catch (Exception e) {
             e.printStackTrace();

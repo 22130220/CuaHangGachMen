@@ -28,6 +28,17 @@ public class UserDao extends BaseDao {
                         .bind("email", email)
                         .execute();
     }
+    public boolean checkEmail(String email) {
+
+        String check=handle.createQuery("SELECT email FROM users WHERE email = :email")
+                .bind("email", email)
+                .mapTo(String.class)
+                .findOne().orElse(null);
+        return check!=null;
+    }
+
+
+
 
     public void updateUserProfileAvatar(User user) {
         handle.createUpdate("UPDATE users SET avatar = :avatar WHERE id = :id")
@@ -74,6 +85,19 @@ public class UserDao extends BaseDao {
                         .findOne()
                         .orElse(null);
     }
+
+    public int insertUser1(String name, String email) {
+
+            return handle.createUpdate("INSERT INTO users (fullname, email) " +
+                            "VALUES (:fullname, :email)")
+                    .bind("fullname", name)
+                    .bind("email", email)
+                    .execute();
+
+
+    }
+
+
 
     // Thêm một người dùng mới
     public ActionResult insertUser(String name, String email, String phone, String avatar, String address, LocalDateTime birthtime, String salt, String password, int sex) {
