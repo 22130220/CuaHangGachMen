@@ -70,15 +70,7 @@ public class GetProduct extends HttpServlet {
 //            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
 //                throw new RuntimeException(e);
 //            }
-        }  else if(action.equalsIgnoreCase("Xoá")) {
-            String[] deleteId = AjaxParseRequest.parse(vid);
-            boolean realAcive = getBoolVal(active);
-            for (String s : deleteId) {
-                success += dao.updateActive(Integer.parseInt(s), realAcive);
-            }
-
         }
-
 
         AjaxResponse resp = new AjaxResponse();
         resp.addBool("success", success > 0);

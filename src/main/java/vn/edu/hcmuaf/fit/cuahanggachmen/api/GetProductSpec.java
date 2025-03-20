@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
+@MultipartConfig
 @WebServlet(name = "GetProductDes", value = "/admin/getspec")
 public class GetProductSpec extends HttpServlet {
     @Override
