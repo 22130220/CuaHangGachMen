@@ -102,7 +102,7 @@
 &approval_prompt=force" class="social-button google">
             <i class="fa-brands fa-google"></i> Đăng nhập với Google
         </a>
-        <a href="facebook-login-url" class="social-button facebook">
+        <a href="https://www.facebook.com/v20.0/dialog/oauth?client_id=1294677724960043&redirect_uri=http://localhost:8080/facebooklogin&scope=public_profile" class="social-button facebook">
             <i class="fa-brands fa-facebook"></i> Đăng nhập với Facebook
         </a>
     </div>
