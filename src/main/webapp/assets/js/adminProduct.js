@@ -1,84 +1,125 @@
 var specTable = null;
-var productTable = initDataTable('#example', '/admin/get-product', 'products', function (d) {}, [
+var category = null;
+var manufacturer = null;
+var material = null;
+var size = null;
+var productTable = initDataTable('#example', '/admin/get-product', function(d)
+{
+    category = d.categories;
+    manufacturer = d.manufacturers;
+    material = d.materials;
+    size = d.sizes;
+    return d.products;
+}
+, function (d) {}, [
     {
         targets:0,
         data: 'imgThumbnail',
         render: data => `<td style="background-color: #f5f5f5;"><img src="${data}" style="width:50px; height:auto;"></td>`,
+        className: 'dt-center',
+    },
+    {
+        targets: 1,
+        data: 'name',
         className: 'dt-center'
     },
-    { targets: 1, data: 'name', className: 'dt-center' },
     {
         targets: 2,
-        data: 'pricePerBox',
-        render: data => `<td style="color: red;">${data.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>`,
-        className: 'dt-center dt-nowrap'
+        data: 'materialId',
+        className: 'dt-center',
+        render: function (d) {
+            let name = '';
+            material.forEach((item, index) => {
+                if(d === item.Id) {
+                    name = item.Name;
+                }
+            })
+            return name;
+        },
+        searchPanes: {
+            show: true
+        }
     },
     {
         targets: 3,
-        data: 'stock',
-        render: data => `<td style="${data === 0 ? 'background-color: #ffe0e0;' : ''}">${data}</td>`,
-        className: 'dt-center'
+        data: 'manufacturerId',
+        render: function(d) {
+            let name = '';
+            manufacturer.forEach((item, index) => {
+                if(d === item.Id) {
+                    name = item.Name;
+                }
+            })
+            return name;
+        },
+        className: 'dt-center',
+        searchPanes: {
+            show: true
+        }
     },
     {
         targets: 4,
-        data: 'status',
-        render: data => data ? `<td><div class="isActive"> Còn hàng </div></td>` : `<td><div class="deActive"> Hết hàng </div></td>`,
-        className: 'dt-center'
+        data: 'sizeId',
+        render: function(d) {
+            let name = '';
+            size.forEach((item, index) => {
+                if(d === item.Id) {
+                    name = item.Name;
+                }
+            })
+            return name;
+        },
+        className: 'dt-center',
+        searchPanes: {
+            show: true
+        }
     },
     {
         targets: 5,
+        data: 'categoryId',
+        className: 'dt-center',
+        render: function(d) {
+            let name = '';
+            category.forEach((item, index) => {
+                if(d === item.id) {
+                    name = item.name;
+                }
+            })
+            return name;
+        },
+        searchPanes: {
+            show: true
+        }
+    },
+    {
+        targets: 6,
+        data: 'pricePerBox',
+        render: data => `<td style="color: red;">${data.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>`,
+        className: 'dt-center dt-nowrap',
+    },
+    {
+        targets: 7,
+        data: 'stock',
+        render: data => `<td style="${data === 0 ? 'background-color: #ffe0e0;' : ''}">${data}</td>`,
+        className: 'dt-center',
+    },
+    {
+        targets: 8,
+        data: 'status',
+        render: data => data ? `<td><div class="isActive"> Còn hàng </div></td>` : `<td><div class="deActive"> Hết hàng </div></td>`,
+        className: 'dt-center',
+        searchPanes: {
+            show: true
+        }
+    },
+    {
+        targets: 9,
         data: 'id',
         render: data => `<div class='table-icon-label'><a href="#" onclick="openUpdateProductModal(${data})"><i class="fa-solid fa-note-sticky"></i></a><a href="#" onclick="openSpecModal(${data})"><i class="fa-solid fa-eraser"></i></a><a href="#" onclick="openColorModal(${data})"><i class="fa-solid fa-eraser"></i></a></div>`,
         className: 'dt-center'
     }
 ], [
-    {
-        extend: 'colvis',
-        text: 'Cột hiển thị',
-    },
-    {
-        extend: 'copy',
-        text: 'Sao chép',
-        exportOptions: {
-            columns: ':visible'
-        }
-    },
-    {
-        extend: 'csv',
-        exportOptions: {
-            columns: ':visible'
-        }
-    },
-    {
-        extend: 'excel',
-        exportOptions: {
-            columns: ':visible'
-        }
-    },
-    {
-        extend: 'pdf',
-        exportOptions: {
-            columns: ':visible'
-        }
-    },
-
-    {
-        extend: 'print',
-        text: 'In',
-        exportOptions: {
-            columns: ':visible',
-        }
-    },
-    {
-        extend: 'print',
-        text: 'In tất cả',
-        exportOptions: {
-            columns: ':visible',
-            modifier: {
-                selected: null
-            }
-        }
-    },
+   [defaultButton],
     {
         text: 'Mô tả',
         className: 'green',
@@ -104,8 +145,8 @@ var productTable = initDataTable('#example', '/admin/get-product', 'products', f
     }
 ], function (e, dt) {
     const selectedRows = dt.rows({ selected: true }).count();
-    dt.button(1).enable(selectedRows === 1); // Button chỉnh sửa
-    dt.button(2).enable(selectedRows > 0); // Button xóa
+    dt.button(9).enable(selectedRows === 1); // Button chỉnh sửa
+    dt.button(10).enable(selectedRows > 0); // Button xóa
 },{ paging: true, searching: true });
 
 function openSpecModal(productId) {

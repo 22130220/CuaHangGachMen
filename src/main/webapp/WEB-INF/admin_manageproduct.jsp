@@ -47,9 +47,10 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.0/css/buttons.dataTables.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/select/2.1.0/css/select.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchpanes/2.3.3/css/searchPanes.dataTables.css">
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.dataTables.js"></script>
     <script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
@@ -58,8 +59,10 @@
     <script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.colVis.min.js"></script>
-    <script src="https://cdn.datatables.net/select/2.1.0/js/dataTables.select.js"></script>
-    <script src="https://cdn.datatables.net/select/2.1.0/js/select.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/select/3.0.0/js/dataTables.select.js"></script>
+    <script src="https://cdn.datatables.net/select/3.0.0/js/select.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/searchpanes/2.3.3/js/dataTables.searchPanes.js"></script>
+    <script src="https://cdn.datatables.net/searchpanes/2.3.3/js/searchPanes.dataTables.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" integrity="sha384-VFQrHzqBh5qiJIU0uGU5CIW3+OWpdGGJM9LBnGbuIH2mkICcFZ7lPd/AAtI7SNf7" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" integrity="sha384-/RlQG9uf0M2vcTw3CX7fbqgbj/h8wKxw7C3zu9/GxcBPRKOEcESxaxufwRXqzq6n" crossorigin="anonymous"></script>
 
@@ -80,6 +83,8 @@
 
     <!-- CKeditor 4 -->
     <script src="/assets/ckeditor/ckeditor.js"></script>
+
+
 
     <style>
         div.container {
@@ -112,12 +117,18 @@
                         <tr>
                             <th>Img</th>
                             <th>Tên Sp</th>
+                            <th>Chất liệu</th>
+                            <th>Nhà máy</th>
+                           <th>Kích thước</th>
+                            <th>Danh mục</th>
                             <th>Giá mỗi hộp</th>
                             <th>Tồn kho</th>
                             <th>Trạng thái</th>
                             <th>Chỉnh sửa</th>
                         </tr>
                         </thead>
+                        <tfoot>
+                        </tfoot>
                     </table>
                 </div>
             </div>

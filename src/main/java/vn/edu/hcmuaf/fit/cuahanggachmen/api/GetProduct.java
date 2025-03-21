@@ -5,9 +5,9 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
-import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxParseRequest;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 
@@ -25,11 +25,23 @@ public class GetProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Handle handle = DBConect.get().open();
         ProductDao pDao = new ProductDao(handle);
+        CategoryDao cDao = new CategoryDao(handle);
+        ManufacturerDao mDao = new ManufacturerDao(handle);
+        SizeDao sDao = new SizeDao(handle);
+        MaterialDao mtDao = new MaterialDao(handle);
         List<Product> ls = null;
         ls = pDao.findAll();
+        List<Category> cs = cDao.findAll();
+        List<Manufacturer> ms = mDao.findAll();
+        List<Size> ss = sDao.findAll();
+        List<Material> materials = mtDao.findAll();
 
         AjaxResponse resp = new AjaxResponse();
         resp.addProductList(ls);
+        resp.addCategoryList(cs);
+        resp.addManufacturerList(ms);
+        resp.addSizeList(ss);
+        resp.addMaterialList(materials);
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

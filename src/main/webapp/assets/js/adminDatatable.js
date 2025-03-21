@@ -1,13 +1,83 @@
 var notyf = new Notyf();
+let defaultButton = [
+    {
+        extend: 'searchPanes',
+        config: {
+            cascadePanes: true,
+            initCollapsed: false,
+            orderable: false
+        }
+    },
+    {
+        extend: 'colvis',
+        text: 'Cột hiển thị',
+    },
+    {
+        extend: 'copy',
+        text: 'Sao chép',
+        exportOptions: {
+            columns: ':visible'
+        }
+    },
+    {
+        extend: 'csv',
+        exportOptions: {
+            columns: ':visible'
+        }
+    },
+    {
+        extend: 'excel',
+        exportOptions: {
+            columns: ':visible'
+        }
+    },
+    {
+        extend: 'pdf',
+        exportOptions: {
+            columns: ':visible'
+        }
+    },
+
+    {
+        extend: 'print',
+        text: 'In',
+        exportOptions: {
+            columns: ':visible',
+        }
+    },
+    {
+        extend: 'print',
+        text: 'In tất cả',
+        exportOptions: {
+            columns: ':visible',
+            modifier: {
+                selected: null
+            }
+        }
+    }
+]
 
 function initDataTable(tableId, ajaxUrl, dataSrc, sendData, columns, buttonConfigs, buttonShow, extraOptions = {}) {
     const table = new DataTable(tableId, {
+        // initComplete: function () {
+        //     this.api().columns().every(function () {
+        //         var column = this;
+        //         var title = $(column.footer()).text();
+        //
+        //         $('<input type="text" placeholder="Search ' + title + '" />')
+        //             .appendTo($(column.footer()).empty())
+        //             .on('keyup change clear', function () {
+        //                 if (column.search() !== this.value) {
+        //                     column.search(this.value).draw();
+        //                 }
+        //             });
+        //     });
+        // },
         ajax: {
             url: ajaxUrl,
             data: sendData,
             dataSrc: dataSrc
         },
-        fixedHeader: true,
         layout: {
             topStart: {
                 buttons: buttonConfigs
@@ -30,10 +100,23 @@ function initDataTable(tableId, ajaxUrl, dataSrc, sendData, columns, buttonConfi
             });
         },
         paging: extraOptions.paging || false,
-        searching: extraOptions.searching || false
+        searching: extraOptions.searching || false,
+        ordering: extraOptions.ordering || false,
+        pageLength: extraOptions.pageLength || 25,
+        language: {
+            searchPanes: {
+                clearMessage: 'Bỏ chọn toàn bộ',
+                collapse: { 0: 'Lọc', _: 'Đã lọc (%d)' },
+                collapseAll: 'Ẩn',
+                showAll: 'Hiển thị',
+                title: {
+                    _: 'Đã lọc (%d)',
+                    0: 'Lọc',
+                }
+            }
+        },
     });
     table.on('select deselect', buttonShow);
-
     return table;
 }
 
