@@ -43,13 +43,13 @@ public class PaymentController extends HttpServlet {
         }
 
         // Đặt thông tin vào request để truyền sang JSP
-        request.setAttribute("name", name);
-        request.setAttribute("email", email);
-        request.setAttribute("phone", phone);
-        request.setAttribute("address", address);
-        request.setAttribute("note", note);
-        request.setAttribute("voucherID", voucherID);
-        request.setAttribute("finalTotal", finalTotal);
+        session.setAttribute("name", name);
+        session.setAttribute("email", email);
+        session.setAttribute("phone", phone);
+        session.setAttribute("address", address);
+        session.setAttribute("note", note);
+        session.setAttribute("voucherID", voucherID);
+        session.setAttribute("finalTotal", finalTotal);
 
 
         request.setAttribute("cart", cart);

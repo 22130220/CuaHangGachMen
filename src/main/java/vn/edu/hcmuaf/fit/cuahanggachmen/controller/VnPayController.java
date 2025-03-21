@@ -50,7 +50,8 @@ public class VnPayController extends HttpServlet {
 
         String vnp_TmnCode = ConfigVNPay.vnp_TmnCode;
 
-        long amount = (long) cart.getTotal() * 100;
+        double shippingFee = cart.getTotal() / 10.0;
+        long amount = (long) (cart.getTotal() +shippingFee)  * 100;
 
         System.out.println(cart.getTotal());
         System.out.println(amount);
