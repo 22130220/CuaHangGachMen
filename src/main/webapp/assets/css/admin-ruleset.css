@@ -83,7 +83,7 @@ a.green {
 }
 
 .table {
-    overflow: auto;
+    overflow: visible;
     background-color: #fff;
     padding: 2rem;
     border-radius: 0.8rem;
