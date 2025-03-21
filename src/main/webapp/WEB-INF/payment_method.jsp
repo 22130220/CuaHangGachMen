@@ -63,8 +63,8 @@
         </section>
 
         <div class="price-summary">
-            <p>Mã voucher đã dùng: ${param.voucherID}</p>
-            <h3>Tổng cộng thanh toán: ${param.finalTotal}₫</h3>
+            <p>Mã voucher đã dùng: ${sessionScope.voucherID}</p>
+            <h3>Tổng cộng thanh toán: ${sessionScope.finalTotal}₫</h3>
         </div>
         <aside class="sidebar">
             <ul class="cart-items">
@@ -92,27 +92,27 @@
 
                     <div class="form-group">
                         <label for="name">Họ tên</label>
-                        <input type="text" id="name" name="name" value="${name}" required>
+                        <input type="text" id="name" name="name" value="${sessionScope.name}" required>
                     </div>
                 <br>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="${email}" required>
+                        <input type="email" id="email" name="email" value="${sessionScope.email}" required>
                     </div>
                 <br>
                     <div class="form-group">
                         <label for="phone">Số điện thoại</label>
-                        <input type="tel" id="phone" name="phone" value="${phone}" required>
+                        <input type="tel" id="phone" name="phone" value="${sessionScope.phone}" required>
                     </div>
                 <br>
                     <div class="form-group">
                         <label for="address">Địa chỉ</label>
-                        <input type="text" id="address" name="address" value="${address}" required>
+                        <input type="text" id="address" name="address" value="${sessionScope.address}" required>
                     </div>
                 <br>
                     <div class="form-group">
                         <label for="note">Ghi chú</label>
-                        <input type="text" id="note" name="note" value="${note}" required >
+                        <input type="text" id="note" name="note" value="${sessionScope.note}"  >
                     </div>
 
                     <div class="ftne">

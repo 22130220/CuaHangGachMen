@@ -31,15 +31,21 @@ public class CompleteOrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        String note = request.getParameter("note");
+        HttpSession session = request.getSession();
+        String name =(String) session.getAttribute("name");
+        String email =(String) session.getAttribute("email");
+        String phone =(String) session.getAttribute("phone");
+        String address =(String) session.getAttribute("address");
+        String note="";
+        String finalTotal = session.getAttribute("finalTotal").toString();
+        if(session.getAttribute("note") != null){
+             note =(String) session.getAttribute("note");
+        }
+
 
         int lastRowId = 0;
 
-        HttpSession session = request.getSession();
+
         User u = (User) session.getAttribute("auth");
         Cart c = (Cart) session.getAttribute("cart");
 
@@ -100,6 +106,13 @@ public class CompleteOrderController extends HttpServlet {
                 emailService.send(email, "Xác nhận đơn hàng #" + lastRowId, emailContent);
                 // XÓA DỮ LIỆU TRONG GIỎ HÀNG
                 session.removeAttribute("cart");
+                session.removeAttribute("name");
+                session.removeAttribute("email");
+                session.removeAttribute("phone");
+                session.removeAttribute("address");
+                session.removeAttribute("note");
+                session.removeAttribute("finalTotal");
+                session.removeAttribute("voucherID");
                 // Truyền thông tin sang trang JSP
                 request.setAttribute("orderId", lastRowId);
                 request.setAttribute("name", name);
@@ -107,7 +120,7 @@ public class CompleteOrderController extends HttpServlet {
                 request.setAttribute("phone", phone);
                 request.setAttribute("address", address);
                 request.setAttribute("payment", "COD");
-                request.setAttribute("totalPrice", totalPrice);
+                request.setAttribute("totalPrice", finalTotal);
                 handle.close();
                 doGet(request,response);
             } else {
