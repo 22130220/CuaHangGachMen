@@ -1,8 +1,10 @@
 var specTable = null;
+var colorTable = null;
 var category = null;
 var manufacturer = null;
 var material = null;
 var size = null;
+var pid = null;
 var productTable = initDataTable('#example', '/admin/get-product', function(d)
 {
     category = d.categories;
@@ -150,7 +152,7 @@ var productTable = initDataTable('#example', '/admin/get-product', function(d)
 },{ paging: true, searching: true });
 
 function openSpecModal(productId) {
-    pid = productId;
+    let pid = productId;
     $("#add_spec_type").empty();
     if (!specTable) {
         specTable = initDataTable('#spec', '/admin/getspec', function (json) {
@@ -414,3 +416,145 @@ $("#update_spec_btn").on('click', function () {
     })
 
 });
+
+function openColorModal(productForColorId) {
+    let pid = productForColorId;
+    $("#add_color_type").empty();
+    const columns = [
+        {
+            targets: 0,
+            data: 'colorName',
+            className: 'dt-center'
+        },
+        {
+            targets: 1,
+            data: 'url',
+            render: function (data) {
+                return `<td style="background-color: #f5f5f5;">
+                    <img src="${data}" style="width:50px; height:auto;">
+                </td>`;
+            },
+            className: 'dt-center'
+        }
+    ];
+
+    const buttonConfigs = [
+        'colvis',
+        {
+            text: 'Chỉnh Sửa',
+            className: 'blue',
+            action: function (e, dt, node, config) {
+                let data = dt.row({ selected: true }).data();
+                action = updateEle;
+                colorRowId = data.id;
+                MicroModal.close('update_color_modal');
+                $("#update_color_val").val(data.url);
+                MicroModal.show('update_color', {
+                    onClose: function() {
+                        openColorModal(pid);
+                    }
+                });
+            },
+            enabled: false
+        },
+        {
+            text: 'Thêm',
+            className: 'green',
+            action: function (e, dt, node, config) {
+                MicroModal.close('update_color_modal');
+                MicroModal.show('add_color', {
+                    onClose: function() {
+                        openColorModal(pid);
+                    }
+                });
+            },
+            enabled: true
+        },
+        {
+            text: 'Xoá',
+            className: 'red',
+            action: function (e, dt, node, config) {
+                var data = dt.rows({ selected: true }).data();
+                var colorRowIdToDel = [];
+                data.each(function(rowData, index) {
+                    colorRowIdToDel.push(rowData.id);
+                });
+                action = delEle;
+                deleteColor(colorRowIdToDel);
+            },
+            enabled: false
+        }
+    ];
+
+    const buttonShow = function () {
+        var selectedRows = colorTable.rows({ selected: true }).count();
+        colorTable.button(1).enable(selectedRows === 1);
+        colorTable.button(3).enable(selectedRows > 0);
+    };
+
+    const extraOptions = {
+        paging: false,
+        searching: false,
+        ordering: false
+    };
+    if (colorTable === null) {
+        colorTable = initDataTable(
+            '#color',
+            '/admin/productColorImg',
+            function (json) {
+                json.colors.forEach(function (e) {
+                    $('#add_color_type').append(
+                        $('<option></option>').val(e.Id).text(e.Name)
+                    );
+                });
+                json.productColors.forEach(function (e) {
+                    console.log(e);
+                });
+                return json.productColors;
+            },
+            function(d) {
+                d.pid = productForColorId;
+            },
+            columns,
+            buttonConfigs,
+            buttonShow,
+            extraOptions
+        );
+    } else {
+        colorTable.settings()[0].ajax.data = function (d) {
+            d.pid = productForColorId;
+        };
+        colorTable.ajax.reload();
+    }
+    MicroModal.show('update_color_modal');
+}
+
+$("#add_color_btn").on('click', function () {
+    const value = $("#add_color_val").val();
+    const sel = $("#add_color_type").val();
+
+    if (isNullOrEmptyOrWhitespace(value) || isNullOrEmptyOrWhitespace(sel)) {
+        notyf.error("Cần nhập đủ thông tin");
+    } else {
+        const formData = new FormData();
+        formData.append('action', "Thêm");
+        formData.append('value', value);
+        formData.append('sel', sel);
+        formData.append('pid', pid);
+        formData.append('vid', vid);
+
+        sendAjaxRequest({
+            url: '/admin/productColorImg',
+            type: 'POST',
+            data: formData,
+            successMessage: "Thêm thành công",
+            errorMessage: "Thêm thất bại",
+            tableToReload: colorTable,
+            modalToClose: 'add_color',
+            onSuccess: function(response) {
+                $("#add_color_val").val("");
+            }
+        });
+    }
+});
+
