@@ -13,6 +13,23 @@
         <listener-class>vn.edu.hcmuaf.fit.cuahanggachmen.AppContextListenter</listener-class>
     </listener>
 
+    <filter>
+        <filter-name>RequestIdFilter</filter-name>
+        <filter-class>vn.edu.hcmuaf.fit.cuahanggachmen.filter.RequestIdFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RequestIdFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+<!--    <filter>-->
+<!--        <filter-name></filter-name>-->
+<!--        <filter-class>com.example.SecondFilter</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>SecondFilter</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
 <!--    <error-page>-->
 <!--        <error-code>404</error-code>-->
 <!--        <location>/WEB-INF/404.jsp</location>-->
