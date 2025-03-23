@@ -62,6 +62,9 @@ public class LoginDeviceBuilder extends LogBuilder{
         this.loginLevel = switch (level) {
             case FAILED -> "FAILED";
             case LOGIN -> "LOGIN";
+            case REGISTERED -> "REGISTERED";
+            case VERIFYING_EMAIL -> "VERIFYING_EMAIL";
+            case VERIFYING_TOTP -> "VERIFYING_TOTP";
             case LOGOUT -> "LOGOUT";
             case LOCKED10 -> "LOCKED10";
             case LOCKED30 -> "LOCKED30";

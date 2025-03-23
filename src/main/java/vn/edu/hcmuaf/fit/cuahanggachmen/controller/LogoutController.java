@@ -4,6 +4,11 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LoginDeviceBuilder;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LoginLevel;
 
 import java.io.IOException;
 
@@ -14,8 +19,19 @@ public class LogoutController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(false);
-        if (session != null) {
+        User u = (User) session.getAttribute("auth");
+        if (u != null) {
+            Handle handle = DBConect.get().open();
+            new LoginDeviceBuilder()
+                    .loginLevel(LoginLevel.LOGOUT)
+                    .setHeaderRequest(request, response)
+                    .location("LogoutController")
+                    .message("Đăng xuất")
+                    .build(handle);
+            String deviceId = (String) session.getAttribute("DEVICE_ID");
             session.invalidate(); // Hủy session
+            session = request.getSession(true);
+            session.setAttribute("DEVICE_ID", deviceId);
         }
 
 //        request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
