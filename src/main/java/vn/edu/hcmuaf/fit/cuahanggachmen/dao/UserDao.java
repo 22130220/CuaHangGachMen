@@ -23,10 +23,10 @@ public class UserDao extends BaseDao {
 
     public void updatePassword(String email, String hashedPassword, String salt) {
         handle.createUpdate("UPDATE users SET password = :password, salt = :salt WHERE email = :email")
-                        .bind("password", hashedPassword)
-                        .bind("salt", salt)
-                        .bind("email", email)
-                        .execute();
+                .bind("password", hashedPassword)
+                .bind("salt", salt)
+                .bind("email", email)
+                .execute();
     }
     public boolean checkEmail(String email) {
 
@@ -37,14 +37,46 @@ public class UserDao extends BaseDao {
         return check!=null;
     }
 
+    // Tìm user bằng password (Facebook ID)
+    public User findByFacebookId(String facebookId) {
+        return handle.createQuery("SELECT * FROM users WHERE password = :facebookId AND status=1")
+                .bind("facebookId", facebookId)
+                .map(new UserMapper())
+                .findOne()
+                .orElse(null);
+    }
 
+    // Insert user với Facebook ID vào password
+    public int insertFacebookUser(User user) {
+        return handle.createUpdate("INSERT INTO users (password, fullname, email, avatar, status) " +
+                        "VALUES (:password, :fullname, :email, :avatar, :status)")
+                .bind("password", user.getPassword()) // Lưu Facebook ID vào password
+                .bind("fullname", user.getFullname())
+                .bind("email", user.getEmail())
+                .bind("avatar", user.getAvatar())
+                .bind("status", user.isStatus())
+                .executeAndReturnGeneratedKeys("id") // Trả về id mới sinh
+                .mapTo(int.class)
+                .one();
+    }
+
+    // Update user dựa trên password (Facebook ID)
+    public int updateUserFaceBook(User user) {
+        return handle.createUpdate("UPDATE users SET fullname = :fullname, email = :email, avatar = :avatar " +
+                        "WHERE password = :password")
+                .bind("fullname", user.getFullname())
+                .bind("email", user.getEmail())
+                .bind("avatar", user.getAvatar())
+                .bind("password", user.getPassword())
+                .execute();
+    }
 
 
     public void updateUserProfileAvatar(User user) {
         handle.createUpdate("UPDATE users SET avatar = :avatar WHERE id = :id")
-                        .bind("avatar", user.getAvatar())
-                        .bind("id", user.getId())
-                        .execute();
+                .bind("avatar", user.getAvatar())
+                .bind("id", user.getId())
+                .execute();
     }
 
     public int countUser() {
@@ -53,46 +85,46 @@ public class UserDao extends BaseDao {
 
     public void updateUserProfile(User user) {
         handle.createUpdate("UPDATE users SET fullname = :fullname, phone = :phone, address = :address, birthtime = :birthtime, sex = :sex WHERE id = :id")
-                        .bind("fullname", user.getFullname())
-                        .bind("phone", user.getPhone())
-                        .bind("address", user.getAddress())
-                        .bind("birthtime", user.getBirthtime())
-                        .bind("sex", user.getSex())
-                        .bind("id", user.getId())
-                        .execute();
+                .bind("fullname", user.getFullname())
+                .bind("phone", user.getPhone())
+                .bind("address", user.getAddress())
+                .bind("birthtime", user.getBirthtime())
+                .bind("sex", user.getSex())
+                .bind("id", user.getId())
+                .execute();
     }
 
 
     // Lấy tất cả người dùng
     public List<User> getAllUsers() {
         return handle.createQuery("SELECT * FROM users")
-                        .map(new UserMapper()) // Sử dụng UserMapper để ánh xạ
-                        .list();
+                .map(new UserMapper()) // Sử dụng UserMapper để ánh xạ
+                .list();
     }
 
     // Lấy một người dùng theo ID
     public User getUserById(int id) {
         return handle.createQuery("SELECT * FROM users WHERE id = :id AND status=1")
-                        .bind("id", id) // Gắn giá trị id
-                        .map(new UserMapper())
-                        .findOne()
-                        .orElse(null);
+                .bind("id", id) // Gắn giá trị id
+                .map(new UserMapper())
+                .findOne()
+                .orElse(null);
     }
     public User findByEmail(String email) {
         return handle.createQuery("SELECT * FROM users WHERE email = :email AND status=1")
-                        .bind("email", email) // Gắn giá trị id
-                        .map(new UserMapper())
-                        .findOne()
-                        .orElse(null);
+                .bind("email", email) // Gắn giá trị id
+                .map(new UserMapper())
+                .findOne()
+                .orElse(null);
     }
 
     public int insertUser1(String name, String email) {
 
-            return handle.createUpdate("INSERT INTO users (fullname, email) " +
-                            "VALUES (:fullname, :email)")
-                    .bind("fullname", name)
-                    .bind("email", email)
-                    .execute();
+        return handle.createUpdate("INSERT INTO users (fullname, email) " +
+                        "VALUES (:fullname, :email)")
+                .bind("fullname", name)
+                .bind("email", email)
+                .execute();
 
 
     }
@@ -102,18 +134,18 @@ public class UserDao extends BaseDao {
     // Thêm một người dùng mới
     public ActionResult insertUser(String name, String email, String phone, String avatar, String address, LocalDateTime birthtime, String salt, String password, int sex) {
         try {
-                   handle.createUpdate("INSERT INTO users (fullname, email, phone, avatar, address, birthtime, salt, password, sex) " +
-                                    "VALUES (:fullname, :email, :phone, :avatar, :address, :birthtime, :salt, :password, :sex)")
-                            .bind("fullname", name)
-                            .bind("email", email)
-                            .bind("phone", phone)
-                            .bind("avatar", avatar)
-                            .bind("address", address)
-                            .bind("birthtime", birthtime)
-                            .bind("salt", salt)
-                            .bind("password", password)
-                            .bind("sex", sex)
-                            .execute();
+            handle.createUpdate("INSERT INTO users (fullname, email, phone, avatar, address, birthtime, salt, password, sex) " +
+                            "VALUES (:fullname, :email, :phone, :avatar, :address, :birthtime, :salt, :password, :sex)")
+                    .bind("fullname", name)
+                    .bind("email", email)
+                    .bind("phone", phone)
+                    .bind("avatar", avatar)
+                    .bind("address", address)
+                    .bind("birthtime", birthtime)
+                    .bind("salt", salt)
+                    .bind("password", password)
+                    .bind("sex", sex)
+                    .execute();
             return Result.Ok();
         } catch (UnableToExecuteStatementException e) {
             Throwable cause = e.getCause();
@@ -127,30 +159,30 @@ public class UserDao extends BaseDao {
     // Cập nhật thông tin người dùng
     public int updateUser(User user) {
         return handle.createUpdate("UPDATE users SET fullname = :fullname, email = :email, phone = :phone, address = :address, sex = :sex, birthtime = :birthtime, status = :status WHERE id = :id")
-                        .bind("fullname", user.getFullname())
-                        .bind("email", user.getEmail())
-                        .bind("phone", user.getPhone())
-                        .bind("address", user.getAddress())
-                        .bind("id", user.getId())
-                        .bind("sex", user.getSex())
-                        .bind("birthtime", user.getBirthtime())
-                        .bind("status", user.isStatus())
-                        .execute();
+                .bind("fullname", user.getFullname())
+                .bind("email", user.getEmail())
+                .bind("phone", user.getPhone())
+                .bind("address", user.getAddress())
+                .bind("id", user.getId())
+                .bind("sex", user.getSex())
+                .bind("birthtime", user.getBirthtime())
+                .bind("status", user.isStatus())
+                .execute();
     }
 
     // Xóa người dùng theo ID
     public void deleteUser(int id) {
         handle.createUpdate("DELETE FROM users WHERE id = :id")
-                        .bind("id", id)
-                        .execute();
+                .bind("id", id)
+                .execute();
     }
 
     public int changePassword(int id, String hash, String salt) {
         return handle.createUpdate("UPDATE users SET password = :hash, salt = :salt WHERE id = :id")
-                        .bind("id", id)
-                        .bind("hash", hash)
-                        .bind("salt", salt)
-                        .execute();
+                .bind("id", id)
+                .bind("hash", hash)
+                .bind("salt", salt)
+                .execute();
     }
 
 }
