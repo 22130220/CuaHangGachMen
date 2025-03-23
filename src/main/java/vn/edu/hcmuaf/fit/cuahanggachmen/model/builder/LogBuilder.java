@@ -5,9 +5,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.LogDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.filter.RequestIdFilter;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.LogModel;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogLevel;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogType;
 
 import java.sql.Timestamp;
 
@@ -46,7 +48,7 @@ public class LogBuilder {
         if (u != null) {
             userId = u.getId();
         }
-        requestId = null;
+        requestId = (String) request.getAttribute(RequestIdFilter.REQUEST_ID_HEADER);
         loginDeviceSetHeader(request, response);
         return this;
     }
@@ -101,8 +103,12 @@ public class LogBuilder {
         return this;
    }
 
-  public LogBuilder type(String type) {
-        this.type = type;
+  public LogBuilder type(LogType type) {
+        this.type = switch (type) {
+            case UPDATE -> "CẬP NHẬT";
+            case DELETE -> "XOÁ";
+            case INSERT -> "THÊM";
+        };
         return this;
   }
 
