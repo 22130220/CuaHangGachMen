@@ -7,13 +7,13 @@ import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.GoogleAccount;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.Log;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.LogModel;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LogBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.GoogleLogin;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.LogService;
 
 import java.io.IOException;
-import java.sql.Date;
 
 @WebServlet(name = "GoogleLoginController", value = "/googlelogin")
 public class GoogleLoginController extends HttpServlet {
@@ -44,9 +44,11 @@ public class GoogleLoginController extends HttpServlet {
        }else{
           int id= dao.insertUser1(account.getName(),account.getEmail());
           if(id>0){
-              Log log=new Log("alert",id,"Đăng nhập Google","Người dùng chưa có trong cơ sở dữ liệu","Người dùng đã được cập nhập vô cơ sở dữ liệu");
-              LogService logService = new LogService();
-              logService.alert(log);
+              new LogBuilder()
+                      .setHeaderRequest(request, response)
+                      .location("User")
+                      .message("Đăng nhập google thành công")
+                      .build(handle);
               User user1=dao.findByEmail(account.getEmail());
               session.setAttribute("auth", user1);
           }

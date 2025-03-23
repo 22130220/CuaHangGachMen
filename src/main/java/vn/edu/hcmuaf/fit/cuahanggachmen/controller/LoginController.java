@@ -7,8 +7,10 @@ import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LogBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.AuthService;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.PasswordUtils;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogLevel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -39,6 +41,8 @@ public class LoginController extends HttpServlet {
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
 
+        Handle handle = DBConect.get().open();
+
         AuthService service = new AuthService();
 
         try {
@@ -52,12 +56,25 @@ public class LoginController extends HttpServlet {
             user.setSalt(null);
             session.setAttribute("auth", user);
 
+            new LogBuilder()
+                    .setHeaderRequest(request, response)
+                    .location("User")
+                    .message("Đăng nhập thành công")
+                    .build(handle);
             response.sendRedirect("/");
         }else{
+            new LogBuilder()
+                    .setHeaderRequest(request, response)
+                    .level(LogLevel.WARNING)
+                    .location("User")
+                    .message("Đăng nhập thất bại")
+                    .build(handle);
             request.setAttribute("error", "Email hoặc mật khẩu bạn vừa nhập chưa đúng");
             request.setAttribute("email", email);
             request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         }
+
+        handle.close();
 
     }
 }
