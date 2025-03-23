@@ -10,8 +10,10 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.model.GoogleAccount;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.LogModel;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LogBuilder;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LoginDeviceBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.GoogleLogin;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.LogService;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LoginLevel;
 
 import java.io.IOException;
 
@@ -44,7 +46,8 @@ public class GoogleLoginController extends HttpServlet {
        }else{
           int id= dao.insertUser1(account.getName(),account.getEmail());
           if(id>0){
-              new LogBuilder()
+              new LoginDeviceBuilder()
+                      .loginLevel(LoginLevel.LOGIN)
                       .setHeaderRequest(request, response)
                       .location("User")
                       .message("Đăng nhập google thành công")

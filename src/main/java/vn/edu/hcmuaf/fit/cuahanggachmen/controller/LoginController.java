@@ -8,9 +8,11 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LogBuilder;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LoginDeviceBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.AuthService;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.PasswordUtils;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogLevel;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LoginLevel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -56,17 +58,19 @@ public class LoginController extends HttpServlet {
             user.setSalt(null);
             session.setAttribute("auth", user);
 
-            new LogBuilder()
+            new LoginDeviceBuilder()
+                    .loginLevel(LoginLevel.LOGIN)
                     .setHeaderRequest(request, response)
                     .location("User")
                     .message("Đăng nhập thành công")
                     .build(handle);
             response.sendRedirect("/");
         }else{
-            new LogBuilder()
+            new LoginDeviceBuilder()
+                    .loginLevel(LoginLevel.FAILED)
                     .setHeaderRequest(request, response)
-                    .level(LogLevel.WARNING)
                     .location("User")
+                    .level(LogLevel.WARNING)
                     .message("Đăng nhập thất bại")
                     .build(handle);
             request.setAttribute("error", "Email hoặc mật khẩu bạn vừa nhập chưa đúng");
