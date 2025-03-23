@@ -9,10 +9,12 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.GoogleAccount;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.LogModel;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.GoogleLoginBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LogBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LoginDeviceBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.GoogleLogin;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.LogService;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogLevel;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LoginLevel;
 
 import java.io.IOException;
@@ -42,15 +44,22 @@ public class GoogleLoginController extends HttpServlet {
            User user = dao.findByEmail(account.getEmail());
             session.setAttribute("auth", user);
 
+           new GoogleLoginBuilder()
+                   .loginLevel(LoginLevel.LOGIN)
+                   .setHeaderRequest(request, response)
+                   .location("GoogleLoginController")
+                   .message("Đăng nhập google thành công")
+                   .build(handle);
             url = "/";
        }else{
           int id= dao.insertUser1(account.getName(),account.getEmail());
           if(id>0){
-              new LoginDeviceBuilder()
-                      .loginLevel(LoginLevel.LOGIN)
+              new GoogleLoginBuilder()
+                      .loginLevel(LoginLevel.REGISTERED)
                       .setHeaderRequest(request, response)
-                      .location("User")
-                      .message("Đăng nhập google thành công")
+                      .level(LogLevel.ALERT)
+                      .location("GoogleLoginController")
+                      .message("Đăng ký google thành công")
                       .build(handle);
               User user1=dao.findByEmail(account.getEmail());
               session.setAttribute("auth", user1);

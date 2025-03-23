@@ -3,14 +3,19 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.ActionResult;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.Result;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.StatusCode;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.mail.EmailService;
 import vn.edu.hcmuaf.fit.cuahanggachmen.mail.VerificationTokenStore;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LoginDeviceBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.RegisterService;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.PasswordUtils;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogLevel;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LoginLevel;
 
 
 import java.io.IOException;
@@ -88,6 +93,14 @@ public class RegisterController extends HttpServlet {
             }
         }
 
+        Handle handle = DBConect.get().open();
+        new LoginDeviceBuilder()
+                .loginLevel(LoginLevel.VERIFYING_EMAIL)
+                .setHeaderRequest(request, response)
+                .level(LogLevel.ALERT)
+                .message("Xác thực email " + email)
+                .location("RegisterController")
+                .build(handle);
 
         ac.put("checkPassword", checkPassword);
         ac.put("checkConfirm", checkConfirm);
@@ -102,5 +115,6 @@ public class RegisterController extends HttpServlet {
         request.setAttribute("email", user.getEmail());
         request.setAttribute("register", ac);
         request.getRequestDispatcher("/WEB-INF/registration-success.jsp").forward(request, response);
+        handle.close();
     }
 }

@@ -61,7 +61,7 @@ public class LoginController extends HttpServlet {
             new LoginDeviceBuilder()
                     .loginLevel(LoginLevel.LOGIN)
                     .setHeaderRequest(request, response)
-                    .location("User")
+                    .location("LoginController")
                     .message("Đăng nhập thành công")
                     .build(handle);
             response.sendRedirect("/");
@@ -69,7 +69,7 @@ public class LoginController extends HttpServlet {
             new LoginDeviceBuilder()
                     .loginLevel(LoginLevel.FAILED)
                     .setHeaderRequest(request, response)
-                    .location("User")
+                    .location("LoginController")
                     .level(LogLevel.WARNING)
                     .message("Đăng nhập thất bại")
                     .build(handle);
