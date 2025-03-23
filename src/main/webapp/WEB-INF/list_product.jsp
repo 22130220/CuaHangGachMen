@@ -56,6 +56,8 @@
     <link rel="stylesheet" href="/assets/css/product-card.css">
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 </head>
 <body>
 
@@ -392,6 +394,45 @@
 
 <script src="/assets/js/scrollTop.js"></script>
 <script src="/assets/js/filterItem.js"></script>
+
+
+<script>
+    // Sử dụng Notyf
+    var notyf = new Notyf();
+
+    $(document).ready(function() {
+
+        $(document).on('click', '.add-to-cart-btn', function(e) {
+
+            e.preventDefault();
+
+            var form = $(this).closest('.add-to-cart-form');
+            var formData = form.serialize();
+
+            $.ajax({
+
+                url: '/add-to-cart',
+                type: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+
+                    if (response.status === 'success') {
+                        $('.cart-count').text(response.quantity);
+                        notyf.success('Đã thêm sản phẩm vào giỏ hàng!');
+
+                    } else {
+                        notyf.error(response.message);
+                    }
+                },
+
+                error: function(xhr, status, error) {
+                    notyf.error('Có lỗi xảy ra khi thêm vào giỏ hàng');
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
