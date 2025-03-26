@@ -10,6 +10,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LogBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LoginDeviceBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.AuthService;
+import vn.edu.hcmuaf.fit.cuahanggachmen.service.VerifyRecaptcha;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.PasswordUtils;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogLevel;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogType;
@@ -43,42 +44,44 @@ public class LoginController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember");
-
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+        System.out.println(gRecaptchaResponse);
+        boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
         Handle handle = DBConect.get().open();
 
-        AuthService service = new AuthService();
+        if(verify) {
+            AuthService service = new AuthService();
+            try {
+                user = service.checkLogin(email, password);
+            } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
 
-        try {
-            user = service.checkLogin(email, password);
-        } catch (SQLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+            if(user!=null){
+                user.setPassword(null);
+                user.setSalt(null);
+                session.setAttribute("auth", user);
+
+                new LoginDeviceBuilder()
+                        .loginLevel(LoginLevel.LOGIN)
+                        .setHeaderRequest(request, response)
+                        .location("LoginController")
+                        .message("Đăng nhập thành công")
+                        .build(handle);
+                response.sendRedirect("/");
+            }else{
+                new LoginDeviceBuilder()
+                        .loginLevel(LoginLevel.FAILED)
+                        .setHeaderRequest(request, response)
+                        .location("LoginController")
+                        .level(LogLevel.WARNING)
+                        .message("Đăng nhập thất bại")
+                        .build(handle);
+                request.setAttribute("error", "Email hoặc mật khẩu bạn vừa nhập chưa đúng");
+                request.setAttribute("email", email);
+                request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+            }
         }
-
-        if(user!=null){
-            user.setPassword(null);
-            user.setSalt(null);
-            session.setAttribute("auth", user);
-
-            new LoginDeviceBuilder()
-                    .loginLevel(LoginLevel.LOGIN)
-                    .setHeaderRequest(request, response)
-                    .location("LoginController")
-                    .message("Đăng nhập thành công")
-                    .build(handle);
-            response.sendRedirect("/");
-        }else{
-            new LoginDeviceBuilder()
-                    .loginLevel(LoginLevel.FAILED)
-                    .setHeaderRequest(request, response)
-                    .location("LoginController")
-                    .level(LogLevel.WARNING)
-                    .message("Đăng nhập thất bại")
-                    .build(handle);
-            request.setAttribute("error", "Email hoặc mật khẩu bạn vừa nhập chưa đúng");
-            request.setAttribute("email", email);
-            request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
-        }
-
         handle.close();
 
     }
