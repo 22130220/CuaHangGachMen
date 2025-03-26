@@ -28,10 +28,7 @@ public class LogoutController extends HttpServlet {
                     .location("LogoutController")
                     .message("Đăng xuất")
                     .build(handle);
-            String deviceId = (String) session.getAttribute("DEVICE_ID");
             session.invalidate(); // Hủy session
-            session = request.getSession(true);
-            session.setAttribute("DEVICE_ID", deviceId);
         }
 
 //        request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);

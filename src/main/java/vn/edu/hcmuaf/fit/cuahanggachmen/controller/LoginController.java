@@ -12,6 +12,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LoginDeviceBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.AuthService;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.PasswordUtils;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogLevel;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogType;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LoginLevel;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        request.getSession().invalidate();
+
         HttpSession session = request.getSession(true);
         User user = null;
         String email = request.getParameter("email");

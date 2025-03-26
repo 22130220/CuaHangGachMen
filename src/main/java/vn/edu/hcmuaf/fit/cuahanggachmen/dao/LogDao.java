@@ -11,8 +11,8 @@ public class LogDao extends BaseDao{
 
     // Insert Log
     public int insertLog(LogModel log) {
-        return handle.createUpdate("INSERT INTO log (level, userId, time, message, requestId, location, beforeData, afterData, type) " +
-                        "VALUES (:level, :userId,:time, :message, :requestId, :location, :beforeData, :afterData, :type)")
+        return handle.createUpdate("INSERT INTO log (level, userId, message, requestId, location, beforeData, afterData, type) " +
+                        "VALUES (:level, :userId, :message, :requestId, :location, :beforeData, :afterData, :type)")
                         .bindBean(log)
                         .executeAndReturnGeneratedKeys("id") // Lấy ID vừa chèn
                         .mapTo(Integer.class)

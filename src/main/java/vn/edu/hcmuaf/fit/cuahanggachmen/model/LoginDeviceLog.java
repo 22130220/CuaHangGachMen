@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -13,8 +14,10 @@ public class LoginDeviceLog implements Serializable {
     private int userId;
     private String loginLevel;
     private Timestamp time;
+    private String os;
+    private String browser;
 
-    public LoginDeviceLog(int id, String deviceId, String deviceIp, String userAgent, boolean isLocked, int userId, String loginLevel, Timestamp time) {
+    public LoginDeviceLog(int id, String deviceId, String deviceIp, String userAgent, boolean isLocked, int userId, String loginLevel, Timestamp time, String os, String browser) {
         this.id = id;
         this.deviceId = deviceId;
         this.deviceIp = deviceIp;
@@ -23,9 +26,27 @@ public class LoginDeviceLog implements Serializable {
         this.userId = userId;
         this.loginLevel = loginLevel;
         this.time = time;
+        this.os = os;
+        this.browser = browser;
     }
 
     public LoginDeviceLog() {
+    }
+
+    public String getOs() {
+        return os;
+    }
+
+    public void setOs(String os) {
+        this.os = os;
+    }
+
+    public String getBrowser() {
+        return browser;
+    }
+
+    public void setBrowser(String browser) {
+        this.browser = browser;
     }
 
     public boolean isLocked() {
@@ -99,6 +120,8 @@ public class LoginDeviceLog implements Serializable {
     public void setLoginLevel(String loginLevel) {
         this.loginLevel = loginLevel;
     }
+
+
 
     @Override
     public String toString() {
