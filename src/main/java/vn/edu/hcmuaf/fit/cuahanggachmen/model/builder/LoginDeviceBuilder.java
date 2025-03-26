@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.jdbi.v3.core.Handle;
+import ua_parser.Client;
+import ua_parser.Parser;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.LogDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.LoginDeviceLogDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.LogModel;
@@ -18,6 +20,8 @@ public class LoginDeviceBuilder extends LogBuilder{
     protected String userAgent;
     protected boolean isLocked;
     private String loginLevel;
+    private String os;
+    private String browser;
 
     public LoginDeviceBuilder() {
         super();
@@ -26,6 +30,8 @@ public class LoginDeviceBuilder extends LogBuilder{
         userAgent = null;
         isLocked = false;
         loginLevel = null;
+        os = null;
+        browser = null;
     }
 
     @Override
@@ -36,6 +42,13 @@ public class LoginDeviceBuilder extends LogBuilder{
 
         // Lấy hoặc tạo Device ID
         this.deviceId = getOrCreateDeviceId(request, response);
+
+        String uaString = request.getHeader("User-Agent");
+
+        Parser uaParser = new Parser();
+        Client c = uaParser.parse(uaString);
+        browser = c.userAgent.family;
+        os = c.os.family;
     }
 
     public LoginDeviceBuilder deviceId(String deviceId) {
@@ -82,35 +95,14 @@ public class LoginDeviceBuilder extends LogBuilder{
         log.setLoginLevel(loginLevel);
         log.setUserId(userId);
         log.setTime(time);
+        log.setOs(os);
+        log.setBrowser(browser);
         return log;
     }
 
     private String getOrCreateDeviceId(HttpServletRequest request, HttpServletResponse response) {
-//        // Kiểm tra cookie Device ID
-//        Cookie[] cookies = request.getCookies();
-//        if (cookies != null) {
-//            for (Cookie cookie : cookies) {
-//                if ("DEVICE_ID".equals(cookie.getName())) {
-//                    return cookie.getValue();
-//                }
-//            }
-//        }
-//
-//        String newDeviceId = UUID.randomUUID().toString();
-//        Cookie newCookie = new Cookie("DEVICE_ID", newDeviceId);
-//        newCookie.setHttpOnly(true);
-//        newCookie.setMaxAge(60 * 60 * 24 * 365); // 1 năm
-//        response.addCookie(newCookie);
-
         HttpSession session = request.getSession();
-        String deviceId = (String) session.getAttribute("DEVICE_ID");
-        if (deviceId != null) {
-           return deviceId;
-        }
-
-        String newDeviceId = UUID.randomUUID().toString();
-        session.setAttribute("DEVICE_ID", newDeviceId);
-        return newDeviceId;
+        return session.getId();
     }
 
     @Override
