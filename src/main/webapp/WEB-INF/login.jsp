@@ -41,6 +41,9 @@
             referrerpolicy="no-referrer"
     ></script>
 
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
 </head>
 <body>
 
@@ -77,14 +80,18 @@
     <form action="login" method="post">
         <input type="text" id="email" name="email" value="${email}" placeholder="Vui lòng nhập email của bạn" required>
         <input type="password" id="password" name="password" placeholder="Mật khẩu" required>
-
+        <div class="g-recaptcha"
+             data-sitekey="6LcfgQArAAAAAHMpZPwzWzPKURK6ID6AAh2bnoFH"
+             data-callback="recaptchaCallback"
+             data-expired-callback="recaptchaExpired">
+        </div>
         <div class="options">
             <label><input type="checkbox" name="remember"> Ghi nhớ đăng nhập</label>
             <a href="forgetpassword">Quên mật khẩu?</a>
         </div>
 
 <%--        <a href="./home.html"><div class="sign-in">Đăng Nhập</div></a>--%>
-        <button type="submit" class="sign-in">Đăng Nhập</button>
+        <button type="submit" id="login-btn" class="sign-in" disabled>Đăng Nhập</button>
 
     </form>
 
@@ -117,5 +124,20 @@
     <button class="create-account"><a href="register">Tạo Tài Khoản</a></button>
 </div>
 </body>
+
+<script>
+    function recaptchaCallback() {
+        document.getElementById("login-btn").disabled = false;
+    }
+
+    function recaptchaExpired() {
+        document.getElementById("login-btn").disabled = true;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("login-btn").disabled = true;
+    });
+</script>
+
 </html>
 
