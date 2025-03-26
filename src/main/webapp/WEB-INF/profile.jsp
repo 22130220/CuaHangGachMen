@@ -81,9 +81,9 @@
 
             <hr>
 
-            <a href="/lichsudonhangthanhcong.html"><li>Đơn Mua</li></a>
+            <a href="completeorderhistory"><li>Đơn Mua</li></a>
             <hr>
-            <a href="/home.html"><li>Quay về trang chủ</li></a>
+            <a href="/"><li>Quay về trang chủ</li></a>
 
         </ul>
     </aside>

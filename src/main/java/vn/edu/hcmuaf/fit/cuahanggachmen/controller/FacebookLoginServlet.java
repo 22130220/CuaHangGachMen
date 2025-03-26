@@ -5,9 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LogBuilder;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogLevel;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogType;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +30,7 @@ public class FacebookLoginServlet extends HttpServlet {
             throws ServletException, IOException {
         String code = request.getParameter("code");
         if (code == null || code.isEmpty()) {
-            response.sendRedirect("login.jsp");
+            request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             return;
         }
 
@@ -45,6 +49,8 @@ public class FacebookLoginServlet extends HttpServlet {
         // Parse thông tin người dùng
         ObjectMapper mapper = new ObjectMapper();
         JsonNode userData = mapper.readTree(userInfo);
+        Handle handle = DBConect.get().open();
+
 
         String fbId = userData.get("id").asText(); // Facebook ID
         String name = userData.get("name").asText();
@@ -74,7 +80,15 @@ public class FacebookLoginServlet extends HttpServlet {
         // Lưu vào session
         HttpSession session = request.getSession();
         session.setAttribute("auth", new User(userId, name, email, null, picture, null, null, true, null, null, 0, fbId, 0));
-
+        new LogBuilder()
+                .level(LogLevel.INFO)
+                .message("Đăng nhập bằng Facebook thành công")
+                .setHeaderRequest(request, response)
+                .location("FacebookLoginServlet")
+                .beforeData("")
+                .afterData("")
+                .type(LogType.INSERT)
+                .build(handle);
         response.sendRedirect("/");
     }
 
