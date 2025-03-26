@@ -95,6 +95,29 @@ public class OrderDetailDao extends BaseDao {
                         .map(this::mapRow)
                         .list();
     }
+    public List<OrderDetail> findAllOrderDetailsByUserId(int userId) {
+        return handle.createQuery(
+                        "SELECT od.OrderID, od.ProductID, od.Quantity, od.Price, od.Color, od.CreateDate, p.imgThumbnail, p.name " +
+                                "FROM orderdetail od " +
+                                "JOIN products p ON p.id = od.ProductID " +
+                                "JOIN orders o ON od.OrderID = o.ID " +
+                                "WHERE o.UserID = :userId")
+                .bind("userId", userId)
+                .map(this::mapRow)
+                .list();
+    }
+    public List<OrderDetail> findOrderDetailsByUserIdAndStatus(int userId, String status) {
+        return handle.createQuery(
+                        "SELECT od.OrderID, od.ProductID, od.Quantity, od.Price, od.Color, od.CreateDate, p.imgThumbnail, p.name " +
+                                "FROM orderdetail od " +
+                                "JOIN products p ON p.id = od.ProductID " +
+                                "JOIN orders o ON od.OrderID = o.ID " +
+                                "WHERE o.UserID = :userId AND o.Status = :status")
+                .bind("userId", userId)
+                .bind("status", status)
+                .map(this::mapRow)
+                .list();
+    }
 
     // Map database row to OrderDetail object
     private OrderDetail mapRow(RowView rowView) {
