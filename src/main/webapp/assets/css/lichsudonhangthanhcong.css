@@ -202,7 +202,55 @@ object-fit: cover;
     background-color: #2e2100ff;
     font-size: 15px;
   }
-
+.order-group {
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+.order-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sort-container {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+.sort-container select, .sort-container input {
+  padding: 5px;
+  font-size: 14px;
+}
+.sort-container input {
+  width: 750px;
+}
+.autocomplete-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 750px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.autocomplete-suggestion {
+  padding: 8px;
+  cursor: pointer;
+}
+.autocomplete-suggestion:hover {
+  background-color: #f0f0f0;
+}
 
 
 

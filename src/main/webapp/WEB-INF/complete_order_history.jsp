@@ -18,31 +18,6 @@
     <link rel="icon" type="image/x-icon" href="/assets/icons/logo2_no_text.svg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <style>
-        .order-group {
-            border: 1px solid #ddd;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #f9f9f9;
-        }
-        .order-header {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #333;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .sort-container {
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: flex-end;
-        }
-        .sort-container select {
-            padding: 5px;
-            font-size: 14px;
-        }
-    </style>
 </head>
 <body>
 <jsp:include page="../view_shared/header_footer/header.jsp"/>
@@ -71,9 +46,13 @@
         <div class="noidungcacdonhang" id="orderContent">
             <div class="cacsanpham">
                 <div class="hoanthanh"><b>TẤT CẢ ĐƠN HÀNG</b></div>
-                <!-- Thêm dropdown để chọn kiểu sắp xếp -->
+                <!-- Thêm ô tìm kiếm và dropdown sắp xếp -->
                 <div class="sort-container">
-                    <select id="sortOption" onchange="loadOrdersWithSort()">
+                    <div style="position: relative;">
+                        <input type="text" id="searchKeyword"  placeholder="Tìm kiếm đơn hàng (VD: 27-03-2025, BAMBU, Đang xử lý)" onkeyup="handleSearch(event)">
+                        <div id="suggestions" class="autocomplete-suggestions" style="display: none;"></div>
+                    </div>
+                    <select id="sortOption" onchange="loadOrdersWithSortAndSearch()">
                         <option value="newest">Mới nhất</option>
                         <option value="oldest">Cũ nhất</option>
                         <option value="totalPriceDesc">Tổng giá: Cao đến thấp</option>
@@ -86,11 +65,11 @@
                     <c:forEach var="entry" items="${orderGroups}">
                         <div class="order-group">
                             <div class="order-header">
-                                <span>Đơn hàng #${entry.key} - Ngày tạo: ${orderCreateDates[entry.key]} - Trạng thái: ${orderStatusMap[entry.key]} - Tổng: ₫${orderTotalPrices[entry.key]}</span>
+                                <span>Đơn hàng #${entry.key} - Ngày tạo: ${orderCreateDates[entry.key]} - Trạng thái: ${orderStatusDisplayMap[entry.key]} - Tổng: ₫${orderTotalPrices[entry.key]}</span>
                                 <c:set var="orderStatus" value="${orderStatusMap[entry.key]}" />
                                 <c:if test="${orderStatus == 'Processing' || orderStatus == 'Shipping'}">
                                     <a class="mualaine" href="/cancelOrder?orderId=${entry.key}" style="display: inline-block;">
-                                        <div class="mualai">Hủy</div>
+                                        <div class="mualai">Hủy đơn</div>
                                     </a>
                                 </c:if>
                             </div>
@@ -148,23 +127,29 @@
 
     function loadOrders(status) {
         currentStatus = status;
-        loadOrdersWithSort();
+        loadOrdersWithSortAndSearch();
     }
 
-    function loadOrdersWithSort() {
+    function loadOrdersWithSortAndSearch() {
         const sortOption = document.getElementById('sortOption').value;
+        const searchKeyword = document.getElementById('searchKeyword').value;
         $.ajax({
             url: "/completeorderhistory",
             type: "GET",
             data: {
                 status: currentStatus,
                 sort: sortOption,
+                search: searchKeyword,
                 ajax: "true"
             },
             success: function(data) {
                 $("#orderContent").html(data);
                 $(".DH").removeClass("active");
                 $(`div[onclick="loadOrders('${currentStatus}')"]`).addClass("active");
+                // Giữ giá trị từ khóa tìm kiếm sau khi tải lại
+                document.getElementById('searchKeyword').value = searchKeyword;
+                // Ẩn danh sách gợi ý sau khi tìm kiếm
+                document.getElementById('suggestions').style.display = 'none';
             },
             error: function(xhr) {
                 console.error("Có lỗi xảy ra khi tải dữ liệu:", xhr);
@@ -172,6 +157,65 @@
             }
         });
     }
+
+    function fetchSuggestions() {
+        const keyword = document.getElementById('searchKeyword').value;
+        if (keyword.length < 1) {
+            document.getElementById('suggestions').style.display = 'none';
+            return;
+        }
+
+        $.ajax({
+            url: "/completeorderhistory",
+            type: "GET",
+            data: {
+                status: currentStatus,
+                search: keyword,
+                suggest: "true"
+            },
+            success: function(data) {
+                const suggestionsDiv = document.getElementById('suggestions');
+                suggestionsDiv.innerHTML = '';
+                if (data && data.length > 0) {
+                    data.forEach(suggestion => {
+                        const div = document.createElement('div');
+                        div.className = 'autocomplete-suggestion';
+                        div.textContent = suggestion;
+                        div.onclick = function() {
+                            document.getElementById('searchKeyword').value = suggestion;
+                            suggestionsDiv.style.display = 'none';
+                            loadOrdersWithSortAndSearch();
+                        };
+                        suggestionsDiv.appendChild(div);
+                    });
+                    suggestionsDiv.style.display = 'block';
+                } else {
+                    suggestionsDiv.style.display = 'none';
+                }
+            },
+            error: function(xhr) {
+                console.error("Có lỗi xảy ra khi lấy gợi ý:", xhr);
+                document.getElementById('suggestions').style.display = 'none';
+            }
+        });
+    }
+
+    function handleSearch(event) {
+        fetchSuggestions();
+        // Nếu người dùng nhấn Enter, thực hiện tìm kiếm ngay
+        if (event.key === 'Enter') {
+            loadOrdersWithSortAndSearch();
+        }
+    }
+
+    // Ẩn danh sách gợi ý khi nhấp ra ngoài
+    document.addEventListener('click', function(e) {
+        const suggestionsDiv = document.getElementById('suggestions');
+        const searchInput = document.getElementById('searchKeyword');
+        if (!searchInput.contains(e.target) && !suggestionsDiv.contains(e.target)) {
+            suggestionsDiv.style.display = 'none';
+        }
+    });
 </script>
 </body>
 </html>
