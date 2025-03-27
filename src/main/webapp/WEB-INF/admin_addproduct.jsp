@@ -376,6 +376,10 @@
                 editor: {
                     required: true,
                     minlength: 10
+                },
+                spec: {
+                    required: true,
+                    minlength: 5
                 }
             },
             // Thông báo lỗi
@@ -417,6 +421,10 @@
                 editor: {
                     required: "Vui lòng nhập mô tả sản phẩm",
                     minlength: "Mô tả sản phẩm phải có ít nhất 10 ký tự"
+                },
+                spec: {
+                    required: "Vui lòng nhập thong số",
+                    minlength: "Có ít nhất 5 ký tự"
                 }
             },
             // Hiển thị lỗi

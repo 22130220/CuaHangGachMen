@@ -213,8 +213,10 @@ $("#add_spec_btn").on('click', function () {
     } else {
        specTable.row.add([
            text,
-           `<input type="text" name="value" value="${value}">`,
-           `<input type="number" name="id" value="${sel}" readonly>`]).draw();
+           `<div class="fui-basic-input flex-column gap-6">
+                <input type="text" name="spec" value="${value}" class="input input-bordered f-s-14"  autocomplete="off" required/>
+            </div>`,
+           `<input type="hidden" name="spec_id" value="${sel}" readonly required>`]).draw();
        $('#add_spec_type').find(`option[value=${sel}]`).remove();
         MicroModal.close('add_spec');
         $("#add_spec_val").val("");
@@ -295,7 +297,10 @@ $("#add_color_btn").on('click', function () {
     // } else {
         colorTable.row.add([
             text,
-            `<input type="file" name="color" accept=".jpg, .jpeg, .png" required>`,
+
+            `<div class="fui-basic-input flex-column gap-6">
+                <input type="file" name="color" class="input input-bordered f-s-14" accept=".jpg, .jpeg, .png" required>
+            </div>`,
             `<input type="hidden" name="color_id" value="${sel}" readonly>`]).draw();
         MicroModal.close('add_color');
         $("#add_color_val").val("");
