@@ -33,6 +33,7 @@ public class GetProduct extends HttpServlet {
         List<Size> ss = sDao.findAll();
         List<Material> materials = mtDao.findAll();
 
+
         AjaxResponse resp = new AjaxResponse();
         resp.addProductList(ls);
         resp.addCategoryList(cs);
@@ -60,6 +61,8 @@ public class GetProduct extends HttpServlet {
         String promotion = request.getParameter("price_promotion");
         Part imgThumbnail = request.getPart("img_thumbnail");
         String[] colorId = request.getParameterValues("color_id");
+        String[] specId = request.getParameterValues("spec_id");
+        String[] spec = request.getParameterValues("spec");
         Collection<Part> parts = request.getParts();
         List<Part> partColor = new ArrayList<Part>();
 
@@ -110,6 +113,7 @@ public class GetProduct extends HttpServlet {
         int success = 0;
         ProductDao dao = new ProductDao(handle);
         ProductColorImgDao daoColorImg = new ProductColorImgDao(handle);
+        ProductSpecDao specDao = new ProductSpecDao(handle);
         Product c = new Product();
 
         c.setName(name);
@@ -193,6 +197,30 @@ public class GetProduct extends HttpServlet {
                 }
 
             }
+        }
+
+        if (specId != null) {
+           for (int i = 0; i < specId.length; i++) {
+                ProductSpec sp = new ProductSpec();
+                sp.setSpecId(Integer.parseInt(specId[i]));
+                sp.setProcuctId(productRowId);
+                sp.setValue(spec[i]);
+                int row = specDao.insert(sp);
+                if (row <= 0) {
+                    handle.rollback();
+                    handle.close();
+                    JsonObject ob = new JsonObject();
+                    ob.addProperty("success", false);
+                    ob.addProperty("message", "Không thể thêm thông số sản phẩm");
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.print(ob);
+                    return;
+                }
+           }
+
         }
 
 
