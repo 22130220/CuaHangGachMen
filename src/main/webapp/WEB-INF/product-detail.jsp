@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -262,7 +263,15 @@
                         <div class="product-content" id="product-content">
                             <div class="content-detail des-content" id="des-content">
                                 <jsp:include page="/${p.description}"/>
-
+<%--                            <c:set var="desUrl" value="${p.description}" />--%>
+<%--                            <c:choose>--%>
+<%--                                <c:when test="${fn:endsWith(desUrl, '.jsp')}">--%>
+<%--                                    <jsp:include page="/${desUrl}" />--%>
+<%--                                </c:when>--%>
+<%--                                <c:otherwise>--%>
+<%--                                    ${desUrl}--%>
+<%--                                </c:otherwise>--%>
+<%--                            </c:choose>--%>
                             </div>
                             <div class="content-detail spec-content" id="spec-content">
                                 <div class="spec-label">

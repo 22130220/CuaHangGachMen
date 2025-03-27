@@ -102,6 +102,7 @@ const productManufacturer = $('#productmanufacturer').val();
 
 var specTable = new DataTable('#spec-table', {
     fixedHeader: true,
+    ordering: false,
     layout: {
         topStart: {
             buttons: [
