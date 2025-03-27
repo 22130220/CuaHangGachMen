@@ -6,7 +6,6 @@ import jakarta.servlet.http.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 
 public class AppContextListenter implements ServletContextListener, HttpSessionListener, HttpSessionAttributeListener {
-
     public AppContextListenter() {
     }
 

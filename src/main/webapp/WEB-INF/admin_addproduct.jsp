@@ -104,7 +104,7 @@
                 </div>
             </nav>
             <div class="card _4c _10r">
-                <form id="add_product_form" action="productcrud" method="post" class="main-grid">
+                <form id="add_product_form" action="/admin/get-product" enctype="multipart/form-data" method="post" class="main-grid">
                     <input type="hidden" id="pid" value="${p.id}">
                     <input type="hidden" id="desUrl" value="${p.description}">
                     <div class="product-name _4c">
@@ -199,6 +199,14 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="product-img _4c">
+                        <div class="fui-basic-input flex-column gap-6">
+                            <label for="img_thumbnail" class="f-bold f-s-14 f-cl-black">Giá trị</label>
+                            <input type="file" name="img_thumbnail" accept=".jpg, .jpeg, .png" class="input input-bordered f-s-14" id="img_thumbnail" autocomplete="off" required/>
+                        </div>
+                    </div>
+
                     <div class="product-description _4c">
                         <div class="flex-column gap-6">
                             <label for="editor" class="f-bold f-s-14 f-cl-black">
@@ -289,10 +297,10 @@
                         <select name="add_color_type" id="add_color_type" class="input input-bordered f-s-14" required>
                         </select>
                     </div>
-                    <div class="fui-basic-input flex-column gap-6">
-                        <label for="add_color_val" class="f-bold f-s-14 f-cl-black">Giá trị</label>
-                        <input type="text" name="add_color_val" placeholder="Nhập giá trị" class="input input-bordered f-s-14" id="add_color_val" autocomplete="off"/>
-                    </div>
+<%--                    <div class="fui-basic-input flex-column gap-6">--%>
+<%--                        <label for="add_color_val" class="f-bold f-s-14 f-cl-black">Giá trị</label>--%>
+<%--                        <input type="file" name="add_color_val"  accept=".jpg, .jpeg, .png" class="input input-bordered f-s-14" id="add_color_val" autocomplete="off" required/>--%>
+<%--                    </div>--%>
                     <footer class="modal__footer">
                         <button class="button bg_green f-cl-white" id="add_color_btn">Cập nhật</button>
                     </footer>
@@ -304,7 +312,6 @@
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="/assets/js/ckeditorLoadFile.js"></script>
 <script src="/assets/js/datatable_addproduct.js"></script>
-<script src="/assets/js/notification.js"></script>
 <script src="/assets/js/script.js"></script>
 <script src="/assets/js/img-uploading.js"></script>
 <script src="/assets/js/accordion.js"></script>

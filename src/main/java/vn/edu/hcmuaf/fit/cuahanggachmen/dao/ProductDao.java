@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.mapper.reflect.ConstructorMapper;
+import vn.edu.hcmuaf.fit.cuahanggachmen.AppContextListenter;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
@@ -48,7 +49,7 @@ public class ProductDao extends BaseDao {
         Product product = handle.createQuery("SELECT * FROM products WHERE ID = :id AND status=1")
                         .bind("id", id)
                         .map(new ProductMapper())
-                        .first();
+                        .findFirst().orElse(null);
 
         List<Map<String, Object>> specs = handle.createQuery("SELECT st.Name, ps.Value\n FROM products p JOIN product_spec ps ON p.ID = ps.ProductID\n" +
                 "JOIN spectype st ON ps.SpecID = st.ID\n" +
@@ -65,6 +66,8 @@ public class ProductDao extends BaseDao {
         List<String> lsImg = handle.createQuery("Select pci.Url from product_color_img pci join products p on p.ID = pci.ProductID\n" +
                 "WHERE p.ID = :id;").bind("id", id ).mapTo(String.class).list();
 
+
+        assert product != null;
         product.setImgList(lsImg);
 
         ReviewDao rvDao = new ReviewDao(handle);
@@ -102,7 +105,7 @@ public class ProductDao extends BaseDao {
 
     // Cập nhật sản phẩm
     public int update(Product product) {
-        return handle.createUpdate("UPDATE products SET Name = :name, PricePerBox = :pricePerBox, Stock = :stock, Discount = :discount, PromotionPrice = :promotionPrice, QuantityPerBox = :quantityPerBox, CategoryID = :categoryId, SizeID = :sizeId, MaterialID = :materialId, ManufacturerID = :manufacturerId, ImgThumbnail = :imgThumbnail WHERE ID = :id")
+        return handle.createUpdate("UPDATE products SET Name = :name, PricePerBox = :pricePerBox, Stock = :stock, Discount = :discount, PromotionPrice = :promotionPrice, QuantityPerBox = :quantityPerBox, CategoryID = :categoryId, SizeID = :sizeId, MaterialID =:materialId, ManufacturerID = :manufacturerId, ImgThumbnail = :imgThumbnail WHERE ID = :id")
                         .bindBean(product)
                         .execute();
     }

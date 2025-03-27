@@ -1,5 +1,7 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 
+import vn.edu.hcmuaf.fit.cuahanggachmen.AppContextListenter;
+
 import java.io.Serializable;
 
 public class ProductColorImg implements Serializable {
@@ -60,7 +62,6 @@ public class ProductColorImg implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
-
 
     @Override
     public String toString() {

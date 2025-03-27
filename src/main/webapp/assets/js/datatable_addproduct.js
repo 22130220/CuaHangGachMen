@@ -223,6 +223,7 @@ $("#add_spec_btn").on('click', function () {
 
 var colorTable = new DataTable('#color', {
     fixedHeader: true,
+    ordering: false,
     layout: {
         topStart: {
             buttons: [
@@ -286,18 +287,18 @@ var colorTable = new DataTable('#color', {
 });
 
 $("#add_color_btn").on('click', function () {
-    const value =  $("#add_color_val").val();
+    // const value =  $("#add_color_val").val();
     const sel = $("#add_color_type").val();
     const text = $("#add_color_type").find(`option[value=${sel}]`).text();
-    if((isNullOrEmptyOrWhitespace(value) || isNullOrEmptyOrWhitespace(sel))) {
-        notyf.error("Cần nhập đủ thông tin");
-    } else {
+    // if((isNullOrEmptyOrWhitespace(value) || isNullOrEmptyOrWhitespace(sel))) {
+    //     notyf.error("Cần nhập đủ thông tin");
+    // } else {
         colorTable.row.add([
             text,
-            `<input type="text" name="color" value="${value}">`,
-            `<input type="number" name="color_id" value="${sel}" readonly>`]).draw();
+            `<input type="file" name="color" accept=".jpg, .jpeg, .png" required>`,
+            `<input type="hidden" name="color_id" value="${sel}" readonly>`]).draw();
         MicroModal.close('add_color');
         $("#add_color_val").val("");
-    }
+    // }
 });
 

@@ -10,6 +10,9 @@ out/
 target/
 build/
 
+# Bỏ qua thư mục upload
+src/main/webapp/upload_image/
+
 # Log file
 *.log
 

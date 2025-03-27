@@ -59,20 +59,6 @@ let defaultButton = [
 
 function initDataTable(tableId, ajaxUrl, dataSrc, sendData, columns, buttonConfigs, buttonShow, extraOptions = {}) {
     const table = new DataTable(tableId, {
-        // initComplete: function () {
-        //     this.api().columns().every(function () {
-        //         var column = this;
-        //         var title = $(column.footer()).text();
-        //
-        //         $('<input type="text" placeholder="Search ' + title + '" />')
-        //             .appendTo($(column.footer()).empty())
-        //             .on('keyup change clear', function () {
-        //                 if (column.search() !== this.value) {
-        //                     column.search(this.value).draw();
-        //                 }
-        //             });
-        //     });
-        // },
         ajax: {
             url: ajaxUrl,
             data: sendData,
