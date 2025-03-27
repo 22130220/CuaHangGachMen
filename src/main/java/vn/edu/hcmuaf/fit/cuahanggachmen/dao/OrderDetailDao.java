@@ -119,6 +119,22 @@ public class OrderDetailDao extends BaseDao {
                 .list();
     }
 
+    // Thêm phương thức để lấy trạng thái đơn hàng từ bảng orders
+    public String getOrderStatus(int orderId) {
+        return handle.createQuery("SELECT Status FROM orders WHERE ID = :orderId")
+                .bind("orderId", orderId)
+                .mapTo(String.class)
+                .one();
+    }
+
+    // Thêm phương thức để lấy ngày tạo đơn hàng
+    public LocalDateTime getOrderCreateDate(int orderId) {
+        return handle.createQuery("SELECT CreateDate FROM orders WHERE ID = :orderId")
+                .bind("orderId", orderId)
+                .mapTo(LocalDateTime.class)
+                .one();
+    }
+
     // Map database row to OrderDetail object
     private OrderDetail mapRow(RowView rowView) {
         OrderDetail orderDetail = new OrderDetail();

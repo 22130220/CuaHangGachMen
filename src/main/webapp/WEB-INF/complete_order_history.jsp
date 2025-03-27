@@ -18,6 +18,22 @@
     <link rel="icon" type="image/x-icon" href="/assets/icons/logo2_no_text.svg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <style>
+        .order-group {
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .order-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="../view_shared/header_footer/header.jsp"/>
@@ -48,25 +64,56 @@
                 <div class="hoanthanh"><b>TẤT CẢ ĐƠN HÀNG</b></div>
                 <hr>
                 <c:if test="${not empty orderDetails}">
-                    <c:forEach var="order" items="${orderDetails}">
-                        <div class="sanpham">
-                            <div class="hinhanhcuacaigach">
-                                <img class="img-donhang" src="${order.productImg}" alt="">
+                    <!-- Nhóm các sản phẩm theo OrderID -->
+                    <c:forEach var="entry" items="${orderGroups}">
+                        <div class="order-group">
+                            <div class="order-header">
+                                <span>Đơn hàng #${entry.key} - Ngày tạo: ${orderCreateDates[entry.key]} - Trạng thái: ${orderStatusMap[entry.key]}</span>
+                                <c:set var="orderStatus" value="${orderStatusMap[entry.key]}" />
+                                <c:if test="${orderStatus == 'Processing' || orderStatus == 'Shipping'}">
+                                    <a class="mualaine" href="/cancelOrder?orderId=${entry.key}" style="display: inline-block;">
+                                        <div class="mualai">Hủy đơn</div>
+                                    </a>
+                                </c:if>
                             </div>
-                            <div class="chitietsanpham">
-                                <div class="tengachmen1">${order.productName}</div>
-                                <div class="soluong1">Số lượng ${order.quantity}</div>
-                                <div class="soluong1">${order.createDate}</div>
-                            </div>
-                            <div>₫${order.price}</div>
-                            <a class="mualaine" href="/pdetail?pid=${order.productId}" style="display: inline-block;">
-                                <div class="mualai">Đánh giá</div>
-                            </a>
-                            <a class="mualaine" href="/pdetail?pid=${order.productId}" style="display: inline-block;">
-                                <div class="mualai">Mua lại</div>
-                            </a>
+                            <c:forEach var="order" items="${entry.value}">
+                                <div class="sanpham">
+                                    <div class="hinhanhcuacaigach">
+                                        <img class="img-donhang" src="${order.productImg}" alt="">
+                                    </div>
+                                    <div class="chitietsanpham">
+                                        <div class="tengachmen1">${order.productName}</div>
+                                        <div class="soluong1">Số lượng ${order.quantity}</div>
+                                    </div>
+                                    <div>₫${order.price}</div>
+                                    <c:set var="orderStatus" value="${orderStatusMap[order.orderId]}" />
+                                    <c:choose>
+                                        <c:when test="${orderStatus == 'Processing' || orderStatus == 'Shipping'}">
+                                            <a class="mualaine" href="/pdetail?pid=${order.productId}" style="display: inline-block;">
+                                                <div class="mualai">Xem chi tiết</div>
+                                            </a>
+                                        </c:when>
+                                        <c:when test="${orderStatus == 'Cancelled'}">
+                                            <a class="mualaine" href="/reorder?orderId=${order.orderId}" style="display: inline-block;">
+                                                <div class="mualai">Đặt lại</div>
+                                            </a>
+                                            <a class="mualaine" href="/pdetail?pid=${order.productId}" style="display: inline-block;">
+                                                <div class="mualai">Xem chi tiết</div>
+                                            </a>
+                                        </c:when>
+                                        <c:when test="${orderStatus == 'Delivered'}">
+                                            <a class="mualaine" href="/pdetail?pid=${order.productId}" style="display: inline-block;">
+                                                <div class="mualai">Đánh giá</div>
+                                            </a>
+                                            <a class="mualaine" href="/pdetail?pid=${order.productId}" style="display: inline-block;">
+                                                <div class="mualai">Mua lại</div>
+                                            </a>
+                                        </c:when>
+                                    </c:choose>
+                                </div>
+                                <hr>
+                            </c:forEach>
                         </div>
-                        <hr>
                     </c:forEach>
                 </c:if>
                 <c:if test="${empty orderDetails}">
