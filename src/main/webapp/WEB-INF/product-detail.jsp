@@ -62,7 +62,7 @@
     <link rel="stylesheet" href="/assets/css/product-detail.css">
     <link rel="stylesheet" href="/assets/css/breadcrumb.css">
     <link rel="stylesheet" href="/assets/css/product-card.css">
-<%--    <link rel="stylesheet" href="/assets/css/bt_hover.css">--%>
+    <link rel="stylesheet" href="/assets/css/bt_hover.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -232,20 +232,20 @@
 
 
                         </div>
-                        <form action="/buynow" method="get">
+                        <form action="/buynow" method="get" id="formbt">
                             <input type="hidden" name="pid" value="${p.id}">
                             <input type="hidden" name="colorId" id="colorIdInput1" value="1">
                             <input type="hidden" name="quantity" id="quantityInput" value="1">
-<%--                            <div class="container-button">--%>
-<%--                                <div class="hover bt-1"></div>--%>
-<%--                                <div class="hover bt-2"></div>--%>
-<%--                                <div class="hover bt-3"></div>--%>
-<%--                                <div class="hover bt-4"></div>--%>
-<%--                                <div class="hover bt-5"></div>--%>
-<%--                                <div class="hover bt-6"></div>--%>
-<%--                                <button type="submit" >Mua ngay</button>--%>
-<%--                            </div>--%>
-                           <button type="submit" class="input-sample buy-btn">Mua ngay</button>
+                            <div class="container-button" onclick="document.getElementById('formbt').submit()">
+                                <div class="hover bt-1"></div>
+                                <div class="hover bt-2"></div>
+                                <div class="hover bt-3"></div>
+                                <div class="hover bt-4"></div>
+                                <div class="hover bt-5"></div>
+                                <div class="hover bt-6"></div>
+                                <div class="btn-custom"></div>
+                            </div>
+<%--                          <button type="submit" class="input-sample buy-btn">Mua ngay</button>--%>
                         </form>
                     </div>
 
@@ -454,26 +454,6 @@
         });
     });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
