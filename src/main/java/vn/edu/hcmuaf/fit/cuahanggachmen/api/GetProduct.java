@@ -68,10 +68,14 @@ public class GetProduct extends HttpServlet {
         if (!uploadDir.exists()) {
             boolean isCreatedFile = uploadDir.mkdir();
             if(!isCreatedFile) {
-                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                response.setContentType("text/plain");
+                JsonObject ob = new JsonObject();
+                ob.addProperty("success", false);
+                ob.addProperty("message", "Không thể tạo đuoc file");
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
-                response.getWriter().println("Something went wrong");
+                PrintWriter out = response.getWriter();
+                out.print(ob);
                 return;
             }
         }
@@ -82,7 +86,14 @@ public class GetProduct extends HttpServlet {
         if(imgThumbnail.getSize() > 0) {
             String thumbnailName = imgThumbnail.getSubmittedFileName();
             if (!thumbnailName.isEmpty() && !thumbnailName.endsWith(".jpg") && !thumbnailName.endsWith(".jpeg") && !thumbnailName.endsWith(".png")) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Chỉ chấp nhận file JPG hoặc PNG!");
+                JsonObject ob = new JsonObject();
+                ob.addProperty("success", false);
+                ob.addProperty("message", "Chỉ hỗ trợ .jpg, .jpeg, .png");
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                PrintWriter out = response.getWriter();
+                out.print(ob);
                 return;
             }
 
@@ -120,10 +131,14 @@ public class GetProduct extends HttpServlet {
        int productRowId = dao.insert(c);
        if (productRowId <= 0) {
            handle.rollback();
-           response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-           response.setContentType("text/plain");
+           JsonObject ob = new JsonObject();
+           ob.addProperty("success", false);
+           ob.addProperty("message", "Không tạo được sản phẩm");
+           response.setStatus(HttpServletResponse.SC_OK);
+           response.setContentType("application/json");
            response.setCharacterEncoding("UTF-8");
-           response.getWriter().println("Something went wrong");
+           PrintWriter out = response.getWriter();
+           out.print(ob);
            handle.close();
            return;
        }
@@ -136,47 +151,63 @@ public class GetProduct extends HttpServlet {
                 } else {
                     handle.rollback();
                     handle.close();
-                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    response.setContentType("text/plain");
+                    JsonObject ob = new JsonObject();
+                    ob.addProperty("success", false);
+                    ob.addProperty("message", "Chỉ hỗ trợ .jpg, .jpeg, .png");
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
-                    response.getWriter().println("Something went wrong");
+                    PrintWriter out = response.getWriter();
+                    out.print(ob);
                     return;
                 }
             }
         }
-
-        for (int i = 0; i < colorId.length; i++) {
-            Part part = partColor.get(i);
-            String fileName = part.getSubmittedFileName();
-            String partName = generateFileName();
-            String partExtension = getFileExtension(fileName);
-            String fileColorName = "/" + "upload_image" + "/" + partName + partExtension;
-            String realFilePath = uploadPath + File.separator + partName + partExtension;
+        if (colorId != null) {
+            for (int i = 0; i < colorId.length; i++) {
+                Part part = partColor.get(i);
+                String fileName = part.getSubmittedFileName();
+                String partName = generateFileName();
+                String partExtension = getFileExtension(fileName);
+                String fileColorName = "/" + "upload_image" + "/" + partName + partExtension;
+                String realFilePath = uploadPath + File.separator + partName + partExtension;
                 ProductColorImg colorImg = new ProductColorImg();
                 colorImg.setColorId(Integer.parseInt(colorId[i]));
                 colorImg.setUrl(fileColorName);
                 colorImg.setProductId(productRowId);
                 int rowId = daoColorImg.insert(colorImg.getColorId(), colorImg.getProductId(), colorImg.getUrl());
                 if (rowId > 0) {
-                   writeImg(part, realFilePath);
+                    writeImg(part, realFilePath);
                 } else {
                     handle.rollback();
                     handle.close();
-                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    response.setContentType("text/plain");
+                    JsonObject ob = new JsonObject();
+                    ob.addProperty("success", false);
+                    ob.addProperty("message", "Không thể tạo màu sản phẩm");
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.setContentType("application/json");
                     response.setCharacterEncoding("UTF-8");
-                    response.getWriter().println("Something went wrong");
+                    PrintWriter out = response.getWriter();
+                    out.print(ob);
                     return;
                 }
 
+            }
         }
 
 
         handle.commit();
+        handle.close();
+
+        JsonObject ob = new JsonObject();
+        ob.addProperty("success", true);
+        ob.addProperty("message", "Thêm sản phẩm thành công");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        handle.close();
+        PrintWriter out = response.getWriter();
+        out.print(ob);
+
     }
 
     @Override

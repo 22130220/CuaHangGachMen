@@ -97,6 +97,7 @@
     <div class="admin-container grid-layout">
         <jsp:include page="../view_shared/admin/admin-grid.jsp"/>
         <div class="content grid-item content-grid">
+            <input type="hidden" id="message" value="${success}">
             <div class="main-grid">
                 <nav class="navbar tag-line _4c _1r">
                     <div class="nav-back-prev">
@@ -448,6 +449,15 @@
     <script src="/assets/js/notification.js"></script>
     <script src="/assets/js/accordion.js"></script>
     <script src="/assets/js/exitfFunc.js"></script>
+   <script>
+       $(document).ready(function () {
+           const value = $("#mesage").text();
+
+           if(value === 'true') {
+               notyf.success("Thêm sản phẩm thành công");
+           }
+       })
+   </script>
 <%--    <script src="/assets/js/datatableAjax.js"></script>--%>
 
 </body>
