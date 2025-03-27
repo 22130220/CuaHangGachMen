@@ -52,6 +52,15 @@
                     <div>Chuyển khoản qua VNPAY</div>
                 </div>
             </a>
+            <form action="/MoMoController" method="post" id="momoForm">
+                <div class="payment-option" onclick="document.getElementById('momoForm').submit()">
+                    <input type="hidden" name="total_momo" id="totaltien" value="">
+                    <div>
+                        <img src="https://tse3.mm.bing.net/th?id=OIP.ZwFh_3ZB6_1cAKgwpP0cnQAAAA&pid=Api&P=0&h=220" alt="MOMO">
+                    </div>
+                    <div>Thanh Toán qua MOMO</div>
+                </div>
+            </form>
 
             <div class="bank-info" id="bank-info" style="display: none;">
                 <p>Quý khách vui lòng chuyển khoản trước số tiền cần thanh toán, sau đó chúng tôi tiến hành giao hàng theo thỏa thuận hoặc hợp đồng với Quý khách.</p>
@@ -127,6 +136,10 @@
 
     </div>
 </div>
+<script>
+    const tien=${sessionScope.finalTotal}
+    document.getElementById('totaltien').value =tien;
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -156,5 +169,7 @@
 
 </script>
 </body>
+
+
 </html>
 
