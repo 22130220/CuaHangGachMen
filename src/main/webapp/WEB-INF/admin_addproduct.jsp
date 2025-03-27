@@ -71,6 +71,9 @@
     <script src="https://cdn.jsdelivr.net/npm/micromodal/dist/micromodal.min.js"></script>
     <link rel="stylesheet" href="/assets/css/micromodal.css">
 
+    <!-- Jquery validate -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/localization/messages_vi.js"></script>
     <!--Notyf-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 
@@ -100,7 +103,7 @@
                     </div>
                 </div>
                 <div class="funcproduct">
-                    <button type="submit" form="add_product_form" class="button bg_green f-cl-white"> <c:out value="${operation}"/></button>
+                    <button type="submit" form="add_product_form" class="button bg_green f-cl-white" id="add-btn"> <c:out value="${operation}"/></button>
                 </div>
             </nav>
             <div class="card _4c _10r">
@@ -312,10 +315,144 @@
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="/assets/js/ckeditorLoadFile.js"></script>
 <script src="/assets/js/datatable_addproduct.js"></script>
+<script src="/assets/js/adminDatatable.js"></script>
 <script src="/assets/js/script.js"></script>
 <script src="/assets/js/img-uploading.js"></script>
 <script src="/assets/js/accordion.js"></script>
+<script>
+    $(document).ready(function() {
+        // Thêm phương thức tùy chỉnh để kiểm tra giá khuyến mãi
+        $.validator.addMethod("lessThanPrice", function(value, element) {
+            var price = parseFloat($("#productprice").val());
+            var pricePromotion = parseFloat(value);
+            return this.optional(element) || pricePromotion <= price;
+        }, "Giá khuyến mãi phải nhỏ hơn hoặc bằng giá sản phẩm");
 
+        // Thêm phương thức tùy chỉnh để kiểm tra file extension
+        $.validator.addMethod("fileExtension", function(value, element) {
+            return this.optional(element) || /\.(jpg|jpeg|png)$/i.test(value);
+        }, "Chỉ chấp nhận file .jpg, .jpeg, .png");
+
+        // Khởi tạo validate cho form
+        $("#add_product_form").validate({
+            // Quy tắc validate
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 3
+                },
+                quantity: {
+                    required: true,
+                    number: true,
+                    min: 1
+                },
+                price: {
+                    required: true,
+                    number: true,
+                    min: 0
+                },
+                price_promotion: {
+                    required: true,
+                    number: true,
+                    min: 0,
+                    lessThanPrice: true
+                },
+                size: {
+                    required: true
+                },
+                category: {
+                    required: true
+                },
+                material: {
+                    required: true
+                },
+                manufacturer: {
+                    required: true
+                },
+                img_thumbnail: {
+                    required: true,
+                    fileExtension: true
+                },
+                editor: {
+                    required: true,
+                    minlength: 10
+                }
+            },
+            // Thông báo lỗi
+            messages: {
+                name: {
+                    required: "Vui lòng nhập tên sản phẩm",
+                    minlength: "Tên sản phẩm phải có ít nhất 3 ký tự"
+                },
+                quantity: {
+                    required: "Vui lòng nhập số lượng",
+                    number: "Số lượng phải là số",
+                    min: "Số lượng phải lớn hơn 0"
+                },
+                price: {
+                    required: "Vui lòng nhập giá sản phẩm",
+                    number: "Giá sản phẩm phải là số",
+                    min: "Giá sản phẩm không được âm"
+                },
+                price_promotion: {
+                    required: "Vui lòng nhập giá khuyến mãi",
+                    number: "Giá khuyến mãi phải là số",
+                    min: "Giá khuyến mãi không được âm"
+                },
+                size: {
+                    required: "Vui lòng chọn kích thước"
+                },
+                category: {
+                    required: "Vui lòng chọn loại sản phẩm"
+                },
+                material: {
+                    required: "Vui lòng chọn chất liệu"
+                },
+                manufacturer: {
+                    required: "Vui lòng chọn nhà cung cấp"
+                },
+                img_thumbnail: {
+                    required: "Vui lòng chọn ảnh sản phẩm"
+                },
+                editor: {
+                    required: "Vui lòng nhập mô tả sản phẩm",
+                    minlength: "Mô tả sản phẩm phải có ít nhất 10 ký tự"
+                }
+            },
+            // Hiển thị lỗi
+            errorPlacement: function(error, element) {
+                error.addClass("f-s-12 f-cl-red");
+                error.insertAfter(element);
+            },
+            submitHandler: function(form) {
+                if ($(form).valid()) {
+                    formAjaxRequest({
+                        url: '/admin/get-product',
+                        formSelector: '#add_product_form',
+                        successMessage: "Thêm thành công",
+                        errorMessage: "Thêm thất bại",
+                        tableToReload: null,
+                        modalToClose: null,
+                        type: 'POST',
+                        onSuccess: function (resp) {
+                            if(resp.success) {
+                                notyf.success(resp.message)
+                            } else {
+                                notyf.error(resp.message)
+                            }
+                        }
+                    });
+                } else {
+                    alert("Form không hợp lệ, vui lòng kiểm tra lại.");
+                }
+            }
+        });
+    });
+   $("#add-btn").click(function (e) {
+       e.preventDefault();
+       $("#add_product_form").submit();
+   })
+</script>
 
 </body>
 
