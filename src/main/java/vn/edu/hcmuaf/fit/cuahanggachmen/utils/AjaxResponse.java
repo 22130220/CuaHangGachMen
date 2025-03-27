@@ -1,5 +1,7 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.utils;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ReviewDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
@@ -11,6 +13,7 @@ import java.util.StringJoiner;
 
 public class AjaxResponse {
     private StringJoiner text;
+    private HttpServletRequest request;
 
     public AjaxResponse() {
        this.text = new StringJoiner(",", "{", "}");
@@ -90,6 +93,10 @@ public class AjaxResponse {
     
     public void addCartItem(List<CartItem> cartItemList) {
         this.text.add(String.format("\"cart_item\":%s", cartItemListToJson(cartItemList)));
+    }
+
+    public void setRequest(HttpServletRequest req) {
+        this.request = req;
     }
 
     private String cartItemListToJson(List<CartItem> cartItemList) {

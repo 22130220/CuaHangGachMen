@@ -8,15 +8,12 @@ import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
-import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxParseRequest;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.math.BigDecimal;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @MultipartConfig
 @WebServlet(name = "get-product", value = "/admin/get-product")
@@ -53,11 +50,6 @@ public class GetProduct extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String active = request.getParameter("active");
-        String action = request.getParameter("action");
-        String id = request.getParameter("vid");
-        String vid = request.getParameter("id");
-
         String name = request.getParameter("name");
         String size = request.getParameter("size");
         String quantity = request.getParameter("quantity");
@@ -65,33 +57,125 @@ public class GetProduct extends HttpServlet {
         String category = request.getParameter("category");
         String material = request.getParameter("material");
         String manufacturer = request.getParameter("manufacturer");
-        String promotion = request.getParameter("promotion");
-        String img = request.getParameter("img");
+        String promotion = request.getParameter("price_promotion");
+        Part imgThumbnail = request.getPart("img_thumbnail");
+        String[] colorId = request.getParameterValues("color_id");
+        Collection<Part> parts = request.getParts();
+        List<Part> partColor = new ArrayList<Part>();
 
-
-        Handle handle = DBConect.get().open();
-        int success = 0;
-        ProductDao dao = new ProductDao(handle);
-        Product c = new Product();
-
-        if(action.equalsIgnoreCase("Thêm")) {
-            c.setName(name);
-            c.setStatus(getBoolVal(active));
-//            try {
-//               // success = dao.insert(c);
-//            } catch (SQLException | IllegalAccessException | InstantiationException | ClassNotFoundException e) {
-//                throw new RuntimeException(e);
-//            }
+        String uploadPath = getServletContext().getRealPath("/upload_image");
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            boolean isCreatedFile = uploadDir.mkdir();
+            if(!isCreatedFile) {
+                response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                response.setContentType("text/plain");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().println("Something went wrong");
+                return;
+            }
         }
 
+        String filePath = null;
+        String fileContextPath = null;
+
+        if(imgThumbnail.getSize() > 0) {
+            String thumbnailName = imgThumbnail.getSubmittedFileName();
+            if (!thumbnailName.isEmpty() && !thumbnailName.endsWith(".jpg") && !thumbnailName.endsWith(".jpeg") && !thumbnailName.endsWith(".png")) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Chỉ chấp nhận file JPG hoặc PNG!");
+                return;
+            }
+
+            String imgThumbnailNameRand = generateFileName();
+            String thumbnailExtension = getFileExtension(thumbnailName);
+
+            filePath = uploadPath + File.separator + imgThumbnailNameRand + thumbnailExtension;
+            fileContextPath = "/" + "upload_image" + "/" + imgThumbnailNameRand + thumbnailExtension;
+            writeImg(imgThumbnail, filePath);
+        }
+
+        Handle handle = DBConect.get().open();
+        handle.begin();
+        int success = 0;
+        ProductDao dao = new ProductDao(handle);
+        ProductColorImgDao daoColorImg = new ProductColorImgDao(handle);
+        Product c = new Product();
+
+        c.setName(name);
+        c.setSizeId(Integer.parseInt(size));
+        c.setCategoryId(Integer.parseInt(category));
+        c.setManufacturerId(Integer.parseInt(manufacturer));
+        c.setMaterialId(Integer.parseInt(material));
+        c.setPricePerBox(Integer.parseInt(price.replaceAll("[^0-9]", "")));
+        c.setStatus(true);
+        promotion = promotion.replaceAll("[^0-9]", "");
+        boolean isDiscount = !(promotion.isEmpty() || promotion.equals("0"));
+        c.setDiscount(isDiscount);
+        if(isDiscount) {
+            c.setPromotionPrice(BigDecimal.valueOf(Double.parseDouble(promotion)));
+        }
+        c.setQuantityPerBox(Integer.parseInt(quantity.replaceAll("[^0-9]", "")));
+        c.setImgThumbnail(fileContextPath);
+
+       int productRowId = dao.insert(c);
+       if (productRowId <= 0) {
+           handle.rollback();
+           response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+           response.setContentType("text/plain");
+           response.setCharacterEncoding("UTF-8");
+           response.getWriter().println("Something went wrong");
+           handle.close();
+           return;
+       }
         AjaxResponse resp = new AjaxResponse();
-        resp.addBool("success", success > 0);
+        for (Part part : parts) {
+            if (part.getName().equals("color") && part.getSize() > 0) {
+                String fileName = part.getSubmittedFileName();
+                if (checkFileEndPrefix(part)) {
+                    partColor.add(part);
+                } else {
+                    handle.rollback();
+                    handle.close();
+                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    response.setContentType("text/plain");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().println("Something went wrong");
+                    return;
+                }
+            }
+        }
+
+        for (int i = 0; i < colorId.length; i++) {
+            Part part = partColor.get(i);
+            String fileName = part.getSubmittedFileName();
+            String partName = generateFileName();
+            String partExtension = getFileExtension(fileName);
+            String fileColorName = "/" + "upload_image" + "/" + partName + partExtension;
+            String realFilePath = uploadPath + File.separator + partName + partExtension;
+                ProductColorImg colorImg = new ProductColorImg();
+                colorImg.setColorId(Integer.parseInt(colorId[i]));
+                colorImg.setUrl(fileColorName);
+                colorImg.setProductId(productRowId);
+                int rowId = daoColorImg.insert(colorImg.getColorId(), colorImg.getProductId(), colorImg.getUrl());
+                if (rowId > 0) {
+                   writeImg(part, realFilePath);
+                } else {
+                    handle.rollback();
+                    handle.close();
+                    response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    response.setContentType("text/plain");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().println("Something went wrong");
+                    return;
+                }
+
+        }
+
+
+        handle.commit();
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        out.print(resp.getText());
-
         handle.close();
     }
 
@@ -204,4 +288,42 @@ public class GetProduct extends HttpServlet {
         return false;
     }
 
+    private void writeImg(Part part, String filePath) throws ServletException {
+
+        try (InputStream input = part.getInputStream()) {
+            try (FileOutputStream output = new FileOutputStream(filePath)) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = input.read(buffer)) != -1) {
+                    output.write(buffer, 0, bytesRead);
+                }
+            }
+        } catch (IOException e) {
+            throw new ServletException(e);
+        }
+    }
+
+    private boolean checkFileEndPrefix(Part part) {
+        String fileName = part.getSubmittedFileName();
+        return fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png");
+    }
+
+    private String generateFileName() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        String timestamp = dateFormat.format(new Date());
+        String uuid = UUID.randomUUID().toString();
+
+        return timestamp + "_" + uuid;
+    }
+
+    public String getFileExtension(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return "";
+        }
+        int lastDotIndex = fileName.lastIndexOf(".");
+        if (lastDotIndex == -1 || lastDotIndex == fileName.length() - 1) {
+            return "";
+        }
+        return fileName.substring(lastDotIndex);
+    }
 }

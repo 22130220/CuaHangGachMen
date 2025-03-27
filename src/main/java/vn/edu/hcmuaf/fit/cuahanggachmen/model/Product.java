@@ -1,5 +1,8 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 
+import jakarta.servlet.ServletContext;
+import vn.edu.hcmuaf.fit.cuahanggachmen.AppContextListenter;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -236,6 +239,7 @@ public class Product implements Serializable{
     public void setLsColor(List<Color> lsColor) {
         this.lsColor = lsColor;
     }
+
 
     @Override
     public String toString() {

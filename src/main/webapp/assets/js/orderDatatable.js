@@ -15,119 +15,197 @@ function isNullOrEmptyOrWhitespace(str) {
     return str === null || str === undefined || /^\s*$/.test(str) || str === "";
 }
 
-var table = new DataTable('#orders', {
-    ajax: {
-        url: '/admin/order',
-        dataSrc: 'orders'
-    },
-    fixedHeader: true,
-    layout: {
-        topStart: {
-            buttons: [
-                'colvis',
-                {
-                    text: 'Trạng thái',
-                    className: 'green',
-                    action: function (e, dt, node, config) {
-                        var data = dt.rows({ selected: true }).data();
-                        setActive = [];
-                        data.each(function(rowData, index) {
-                            setActive.push(rowData.id);
-                        });
-                        action = delEle;
-                        MicroModal.show('update_status_modal');
-                    },
-                    enabled: false
-                }
-            ]
-        },
-    },
-    select: true,
-    columnDefs: [
+// var table = new DataTable('#orders', {
+//     ajax: {
+//         url: '/admin/order',
+//         dataSrc: 'orders'
+//     },
+//     fixedHeader: true,
+//     layout: {
+//         topStart: {
+//             buttons: [
+//                 'colvis',
+//                 {
+//                     text: 'Trạng thái',
+//                     className: 'green',
+//                     action: function (e, dt, node, config) {
+//                         var data = dt.rows({ selected: true }).data();
+//                         setActive = [];
+//                         data.each(function(rowData, index) {
+//                             setActive.push(rowData.id);
+//                         });
+//                         action = delEle;
+//                         MicroModal.show('update_status_modal');
+//                     },
+//                     enabled: false
+//                 }
+//             ]
+//         },
+//     },
+//     select: true,
+//     columnDefs: [
+//         {
+//             targets: 0,
+//             data: 'userId',
+//             className: 'dt-center'
+//         },
+//         {
+//             targets: 1,
+//             data: 'fullName',
+//             className: 'dt-center'
+//         },
+//         {
+//             targets: 2, // Cột giá
+//             data: 'orderDate',
+//             // render: function (data) {
+//             //     return `<td style="color: red;">${data.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>`;
+//             // },
+//             className: 'dt-center  dt-nowrap'
+//         },
+//         {
+//             targets: 3, // Cột số lượng
+//             data: 'address',
+//             // render: function (data) {
+//             //     const style = data === 0 ? 'background-color: #ffe0e0;' : '';
+//             //     return `<td style="${style}">${data}</td>`;
+//             // },
+//             className: 'dt-center'
+//         },
+//         {
+//             targets: 4, // Cột đánh giá
+//             data: 'status',
+//             render: function (data) {
+//                 if(data === 'Delivered') {
+//                     return `<td> <div class="isActive"> Đã Giao </div> </td>`
+//                 } else if(data === 'Cancelled') return `<td> <div class="deActive"> Đã huỷ </div> </td>`
+//                 else return data;
+//             },
+//             className: 'dt-center'
+//         },
+//         {
+//             target: 5,
+//             data: 'totalPrice',
+//             // render: function (data) {
+//             //     return`<div class='table-icon-label'>  <a href="#" onclick="openUpdateProductModal(${data})"><i class="fa-solid fa-note-sticky"></i></a><a href="#" onclick="openSpecModal(${data})"><i class="fa-solid fa-eraser"></i></a> <a href="#" onclick="openColorModal(${data})"><i class="fa-solid fa-eraser"></i></a> </div>`
+//             // },
+//             render: function (data) {
+//                 return `<td style="color: red;">${data.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>`;
+//             },
+//             className: 'dt-center'
+//         },
+//         {
+//             target: 6,
+//             data: 'id',
+//             render: function (data) {
+//                 return`<div class='table-icon-label'>  <a href="#" onclick="openOrderDetailModal(${data})"><i class="fa-solid fa-note-sticky"></i></a> </div>`
+//             },
+//             className: 'dt-center'
+//         }
+//     ],
+//     'autoWidth': false,
+//     language: {
+//         lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
+//         zeroRecords: "Không tìm thấy kết quả",
+//         info: "Hiển thị trang _PAGE_ của _PAGES_",
+//         infoEmpty: "Không có dữ liệu",
+//         infoFiltered: "(lọc từ _MAX_ tổng mục)"
+//     },
+//
+//     createdRow: function (row, data, dataIndex) {
+//         // Thêm lớp CSS để căn giữa các ô
+//         $('td', row).css({
+//             'text-align': 'center',
+//             'vertical-align': 'middle'
+//         });
+//     }
+//
+// });
+//
+// table.on('select deselect', function () {
+//     var selectedRows = table.rows({ selected: true }).count();
+//
+//     table.button(1).enable(selectedRows > 0);
+//     // table.button(3).enable(selectedRows > 0);
+// });
+// Khởi tạo DataTable
+
+const table = initDataTable(
+    '#orders', // tableId
+    '/admin/order', // ajaxUrl
+    'orders', // dataSrc
+    {}, // sendData (trống vì không có dữ liệu gửi kèm)
+    [ // columns
+        { targets: 0, data: 'userId', className: 'dt-center' },
+        { targets: 1, data: 'fullName', className: 'dt-center' },
         {
-            targets: 0,
-            data: 'userId',
-            className: 'dt-center'
-        },
-        {
-            targets: 1,
-            data: 'fullName',
-            className: 'dt-center'
-        },
-        {
-            targets: 2, // Cột giá
+            targets: 2,
             data: 'orderDate',
-            // render: function (data) {
-            //     return `<td style="color: red;">${data.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>`;
-            // },
-            className: 'dt-center  dt-nowrap'
+            className: 'dt-center dt-nowrap'
         },
         {
-            targets: 3, // Cột số lượng
+            targets: 3,
             data: 'address',
-            // render: function (data) {
-            //     const style = data === 0 ? 'background-color: #ffe0e0;' : '';
-            //     return `<td style="${style}">${data}</td>`;
-            // },
             className: 'dt-center'
         },
         {
-            targets: 4, // Cột đánh giá
+            targets: 4,
             data: 'status',
             render: function (data) {
-                if(data === 'Delivered') {
-                    return `<td> <div class="isActive"> Đã Giao </div> </td>`
-                } else if(data === 'Cancelled') return `<td> <div class="deActive"> Đã huỷ </div> </td>`
-                else return data;
+                if (data === 'Delivered') {
+                    return `<td> <div class="isActive"> Đã Giao </div> </td>`;
+                } else if (data === 'Cancelled') {
+                    return `<td> <div class="deActive"> Đã huỷ </div> </td>`;
+                } else {
+                    return data;
+                }
             },
             className: 'dt-center'
         },
         {
-            target: 5,
+            targets: 5,
             data: 'totalPrice',
-            // render: function (data) {
-            //     return`<div class='table-icon-label'>  <a href="#" onclick="openUpdateProductModal(${data})"><i class="fa-solid fa-note-sticky"></i></a><a href="#" onclick="openSpecModal(${data})"><i class="fa-solid fa-eraser"></i></a> <a href="#" onclick="openColorModal(${data})"><i class="fa-solid fa-eraser"></i></a> </div>`
-            // },
             render: function (data) {
                 return `<td style="color: red;">${data.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>`;
             },
             className: 'dt-center'
         },
         {
-            target: 6,
+            targets: 6,
             data: 'id',
             render: function (data) {
-                return`<div class='table-icon-label'>  <a href="#" onclick="openOrderDetailModal(${data})"><i class="fa-solid fa-note-sticky"></i></a> </div>`
+                return `<div class='table-icon-label'> <a href="#" onclick="openOrderDetailModal(${data})"><i class="fa-solid fa-note-sticky"></i></a> </div>`;
             },
             className: 'dt-center'
         }
     ],
-    'autoWidth': false,
-    language: {
-        lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
-        zeroRecords: "Không tìm thấy kết quả",
-        info: "Hiển thị trang _PAGE_ của _PAGES_",
-        infoEmpty: "Không có dữ liệu",
-        infoFiltered: "(lọc từ _MAX_ tổng mục)"
-    },
-
-    createdRow: function (row, data, dataIndex) {
-        // Thêm lớp CSS để căn giữa các ô
-        $('td', row).css({
-            'text-align': 'center',
-            'vertical-align': 'middle'
-        });
+    [ // buttonConfigs
+        [defaultButton],
+        {
+            text: 'Trạng thái',
+            className: 'green',
+            action: function (e, dt, node, config) {
+                var data = dt.rows({ selected: true }).data();
+                setActive = [];
+                data.each(function(rowData, index) {
+                    setActive.push(rowData.id);
+                });
+                action = delEle;
+                MicroModal.show('update_status_modal');
+            },
+            enabled: false
+        }
+    ],
+    handleButtonShow, // buttonShow
+    { // extraOptions
+        fixedHeader: true
     }
+);
 
-});
-
-table.on('select deselect', function () {
-    var selectedRows = table.rows({ selected: true }).count();
-
-    table.button(1).enable(selectedRows > 0);
-    // table.button(3).enable(selectedRows > 0);
-});
-
+// Hàm xử lý sự kiện nút button
+function handleButtonShow(e, dt, node, config) {
+    var selectedRows = dt.rows({ selected: true }).count();
+    dt.buttons(8).enable(selectedRows > 0); // Kích hoạt nút khi có hàng được chọn
+}
 
 function openOrderDetailModal(orderID) {
 
