@@ -135,6 +135,14 @@ public class OrderDetailDao extends BaseDao {
                 .one();
     }
 
+    // Thêm phương thức để lấy TotalPrice từ bảng orders
+    public Integer getOrderTotalPrice(int orderId) {
+        return handle.createQuery("SELECT TotalPrice FROM orders WHERE ID = :orderId")
+                .bind("orderId", orderId)
+                .mapTo(Integer.class)
+                .one();
+    }
+
     // Map database row to OrderDetail object
     private OrderDetail mapRow(RowView rowView) {
         OrderDetail orderDetail = new OrderDetail();

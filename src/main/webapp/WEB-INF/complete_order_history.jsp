@@ -33,6 +33,15 @@
             justify-content: space-between;
             align-items: center;
         }
+        .sort-container {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .sort-container select {
+            padding: 5px;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -62,17 +71,26 @@
         <div class="noidungcacdonhang" id="orderContent">
             <div class="cacsanpham">
                 <div class="hoanthanh"><b>TẤT CẢ ĐƠN HÀNG</b></div>
+                <!-- Thêm dropdown để chọn kiểu sắp xếp -->
+                <div class="sort-container">
+                    <select id="sortOption" onchange="loadOrdersWithSort()">
+                        <option value="newest">Mới nhất</option>
+                        <option value="oldest">Cũ nhất</option>
+                        <option value="totalPriceDesc">Tổng giá: Cao đến thấp</option>
+                        <option value="totalPriceAsc">Tổng giá: Thấp đến cao</option>
+                    </select>
+                </div>
                 <hr>
                 <c:if test="${not empty orderDetails}">
                     <!-- Nhóm các sản phẩm theo OrderID -->
                     <c:forEach var="entry" items="${orderGroups}">
                         <div class="order-group">
                             <div class="order-header">
-                                <span>Đơn hàng #${entry.key} - Ngày tạo: ${orderCreateDates[entry.key]} - Trạng thái: ${orderStatusMap[entry.key]}</span>
+                                <span>Đơn hàng #${entry.key} - Ngày tạo: ${orderCreateDates[entry.key]} - Trạng thái: ${orderStatusMap[entry.key]} - Tổng: ₫${orderTotalPrices[entry.key]}</span>
                                 <c:set var="orderStatus" value="${orderStatusMap[entry.key]}" />
                                 <c:if test="${orderStatus == 'Processing' || orderStatus == 'Shipping'}">
                                     <a class="mualaine" href="/cancelOrder?orderId=${entry.key}" style="display: inline-block;">
-                                        <div class="mualai">Hủy đơn</div>
+                                        <div class="mualai">Hủy</div>
                                     </a>
                                 </c:if>
                             </div>
@@ -85,7 +103,6 @@
                                         <div class="tengachmen1">${order.productName}</div>
                                         <div class="soluong1">Số lượng ${order.quantity}</div>
                                     </div>
-                                    <div>₫${order.price}</div>
                                     <c:set var="orderStatus" value="${orderStatusMap[order.orderId]}" />
                                     <c:choose>
                                         <c:when test="${orderStatus == 'Processing' || orderStatus == 'Shipping'}">
@@ -127,18 +144,27 @@
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
 
 <script>
+    let currentStatus = 'all'; // Biến để lưu trạng thái hiện tại
+
     function loadOrders(status) {
+        currentStatus = status;
+        loadOrdersWithSort();
+    }
+
+    function loadOrdersWithSort() {
+        const sortOption = document.getElementById('sortOption').value;
         $.ajax({
             url: "/completeorderhistory",
             type: "GET",
             data: {
-                status: status,
-                ajax: "true" // Thêm tham số để phân biệt yêu cầu AJAX
+                status: currentStatus,
+                sort: sortOption,
+                ajax: "true"
             },
             success: function(data) {
                 $("#orderContent").html(data);
                 $(".DH").removeClass("active");
-                $(`div[onclick="loadOrders('${status}')"]`).addClass("active");
+                $(`div[onclick="loadOrders('${currentStatus}')"]`).addClass("active");
             },
             error: function(xhr) {
                 console.error("Có lỗi xảy ra khi tải dữ liệu:", xhr);
