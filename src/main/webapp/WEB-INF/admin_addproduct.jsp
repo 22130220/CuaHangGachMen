@@ -434,6 +434,7 @@
             },
             submitHandler: function(form) {
                 if ($(form).valid()) {
+                    $("#editor").val(editor.getData());
                     formAjaxRequest({
                         url: '/admin/get-product',
                         formSelector: '#add_product_form',

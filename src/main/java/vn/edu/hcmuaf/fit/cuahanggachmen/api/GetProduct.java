@@ -65,6 +65,7 @@ public class GetProduct extends HttpServlet {
         String[] spec = request.getParameterValues("spec");
         Collection<Part> parts = request.getParts();
         List<Part> partColor = new ArrayList<Part>();
+        String editor = request.getParameter("editor");
 
         String uploadPath = getServletContext().getRealPath("/upload_image");
         File uploadDir = new File(uploadPath);
@@ -108,6 +109,34 @@ public class GetProduct extends HttpServlet {
             writeImg(imgThumbnail, filePath);
         }
 
+        String fileDesName = null;
+        String fileDesPath =  null;
+
+        if(editor != null) {
+            String descriptionDir = getServletContext().getRealPath("/descriptions");
+            File dir = new File(descriptionDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            fileDesName = "product_" + generateFileName() + ".html";
+            fileDesPath = descriptionDir + "/" + fileDesName;
+
+            // Lưu nội dung CKEditor vào file
+            try (FileWriter fileWriter = new FileWriter(fileDesPath)) {
+                fileWriter.write(editor);
+            } catch (IOException e) {
+                JsonObject ob = new JsonObject();
+                ob.addProperty("success", false);
+                ob.addProperty("message", "Không tạo được mô tả sản phẩm");
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                PrintWriter out = response.getWriter();
+                out.print(ob);
+                return;
+            }
+        }
         Handle handle = DBConect.get().open();
         handle.begin();
         int success = 0;
@@ -123,6 +152,7 @@ public class GetProduct extends HttpServlet {
         c.setMaterialId(Integer.parseInt(material));
         c.setPricePerBox(Integer.parseInt(price.replaceAll("[^0-9]", "")));
         c.setStatus(true);
+        c.setDescription("/descriptions/" + fileDesName);
         promotion = promotion.replaceAll("[^0-9]", "");
         boolean isDiscount = !(promotion.isEmpty() || promotion.equals("0"));
         c.setDiscount(isDiscount);
@@ -147,6 +177,7 @@ public class GetProduct extends HttpServlet {
            return;
        }
         AjaxResponse resp = new AjaxResponse();
+
         for (Part part : parts) {
             if (part.getName().equals("color") && part.getSize() > 0) {
                 String fileName = part.getSubmittedFileName();
