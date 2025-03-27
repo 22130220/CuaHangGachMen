@@ -1,4 +1,4 @@
-/* From Uiverse.io by MuhammadHasann */
+/* Container chính */
 .container-button {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -6,9 +6,8 @@
     grid-template-areas: "bt-1 bt-2 bt-3"
     "bt-4 bt-5 bt-6";
     position: relative;
-    perspective: 800;
-    padding: 0;
-    width: 135px;
+    perspective: 800px;
+    width: 500px;
     height: 47px;
     transition: all 0.3s ease-in-out;
 }
@@ -17,6 +16,7 @@
     transform: scale(0.95);
 }
 
+/* Các vùng hover */
 .hover {
     position: absolute;
     width: 100%;
@@ -24,146 +24,83 @@
     z-index: 200;
 }
 
-.bt-1 {
-    grid-area: bt-1;
-}
+.bt-1 { grid-area: bt-1; }
+.bt-2 { grid-area: bt-2; }
+.bt-3 { grid-area: bt-3; }
+.bt-4 { grid-area: bt-4; }
+.bt-5 { grid-area: bt-5; }
+.bt-6 { grid-area: bt-6; }
 
-.bt-2 {
-    grid-area: bt-2;
-}
-
-.bt-3 {
-    grid-area: bt-3;
-}
-
-.bt-4 {
-    grid-area: bt-4;
-}
-
-.bt-5 {
-    grid-area: bt-5;
-}
-
-.bt-6 {
-    grid-area: bt-6;
-}
-
-.bt-1:hover ~ button {
-    transform: rotateX(15deg) rotateY(-15deg) rotateZ(0deg);
-    box-shadow: -2px -2px #18181888;
-}
-
-.bt-1:hover ~ button::after {
-    animation: shake 0.5s ease-in-out 0.3s;
-    text-shadow: -2px -2px #18181888;
-}
-
-.bt-3:hover ~ button {
-    transform: rotateX(15deg) rotateY(15deg) rotateZ(0deg);
-    box-shadow: 2px -2px #18181888;
-}
-
-.bt-3:hover ~ button::after {
-    animation: shake 0.5s ease-in-out 0.3s;
-    text-shadow: 2px -2px #18181888;
-}
-
-.bt-4:hover ~ button {
-    transform: rotateX(-15deg) rotateY(-15deg) rotateZ(0deg);
-    box-shadow: -2px 2px #18181888;
-}
-
-.bt-4:hover ~ button::after {
-    animation: shake 0.5s ease-in-out 0.3s;
-    text-shadow: -2px 2px #18181888;
-}
-
-.bt-6:hover ~ button {
-    transform: rotateX(-15deg) rotateY(15deg) rotateZ(0deg);
-    box-shadow: 2px 2px #18181888;
-}
-
-.bt-6:hover ~ button::after {
-    animation: shake 0.5s ease-in-out 0.3s;
-    text-shadow: 2px 2px #18181888;
-}
-
-.hover:hover ~ button::before {
-    background: transparent;
-}
-
-.hover:hover ~ button::after {
-    content: "Click";
-    top: -150%;
-    transform: translate(-50%, 0);
-    font-size: 34px;
-    color: #f19c2b;
-}
-
-button {
+/* Thẻ div thay thế button */
+.btn-custom {
     position: absolute;
-    padding: 0;
-    width: 135px;
+    width: 100%;
     height: 47px;
     background: transparent;
     font-size: 17px;
     font-weight: 900;
-    border: 3px solid #f39923;
+    border: 1px solid #f39923;
     border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     transition: all 0.3s ease-in-out;
+    overflow: hidden;
 }
 
-button::before {
+/* Hiệu ứng nền sau */
+.btn-custom::before {
     content: "";
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 135px;
+    width: 100%;
     height: 47px;
-    background-color: #f5ae51;
+    background-color: #2e2100ff;
     border-radius: 12px;
     transition: all 0.3s ease-in-out;
     z-index: -1;
 }
 
-button::after {
-    content: "Hover";
+/* Hiển thị chữ Hover / Click */
+.btn-custom::after {
+    content: "Mua Ngay";
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 135px;
-    height: 47px;
+    width: 100%;
+    height: 100%;
     background-color: transparent;
     font-size: 17px;
     font-weight: 900;
-    line-height: 47px;
-    color: #ffffff;
-    border: none;
+    color: #f19c2b;
     border-radius: 12px;
     transition: all 0.3s ease-in-out;
     z-index: 2;
+
+    /* Căn giữa chữ */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-@keyframes shake {
-    0% {
-        left: 45%;
-    }
+/* Hover hiệu ứng */
+.hover:hover ~ .btn-custom {
+    transform: translateY(-5px);
+    transition: transform 0.2s ease-in-out;
+}
 
-    25% {
-        left: 54%;
-    }
+.hover:hover ~ .btn-custom::before {
+    background: transparent;
+}
 
-    50% {
-        left: 48%;
-    }
+.hover:hover ~ .btn-custom::after {
+    content: "Mua Ngay"; /* Chữ đổi thành Click */
+    font-size: 34px;
+    color: #f19c2b;
+}
 
-    75% {
-        left: 52%;
-    }
-
-    100% {
-        left: 50%;
-    }
+/* Hiệu ứng click */
+.btn-custom:active {
+    transform: scale(0.95);
 }
