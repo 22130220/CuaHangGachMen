@@ -13,6 +13,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.mail.VerificationTokenStore;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LoginDeviceBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.RegisterService;
+import vn.edu.hcmuaf.fit.cuahanggachmen.service.VerifyRecaptcha;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.PasswordUtils;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogLevel;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LoginLevel;
@@ -43,78 +44,84 @@ public class RegisterController extends HttpServlet {
         String address = request.getParameter("address");
         int gender = Integer.parseInt(request.getParameter("gender"));
         String birthTime = request.getParameter("birthday");
-        User user = new User();
+        String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+        System.out.println(gRecaptchaResponse);
+        boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+        if(verify){
+            User user = new User();
 
-        RegisterService resService = new RegisterService();
+            RegisterService resService = new RegisterService();
 
-        ActionResult checkPassword = resService.checkPassword(password);
-        ActionResult checkConfirm = resService.checkConfirmPassword(password, confirmPassword);
-        ActionResult checkEmail = Result.BadRequest(null);
+            ActionResult checkPassword = resService.checkPassword(password);
+            ActionResult checkConfirm = resService.checkConfirmPassword(password, confirmPassword);
+            ActionResult checkEmail = Result.BadRequest(null);
 
-        ActionResult ac = new ActionResult();
-        if(!checkPassword.isOk(StatusCode.OK) || !checkConfirm.isOk(StatusCode.OK)) {
-            ac.setCode(StatusCode.REGISTER_FAILED);
-            password = null;
-            confirmPassword = null;
-        } else {
-            // Tạo salt và hash password
-            String salt = PasswordUtils.generateSalt();
-            String hashedPassword = PasswordUtils.hashPassword(password, salt);
-            user.setFullname(name);
-            user.setPassword(hashedPassword);
-            user.setSalt(salt);
-            user.setEmail(email);
-            user.setPhone(phone);
-            user.setAddress(address);
-            user.setSex(gender);
-            user.setAvatar(null);
-            user.setCreatetime(LocalDateTime.now());
-            user.setBirthtime(resService.convertToTimestamp(birthTime).toLocalDateTime());
-            if(checkPassword.isOk(StatusCode.OK) && checkConfirm.isOk(StatusCode.OK) && checkEmail.isOk(StatusCode.OK)) {
-                response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-                response.setHeader("Pragma", "no-cache");
-                response.setHeader("Expires", "0");
-                response.sendRedirect(request.getContextPath() + "/registration-success");
-                return;
+            ActionResult ac = new ActionResult();
+            if(!checkPassword.isOk(StatusCode.OK) || !checkConfirm.isOk(StatusCode.OK)) {
+                ac.setCode(StatusCode.REGISTER_FAILED);
+                password = null;
+                confirmPassword = null;
+            } else {
+                // Tạo salt và hash password
+                String salt = PasswordUtils.generateSalt();
+                String hashedPassword = PasswordUtils.hashPassword(password, salt);
+                user.setFullname(name);
+                user.setPassword(hashedPassword);
+                user.setSalt(salt);
+                user.setEmail(email);
+                user.setPhone(phone);
+                user.setAddress(address);
+                user.setSex(gender);
+                user.setAvatar(null);
+                user.setCreatetime(LocalDateTime.now());
+                user.setBirthtime(resService.convertToTimestamp(birthTime).toLocalDateTime());
+                if(checkPassword.isOk(StatusCode.OK) && checkConfirm.isOk(StatusCode.OK) && checkEmail.isOk(StatusCode.OK)) {
+                    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                    response.setHeader("Pragma", "no-cache");
+                    response.setHeader("Expires", "0");
+                    response.sendRedirect(request.getContextPath() + "/registration-success");
+                    return;
+                }
+                // Tạo token xác thực
+                String token = UUID.randomUUID().toString();
+                VerificationTokenStore.addToken(token, user);
+
+                // Xây dựng liên kết xác thực
+                String verificationLink = request.getRequestURL().toString().replace("/register", "") + "/verify-email?token=" + token;
+                String emailContent = emailService.buildVerificationEmailContent(user, verificationLink);
+
+                // Gửi email xác thực
+                boolean emailSent = emailService.send(user.getEmail(), "Xác thực tài khoản Cửa hàng gạch men", emailContent);
+
+                if(!emailSent) {
+                    checkEmail = Result.BadRequest("Không thể gửi email xác thực.");
+                }
             }
-            // Tạo token xác thực
-            String token = UUID.randomUUID().toString();
-            VerificationTokenStore.addToken(token, user);
 
-            // Xây dựng liên kết xác thực
-            String verificationLink = request.getRequestURL().toString().replace("/register", "") + "/verify-email?token=" + token;
-            String emailContent = emailService.buildVerificationEmailContent(user, verificationLink);
+            Handle handle = DBConect.get().open();
+            new LoginDeviceBuilder()
+                    .loginLevel(LoginLevel.VERIFYING_EMAIL)
+                    .setHeaderRequest(request, response)
+                    .level(LogLevel.ALERT)
+                    .message("Xác thực email " + email)
+                    .location("RegisterController")
+                    .build(handle);
 
-            // Gửi email xác thực
-            boolean emailSent = emailService.send(user.getEmail(), "Xác thực tài khoản Cửa hàng gạch men", emailContent);
+            ac.put("checkPassword", checkPassword);
+            ac.put("checkConfirm", checkConfirm);
+            ac.put("checkEmail", checkEmail);
+            ac.put("name", name);
+            ac.put("phone", phone);
+            ac.put("address", address);
+            ac.put("gender", gender);
+            ac.put("birthday", birthTime);
+            ac.put("email", email);
 
-            if(!emailSent) {
-                checkEmail = Result.BadRequest("Không thể gửi email xác thực.");
-            }
+            request.setAttribute("email", user.getEmail());
+            request.setAttribute("register", ac);
+            request.getRequestDispatcher("/WEB-INF/registration-success.jsp").forward(request, response);
+            handle.close();
         }
 
-        Handle handle = DBConect.get().open();
-        new LoginDeviceBuilder()
-                .loginLevel(LoginLevel.VERIFYING_EMAIL)
-                .setHeaderRequest(request, response)
-                .level(LogLevel.ALERT)
-                .message("Xác thực email " + email)
-                .location("RegisterController")
-                .build(handle);
-
-        ac.put("checkPassword", checkPassword);
-        ac.put("checkConfirm", checkConfirm);
-        ac.put("checkEmail", checkEmail);
-        ac.put("name", name);
-        ac.put("phone", phone);
-        ac.put("address", address);
-        ac.put("gender", gender);
-        ac.put("birthday", birthTime);
-        ac.put("email", email);
-        
-        request.setAttribute("email", user.getEmail());
-        request.setAttribute("register", ac);
-        request.getRequestDispatcher("/WEB-INF/registration-success.jsp").forward(request, response);
-        handle.close();
     }
 }

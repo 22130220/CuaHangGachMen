@@ -229,8 +229,6 @@
                                     </div>
                                 </div>
                             </form>
-
-
                         </div>
                         <form action="/buynow" method="get" id="formbt">
                             <input type="hidden" name="pid" value="${p.id}">

@@ -39,7 +39,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     ></script>
-
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </head>
 <body>
@@ -89,7 +89,6 @@
                                 <c:out value="${res.checkEmail.message}"/>
                             </div>
                         </c:if>
-
                 </div>
                 <input type="tel" id="tel" name="tel" value="${register.data.phone}" placeholder="Số Điện Thoại">
                 <div class="message" id="tel-message"></div>
@@ -128,7 +127,17 @@
                     <label>Ngày sinh: </label>
                     <input type="date" id="birthday" name="birthday" value="${register.data.birthday}" placeholder="Ngày sinh" style="width: 70%;" required>
                 </div>
-                <button type="submit" id="register_btn">Tạo Tài Khoản Cá Nhân</button>
+                <div class="form-group radio-group ckc">
+                    <div class="g-recaptcha"
+                         data-sitekey="6LcfgQArAAAAAHMpZPwzWzPKURK6ID6AAh2bnoFH"
+                         data-callback="recaptchaCallback1"
+                         data-expired-callback="recaptchaExpired1">
+                    </div>
+                </div>
+
+
+
+                <button type="submit" id="register_btn" >Tạo Tài Khoản Cá Nhân</button>
                 <p class="login-text">Bạn đã có tài khoản? <a href="login">Đăng nhập tại đây</a></p>
             </form>
         </div>
@@ -140,9 +149,9 @@
     let validate_password = false;
     let confirm_password = false;
     let validate_phone = false;
-
+    let captcha_verified = false; // Thêm biến kiểm tra reCAPTCHA
     function aciveRegisterBtn() {
-        if(validate_password && validate_phone && confirm_password) {
+        if(validate_password && validate_phone && confirm_password && captcha_verified) {
             $("#register_btn").prop("disabled", false);
         } else {
             $("#register_btn").prop("disabled", true);
@@ -254,6 +263,16 @@
             $("#email_message").empty();
         });
     });
+
+    function recaptchaCallback1() {
+        captcha_verified = true;
+        aciveRegisterBtn();
+    }
+
+    function recaptchaExpired1() {
+        captcha_verified = false;
+        aciveRegisterBtn();
+    }
 
     aciveRegisterBtn();
 
