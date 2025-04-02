@@ -43,7 +43,16 @@
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-
+    <style>
+        /* Định dạng thông báo lỗi màu đỏ */
+        label.error {
+            color: red;
+            font-size: 14px;
+            margin-top: -11px;
+            margin-bottom: 11px;
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
@@ -77,13 +86,13 @@
         </c:if>
     </div>
 
-    <form action="login" method="post">
+    <form action="login" method="post" id="login-form">
         <input type="text" id="email" name="email" value="${email}" placeholder="Vui lòng nhập email của bạn" required>
         <input type="password" id="password" name="password" placeholder="Mật khẩu" required>
         <div class="g-recaptcha"
              data-sitekey="6LcfgQArAAAAAHMpZPwzWzPKURK6ID6AAh2bnoFH"
              data-callback="recaptchaCallback"
-             data-expired-callback="recaptchaExpired">
+             data-expired-callback="recaptchaExpired">va
         </div>
         <div class="options">
             <label><input type="checkbox" name="remember"> Ghi nhớ đăng nhập</label>
@@ -124,6 +133,61 @@
     <button class="create-account"><a href="register">Tạo Tài Khoản</a></button>
 </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $.validator.addMethod("gmailFormat", function (value, element) {
+            return /^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(value);
+        }, "Email phải có đuôi @gmail.com.");
+
+        $.validator.addMethod("passwordFormat", function (value, element) {
+            return /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(value);
+        }, "Mật khẩu phải có ít nhất 8 ký tự, chứa ít nhất một chữ cái viết hoa và có số.");
+
+        $("#login-form").validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true,
+                    gmailFormat: true
+                },
+                password: {
+                    required: true,
+                    minlength: 8,
+                    passwordFormat: true
+                }
+            },
+            messages: {
+                email: {
+                    required: "Vui lòng nhập email.",
+                    email: "Email không hợp lệ.",
+                },
+                password: {
+                    required: "Vui lòng nhập mật khẩu.",
+                    minlength: "Mật khẩu phải có ít nhất 8 ký tự."
+                }
+            },
+            errorPlacement: function (error, element) {
+                error.insertAfter(element);
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+
+        // Kích hoạt nút đăng nhập khi hợp lệ
+        $("#email, #password").on("keyup", function () {
+            if ($("#login-form").valid()) {
+                $("#login-btn").prop("disabled", false);
+            } else {
+                $("#login-btn").prop("disabled", true);
+            }
+        });
+    });
+</script>
+
 
 <script>
     function recaptchaCallback() {
