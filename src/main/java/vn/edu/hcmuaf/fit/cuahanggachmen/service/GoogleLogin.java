@@ -42,7 +42,6 @@ public class GoogleLogin {
                                 .add("grant_type", Iconstant.GOOGLE_GRANT_TYPE)
 
                                 .build()
-
                 )
 
                 .execute().returnContent().asString();
