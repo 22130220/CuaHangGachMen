@@ -5,8 +5,11 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserResourceDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.RoleResourcePermission;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.UserPermission;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LogBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LoginDeviceBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.AuthService;
@@ -18,6 +21,8 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LoginLevel;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "login", value = "/login")
 public class LoginController extends HttpServlet {
@@ -67,6 +72,13 @@ public class LoginController extends HttpServlet {
                         .location("LoginController")
                         .message("Đăng nhập thành công")
                         .build(handle);
+
+                UserResourceDao uDao = new UserResourceDao(handle);
+
+                UserPermission rMap = uDao.getPermission(user.getId());
+                session.setAttribute("userRole", rMap);
+
+
                 response.sendRedirect("/");
             }else{
                 new LoginDeviceBuilder()

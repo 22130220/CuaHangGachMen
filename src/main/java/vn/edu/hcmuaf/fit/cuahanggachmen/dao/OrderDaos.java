@@ -16,6 +16,8 @@ public class OrderDaos extends BaseDao{
     //    // Insert Order
     public int insertOrder(Orders orders)  {
         Update update = handle.createUpdate("""
+            jdbi.withHandle(handle -> {
+            });
                 INSERT INTO orders (UserID, OrderDate, Address, Status, TotalPrice, Des, CreateDate)
                 VALUES (:userId, :orderDate, :address, :status, :totalPrice, :description, CURRENT_TIMESTAMP)
             """).bind("userId", orders.getUserId())
