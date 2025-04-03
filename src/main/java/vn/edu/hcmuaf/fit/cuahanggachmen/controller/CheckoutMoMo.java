@@ -52,7 +52,7 @@ public class CheckoutMoMo extends HttpServlet {
             order.setPhone(phone);
             order.setAddress(address);
             order.setDescription(note);
-            order.setPayment("COD");
+            order.setPayment("Thanh toán momo");
             order.setUserId(u.getId());
             order.setOrderDate(LocalDateTime.now());
             double totalPrice=Double.parseDouble(finalTotal);
@@ -112,7 +112,7 @@ public class CheckoutMoMo extends HttpServlet {
                     request.setAttribute("email", email);
                     request.setAttribute("phone", phone);
                     request.setAttribute("address", address);
-                    request.setAttribute("payment", "Thanh toán VNPay");
+                    request.setAttribute("payment", "Thanh toán momo");
                     request.setAttribute("totalPrice", finalTotal);
                     handle.close();
                     request.getRequestDispatcher("/WEB-INF/complete_order.jsp").forward(request,response);

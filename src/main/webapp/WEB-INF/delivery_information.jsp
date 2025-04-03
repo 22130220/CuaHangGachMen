@@ -49,18 +49,37 @@
 
                 </div>
             </div>
+            <div class="form-row">
             <div class="form-group">
-                <label for="address">Địa chỉ</label>
-                <input type="text" name="address" id="address" placeholder="Địa chỉ" value="${sessionScope.auth.address}" style="width: 700px;">
+                <select id="province" name="province">
+                    <option value="">-- Chọn Tỉnh/Thành phố --</option>
+                </select>
+            </div>
+                <div class="form-group">
+                <select id="district" name="district">
+                    <option value="">-- Quận huyện --</option>
+                </select>
+                </div>
+                <div class="form-group">
+                <select id="ward" name="ward">
+                    <option value="">Xã phường</option>
+                </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="address">Số nhà</label>
+                <input type="text" name="address" id="address" placeholder="Địa chỉ" value="" style="width: 700px;" required>
             </div>
             <div class="form-group">
                 <label for="des">Ghi chú</label>
                 <input type="text" id="des" name="note" placeholder=" Nhập lưu ý của bạn " style="width: 700px;">
             </div>
 
-
+            <input type="hidden" id="province1" name="province1" value="">
+            <input type="hidden" id="district1" name="district1" value="">
+            <input type="hidden" id="ward1" name="ward1" value="">
             <input type="hidden" id="voucherID" name="voucherID" value="Không có mã voucher">
-            <input type="hidden" id="finalTotal" name="finalTotal" value="${cart.total + shippingFee}">
+            <input type="hidden" id="finalTotal1" name="finalTotal" value="">
 
 
 
@@ -98,19 +117,207 @@
             <p>Tạm tính:
                 <fmt:formatNumber value="${cart.total}" type="number" maxFractionDigits="0"/>₫
             </p>
-            <p>Phí vận chuyển:
-                <fmt:formatNumber value="${shippingFee}" type="number" maxFractionDigits="0"/>₫
+            <p id="feeValue">Phí vận chuyển:
+                <fmt:formatNumber value="0" type="number" maxFractionDigits="0"/>₫
             </p>
             <p id="dis_val"></p>
             <hr>
             <h3>Tổng cộng:
-                <span id="totalPrice"><fmt:formatNumber value="${cart.total + shippingFee}" type="number" maxFractionDigits="0"/></span>₫
+                <span id="totalPrice"><fmt:formatNumber value="${cart.total}" type="number" maxFractionDigits="0"/></span>₫
             </h3>
         </div>
     </aside>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="/assets/js/ajaxVoucher.js"></script>
+
+<script>
+    const apiToken = 'db44e853-cc14-11ef-b1ed-769685acafa5';
+    const baseURL = 'https://dev-online-gateway.ghn.vn';
+    checkFirst =true;
+
+    function loadProvinces() {
+        fetch(baseURL+'/shiip/public-api/master-data/province', {
+            method: 'GET',
+            headers: { 'Token': apiToken }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const provinceSelect = document.getElementById('province');
+                data.data.forEach(province => {
+                    const option = document.createElement('option');
+                    option.value = province.ProvinceID;
+                    option.textContent = province.ProvinceName;
+                    document.getElementById('province1').value=province.ProvinceName
+                    provinceSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error loading provinces:', error));
+    }
+
+    function loadDistricts(provinceID) {
+        fetch(baseURL+`/shiip/public-api/master-data/district`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Token': apiToken
+            },
+            body: JSON.stringify({ province_id: parseInt(provinceID, 10) })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                const districtSelect = document.getElementById('district');
+                districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+                data.data.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district.DistrictID;
+                    option.textContent = district.DistrictName;
+                    document.getElementById('district1').value=district.DistrictName
+                    districtSelect.appendChild(option);
+                    console.log(district.DistrictID+' ' + district.DistrictName)
+                });
+                districtSelect.disabled = false;
+            })
+            .catch(error => console.error('Error loading districts:', error));
+    }
+
+    function loadWards(districtID) {
+        fetch(baseURL+`/shiip/public-api/master-data/ward`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Token': apiToken
+            },
+            body: JSON.stringify({ district_id: parseInt(districtID, 10) })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                const wardSelect = document.getElementById('ward');
+                wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+                data.data.forEach(ward => {
+                    const option = document.createElement('option');
+                    option.value = ward.WardCode;
+                    option.textContent = ward.WardName;
+                    document.getElementById('ward1').value=ward.WardName
+                    wardSelect.appendChild(option);
+                    console.log(ward.WardCode+' '+ward.WardName)
+                });
+                wardSelect.disabled = false;
+
+            })
+            .catch(error => console.error('Error loading wards:', error));
+    }
+    function getShippingFee() {
+        const toDistrictID = document.getElementById('district').value;
+        const toWardID = document.getElementById('ward').value;
+        const weight = 100;
+
+        if (!toDistrictID || !toWardID || !weight) {
+            alert('Vui lòng nhập đầy đủ thông tin!');
+            return;
+        }
+
+        fetch(baseURL+`/shiip/public-api/v2/shipping-order/fee`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Token': apiToken
+            },
+            body: JSON.stringify({
+                from_district_id: 3695,
+                from_ward_code: "90735",
+                to_district_id: parseInt(toDistrictID, 10),
+                to_ward_code: toWardID,
+                weight: parseInt(weight, 10),
+                service_type_id: 2,
+                shop_id: 2509459
+            })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then(data => {
+                updateFeeInCart(data.data.total);
+            })
+            .catch(error => {
+                console.error('Error fetching shipping fee:', error);
+            });
+    }
+
+    document.getElementById('province').addEventListener('change', function () {
+        const provinceSelect = document.getElementById('province');
+        const districtSelect = document.getElementById('district');
+        const wardSelect = document.getElementById('ward');
+
+        if(this.value == ''){
+
+            districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+            districtSelect.disabled = true;
+
+            wardSelect.innerHTML = '<option value="">Chọn Phường/Xã</option>';
+            wardSelect.disabled = true;
+
+        }else{
+            loadDistricts(this.value);
+        }
+    });
+
+    document.getElementById('district').addEventListener('change', function () {
+
+        loadWards(this.value);
+
+    });
+
+    document.getElementById('ward').addEventListener('change', function () {
+        getShippingFee();
+
+    });
+    loadProvinces();
+
+    function updateFeeInCart(fee){
+
+
+        fetch('/UpdateController', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ fee: fee })
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return response.json();
+            })
+            .then (data =>{
+                if(data.success){
+                    $('#feeValue').text(fee.toLocaleString()+" đ")  ;
+                    $('#totalPrice').text(data.totalPrice.toLocaleString())
+                    $('#finalTotal1').val(data.totalPrice)
+                }
+
+            })
+            .catch(error => {
+                console.error('Error updating session fee:', error);
+            });
+    }
+</script>
+
+
+
+
+
 </body>
 </html>
 

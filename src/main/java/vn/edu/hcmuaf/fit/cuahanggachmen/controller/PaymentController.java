@@ -34,8 +34,12 @@ public class PaymentController extends HttpServlet {
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
+        String address1 = request.getParameter("address");
+        String province = request.getParameter("province1");
+        String district1 = request.getParameter("district1");
+        String ward=request.getParameter("ward1");
         String note = request.getParameter("note");
+        String address = address1+", "+province+", "+district1+", "+ward;
 
         // Kiểm tra nếu người dùng không nhập mã voucher
         if (voucherID == null || voucherID.isEmpty()) {
