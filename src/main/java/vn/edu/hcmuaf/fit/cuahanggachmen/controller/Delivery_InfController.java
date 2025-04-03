@@ -23,11 +23,11 @@ public class Delivery_InfController extends HttpServlet {
         }
 
         // Tính phí vận chuyển (tạm tính / 10)
-        double shippingFee = cart.getTotal() / 10.0;
+//        double shippingFee = cart.getTotal() / 10.0;
 
         // Truyền thông tin sang JSP
         request.setAttribute("cart", cart);
-        request.setAttribute("shippingFee", shippingFee);
+//        request.setAttribute("shippingFee", shippingFee);
         request.getRequestDispatcher("/WEB-INF/delivery_information.jsp").forward(request, response);
 
     }

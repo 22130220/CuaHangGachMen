@@ -52,15 +52,14 @@ public class CheckoutVNPay extends HttpServlet {
             order.setPhone(phone);
             order.setAddress(address);
             order.setDescription(note);
-            order.setPayment("COD");
+            order.setPayment("Thanh toán VNPay");
             order.setUserId(u.getId());
             order.setOrderDate(LocalDateTime.now());
-            double totalPrice;
+            double totalPrice=Double.parseDouble(finalTotal);
             if(c.getVoucherId() > 0) {
-                totalPrice = c.getTotal() - c.getDiscount();
+                totalPrice = totalPrice - c.getDiscount();
                 if(totalPrice < 0) totalPrice =0;
-            } else totalPrice = c.getTotal();
-
+            }
             order.setTotalPrice(BigDecimal.valueOf(totalPrice));
             lastRowId = dao.insert(order);
 
