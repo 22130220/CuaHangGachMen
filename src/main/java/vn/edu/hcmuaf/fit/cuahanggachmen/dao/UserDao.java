@@ -39,7 +39,7 @@ public class UserDao extends BaseDao {
 
     // Tìm user bằng password (Facebook ID)
     public User findByFacebookId(String facebookId) {
-        return handle.createQuery("SELECT * FROM users WHERE password = :facebookId AND status=1")
+        return handle.createQuery("SELECT * FROM users WHERE fbid = :facebookId AND status=1")
                 .bind("facebookId", facebookId)
                 .map(new UserMapper())
                 .findOne()
@@ -48,26 +48,35 @@ public class UserDao extends BaseDao {
 
     // Insert user với Facebook ID vào password
     public int insertFacebookUser(User user) {
-        return handle.createUpdate("INSERT INTO users (password, fullname, email, avatar, status) " +
-                        "VALUES (:password, :fullname, :email, :avatar, :status)")
-                .bind("password", user.getPassword()) // Lưu Facebook ID vào password
+        return handle.createUpdate("INSERT INTO users (fbid, fullname, email, avatar, status, phone, address, birthtime, sex) " +
+                        "VALUES (:fbid, :fullname, :email, :avatar, :status, :phone, :address, :birthtime, :sex)")
+                .bind("fbid", user.getFbid())
                 .bind("fullname", user.getFullname())
                 .bind("email", user.getEmail())
                 .bind("avatar", user.getAvatar())
                 .bind("status", user.isStatus())
-                .executeAndReturnGeneratedKeys("id") // Trả về id mới sinh
+                .bind("phone", user.getPhone())
+                .bind("address", user.getAddress())
+                .bind("birthtime", user.getBirthtime())
+                .bind("sex", user.getSex())
+                .executeAndReturnGeneratedKeys("id")
                 .mapTo(int.class)
                 .one();
     }
 
     // Update user dựa trên password (Facebook ID)
     public int updateUserFaceBook(User user) {
-        return handle.createUpdate("UPDATE users SET fullname = :fullname, email = :email, avatar = :avatar " +
-                        "WHERE password = :password")
+        return handle.createUpdate("UPDATE users SET fullname = :fullname, email = :email, avatar = :avatar, " +
+                        "phone = :phone, address = :address, birthtime = :birthtime, sex = :sex " +
+                        "WHERE fbid = :fbid")
                 .bind("fullname", user.getFullname())
                 .bind("email", user.getEmail())
                 .bind("avatar", user.getAvatar())
-                .bind("password", user.getPassword())
+                .bind("phone", user.getPhone())
+                .bind("address", user.getAddress())
+                .bind("birthtime", user.getBirthtime())
+                .bind("sex", user.getSex())
+                .bind("fbid", user.getFbid())
                 .execute();
     }
 
@@ -84,13 +93,14 @@ public class UserDao extends BaseDao {
     }
 
     public void updateUserProfile(User user) {
-        handle.createUpdate("UPDATE users SET fullname = :fullname, phone = :phone, address = :address, birthtime = :birthtime, sex = :sex WHERE id = :id")
+        handle.createUpdate("UPDATE users SET fullname = :fullname,email=:email, phone = :phone, address = :address, birthtime = :birthtime, sex = :sex WHERE id = :id")
                 .bind("fullname", user.getFullname())
                 .bind("phone", user.getPhone())
                 .bind("address", user.getAddress())
                 .bind("birthtime", user.getBirthtime())
                 .bind("sex", user.getSex())
                 .bind("id", user.getId())
+                .bind("email", user.getEmail())
                 .execute();
     }
 
