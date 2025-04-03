@@ -87,3 +87,22 @@ body{
 .log-i{
     font-size: 20rem;
 }
+
+.totp_notice{
+    font-size: 1.5rem;
+    color: #000000;
+    line-height: 1.4;
+}
+
+/*!* Hover khi button enable *!*/
+/*#btn-back:hover {*/
+/*    background-color: #0056b3;*/
+/*}*/
+
+/* Button khi bị disabled */
+#btn-back:disabled {
+    background-color: gray;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
