@@ -1,13 +1,6 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 
-
-import vn.edu.hcmuaf.fit.cuahanggachmen.action.ActionResult;
-
-
-import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
-
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class User implements Serializable {
@@ -23,13 +16,14 @@ public class User implements Serializable {
     private String salt;
     private int role;
     private String password;
-
+    private String fbid; // Thêm trường fbid
     private int sex;
 
     public User() {}
 
-    public User(int id, String fullname, String email, String phone, String avatar, String address, LocalDateTime birthtime, boolean status, LocalDateTime createtime, String salt, int role, String password, int sex) {
-
+    public User(int id, String fullname, String email, String phone, String avatar, String address,
+                LocalDateTime birthtime, boolean status, LocalDateTime createtime, String salt,
+                int role, String password, String fbid, int sex) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
@@ -42,9 +36,8 @@ public class User implements Serializable {
         this.salt = salt;
         this.role = role;
         this.password = password;
-
+        this.fbid = fbid; // Thêm fbid vào constructor
         this.sex = sex;
-
     }
 
     @Override
@@ -62,118 +55,51 @@ public class User implements Serializable {
                 ", salt='" + salt + '\'' +
                 ", role=" + role +
                 ", password='" + password + '\'' +
+                ", fbid='" + fbid + '\'' + // Thêm fbid vào toString
                 ", sex=" + sex +
                 '}';
     }
 
     // Getters và Setters
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public String getFullname() { return fullname; }
+    public void setFullname(String fullname) { this.fullname = fullname; }
 
-    public String getFullname() {
-        return fullname;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getAvatar() { return avatar; }
+    public void setAvatar(String avatar) { this.avatar = avatar; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
 
-    public String getPhone() {
-        return phone;
-    }
+    public LocalDateTime getBirthtime() { return birthtime; }
+    public void setBirthtime(LocalDateTime birthtime) { this.birthtime = birthtime; }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+    public boolean isStatus() { return status; }
+    public void setStatus(boolean status) { this.status = status; }
 
-    public String getAvatar() {
-        return avatar;
-    }
+    public LocalDateTime getCreatetime() { return createtime; }
+    public void setCreatetime(LocalDateTime createtime) { this.createtime = createtime; }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
+    public String getSalt() { return salt; }
+    public void setSalt(String salt) { this.salt = salt; }
 
-    public String getAddress() {
-        return address;
-    }
+    public int getRole() { return role; }
+    public void setRole(int role) { this.role = role; }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
-    public LocalDateTime getBirthtime() {
-        return birthtime;
-    }
+    public String getFbid() { return fbid; } // Getter cho fbid
+    public void setFbid(String fbid) { this.fbid = fbid; } // Setter cho fbid
 
-    public void setBirthtime(LocalDateTime birthtime) {
-        this.birthtime = birthtime;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(LocalDateTime createtime) {
-        this.createtime = createtime;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-    public int getSex() {
-        return sex;
-    }
-
-    public void setSex(int sex) {
-
-        this.sex = sex;
-    }
-
+    public int getSex() { return sex; }
+    public void setSex(int sex) { this.sex = sex; }
 }
-
-
-
