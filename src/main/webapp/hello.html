@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOTP QR Code</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        .qr-code-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .qr-code-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center mb-4">TOTP Setup</h1>
+
+    <!-- Khu vực hiển thị QR code -->
+    <div class="qr-code-container">
+        <h3>Scan this QR Code</h3>
+        <img id="qrCode" alt="QR Code" class="img-fluid">
+    </div>
+
+    <!-- Input để nhập mã TOTP -->
+    <div class="input-group">
+        <input type="text" id="totpCode" class="form-control" placeholder="Enter TOTP Code" maxlength="6">
+        <button class="btn btn-primary" onclick="verifyTOTP()">Verify</button>
+    </div>
+
+    <!-- Thông báo kết quả -->
+    <div id="resultMessage" class="mt-3"></div>
+</div>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+<!-- JavaScript để lấy QR code và xử lý input -->
+<script>
+    // Lấy QR code từ API
+    window.onload = function() {
+        fetch('/qr') // Giả sử API của bạn là /qr
+            .then(response => response.json())
+            .then(data => {
+                // Hiển thị QR code
+                const qrCodeElement = document.getElementById('qrCode');
+                qrCodeElement.src = data.dataUri;
+            })
+            .catch(error => {
+                console.error('Error fetching QR code:', error);
+                showMessage('Failed to load QR code.', 'danger');
+            });
+    };
+
+    // Hàm xử lý khi người dùng nhấn nút Verify
+    function verifyTOTP() {
+        const totpCode = document.getElementById('totpCode').value.trim();
+        const resultMessage = document.getElementById('resultMessage');
+
+        // Kiểm tra mã TOTP có hợp lệ không (6 chữ số)
+        if (!/^\d{6}$/.test(totpCode)) {
+            showMessage('Please enter a valid 6-digit TOTP code.', 'danger');
+            return;
+        }
+
+        // Gửi mã TOTP đến backend để xác thực (giả lập)
+        fetch('/verify-totp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ totpCode: totpCode, secretKey: getSecretKeyFromQR() })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage('TOTP verified successfully!', 'success');
+                } else {
+                    showMessage('Invalid TOTP code. Please try again.', 'danger');
+                }
+            })
+            .catch(error => {
+                console.error('Error verifying TOTP:', error);
+                showMessage('Error verifying TOTP. Please try again.', 'danger');
+            });
+    }
+
+    // Hàm hiển thị thông báo
+    function showMessage(message, type) {
+        const resultMessage = document.getElementById('resultMessage');
+        resultMessage.innerHTML = `<div class="alert alert-${type}" role="alert">${message}</div>`;
+    }
+
+    // Hàm lấy secretKey từ API (giả lập)
+    function getSecretKeyFromQR() {
+        // Trong thực tế, bạn có thể lưu secretKey khi lấy QR code
+        return 'H3ZYBZFRUS5VET7DJSGH3JMJ4QIZGAH'; // Giả lập
+    }
+</script>
+</body>
+</html>

@@ -128,6 +128,36 @@ public class UserDao extends BaseDao {
                 .orElse(null);
     }
 
+    public String getRecoryCode(int userId) {
+        return handle.createQuery("SELECT totp_recovery_code FROM users WHERE id = :id")
+                .bind("id", userId) // Gắn giá trị id
+                .mapTo(String.class)
+                .findOne()
+                .orElse(null);
+    }
+
+    public String getSecretKey(int userId) {
+        return handle.createQuery("SELECT totp_secret_key FROM users WHERE id = :id")
+                .bind("id", userId) // Gắn giá trị id
+                .mapTo(String.class)
+                .findOne()
+                .orElse(null);
+    }
+
+    public int insertRecoveryCode(int userId, String recoveryCode) {
+        return handle.createUpdate("UPDATE users SET totp_recovery_code = :recoveryCode WHERE id = :id")
+                .bind("id", userId)
+                .bind("recoveryCode", recoveryCode)
+                .execute();
+    }
+
+    public int insertSecretKey(int userId, String secretKey) {
+        return handle.createUpdate("UPDATE users SET totp_secret_key = :secretKey WHERE id = :id")
+                .bind("id", userId)
+                .bind("secretKey", secretKey)
+                .execute();
+    }
+
     public int insertUser1(String name, String email) {
 
         return handle.createUpdate("INSERT INTO users (fullname, email) " +
