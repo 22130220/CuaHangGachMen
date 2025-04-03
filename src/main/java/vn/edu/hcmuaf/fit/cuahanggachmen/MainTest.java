@@ -1,35 +1,18 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import org.jdbi.v3.core.Handle;
-import vn.edu.hcmuaf.fit.cuahanggachmen.dao.RoleResourcePermissionDao;
-import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
-
-import java.util.List;
-import java.util.Map;
+import com.google.gson.JsonObject;
+import dev.samstevens.totp.exceptions.QrGenerationException;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.TOTPUtils;
 
 public class MainTest {
-    public static void main(String[] args) {
-        DBConect.mySqlDataSource();
-
-        Handle handle = DBConect.get().open();
-        RoleResourcePermissionDao dao = new RoleResourcePermissionDao(handle);
-        List<RoleResourcePermission> list = dao.getAll();
-
-
-//        // Tạo Gson instance
-//        Gson gson = new GsonBuilder()
-//                .setPrettyPrinting()
-//                .disableHtmlEscaping()
-//                .create();
-//
-//        // Chuyển Map thành JSON
-//        String json = gson.toJson(ls);
-//        System.out.println("JSON output:");
-//        System.out.println(json);
-
-        handle.close();
+    public static void main(String[] args) throws QrGenerationException {
+        String secretKey = TOTPUtils.getGenerateKey();
+        String dataUri = TOTPUtils.getQRCode(secretKey, "tahoangphuc1901@gmail.com");
+        System.out.println(secretKey);
+        System.out.println(dataUri);
+        JsonObject data = new JsonObject();
+        data.addProperty("secretKey", secretKey);
+        data.addProperty("dataUri", dataUri);
+        String dataS = data.toString();
     }
 }
