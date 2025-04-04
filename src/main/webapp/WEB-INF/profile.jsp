@@ -25,7 +25,6 @@
             rel="icon"
             type="image/x-icon"
             href="/assets/icons/logo2_no_text.svg"
-
     />
 
     <!-- Font Awesome-->
@@ -55,7 +54,6 @@
 
 <jsp:include page="../view_shared/header_footer/header.jsp"/>
 
-
 <div class="container">
     <!-- Sidebar -->
     <aside class="sidebar">
@@ -73,18 +71,12 @@
         </div>
 
         <ul>
-            <li ><b>Tài Khoản Của Tôi</b></li>
+            <li><b>Tài Khoản Của Tôi</b></li>
             <li class="active">Hồ Sơ</li>
-
-
-
-
             <hr>
-
             <a href="completeorderhistory"><li>Đơn Mua</li></a>
             <hr>
             <a href="/"><li>Quay về trang chủ</li></a>
-
         </ul>
     </aside>
 
@@ -105,24 +97,19 @@
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" value="${user.email}" disabled>
-
                 </div>
-
                 <div class="form-group">
                     <label for="phone">Số điện thoại</label>
                     <input type="text" id="phone" name="phone" value="${user.phone}" required>
                 </div>
-
                 <div class="form-group">
                     <label for="address">Địa chỉ</label>
                     <input type="text" id="address" name="address" value="${user.address}" required>
                 </div>
-
                 <div class="form-group">
                     <label for="birthtime">Ngày sinh</label>
                     <input type="date" id="birthtime" name="birthtime" value="${birthtime}">
                 </div>
-
                 <div class="form-group radio-group">
                     <label>Giới tính</label>
                     <div class="radio-options">
@@ -130,27 +117,10 @@
                         <label><input type="radio" name="gender" value="female" ${user.sex == 0 ? 'checked' : ''}> Nữ</label>
                     </div>
                 </div>
-
                 <button type="submit" class="save-btn">Lưu</button>
             </form>
 
-
-
-
             <!-- Upload Photo Section -->
-<%--            <div class="upload-photo">--%>
-<%--                <div class="photo-preview">--%>
-<%--                    <img id="preview"--%>
-<%--                         src="${user.avatar}"--%>
-
-<%--                         alt="" />--%>
-<%--                </div>--%>
-<%--                <label class="upload-btn">--%>
-<%--                    Đổi Ảnh--%>
-<%--                    <input type="file" id="fileInput" accept="image/*">--%>
-<%--                </label>--%>
-<%--                <p>Dung lượng file tối đa 1 MB<br>Định dạng: JPEG, PNG</p>--%>
-<%--            </div>--%>
             <form method="POST" action="/uploadAvatar" enctype="multipart/form-data">
                 <div class="upload-photo">
                     <div class="photo-preview">
@@ -164,26 +134,25 @@
                 </div>
             </form>
 
-            <!-- Form Đổi Mật Khẩu -->
-            <form method="POST" action="/profile/change-password" class="change-password-form">
-                <h3>Đổi mật khẩu</h3>
-                <div class="form-group">
-                    <label for="currentPassword">Mật khẩu hiện tại</label>
-                    <input type="password" id="currentPassword" name="currentPassword" required>
-                </div>
-                <div class="form-group">
-                    <label for="newPassword">Mật khẩu mới</label>
-                    <input type="password" id="newPassword" name="newPassword" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirmPassword">Xác nhận mật khẩu mới</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" required>
-                </div>
-                <button type="submit" class="save-btn">Đổi mật khẩu</button>
-            </form>
-
-
-
+            <!-- Form Đổi Mật Khẩu - Chỉ hiển thị nếu không đăng nhập bằng Facebook -->
+            <c:if test="${empty user.fbid}">
+                <form method="POST" action="/profile/change-password" class="change-password-form">
+                    <h3>Đổi mật khẩu</h3>
+                    <div class="form-group">
+                        <label for="currentPassword">Mật khẩu hiện tại</label>
+                        <input type="password" id="currentPassword" name="currentPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Mật khẩu mới</label>
+                        <input type="password" id="newPassword" name="newPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Xác nhận mật khẩu mới</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="save-btn">Đổi mật khẩu</button>
+                </form>
+            </c:if>
         </div>
         <c:if test="${not empty message}">
             <div class="alert">
@@ -192,7 +161,6 @@
         </c:if>
     </main>
 </div>
-
 
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
@@ -220,12 +188,12 @@
                 },
                 email: {
                     required: true,
-                    email: true, // Kiểm tra định dạng email
-                    validEmail: true // Kiểm tra tên miền email hợp lệ
+                    email: true,
+                    validEmail: true
                 },
                 phone: {
                     required: true,
-                    validPhone: true // Chỉ chấp nhận số có 10 chữ số
+                    validPhone: true
                 },
                 address: {
                     required: true,
@@ -252,19 +220,12 @@
                 }
             },
             errorPlacement: function(error, element) {
-                error.css("color", "red"); // Màu đỏ cho thông báo lỗi
-                error.insertAfter(element); // Hiển thị lỗi ngay dưới input
+                error.css("color", "red");
+                error.insertAfter(element);
             }
         });
     });
 </script>
-
-
-
-
-
-
-
 
 <script>
     document.getElementById('fileInput').addEventListener('change', function(event) {
@@ -280,8 +241,6 @@
         }
     });
 </script>
-
-
 
 </body>
 </html>
