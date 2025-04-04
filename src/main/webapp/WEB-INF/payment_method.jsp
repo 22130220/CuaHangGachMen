@@ -35,7 +35,6 @@
                 <div>
                     <input type="checkbox" id="cod" name="payment" >
                 </div>
-
                 <div>
                     <img src="https://hstatic.net/0/0/global/design/seller/image/payment/cod.svg?v=6" alt="COD" >
                 </div>

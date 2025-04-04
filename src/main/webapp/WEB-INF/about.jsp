@@ -44,6 +44,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/spin.js@2.0.2/spin.min.js"></script>
 
+    <style>
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="/view_shared/header_footer/header.jsp" />
@@ -138,7 +144,7 @@
                     <textarea id="content" name="content" class="tarea area-height" rows="4" cols="50" required></textarea>
                 </div>
                 <div class="submit-btn">
-                    <button class="btn">Gửi yêu cầu</button>
+                    <button class="btn" id="submitBtn" disabled>Gửi yêu cầu</button>
                 </div>
             </div>
         </form>
@@ -149,17 +155,18 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="../assets/js/scrollTop.js"></script>
-
 <script>
-    $(document).ready(function() {
-        // Hàm kiểm tra email có đuôi @gmail.com, @yahoo.com hoặc @outlook.com
-        $.validator.addMethod("validEmail", function(value, element) {
-            return this.optional(element) || /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)$/.test(value);
-        }, "Email phải thuộc @gmail.com, @yahoo.com hoặc @outlook.com");
+    $(document).ready(function () {
+        // Thêm phương thức kiểm tra email tùy chỉnh
+        $.validator.addMethod("validEmail", function (value, element) {
+            return this.optional(element) || /@/.test(value);
+        }, "Email phải có @");
 
+        // Khởi tạo validate cho form
         $("#validationAbout").validate({
-            onkeyup: function(element) {
-                $(element).valid(); // Kiểm tra lỗi ngay khi nhập
+            onkeyup: function (element) {
+                $(element).valid(); // Kiểm tra ngay khi người dùng nhập
+                toggleSubmitButton(); // Cập nhật trạng thái nút submit
             },
             rules: {
                 name: {
@@ -168,8 +175,8 @@
                 },
                 Email: {
                     required: true,
-                    email: true, // Kiểm tra định dạng email
-                    validEmail: true // Kiểm tra tên miền email hợp lệ
+                    email: true,
+                    validEmail: true
                 },
                 TieuDe: {
                     required: true,
@@ -182,13 +189,13 @@
             },
             messages: {
                 name: {
-                    required: "Vui lòng nhập tên sản phẩm",
-                    minlength: "Tên sản phẩm phải dài ít nhất 2 ký tự"
+                    required: "Vui lòng nhập họ và tên",
+                    minlength: "Tên phải dài ít nhất 2 ký tự"
                 },
                 Email: {
                     required: "Vui lòng nhập email",
                     email: "Vui lòng nhập đúng định dạng email",
-                    validEmail: "Email phải thuộc @gmail.com, @yahoo.com hoặc @outlook.com"
+                    validEmail: "Email phải có @"
                 },
                 TieuDe: {
                     required: "Vui lòng nhập tiêu đề",
@@ -199,11 +206,25 @@
                     minlength: "Nội dung phải dài ít nhất 2 ký tự"
                 }
             },
-            errorPlacement: function(error, element) {
-                error.css("color", "red"); // Màu đỏ cho thông báo lỗi
-                error.insertAfter(element); // Hiển thị lỗi ngay dưới input
+            errorPlacement: function (error, element) {
+                error.css("color", "red");
+                error.insertAfter(element);
             }
         });
+
+        // Hàm bật/tắt nút submit
+        function toggleSubmitButton() {
+            const isValid = $("#validationAbout").valid();
+            $("#submitBtn").prop("disabled", !isValid);
+        }
+
+        // Gọi toggleSubmitButton khi có input thay đổi
+        $("#validationAbout input, #validationAbout textarea").on("input", function () {
+            toggleSubmitButton();
+        });
+
+        // Gọi kiểm tra lần đầu
+        toggleSubmitButton();
     });
 </script>
 
@@ -212,99 +233,142 @@
 
 
 <script>
-    $(document).ready(function() {
-        // Khi form được submit
-        $('.contact-form').submit(function(event) {
-            event.preventDefault(); // Ngăn chặn việc reload trang
+    // ====== LƯU / PHỤC HỒI / XOÁ FORM ======
 
-            // Lấy dữ liệu từ các input fields
-            var name = $('#name').val();
-            var email = $('#email').val();
-            var subject = $('#subject').val();
-            var content = $('#content').val();
+    let isReloading = false;
 
-            // Tạo đối tượng dữ liệu để gửi đi
-            var formData = {
+    // ====== LƯU / PHỤC HỒI / XOÁ FORM ======
+
+    function saveFormData() {
+        const formData = {
+            name: $('#name').val(),
+            email: $('#email').val(),
+            subject: $('#subject').val(),
+            content: $('#content').val()
+        };
+        sessionStorage.setItem("contactFormData", JSON.stringify(formData));
+    }
+
+    function restoreFormData() {
+        const savedData = sessionStorage.getItem("contactFormData");
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            $('#name').val(data.name || "");
+            $('#email').val(data.email || "");
+            $('#subject').val(data.subject || "");
+            $('#content').val(data.content || "");
+        }
+    }
+
+    function clearFormData() {
+        sessionStorage.removeItem("contactFormData");
+    }
+
+    // 🔑 Bắt sự kiện nhấn F5 hoặc Ctrl+R
+    window.addEventListener('keydown', function (e) {
+        if (e.key === 'F5' || (e.ctrlKey && e.key.toLowerCase() === 'r')) {
+            isReloading = true;
+        }
+    });
+
+    // ❗ Chỉ giữ lại dữ liệu nếu:
+    // - Nhấn F5 / Ctrl+R (isReloading = true)
+    // - Đang ở đúng controller AboutController
+    window.addEventListener("pageshow", function () {
+        const currentPath = window.location.pathname;
+        const isOnAboutController = currentPath.includes("AboutController");
+
+        if (!isReloading || !isOnAboutController) {
+            clearFormData();
+        }
+
+        // Reset lại flag reload sau khi xử lý
+        isReloading = false;
+    });
+
+    // ====== MAIN SCRIPT ======
+    $(document).ready(function () {
+        restoreFormData();
+
+        $('#name, #email, #subject, #content').on('input', function () {
+            saveFormData();
+        });
+
+        $('.contact-form').submit(function (event) {
+            event.preventDefault();
+
+            if (!$("#validationAbout").valid()) return;
+
+            const name = $('#name').val();
+            const email = $('#email').val();
+            const subject = $('#subject').val();
+            const content = $('#content').val();
+
+            const formData = {
                 'name': name,
                 'email': email,
                 'subject': subject,
                 'content': content
             };
-            var opts = {
-                lines: 13, // Số lượng vòng quay
-                length: 28, // Chiều dài của mỗi cánh quạt
-                width: 14, // Độ dày của cánh quạt
-                radius: 42, // Bán kính của vòng quay
-                scale: 1, // Tỉ lệ
-                corners: 1, // Mặt cắt của vòng quay
-                color: '#000', // Màu sắc
-                fadeColor: 'transparent', // Màu khi spinner biến mất
-                speed: 1, // Tốc độ quay
-                rotate: 0, // Độ quay
-                animation: 'spinner-line-fade-quick', // Loại animation
-                direction: 1, // Chiều quay
-                zIndex: 2e9, // Z-index để hiển thị trên các phần tử khác
-                className: 'spinner', // Tên class của spinner
-                top: '50%', // Vị trí top
-                left: '50%', // Vị trí left
-                shadow: '0 0 1px transparent', // Độ bóng
-                position: 'absolute' // Đặt spinner tuyệt đối
+
+            const opts = {
+                lines: 13,
+                length: 28,
+                width: 14,
+                radius: 42,
+                scale: 1,
+                corners: 1,
+                color: '#000',
+                fadeColor: 'transparent',
+                speed: 1,
+                rotate: 0,
+                animation: 'spinner-line-fade-quick',
+                direction: 1,
+                zIndex: 2e9,
+                className: 'spinner',
+                top: '50%',
+                left: '50%',
+                shadow: '0 0 1px transparent',
+                position: 'absolute'
             };
 
-            // Gọi Spinner và thêm vào div
-            var spinner = new Spinner(opts).spin(document.getElementById('spinner'));
-
-            // Hiển thị spinner khi trang đang tải
+            const spinner = new Spinner(opts).spin(document.getElementById('spinner'));
             $('#spinner').show();
 
-
-
-            // Gửi AJAX request
             $.ajax({
-                url: '/AboutController', // URL của controller
-                type: 'POST', // Phương thức gửi dữ liệu
-                data: formData, // Dữ liệu gửi đi
-                success: function(response) {
-                    if(response.success) {
-                        $('#spinner').hide();
+                url: '/AboutController',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    $('#spinner').hide();
+
+                    if (response.success) {
+                        clearFormData();
+
                         $('#name').val("");
                         $('#email').val("");
                         $('#subject').val("");
                         $('#content').val("");
 
-
-                        const notyf= new Notyf()
+                        const notyf = new Notyf();
                         notyf.open({
-                            duration:1000,
-                            position:{
-                                x: 'right',
-                                y: 'bottom',
-                            },
+                            duration: 1000,
+                            position: { x: 'right', y: 'bottom' },
                             type: "success",
-                            message : "Gửi mail thành công",
+                            message: "Gửi mail thành công",
                         });
-
-
                     } else {
-                        $('#spinner').hide();
-                        const notyf= new Notyf()
+                        const notyf = new Notyf();
                         notyf.open({
-                            duration:1000,
-                            position:{
-                                x: 'right',
-                                y: 'bottom',
-                            },
+                            duration: 1000,
+                            position: { x: 'right', y: 'bottom' },
                             type: "error",
-                            message : "Gửi email không thành công",
+                            message: "Gửi email không thành công",
                         });
                     }
-
-
-
-
                 },
-                error: function(xhr, status, error) {
-                    // Xử lý khi có lỗi xảy ra
+                error: function () {
+                    $('#spinner').hide();
                     alert("Có lỗi xảy ra! Vui lòng thử lại.");
                 }
             });

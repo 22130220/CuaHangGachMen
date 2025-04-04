@@ -139,8 +139,8 @@
 <script>
     $(document).ready(function () {
         $.validator.addMethod("gmailFormat", function (value, element) {
-            return /^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(value);
-        }, "Email phải có đuôi @gmail.com.");
+            return /@/.test(value);
+        }, "Email phải chứa ký tự @.");
 
         $.validator.addMethod("passwordFormat", function (value, element) {
             return /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(value);
