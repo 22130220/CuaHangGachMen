@@ -46,7 +46,6 @@
                 <div class="form-group sdt">
                     <label for="phone">Số điện thoại</label>
                     <input type="tel" name="phone" id="phone" placeholder="Số điện thoại" value="${sessionScope.auth.phone}" required>
-
                 </div>
             </div>
             <div class="form-row">

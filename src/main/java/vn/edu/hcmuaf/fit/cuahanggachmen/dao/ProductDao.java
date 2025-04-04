@@ -42,6 +42,15 @@ public class ProductDao extends BaseDao {
                         .mapToBean(Product.class)
                         .list();
     }
+    public List<Product> findNameProduct(String productName) {
+        String sql = "SELECT * FROM products WHERE name LIKE :productName";
+        List<Product> products = handle.createQuery(sql)
+                .bind("productName", "%g%") // truyền tham số với ký tự % để tìm kiếm
+                .mapToBean(Product.class)
+                .list();
+        return products;
+    }
+
 
 
     // Tìm sản phẩm theo ID

@@ -432,7 +432,42 @@
 <div class="load-more" style="text-align: center; margin-top: 30px;">
     <div id="load-more-btn3" class="btn" onclick="loadMoreView()">Xem thêm</div>
 </div>
+<%--<script>--%>
+<%--  document.getElementById("searchInput").addEventListener("blur", function() {--%>
+<%--    var query = this.value.trim();--%>
 
+<%--    // Kiểm tra nếu có giá trị nhập vào--%>
+<%--    if (query) {--%>
+<%--      // Gửi yêu cầu tới servlet qua fetch--%>
+<%--      fetch(`/yourServletPath?query=${encodeURIComponent(query)}`)--%>
+<%--              .then(response => response.json())--%>
+<%--              .then(data => {--%>
+<%--                // Xử lý kết quả trả về--%>
+<%--                displaySearchResults(data);--%>
+<%--              })--%>
+<%--              .catch(error => console.error("Error fetching data: ", error));--%>
+<%--    } else {--%>
+<%--      // Nếu không có gì nhập vào, ẩn kết quả tìm kiếm--%>
+<%--      document.getElementById("searchResults").innerHTML = "";--%>
+<%--    }--%>
+<%--  });--%>
+
+<%--  function displaySearchResults(data) {--%>
+<%--    const resultsContainer = document.getElementById("searchResults");--%>
+<%--    resultsContainer.innerHTML = ""; // Làm sạch kết quả cũ--%>
+
+<%--    if (data && data.length > 0) {--%>
+<%--      data.forEach(item => {--%>
+<%--        const resultItem = document.createElement("div");--%>
+<%--        resultItem.classList.add("result-item");--%>
+<%--        resultItem.textContent = item.name; // Hoặc thuộc tính tương ứng từ JSON--%>
+<%--        resultsContainer.appendChild(resultItem);--%>
+<%--      });--%>
+<%--    } else {--%>
+<%--      resultsContainer.innerHTML = "<p>No results found</p>";--%>
+<%--    }--%>
+<%--  }--%>
+<%--</script>--%>
 <script>
     var amount = 3;
     function loadMoreView() {

@@ -23,7 +23,6 @@ public class CheckoutMoMo extends HttpServlet {
             throws ServletException, IOException {
         String status = request.getParameter("resultCode");
         HttpSession session = request.getSession();
-
         if(status.equalsIgnoreCase("0")){
             String name =(String) session.getAttribute("name");
             String email =(String) session.getAttribute("email");
