@@ -279,14 +279,12 @@ public class HistoryOrderController extends HttpServlet {
                             out.println("<div class=\"mualai\">Xem chi tiết</div>");
                             out.println("</a>");
                         } else if ("Cancelled".equals(orderStatus)) {
-                            out.println("<a class=\"mualaine\" href=\"/reorder?orderId=" + order.getOrderId() + "\" style=\"display: inline-block;\">");
-                            out.println("<div class=\"mualai\">Đặt lại</div>");
-                            out.println("</a>");
+
                             out.println("<a class=\"mualaine\" href=\"/pdetail?pid=" + order.getProductId() + "\" style=\"display: inline-block;\">");
-                            out.println("<div class=\"mualai\">Xem chi tiết</div>");
+                            out.println("<div class=\"mualai\">Mua lại</div>");
                             out.println("</a>");
                         } else if ("Delivered".equals(orderStatus)) {
-                            out.println("<a class=\"mualaine\" href=\"/pdetail?pid=" + order.getProductId() + "\" style=\"display: inline-block;\">");
+                            out.println("<a class=\"mualaine\" href=\"/pdetail?pid=" + order.getProductId() + "&tab=review\" style=\"display: inline-block;\">");
                             out.println("<div class=\"mualai\">Đánh giá</div>");
                             out.println("</a>");
                             out.println("<a class=\"mualaine\" href=\"/pdetail?pid=" + order.getProductId() + "\" style=\"display: inline-block;\">");

@@ -512,20 +512,15 @@
             if (id[0] === des) {
                 element.style.display = 'flex';
                 document.getElementById(id[0]).style.borderBottom = '1px solid #000';
-                if(des == "review") {
+                if (des === "review") {
                     const value = $("#pid").val();
-                    getComment(value);
+                    getComment(value); // Tải bình luận nếu cần
                 }
             } else {
                 element.style.display = 'none';
                 document.getElementById(id[0]).style.borderBottom = 'none';
             }
         });
-
-        // Ẩn bình luận nếu không chọn 'review'
-        if (des !== "review") {
-            document.getElementById('review-content').style.display = 'none';
-        }
     }
 
 </script>
@@ -568,5 +563,30 @@
 
 </script>
 
+<script>
+    // Hàm lấy tham số từ URL
+    function getParameterByName(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+    }
+
+    // Kiểm tra tham số 'tab' khi trang được tải
+    document.addEventListener('DOMContentLoaded', function() {
+        const tab = getParameterByName('tab');
+        if (tab === 'review') {
+            // Kích hoạt tab "Bình luận"
+            const reviewTab = document.getElementById('review');
+            if (reviewTab) {
+                activateDesInfo(reviewTab); // Gọi hàm để hiển thị tab "Bình luận"
+
+                // Cuộn đến phần bình luận
+                const reviewContent = document.getElementById('review-content');
+                if (reviewContent) {
+                    reviewContent.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+    });
+</script>
 </body>
 </html>

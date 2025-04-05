@@ -1,17 +1,21 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpSession;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.mail.EmailService;
+import vn.edu.hcmuaf.fit.cuahanggachmen.mail.VerificationTokenStore;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LogBuilder;
-import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogLevel;
-import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogType;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Base64;
+import java.util.UUID;
 
 @WebServlet("/complete-profile")
 public class CompleteProfileServlet extends HttpServlet {
@@ -28,7 +32,6 @@ public class CompleteProfileServlet extends HttpServlet {
             return;
         }
 
-        // Ưu tiên tempUser nếu có (người dùng mới)
         request.setAttribute("user", tempUser != null ? tempUser : user);
         request.getRequestDispatcher("/WEB-INF/complete-profile.jsp").forward(request, response);
     }
@@ -47,7 +50,7 @@ public class CompleteProfileServlet extends HttpServlet {
 
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
-        String address = request.getParameter("address"); // Thêm address
+        String address = request.getParameter("address");
         String birthtimeStr = request.getParameter("birthtime");
         int sex = Integer.parseInt(request.getParameter("sex"));
 
@@ -60,51 +63,31 @@ public class CompleteProfileServlet extends HttpServlet {
             return;
         }
 
-        if (tempUser != null) {
-            // Người dùng mới: Insert vào database
-            tempUser.setEmail(email);
-            tempUser.setPhone(phone);
-            tempUser.setAddress(address); // Thêm address
-            tempUser.setBirthtime(birthtime);
-            tempUser.setSex(sex);
-            int userId = userDao.insertFacebookUser(tempUser);
-            tempUser.setId(userId);
-            session.setAttribute("auth", tempUser);
-            session.removeAttribute("tempUser"); // Xóa tempUser sau khi insert
+        // Tạo đối tượng User để lưu tạm
+        User updatedUser = (tempUser != null) ? tempUser : user;
+        updatedUser.setEmail(email);
+        updatedUser.setPhone(phone);
+        updatedUser.setAddress(address);
+        updatedUser.setBirthtime(birthtime);
+        updatedUser.setSex(sex);
+        updatedUser.setCreatetime(LocalDateTime.now());
 
-            new LogBuilder()
-                    .level(LogLevel.INFO)
-                    .message("Thêm người dùng mới từ Facebook thành công")
-                    .setHeaderRequest(request, response)
-                    .location("CompleteProfileServlet")
-                    .type(LogType.INSERT)
-                    .build(DBConect.get().open());
+        // Tạo token xác minh
+        String token = UUID.randomUUID().toString() + "." + Base64.getEncoder().encodeToString(email.getBytes());
+        VerificationTokenStore.addToken(token, updatedUser);
+
+        // Gửi email xác minh
+        String verificationLink = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/verify-profile-email?email=" + email + "&token=" + token;
+        EmailService emailService = new EmailService();
+        String emailContent = emailService.buildVerificationEmailContent(updatedUser, verificationLink);
+        boolean emailSent = emailService.send(email, "Xác minh email của bạn", emailContent);
+
+        if (emailSent) {
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("/WEB-INF/registration-success.jsp").forward(request, response);
         } else {
-            // Người dùng cũ: Update thông tin
-            user.setEmail(email);
-            user.setPhone(phone);
-            user.setAddress(address); // Thêm address
-            user.setBirthtime(birthtime);
-            user.setSex(sex);
-            userDao.updateUserProfile(user);
-
-            new LogBuilder()
-                    .level(LogLevel.INFO)
-                    .message("Cập nhật thông tin người dùng thành công")
-                    .setHeaderRequest(request, response)
-                    .location("CompleteProfileServlet")
-                    .type(LogType.UPDATE)
-                    .build(DBConect.get().open());
+            request.setAttribute("error", "Không thể gửi email xác minh. Vui lòng thử lại.");
+            request.getRequestDispatcher("/WEB-INF/complete-profile.jsp").forward(request, response);
         }
-        if (user != null) {
-            if (user.getEmail() != null && !user.getEmail().isEmpty()) {
-                session.setAttribute("profileCompleted", true);
-                response.sendRedirect("/");
-                return;
-            }
-        }
-
-
-        response.sendRedirect("/");
     }
 }

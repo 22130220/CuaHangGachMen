@@ -96,15 +96,13 @@
                                             </a>
                                         </c:when>
                                         <c:when test="${orderStatus == 'Cancelled'}">
-                                            <a class="mualaine" href="/reorder?orderId=${order.orderId}" style="display: inline-block;">
-                                                <div class="mualai">Đặt lại</div>
-                                            </a>
+
                                             <a class="mualaine" href="/pdetail?pid=${order.productId}" style="display: inline-block;">
-                                                <div class="mualai">Xem chi tiết</div>
+                                                <div class="mualai">Mua lại</div>
                                             </a>
                                         </c:when>
                                         <c:when test="${orderStatus == 'Delivered'}">
-                                            <a class="mualaine" href="/pdetail?pid=${order.productId}" style="display: inline-block;">
+                                            <a class="mualaine" href="/pdetail?pid=${order.productId}&tab=review" style="display: inline-block;">
                                                 <div class="mualai">Đánh giá</div>
                                             </a>
                                             <a class="mualaine" href="/pdetail?pid=${order.productId}" style="display: inline-block;">
