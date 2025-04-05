@@ -213,7 +213,7 @@ public class HistoryOrderController extends HttpServlet {
                     sortedOrderGroups.sort((o1, o2) -> orderTotalPriceMap.get(o2.getKey()).compareTo(orderTotalPriceMap.get(o1.getKey())));
                     break;
                 case "totalPriceAsc":
-                    sortedOrderGroups.sort((o1, o2) -> orderTotalPriceMap.get(o1.getKey()).compareTo(orderTotalPriceMap.get(o2.getKey())));
+                    sortedOrderGroups.sort((o1, o2) -> orderTotalPriceMap.get(o1.getKey()).compareTo(orderTotalPriceMap.get(o1.getKey())));
                     break;
                 default:
                     sortedOrderGroups.sort((o1, o2) -> orderCreateDateMap.get(o2.getKey()).compareTo(orderCreateDateMap.get(o1.getKey())));
@@ -257,9 +257,10 @@ public class HistoryOrderController extends HttpServlet {
                     out.println("<div class=\"order-header\">");
                     out.println("<span>Đơn hàng #" + orderId + " - Ngày tạo: " + createDateStr + " - Trạng thái: " + orderStatusDisplay + " - Tổng: ₫" + totalPrice + "</span>");
                     if ("Processing".equals(orderStatus) || "Shipping".equals(orderStatus)) {
-                        out.println("<a class=\"mualaine\" href=\"/cancelOrder?orderId=" + orderId + "\" style=\"display: inline-block;\">");
+                        // Thay liên kết <a> bằng div với sự kiện onclick
+                        out.println("<div class=\"mualaine\" onclick=\"confirmCancelOrder(" + orderId + ")\" style=\"display: inline-block; cursor: pointer;\">");
                         out.println("<div class=\"mualai\">Hủy đơn</div>");
-                        out.println("</a>");
+                        out.println("</div>");
                     }
                     out.println("</div>");
 
