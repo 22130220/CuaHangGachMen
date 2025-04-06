@@ -74,7 +74,7 @@
     </div>
   </div>
   <div class="omega">
-    <form action="" class="form">
+    <form action="totp" method="post" class="form">
       <p class="login-title-text f-s-30 f-cl-black f-regular">
         Đăng Ký Xác Thực
         <i class="fa-regular fa-hand fa-rotate-by" style="--fa-rotate-angle: 45deg;"></i>
@@ -83,7 +83,7 @@
         Hãy sử dụng ứng dụng xác thực 2 yếu tố để bảo mật tài khoản của bạn, như Google Authenticator, Microsoft Authenticator hoặc Authy.
       </p>
       <div class="fui-input-label-animation form-input-custom">
-        <input type="text" class="form-input " id="totp_code" placeholder=" " required>
+        <input type="text" name="code" class="form-input " id="totp_code" placeholder=" " required>
         <label for="totp_code" class="form-label">Nhập mã xác thực</label>
       </div>
       <div class="login-button">

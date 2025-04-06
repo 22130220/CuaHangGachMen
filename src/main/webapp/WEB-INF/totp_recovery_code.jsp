@@ -47,22 +47,22 @@
 <div class="login-header">
   <div class="container">
     <div class="child-container">
-      <nav class="fui-navbar-basic fui-navbar">
-        <a href="/" class="logo">
-          <img src="/assets/icons/logo2.svg" alt="Fast UI"/>
-        </a>
-        <ul class="nav-list">
-          <li class="nav-item">
-            <a href="/" title="Trang chủ" class="nav-link">Trang Chủ</a>
-          </li>
-          <li class="nav-item">
-            <a href="/introduction" title="Giới Thiệu" class="nav-link">Giới Thiệu</a>
-          </li>
-          <li class="nav-item">
-            <a href="/AboutController" title="Liên Hệ" class="nav-link">Liên Hệ</a>
-          </li>
-        </ul>
-      </nav>
+<%--      <nav class="fui-navbar-basic fui-navbar">--%>
+<%--        <a href="/" class="logo">--%>
+<%--          <img src="/assets/icons/logo2.svg" alt="Fast UI"/>--%>
+<%--        </a>--%>
+<%--        <ul class="nav-list">--%>
+<%--          <li class="nav-item">--%>
+<%--            <div href="/" title="Trang chủ" class="nav-link">Trang Chủ</div>--%>
+<%--          </li>--%>
+<%--          <li class="nav-item">--%>
+<%--            <a href="/introduction" title="Giới Thiệu" class="nav-link">Giới Thiệu</a>--%>
+<%--          </li>--%>
+<%--          <li class="nav-item">--%>
+<%--            <a href="/AboutController" title="Liên Hệ" class="nav-link">Liên Hệ</a>--%>
+<%--          </li>--%>
+<%--        </ul>--%>
+<%--      </nav>--%>
     </div>
   </div>
 </div>
@@ -93,7 +93,7 @@
       <div class="link-download">
         <button type="button" class="btn" style="background-color: white; color: #2e2100" onclick="downloadTextFile()">Tải file recovery_code.txt</button>
       </div>
-      <input type="hidden" value="recoveryCode" id="recovery_code">
+      <input type="hidden" value="${recoveryCodes}" id="recovery_code">
       <div class="login-button">
         <button disabled class="btn" id="btn-back">Quay lại trang chủ</button>
       </div>

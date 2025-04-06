@@ -26,12 +26,6 @@ public class ListProductController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-        UserPermission u = (UserPermission) session.getAttribute("userRole");
-
-        boolean havePermission = u.havePermission("user.cart", 4);
-        boolean haveResource = u.haveResource("user.cart");
-
         String danhMuc = request.getParameter("danhmuc");
         String thuongHieu = request.getParameter("thuonghieu");
         String chatLieu = request.getParameter("chatlieu");
