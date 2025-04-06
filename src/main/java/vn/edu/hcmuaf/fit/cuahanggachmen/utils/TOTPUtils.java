@@ -52,7 +52,7 @@ public class TOTPUtils {
 
     public static String[] getRecoveryCode() {
         RecoveryCodeGenerator recoveryCodes = new RecoveryCodeGenerator();
-        String[] codes = recoveryCodes.generateCodes(16);
+        String[] codes = recoveryCodes.generateCodes(10);
         return codes;
     }
 }
