@@ -187,9 +187,16 @@
       </a>
 
       <!-- Thanh tìm kiếm -->
-      <div class="search-bar">
-        <input type="text" placeholder="Tìm kiếm sản phẩm..." />
-        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <div class="search-bar" style="position: relative;">
+        <input type="text" id="searchInput"  placeholder="Tìm kiếm sản phẩm..."
+               autocomplete="off"/>
+        <i   id="searchIcon"  class="fa-solid fa-magnifying-glass search-icon"  title="Tìm kiếm"
+             style="cursor: pointer !important;"></i>
+
+        <!-- Hộp lịch sử (history) -->
+        <div id="suggestionsBox" class="suggestions-box"></div>
+
+        <div id="productbox1" class="suggestions-box"></div>
       </div>
 
       <!-- Nếu chưa đăng nhập, chỉ hiển thị nút Đăng Nhập -->
