@@ -66,7 +66,6 @@ public class LoginController extends HttpServlet {
                 user.setSalt(null);
 
                 if (service.userHasSecretKey(user.getId())) {
-                    session.setAttribute("verifyTotp", "true");
                     session.setAttribute("userVerify", user);
 
                     new LoginDeviceBuilder()

@@ -94,7 +94,6 @@ body{
 
 .totp_notice{
     font-size: 1.5rem;
-    color: #000000;
     line-height: 1.4;
 }
 
@@ -109,4 +108,14 @@ body{
     color: white;
     cursor: not-allowed;
     opacity: 0.6;
+}
+
+/*#totp_code {*/
+/*    -moz-appearance: textfield; !* Firefox *!*/
+/*}*/
+
+#totp_code::-webkit-outer-spin-button,
+#totp_code::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Chrome, Safari */
+    margin: 0;
 }

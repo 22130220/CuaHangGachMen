@@ -41,7 +41,7 @@
   <link rel="stylesheet" href="assets/css/input-anim.css">
 
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 </head>
 <body>
 <div class="login-header">
@@ -86,6 +86,9 @@
         <input type="text" name="code" class="form-input " id="totp_code" placeholder=" " required>
         <label for="totp_code" class="form-label">Nhập mã xác thực</label>
       </div>
+      <p class="totp_notice f-s-14 f-cl-red f-regular">
+        <c:out value="${error}" />
+      </p>
       <div class="login-button">
         <button class="btn">Xác thực</button>
       </div>
@@ -96,13 +99,58 @@
   </p>
 </div>
 <script>
-    fetch('/totp-check')
-    .then(response => {
-            return response.json();
-    })
-    .then(data => {
+    // fetch('/totp-check')
+    // .then(response => {
+    //         return response.json();
+    // })
+    // .then(data => {
+    //
+    // })
 
-    })
+    $(document).ready(function() {
+      $('form').validate({
+        rules: {
+          code: {
+            required: true,
+            digits: true,
+            minlength: 6,
+            maxlength: 6
+          }
+        },
+        messages: {
+          code: {
+            required: "Vui lòng nhập mã xác thực",
+            digits: "Mã xác thực chỉ được chứa số",
+            minlength: "Mã xác thực phải có đúng 6 số",
+            maxlength: "Mã xác thực phải có đúng 6 số"
+          }
+        },
+        errorPlacement: function(error, element) {
+          $('.totp_notice.f-cl-red').text(error.text());
+        },
+        success: function(label, element) {
+          $('.totp_notice.f-cl-red').text('');
+        }
+      });
+
+      $('#totp_code').on('blur', function() {
+        $('.totp_notice.f-cl-red').text('');
+      });
+
+      $('#totp_code').on('input', function() {
+        if (this.value.length > 6) {
+          this.value = this.value.slice(0, 6);
+        }
+        this.value = this.value.replace(/[^0-9]/g, '');
+      }).on('keypress', function(e) {
+        var charCode = (e.which) ? e.which : e.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+          e.preventDefault();
+          return false;
+        }
+        return true;
+      });
+    });
 </script>
 </body>
 </html>
