@@ -41,6 +41,7 @@
     <link rel="stylesheet" href="assets/css/input-anim.css">
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 
 </head>
 <body>
@@ -85,6 +86,9 @@
                 <input type="text" name="code" class="form-input " id="totp_code" placeholder=" " required>
                 <label for="totp_code" class="form-label">Nhập mã khôi phục</label>
             </div>
+            <p class="totp_notice f-s-14 f-cl-red f-regular" id="error_message">
+                <c:out value="${error}" />
+            </p>
             <div class="login-button">
                 <button class="btn">Khôi phục</button>
             </div>
@@ -99,6 +103,55 @@
     //     .then(data => {
     //
     //     })
+    $(document).ready(function() {
+        // Validate form
+        $('form').validate({
+            rules: {
+                code: {
+                    required: true,
+                    pattern: /^[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}$/
+                }
+            },
+            messages: {
+                code: {
+                    required: "Vui lòng nhập mã khôi phục",
+                    pattern: "Mã khôi phục phải có định dạng như hv61-636a-bp3w-kkcj"
+                }
+            },
+            errorPlacement: function(error, element) {
+                $('#error_message').text(error.text());
+            },
+            success: function(label, element) {
+                $('#error_message').text('');
+            }
+        });
+
+        $('#totp_code').on('blur', function() {
+            $('#error_message').text('');
+        });
+
+        $('#totp_code').on('input', function() {
+            let value = this.value.replace(/[^a-z0-9-]/g, ''); // Chỉ giữ chữ cái thường và số
+            value = value.toLowerCase(); // Chuyển về chữ thường
+
+            // Xóa tất cả dấu gạch ngang hiện có
+            value = value.replace(/-/g, '');
+
+            let formatted = '';
+            for (let i = 0; i < value.length; i++) {
+                formatted += value[i];
+                if ((i + 1) % 4 === 0 && i < 15) { // i < 15 để không thêm dấu gạch ngang sau ký tự cuối
+                    formatted += '-';
+                }
+            }
+
+            this.value = formatted;
+
+            if (this.value.length > 19) {
+                this.value = this.value.slice(0, 19);
+            }
+        });
+    });
 </script>
 </body>
 </html>

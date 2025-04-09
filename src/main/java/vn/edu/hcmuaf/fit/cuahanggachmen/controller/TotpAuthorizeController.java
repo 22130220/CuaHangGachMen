@@ -44,8 +44,6 @@ public class TotpAuthorizeController extends HttpServlet {
         if (TOTPUtils.verifyCode(secretKey, verifyCode)) {
             session.setAttribute("auth", user);
             session.removeAttribute("userVerify");
-            session.removeAttribute("verifyTotp");
-            service.userResetTotp(user.getId());
             response.sendRedirect(request.getContextPath() + "/");
             return;
         } else {

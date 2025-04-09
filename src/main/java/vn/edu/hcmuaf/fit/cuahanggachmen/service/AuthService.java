@@ -46,10 +46,10 @@ public class AuthService {
         boolean result = false;
 
         String recoveryCode = usDao.getRecoryCode(uId);
-        if(recoveryCode != null && !recoveryCode.isEmpty()) {
-            handle.close();
-            return true;
-        }
+//        if(recoveryCode != null && !recoveryCode.isEmpty()) {
+//            handle.close();
+//            return true;
+//        }
         String[] recoveryCodes = recoveryCode.split("\\s*,\\s*");
 
         for (String code : recoveryCodes) {

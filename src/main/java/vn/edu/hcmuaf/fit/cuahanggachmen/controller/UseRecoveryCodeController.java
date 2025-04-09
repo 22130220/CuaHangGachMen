@@ -13,8 +13,8 @@ public class UseRecoveryCodeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("auth");
-        if (user != null) {
+        User user = (User) session.getAttribute("userVerify");
+        if (user == null) {
             response.sendRedirect(request.getContextPath() + "/");
             return;
         }
