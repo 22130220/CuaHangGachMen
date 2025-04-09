@@ -524,3 +524,113 @@ a.green {
 }
 
 
+
+
+
+/* Điều chỉnh DataTable */
+#rolesTable_wrapper .dataTables_filter {
+    float: left;
+    text-align: left;
+}
+
+#rolesTable_wrapper .dataTables_filter input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+}
+
+#rolesTable_wrapper .dataTables_length,
+#rolesTable_wrapper .dataTables_info,
+#rolesTable_wrapper .dataTables_paginate {
+    display: none; /* Ẩn các phần không cần thiết */
+}
+
+#rolesTable td, #rolesTable th {
+    text-align: left;
+    padding: 0.8rem;
+}
+
+#rolesTable tbody tr:hover {
+    background-color: #e6f0fa;
+    cursor: pointer;
+}
+
+#rolesTable tbody tr.selected {
+    background-color: #d1e7ff;
+}
+
+/* Định dạng cho permission groups */
+.permission-group {
+    margin-bottom: 1rem;
+}
+
+.permission-group h4 {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.permission-group .permission-items {
+    display: none;
+    padding-left: 1.5rem;
+}
+
+.permission-group.active .permission-items {
+    display: block;
+}
+
+.permission-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 0;
+}
+
+.permission-item span:first-child {
+    font-weight: normal;
+}
+
+.permission-item span:last-child {
+    color: #007bff;
+}
+
+/* Điều chỉnh nút Create Role */
+.bg_blue {
+    background-color: #007bff !important;
+}
+
+/* Tổng số roles */
+.total-roles {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    color: #007bff;
+}
+
+/* Định dạng nút Modify và Delete giống trang Quản lý danh mục */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-buttons .button {
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+.action-buttons .bg_orange {
+    background-color: #f0ad4e !important;
+}
+
+.action-buttons .bg_red {
+    background-color: #d9534f !important;
+}
+
+.sos{
+    margin-right: 10px;
+}
+
