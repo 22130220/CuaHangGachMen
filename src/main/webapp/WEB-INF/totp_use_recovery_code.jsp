@@ -69,13 +69,11 @@
 <div class="login-form">
     <div class="alpha">
         <div id="qr" class="login-icon">
-<%--            <img src="${sessionScope.auth.avatar}" alt="Fast UI"/>--%>
-<%--                  <i class="fa-solid fa-user-tie log-i"></i>--%>
                 <i class="fa-solid fa-hammer log-i"></i>
         </div>
     </div>
     <div class="omega">
-        <form action="totp" method="post" class="form">
+        <form action="recovery_account" method="post" class="form">
             <p class="login-title-text f-s-30 f-cl-black f-regular">
                 Sử dụng mã khôi phục
                 <i class="fa-regular fa-hand fa-rotate-by" style="--fa-rotate-angle: 45deg;"></i>

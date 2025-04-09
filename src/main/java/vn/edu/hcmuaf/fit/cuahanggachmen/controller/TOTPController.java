@@ -22,7 +22,7 @@ public class TOTPController extends HttpServlet {
             Handle handle = DBConect.get().open();
             String secretKey = new UserDao(handle).getSecretKey(u.getId());
             String dataUri = (String) session.getAttribute("dataUri");
-            if(secretKey != null) {
+            if(secretKey != null && !secretKey.isEmpty()) {
                 response.sendRedirect(request.getContextPath() + "/");
                 return;
             }

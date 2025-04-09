@@ -64,6 +64,22 @@ public class LoginController extends HttpServlet {
             if(user!=null){
                 user.setPassword(null);
                 user.setSalt(null);
+
+                if (service.userHasSecretKey(user.getId())) {
+                    session.setAttribute("verifyTotp", "true");
+                    session.setAttribute("userVerify", user);
+
+                    new LoginDeviceBuilder()
+                            .loginLevel(LoginLevel.VERIFYING_TOTP)
+                            .setHeaderRequest(request, response)
+                            .location("LoginController")
+                            .message("Xác thực Totp")
+                            .build(handle);
+
+                    response.sendRedirect("/totp_auth");
+                    handle.close();
+                    return;
+                }
                 session.setAttribute("auth", user);
 
                 new LoginDeviceBuilder()
