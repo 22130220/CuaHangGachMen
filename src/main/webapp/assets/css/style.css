@@ -246,10 +246,10 @@ a {
 
 .search-icon {
   position: absolute;
-  left: 215px; /* Căn chỉnh icon cách mép trái */
+  left: 145px; /* Căn chỉnh icon cách mép trái */
   top: 50%;
   transform: translateY(-50%);
-
+  cursor: pointer;
   font-size: 1.6rem;
   pointer-events: none; /* Đảm bảo icon không ảnh hưởng đến việc nhập */
 }
