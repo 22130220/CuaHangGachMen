@@ -104,6 +104,90 @@
         </p>
     </a>
 
+    <!-- Accounts with collapsible sub-items -->
+    <div class="sidebar-button has-subitems">
+        <div class="sidebar-icon">
+            <i class="fa-solid fa-users"></i>
+        </div>
+        <p class="text">
+            Accounts
+        </p>
+        <div class="toggle-icon">
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+    </div>
+    <div class="subitems" style="display: none;">
+        <a href="/admin/manage-user" class="sidebar-button subitem">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <p class="text">
+                User
+            </p>
+        </a>
+        <a href="/admin/role" class="sidebar-button subitem">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-user-shield"></i>
+            </div>
+            <p class="text">
+                Role
+            </p>
+        </a>
+        <a href="/admin/resource-group" class="sidebar-button subitem">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-users-rectangle"></i>
+            </div>
+            <p class="text">
+                Resource Group
+            </p>
+        </a>
+        <a href="/admin/identity" class="sidebar-button subitem">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-id-card"></i>
+            </div>
+            <p class="text">
+                Identity
+            </p>
+        </a>
+    </div>
+
 </div>
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const parentItem = document.querySelector('.sidebar-button.has-subitems');
+        const subItems = document.querySelector('.subitems');
+        const toggleIcon = parentItem.querySelector('.toggle-icon');
+
+        const isMenuOpen = localStorage.getItem('accountsMenuOpen') === 'true';
+        if (isMenuOpen) {
+            subItems.style.display = 'block';
+            toggleIcon.classList.add('active');
+        } else {
+            subItems.style.display = 'none';
+            toggleIcon.classList.remove('active');
+        }
+
+        parentItem.addEventListener('click', function (event) {
+            if (subItems.style.display === 'none' || subItems.style.display === '') {
+                subItems.style.display = 'block';
+                toggleIcon.classList.add('active');
+                localStorage.setItem('accountsMenuOpen', 'true'); // Lưu trạng thái mở
+            } else {
+                subItems.style.display = 'none';
+                toggleIcon.classList.remove('active');
+                localStorage.setItem('accountsMenuOpen', 'false'); // Lưu trạng thái đóng
+            }
+        });
+
+        const subItemLinks = document.querySelectorAll('.subitems .sidebar-button.subitem');
+        subItemLinks.forEach(function (subItem) {
+            subItem.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        });
+    });
+</script>
+
 </html>
