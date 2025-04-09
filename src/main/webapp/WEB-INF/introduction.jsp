@@ -26,6 +26,7 @@
             href="../assets/icons/logo2_no_text.svg"
 
     />
+    <link rel="stylesheet" href="/assets/css/search.css"/>
 </head>
 <body>
 <jsp:include page="../view_shared/header_footer/header.jsp"/>
@@ -70,5 +71,6 @@
 
 
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
+<script src="../assets/js/search.js"></script>
 </body>
 </html>

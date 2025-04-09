@@ -58,6 +58,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="stylesheet" href="/assets/css/search.css"/>
 </head>
 <body>
 
@@ -394,7 +395,7 @@
 
 <script src="/assets/js/scrollTop.js"></script>
 <script src="/assets/js/filterItem.js"></script>
-
+<script src="../assets/js/search.js"></script>
 
 <script>
     // Sử dụng Notyf
