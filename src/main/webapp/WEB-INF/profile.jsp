@@ -49,6 +49,7 @@
             margin-top: -26px;
         }
     </style>
+    <link rel="stylesheet" href="/assets/css/search.css"/>
 </head>
 <body>
 
@@ -164,7 +165,7 @@
 
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
-
+<script src="../assets/js/search.js"></script>
 <script>
     $(document).ready(function() {
         // Hàm kiểm tra email có đuôi @gmail.com, @yahoo.com hoặc @outlook.com

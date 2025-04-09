@@ -66,6 +66,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="/assets/css/search.css"/>
 </head>
 <body>
 <div id="menuContainer">
@@ -410,6 +411,7 @@
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="../assets/js/search.js"></script>
 <script>
     $(document).ready(function() {
         // Lắng nghe sự kiện submit của form

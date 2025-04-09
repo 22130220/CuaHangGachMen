@@ -50,6 +50,7 @@
             cursor: not-allowed;
         }
     </style>
+    <link rel="stylesheet" href="/assets/css/search.css"/>
 </head>
 <body>
 <jsp:include page="/view_shared/header_footer/header.jsp" />
@@ -155,6 +156,7 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="../assets/js/scrollTop.js"></script>
+<script src="../assets/js/search.js"></script>
 <script>
     $(document).ready(function () {
         // Thêm phương thức kiểm tra email tùy chỉnh

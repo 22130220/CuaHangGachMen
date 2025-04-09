@@ -41,6 +41,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     ></script>
+    <link rel="stylesheet" href="/assets/css/search.css"/>
 </head>
 <body>
 
@@ -494,4 +495,5 @@
     });
 </script>
 </body>
+<script src="../assets/js/search.js"></script>
 </html>
