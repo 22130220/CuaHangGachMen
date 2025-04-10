@@ -38,117 +38,128 @@
 
 </div>
 <div class="sidebar grid-item sidebar-grid">
-    <a href="/admin" class="sidebar-button .has-icon">
-        <div class="sidebar-icon">
-            <i class="fa-solid fa-house-user"></i>
-        </div>
-        <p class="text">
-            Dashboard
-        </p>
-    </a>
-    <a href="/admin/manage-product" class="sidebar-button">
-        <div class="sidebar-icon">
-            <i class="fa-solid fa-table-list"></i>
-        </div>
-        <p class="text">
-            Quản lý sản phẩm
-        </p>
-    </a>
-    <a href="/admin/productcrud" class="sidebar-button">
-        <div class="sidebar-icon">
-            <i class="fa-regular fa-square-plus"></i>
-        </div>
-        <p class="text">
-            Thêm sản phẩm
-        </p>
-    </a>
-    <a href="/admin/manage-category" class="sidebar-button">
-        <div class="sidebar-icon">
-            <i class="fa-solid fa-layer-group"></i>
-        </div>
-        <p class="text">
-            Quản lý danh mục
-        </p>
-    </a>
-    <a href="/admin/element" class="sidebar-button">
-        <div class="sidebar-icon">
-            <i class="fa-solid fa-circle-info"></i>
-        </div>
-        <p class="text">
-            Quản lý thành phần
-        </p>
-    </a>
-    <a href="/admin/manage-order" class="sidebar-button">
-        <div class="sidebar-icon">
-            <i class="fa-solid fa-arrow-down-up-across-line"></i>
-        </div>
-        <p class="text">
-            Quản lý đơn hàng
-        </p>
-    </a>
-    <a href="/admin/manage-user" class="item5 sidebar-button">
-        <div class="sidebar-icon">
-            <i class="fa-solid fa-user-tag"></i>
-        </div>
-        <p class="text">
-            Quản lý khách hàng
-        </p>
-    </a>
+    <div class="overflow-content">
+        <a href="/admin" class="sidebar-button .has-icon">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-house-user"></i>
+            </div>
+            <p class="text">
+                Dashboard
+            </p>
+        </a>
+        <a href="/admin/manage-product" class="sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-table-list"></i>
+            </div>
+            <p class="text">
+                Quản lý sản phẩm
+            </p>
+        </a>
+        <a href="/admin/productcrud" class="sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-regular fa-square-plus"></i>
+            </div>
+            <p class="text">
+                Thêm sản phẩm
+            </p>
+        </a>
+        <a href="/admin/manage-category" class="sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <p class="text">
+                Quản lý danh mục
+            </p>
+        </a>
+        <a href="/admin/element" class="sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <p class="text">
+                Quản lý thành phần
+            </p>
+        </a>
+        <a href="/admin/manage-order" class="sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-arrow-down-up-across-line"></i>
+            </div>
+            <p class="text">
+                Quản lý đơn hàng
+            </p>
+        </a>
+        <a href="/admin/manage-user" class="item5 sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-user-tag"></i>
+            </div>
+            <p class="text">
+                Quản lý khách hàng
+            </p>
+        </a>
 
-    <a href="/admin/manage-voucher" class="item5 sidebar-button">
-        <div class="sidebar-icon">
-            <i class="fa-solid fa-user-tag"></i>
-        </div>
-        <p class="text">
-            Quản lý Voucher
-        </p>
-    </a>
+        <a href="/admin/manage-voucher" class="item5 sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-user-tag"></i>
+            </div>
+            <p class="text">
+                Quản lý Voucher
+            </p>
+        </a>
 
-    <!-- Accounts with collapsible sub-items -->
-    <div class="sidebar-button has-subitems">
-        <div class="sidebar-icon">
-            <i class="fa-solid fa-users"></i>
+        <!-- Accounts with collapsible sub-items -->
+        <div class="sidebar-button has-subitems">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-users"></i>
+            </div>
+            <p class="text">
+                Accounts
+            </p>
+            <div class="toggle-icon">
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
         </div>
-        <p class="text">
-            Accounts
-        </p>
-        <div class="toggle-icon">
-            <i class="fa-solid fa-chevron-down"></i>
-        </div>
+        <div class="subitems" style="display: none;">
+            <a href="/admin/manage-user" class="sub-sidebar-button subitem">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <p class="text">
+                    User
+                </p>
+            </a>
+            <a href="/admin/role" class="sub-sidebar-button subitem">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <p class="text">
+                    Role
+                </p>
+            </a>
+            <a href="/admin/resource-group" class="sub-sidebar-button subitem">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-users-rectangle"></i>
+                </div>
+                <p class="text">
+                    Resource Group
+                </p>
+            </a>
+            <a href="/admin/identity" class="sub-sidebar-button subitem">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+                <p class="text">
+                    Identity
+                </p>
+            </a>
+
+            <a href="/admin/privacy-role" class="sub-sidebar-button subitem">
+                <div class="sidebar-icon">
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+                <p class="text">
+                   Quản lý quyền và hạng mục
+                </p>
+            </a>
     </div>
-    <div class="subitems" style="display: none;">
-        <a href="/admin/manage-user" class="sidebar-button subitem">
-            <div class="sidebar-icon">
-                <i class="fa-solid fa-user"></i>
-            </div>
-            <p class="text">
-                User
-            </p>
-        </a>
-        <a href="/admin/role" class="sidebar-button subitem">
-            <div class="sidebar-icon">
-                <i class="fa-solid fa-user-shield"></i>
-            </div>
-            <p class="text">
-                Role
-            </p>
-        </a>
-        <a href="/admin/resource-group" class="sidebar-button subitem">
-            <div class="sidebar-icon">
-                <i class="fa-solid fa-users-rectangle"></i>
-            </div>
-            <p class="text">
-                Resource Group
-            </p>
-        </a>
-        <a href="/admin/identity" class="sidebar-button subitem">
-            <div class="sidebar-icon">
-                <i class="fa-solid fa-id-card"></i>
-            </div>
-            <p class="text">
-                Identity
-            </p>
-        </a>
     </div>
 
 </div>
