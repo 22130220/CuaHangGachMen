@@ -90,7 +90,7 @@
 
       <!-- Bảng danh sách roles và permissions -->
       <div class="table _4c _6r">
-        <div class="flex-row gap-20">
+        <div class="main-grid flex-row gap-20">
           <!-- Cột trái: Danh sách roles -->
           <div class="_2c">
             <div class="card">
