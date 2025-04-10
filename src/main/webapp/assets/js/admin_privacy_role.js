@@ -20,7 +20,6 @@ const buttonRoleConfig = [
             $('#modify_role_form')[0].reset();
             $('#role_id_update').val(data.id);
             $('#role_name_update').val(data.name);
-            $('#role_description_update').val(data.description);
             MicroModal.show('update_role_modal');
         },
         enabled: false
@@ -84,11 +83,11 @@ const buttonResourceConfig = [
         className: 'green',
         action: function (e, dt, node, config) {
             let data = dt.row({ selected: true }).data();
-            id = data.Id;
-            url = colorUrl;
-            action = updateEle;
-            tableReload = "color";
-            openModal('update_modal', 'update', data.Name);
+            $('#modify_resource_form')[0].reset();
+            $('#resource_id_update').val(data.id);
+            $('#resource_name_update').val(data.name);
+            $('#resource_description_update').val(data.description);
+            MicroModal.show('update_resource_modal');
         },
         enabled: false
     },
@@ -96,8 +95,50 @@ const buttonResourceConfig = [
         text: 'Xoá',
         className: 'red',
         action: function (e, dt, node, config) {
-            // console.log('Rows: ' + dt.rows({ selected: true }).count());
             var data = dt.rows({ selected: true }).data();
+            let deleteId = [];
+            data.each(function(rowData, index) {
+                deleteId.push(rowData.id);
+            });
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title: `Bạn có chắc muốn xoá ${deleteId.length} mục này ?`,
+                text: "Hành động này sẽ không thể quay lại!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Có",
+                cancelButtonText: "Không",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let formData = new FormData();
+                    formData.append('id', deleteId);
+                    sendAjaxRequest({
+                        url: '/admin/get-resource',
+                        data: formData,
+                        successMessage: null,
+                        errorMessage: null,
+                        tableToReload: resourceTable,
+                        modalToClose: null,
+                        type: 'DELETE',
+                        onSuccess: function (resp) {
+                            if (resp.success) {
+                                notyf.success(resp.message);
+                            }
+                            else {
+                                notyf.error(resp.message);
+                            }
+                        }
+                    });
+                }
+            });
         },
         enabled: false
     }
@@ -151,6 +192,12 @@ $('#role_add').on('click', function () {
     MicroModal.show('create_role_modal');
 });
 
+
+$('#res_add').on('click', function () {
+    $('#add_resource_form')[0].reset();
+    MicroModal.show('create_resource_modal');
+});
+
 $('#add_role_btn').on('click', function () {
     let formData = new FormData($('#add_role_form')[0]);
     sendAjaxRequest({
@@ -172,6 +219,27 @@ $('#add_role_btn').on('click', function () {
     });
 });
 
+$('#add_resource_btn').on('click', function () {
+    let formData = new FormData($('#add_resource_form')[0]);
+    sendAjaxRequest({
+        url: '/admin/get-resource',
+        data: formData,
+        successMessage: null,
+        errorMessage: null,
+        tableToReload: resourceTable,
+        modalToClose: 'create_resource_modal',
+        type: 'POST',
+        onSuccess: function (resp) {
+            if (resp.success) {
+                notyf.success(resp.message)
+            }
+            else {
+                notyf.error(resp.message)
+            }
+        }
+    });
+});
+
 $('#update_role_btn').on('click', function () {
     let formData = new FormData($('#modify_role_form')[0]);
     sendAjaxRequest({
@@ -181,6 +249,27 @@ $('#update_role_btn').on('click', function () {
         errorMessage: null,
         tableToReload: roleTable,
         modalToClose: 'update_role_modal',
+        type: 'PUT',
+        onSuccess: function (resp) {
+            if (resp.success) {
+                notyf.success(resp.message)
+            }
+            else {
+                notyf.error(resp.message)
+            }
+        }
+    });
+});
+
+$('#update_resource_btn').on('click', function () {
+    let formData = new FormData($('#modify_resource_form')[0]);
+    sendAjaxRequest({
+        url: '/admin/get-resource',
+        data: formData,
+        successMessage: null,
+        errorMessage: null,
+        tableToReload: resourceTable,
+        modalToClose: 'update_resource_modal',
         type: 'PUT',
         onSuccess: function (resp) {
             if (resp.success) {

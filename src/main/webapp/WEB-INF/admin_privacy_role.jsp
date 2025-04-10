@@ -76,6 +76,8 @@
 
     <!-- CKeditor 4 -->
     <script src="/assets/ckeditor/ckeditor.js"></script>
+
+    <!-- Sweet alert 2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -140,45 +142,8 @@
         </div>
     </div>
 
-    <!-- Modal: Create Role -->
-    <div class="modal micromodal-slide" id="create_role_modal" aria-hidden="true">
-        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
-                <header class="modal__header">
-                    <h2 class="modal__title" id="create_role_title">Thêm mới dữ liệu</h2>
-                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                </header>
-                <div class="modal-content-content">
-                    <div class="modal__content">
-                        <form id="add_role_form" class="main-grid">
-                            <!-- Name Field -->
-                            <div class="form-group _4c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="role_name" class="f-bold f-s-14 f-cl-black">Tên</label>
-                                    <input type="text" name="role_name" id="role_name" class="input input-bordered f-s-14" placeholder="Nhập tên" required />
-                                </div>
-                            </div>
-
-                            <!-- Description Field -->
-                            <div class="form-group _4c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="role_description" class="f-bold f-s-14 f-cl-black">Mô tả</label>
-                                    <input type="text" name="role_description" id="role_description" class="input input-bordered f-s-14" placeholder="Nhập mô tả" />
-                                </div>
-                            </div>
-
-                            <!-- Submit Button -->
-                            <div class="_1c">
-                                <button class="button bg_green f-cl-white" type="button" id="add_role_btn">Thêm</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal micromodal-slide" id="update_role_modal" aria-hidden="true">
+    <!-- Modal: Create resource -->
+    <div class="modal micromodal-slide" id="create_resource_modal" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
@@ -187,26 +152,18 @@
                 </header>
                 <div class="modal-content-content">
                     <div class="modal__content">
-                        <form id="modify_role_form" class="main-grid">
+                        <form id="add_resource_form" class="main-grid">
                             <!-- Name Field -->
                             <div class="form-group _4c">
                                 <div class="fui-basic-input flex-column gap-6">
-                                    <label for="role_name_update" class="f-bold f-s-14 f-cl-black">Tên</label>
-                                    <input type="text" name="role_name_update" id="role_name_update" class="input input-bordered f-s-14" placeholder="Nhập tên" required />
+                                    <label for="resource_name" class="f-bold f-s-14 f-cl-black">Tên</label>
+                                    <input type="text" name="resource_name" id="resource_name" class="input input-bordered f-s-14" placeholder="Nhập tên" required />
                                 </div>
                             </div>
 
-                            <!-- Description Field -->
-                            <div class="form-group _4c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="role_description_update" class="f-bold f-s-14 f-cl-black">Mô tả</label>
-                                    <input type="text" name="role_description_update" id="role_description_update" class="input input-bordered f-s-14" placeholder="Nhập mô tả" />
-                                </div>
-                            </div>
-                            <input type="hidden" name="role_id_update" id="role_id_update" />
                             <!-- Submit Button -->
                             <div class="_1c">
-                                <button class="button bg_green f-cl-white" type="button" id="update_role_btn">Thêm</button>
+                                <button class="button bg_green f-cl-white" type="button" id="add_resource_btn">Thêm</button>
                             </div>
                         </form>
                     </div>
@@ -214,6 +171,113 @@
             </div>
         </div>
     </div>
+
+    <div class="modal micromodal-slide" id="update_resource_modal" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title">Thêm mới dữ liệu</h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div class="modal-content-content">
+                    <div class="modal__content">
+                        <form id="modify_resource_form" class="main-grid">
+                            <!-- Name Field -->
+                            <div class="form-group _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="resource_name_update" class="f-bold f-s-14 f-cl-black">Tên</label>
+                                    <input type="text" name="resource_name_update" id="resource_name_update" class="input input-bordered f-s-14" placeholder="Nhập tên" required />
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="resource_id_update" id="resource_id_update" />
+                            <!-- Submit Button -->
+                            <div class="_1c">
+                                <button class="button bg_green f-cl-white" type="button" id="update_resource_btn">Thêm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <!-- Modal: Create Role -->
+        <div class="modal micromodal-slide" id="create_role_modal" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title" id="create_role_title">Thêm mới dữ liệu</h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
+                            <form id="add_role_form" class="main-grid">
+                                <!-- Name Field -->
+                                <div class="form-group _4c">
+                                    <div class="fui-basic-input flex-column gap-6">
+                                        <label for="role_name" class="f-bold f-s-14 f-cl-black">Tên</label>
+                                        <input type="text" name="role_name" id="role_name" class="input input-bordered f-s-14" placeholder="Nhập tên" required />
+                                    </div>
+                                </div>
+
+                                <!-- Description Field -->
+                                <div class="form-group _4c">
+                                    <div class="fui-basic-input flex-column gap-6">
+                                        <label for="role_description" class="f-bold f-s-14 f-cl-black">Mô tả</label>
+                                        <input type="text" name="role_description" id="role_description" class="input input-bordered f-s-14" placeholder="Nhập mô tả" />
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="_1c">
+                                    <button class="button bg_green f-cl-white" type="button" id="add_role_btn">Thêm</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal micromodal-slide" id="update_role_modal" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">Thêm mới dữ liệu</h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
+                            <form id="modify_role_form" class="main-grid">
+                                <!-- Name Field -->
+                                <div class="form-group _4c">
+                                    <div class="fui-basic-input flex-column gap-6">
+                                        <label for="role_name_update" class="f-bold f-s-14 f-cl-black">Tên</label>
+                                        <input type="text" name="role_name_update" id="role_name_update" class="input input-bordered f-s-14" placeholder="Nhập tên" required />
+                                    </div>
+                                </div>
+
+                                <!-- Description Field -->
+                                <div class="form-group _4c">
+                                    <div class="fui-basic-input flex-column gap-6">
+                                        <label for="role_description_update" class="f-bold f-s-14 f-cl-black">Mô tả</label>
+                                        <input type="text" name="role_description_update" id="role_description_update" class="input input-bordered f-s-14" placeholder="Nhập mô tả" />
+                                    </div>
+                                </div>
+                                <input type="hidden" name="role_id_update" id="role_id_update" />
+                                <!-- Submit Button -->
+                                <div class="_1c">
+                                    <button class="button bg_green f-cl-white" type="button" id="update_role_btn">Thêm</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="/assets/js/script.js"></script>

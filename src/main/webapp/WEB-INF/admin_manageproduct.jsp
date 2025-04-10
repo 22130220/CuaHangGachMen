@@ -84,6 +84,8 @@
     <!-- CKeditor 4 -->
     <script src="/assets/ckeditor/ckeditor.js"></script>
 
+    <!-- Sweet alert 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <style>

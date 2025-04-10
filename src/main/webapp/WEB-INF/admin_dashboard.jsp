@@ -38,6 +38,10 @@
     <link rel="stylesheet" href="/assets/css/InputViaIcon.css">
     <link rel="stylesheet" href="/assets/css/admin-dashboard.css">
     <link rel="stylesheet" href="/assets/css/notification.css">
+
+
+    <!-- Sweet alert 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>

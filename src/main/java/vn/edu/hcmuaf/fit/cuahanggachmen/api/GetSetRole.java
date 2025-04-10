@@ -52,6 +52,7 @@ public class GetSetRole extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         out.print(ob);
+        handle.close();
 
     }
 
