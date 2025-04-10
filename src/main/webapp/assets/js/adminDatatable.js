@@ -115,6 +115,13 @@ function openModalWithData(modalId, inputValues = {}, onClose) {
 }
 
 function sendAjaxRequest(config) {
+    Swal.fire({
+        title: 'Vui lòng chờ...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
      const { url, data, successMessage, errorMessage, tableToReload, modalToClose, onSuccess, type } = config;
 
     $.ajax({
@@ -125,18 +132,20 @@ function sendAjaxRequest(config) {
         data: data,
         success: function (response) {
             if (response.success) {
-                notyf.success(successMessage);
+                if(successMessage) notyf.success(successMessage);
                 if (modalToClose) MicroModal.close(modalToClose);
                 if (tableToReload) tableToReload.ajax.reload();
                 if (onSuccess) onSuccess(response);
                 if (tableToReload) tableToReload.rows().deselect();
             } else {
-                notyf.error(errorMessage);
+                if(errorMessage) notyf.error(errorMessage);
             }
+            Swal.close();
         },
         error: function () {
             if (tableToReload) tableToReload.rows().deselect();
-            notyf.error(errorMessage);
+            Swal.close();
+            notyf.error("Có lỗi xảy ra trong quá trình xử lý yêu cầu");
         }
     });
 }

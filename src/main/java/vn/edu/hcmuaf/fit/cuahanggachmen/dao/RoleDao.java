@@ -53,22 +53,22 @@ public class RoleDao extends BaseDao{
     /**
      * Cập nhật Role
      */
-    public boolean updateRole(int id, String newName, String newDescription) {
+    public int updateRole(int id, String newName, String newDescription) {
         int rowsAffected = handle.createUpdate("UPDATE role SET name = :name, description = :description WHERE id = :id")
                         .bind("name", newName)
                         .bind("description", newDescription)
                         .bind("id", id)
                         .execute();
-        return rowsAffected > 0;
+        return rowsAffected;
     }
 
     /**
      * Xóa Role theo ID
      */
-    public boolean deleteRole(int id) {
+    public int deleteRole(int id) {
         int rowsAffected = handle.createUpdate("DELETE FROM role WHERE id = :id")
                         .bind("id", id)
                         .execute();
-        return rowsAffected > 0;
+        return rowsAffected;
     }
 }
