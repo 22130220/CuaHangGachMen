@@ -670,4 +670,120 @@ a.green {
 
 
 
+/* Điều chỉnh layout hai cột */
+.flex-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
 
+._2c {
+    flex: 1;
+    min-width: 300px;
+}
+
+._2c:last-child {
+    flex-grow: 1;
+    min-width: 0;
+}
+
+/* Điều chỉnh DataTable */
+#resourceGroupsTable_wrapper .dataTables_filter {
+    float: left;
+    text-align: left;
+}
+
+#resourceGroupsTable_wrapper .dataTables_filter input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+}
+
+#resourceGroupsTable_wrapper .dataTables_length,
+#resourceGroupsTable_wrapper .dataTables_info,
+#resourceGroupsTable_wrapper .dataTables_paginate {
+    display: none;
+}
+
+#resourceGroupsTable td, #resourceGroupsTable th {
+    text-align: left;
+    padding: 0.8rem;
+}
+
+#resourceGroupsTable tbody tr:hover {
+    background-color: #e6f0fa;
+    cursor: pointer;
+}
+
+#resourceGroupsTable tbody tr.selected {
+    background-color: #d1e7ff;
+}
+
+/* Định dạng cho chi tiết resource group */
+.resource-details {
+    margin-bottom: 1rem;
+}
+
+.resource-details h4 {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.resource-details .detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.3rem 0;
+}
+
+.resource-details .detail-item span:first-child {
+    font-weight: normal;
+}
+
+.resource-details .detail-item span:last-child {
+    color: #007bff;
+}
+
+/* Định dạng nút Create Resource Group */
+.bg_blue {
+    background-color: #007bff !important;
+}
+
+/* Tổng số resource groups */
+.total-resource-groups {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    color: #007bff;
+}
+
+/* Định dạng nút Modify và Delete */
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.action-buttons .button {
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+}
+
+/* Định dạng tiêu đề và nút trên cột phải */
+.title-icon {
+    border-bottom: 0.1rem solid #e4e4e4;
+    padding-bottom: 0.8rem;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+/* Định dạng chi tiết resource group */
+.resource-details {
+    padding: 1rem;
+}
+
+.resource-details .detail-item {
+    border-bottom: 1px solid #e4e4e4;
+    padding: 0.5rem 0;
+}
