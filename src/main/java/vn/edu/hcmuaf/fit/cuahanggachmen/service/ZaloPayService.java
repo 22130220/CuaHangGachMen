@@ -26,7 +26,7 @@ public class ZaloPayService {
         return fmt.format(cal.getTimeInMillis());
     }
 
-    public String createOrder(Map<String, Object> orderRequest,int tien) {
+    public String createOrder(Map<String, Object> orderRequest,String tien) {
         Random rand = new Random();
         int randomId = rand.nextInt(1000000);
         JSONObject embedData = new JSONObject();
