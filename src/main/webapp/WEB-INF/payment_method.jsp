@@ -60,6 +60,15 @@
                     <div>Thanh Toán qua MOMO</div>
                 </div>
             </form>
+            <form action="/ZaloPayController" method="post" id="zaloPayform">
+                <div class="payment-option" onclick="document.getElementById('zaloPayform').submit()">
+                    <input type="hidden" name="total_zaloPay" id="totaltien2" value="${sessionScope.finalTotal}">
+                    <div>
+                        <img src="https://vcci-hcm.org.vn/wp-content/uploads/2022/12/1.png" alt="MOMO">
+                    </div>
+                    <div>Thanh Toán qua MOMO</div>
+                </div>
+            </form>
 
             <div class="bank-info" id="bank-info" style="display: none;">
                 <p>Quý khách vui lòng chuyển khoản trước số tiền cần thanh toán, sau đó chúng tôi tiến hành giao hàng theo thỏa thuận hoặc hợp đồng với Quý khách.</p>
