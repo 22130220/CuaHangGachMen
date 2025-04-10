@@ -49,21 +49,21 @@ public class ResourceDao extends BaseDao {
     /**
      * Cập nhật Resource
      */
-    public boolean updateResource(int id, String newName) {
+    public int updateResource(int id, String newName) {
         int rowsAffected = handle.createUpdate("UPDATE resource SET name = :name WHERE id = :id")
                 .bind("name", newName)
                 .bind("id", id)
                 .execute();
-        return rowsAffected > 0;
+        return rowsAffected;
     }
 
     /**
      * Xóa Resource theo ID
      */
-    public boolean deleteResource(int id) {
-        int rowsAffected = handle.createUpdate("DELETE FROM Resource WHERE id = :id")
+    public int deleteResource(int id) {
+        int rowsAffected = handle.createUpdate("DELETE FROM resource WHERE id = :id")
                 .bind("id", id)
                 .execute();
-        return rowsAffected > 0;
+        return rowsAffected;
     }
 }
