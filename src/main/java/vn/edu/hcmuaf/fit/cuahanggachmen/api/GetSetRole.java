@@ -1,111 +1,102 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ResourceDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.RoleDao;
-import vn.edu.hcmuaf.fit.cuahanggachmen.dao.RoleResourcePermissionDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Resource;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Role;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.RoleResourcePermission;
-import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
-
-@WebServlet(name = "GetSetRole", value = "/admin/role/api")
+import java.util.Map;
+@MultipartConfig
+@WebServlet(name = "GetSetRole", value = "/admin/get-role")
 public class GetSetRole extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Handle handle = DBConect.get().open();
-        RoleDao roleDao = new RoleDao(handle);
-        RoleResourcePermissionDao permissionDao = new RoleResourcePermissionDao(handle);
-
-        List<Role> roles = roleDao.getAllRoles();
-        List<RoleResourcePermission> permissions = permissionDao.getAll();
-
-        AjaxResponse resp = new AjaxResponse();
-        resp.addRoleList(roles);
-        resp.addRoleResourcePermissionList(permissions);
-
+        List<Role> ls = new RoleDao(handle).getAllRoles();
+        Map<String, List<Role>> map = new HashMap<>();
+        map.put("roles", ls);
+        Gson gson = new Gson();
+        String jsonString = gson.toJson(map);
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        out.print(resp.getText());
+        response.getWriter().write(jsonString);
         handle.close();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        String permissions = request.getParameter("permissions");
-        String id = request.getParameter("id");
+        String roleName = request.getParameter("role_name");
+        String roleDescription = request.getParameter("role_description");
 
         Handle handle = DBConect.get().open();
         RoleDao roleDao = new RoleDao(handle);
-        RoleResourcePermissionDao permissionDao = new RoleResourcePermissionDao(handle);
 
-        AjaxResponse resp = new AjaxResponse();
-        boolean success = false;
-
-        try {
-            if ("Tạo".equalsIgnoreCase(action)) {
-                int roleId = roleDao.insertRole(name, description);
-                if (roleId > 0 && permissions != null && !permissions.isEmpty()) {
-                    String[] permissionArray = permissions.split(",");
-                    for (String perm : permissionArray) {
-                        String[] parts = perm.split(":");
-                        if (parts.length == 2) {
-                            int resourceId = Integer.parseInt(parts[0]);
-                            int permissionId = Integer.parseInt(parts[1]);
-                            permissionDao.insert(roleId, resourceId, permissionId);
-                        }
-                    }
-                }
-                success = roleId > 0;
-            } else if ("Cập nhật".equalsIgnoreCase(action)) {
-                int roleId = Integer.parseInt(id);
-                success = roleDao.updateRole(roleId, name, description);
-                if (success) {
-                    // Xóa quyền cũ
-                    permissionDao.deleteByRoleId(roleId);
-                    // Thêm quyền mới
-                    if (permissions != null && !permissions.isEmpty()) {
-                        String[] permissionArray = permissions.split(",");
-                        for (String perm : permissionArray) {
-                            String[] parts = perm.split(":");
-                            if (parts.length == 2) {
-                                int resourceId = Integer.parseInt(parts[0]);
-                                int permissionId = Integer.parseInt(parts[1]);
-                                permissionDao.insert(roleId, resourceId, permissionId);
-                            }
-                        }
-                    }
-                }
-            } else if ("Xóa".equalsIgnoreCase(action)) {
-                int roleId = Integer.parseInt(id);
-                permissionDao.deleteByRoleId(roleId); // Xóa quyền trước
-                success = roleDao.deleteRole(roleId);
-            }
-
-            resp.addBool("success", success);
-        } catch (Exception e) {
-            resp.addBool("success", false);
-            resp.addString("error", e.getMessage());
-        }
-
+        int success = roleDao.insertRole(roleName, roleDescription);
+        JsonObject ob = new JsonObject();
+        ob.addProperty("success", success > 0);
+        ob.addProperty("message", success > 0 ? "Thêm thành công" : "Thêm thất bại");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-        out.print(resp.getText());
+        out.print(ob);
+
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
+
+        int success = 0;
+        String[] ids = id.split(",");
+        Handle handle = DBConect.get().open();
+        RoleDao roleDao = new RoleDao(handle);
+        for (String idRole : ids) {
+            success += roleDao.deleteRole(Integer.parseInt(idRole));
+        }
+
+        JsonObject ob = new JsonObject();
+        ob.addProperty("success", success > 0);
+        ob.addProperty("message", success > 0 ? "Xoá thành công" : "Xoá thất bại");
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter out = resp.getWriter();
+        out.print(ob);
+        handle.close();
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String roleId = req.getParameter("role_id_update");
+        String roleName = req.getParameter("role_name_update");
+        String roleDescription = req.getParameter("role_description_update");
+
+        int success = 0;
+        Handle handle = DBConect.get().open();
+        RoleDao roleDao = new RoleDao(handle);
+        success = roleDao.updateRole(Integer.parseInt(roleId), roleName, roleDescription);
+
+        JsonObject ob = new JsonObject();
+        ob.addProperty("success", success > 0);
+        ob.addProperty("message", success > 0 ? "Câp nhật thành công" : "Cập nhật thất bại");
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter out = resp.getWriter();
+        out.print(ob);
         handle.close();
     }
 }

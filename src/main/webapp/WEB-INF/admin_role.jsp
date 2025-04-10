@@ -73,7 +73,6 @@
   <!-- Nội dung chính -->
   <div class="content grid-item content-grid">
     <div class="main-grid">
-      <!-- Thanh điều hướng -->
       <nav class="navbar tag-line _4c _1r">
         <div class="nav-back-prev">
           <div class="breadcumb">
@@ -282,87 +281,6 @@
 <script src="/assets/js/notification.js"></script>
 <script src="/assets/js/accordion.js"></script>
 <script src="/assets/js/exitfFunc.js"></script>
-
-<!-- JavaScript để xử lý DataTable, accordion và các sự kiện -->
-<script>
-  $(document).ready(function () {
-    // Khởi tạo DataTable cho bảng roles
-    $('#rolesTable').DataTable({
-      "paging": true,
-      "searching": true,
-      "ordering": true,
-      "info": false,
-      "responsive": true,
-      "select": {
-        style: 'single'
-      },
-      "dom": 'frt', // Chỉ hiển thị tìm kiếm (f), bảng (t), và sắp xếp (r)
-      "language": {
-        "search": "Tìm kiếm role theo tên:"
-      }
-    });
-
-    // Xử lý sự kiện click vào hàng trong bảng để hiển thị permissions
-    $('#rolesTable tbody').on('click', 'tr', function (e) {
-      // Ngăn sự kiện click trên nút lan truyền lên hàng
-      if ($(e.target).closest('.action-buttons').length) {
-        return;
-      }
-      $(this).addClass('selected').siblings().removeClass('selected');
-      // Ở đây bạn có thể thêm logic để tải permissions của role được chọn
-      // Ví dụ: Gọi API để lấy permissions và cập nhật cột bên phải
-    });
-
-    // Xử lý accordion cho permission groups
-    $('.permission-group h4').on('click', function () {
-      const $parent = $(this).parent();
-      const $items = $parent.find('.permission-items');
-      const $icon = $(this).find('i');
-
-      if ($items.is(':hidden')) {
-        $items.slideDown();
-        $parent.addClass('active');
-        $icon.removeClass('fa-chevron-down').addClass('fa-chevron-up');
-      } else {
-        $items.slideUp();
-        $parent.removeClass('active');
-        $icon.removeClass('fa-chevron-up').addClass('fa-chevron-down');
-      }
-    });
-
-    // Xử lý menu gập/mở (từ mã trước đó)
-    $('.sidebar-button.has-subitems').each(function () {
-      const $parentItem = $(this);
-      const $subItems = $parentItem.next('.subitems');
-      const $toggleIcon = $parentItem.find('.toggle-icon');
-
-      const isMenuOpen = localStorage.getItem('accountsMenuOpen') === 'true';
-      if (isMenuOpen) {
-        $subItems.show();
-        $toggleIcon.addClass('active');
-      } else {
-        $subItems.hide();
-        $toggleIcon.removeClass('active');
-      }
-
-      $parentItem.on('click', function (event) {
-        if ($subItems.is(':hidden')) {
-          $subItems.slideDown();
-          $toggleIcon.addClass('active');
-          localStorage.setItem('accountsMenuOpen', 'true');
-        } else {
-          $subItems.slideUp();
-          $toggleIcon.removeClass('active');
-          localStorage.setItem('accountsMenuOpen', 'false');
-        }
-      });
-    });
-
-    $('.subitems .sidebar-button.subitem').on('click', function (event) {
-      event.stopPropagation();
-    });
-  });
-</script>
 
 </body>
 </html>
