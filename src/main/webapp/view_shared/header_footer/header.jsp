@@ -334,9 +334,11 @@
           <li>
             <a href="./store.html">CỬA HÀNG</a>
           </li>
+<c:if test="${not empty sessionScope.auth}">
           <li>
             <a href="/AboutController">LIÊN HỆ</a>
           </li>
+</c:if>
         </ul>
       </nav>
     </div>

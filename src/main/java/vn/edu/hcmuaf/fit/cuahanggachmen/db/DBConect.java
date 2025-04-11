@@ -23,8 +23,8 @@ public class DBConect {
             throw new RuntimeException(e);
         }
     }
-
     public static Jdbi get() {
+
         return jdbi;
     }
 
