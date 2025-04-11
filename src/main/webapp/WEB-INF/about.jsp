@@ -130,20 +130,24 @@
             <div class="inputform">
                 <div class="fui-basic-input input-field">
                     <label for="name" class="">Họ và tên</label>
-                    <input type="text" name="name" placeholder="" class="input input-height" id="name" autocomplete="off" required/>
+                    <input type="text" name="name" id="name" placeholder="" class="input input-height" autocomplete="off" required />
                 </div>
+
                 <div class="fui-basic-input input-field">
                     <label for="email" class="">Email</label>
-                    <input type="text" name="Email" placeholder="" class="input input-height" id="email" autocomplete="off" required/>
+                    <input type="text" name="email" id="email" placeholder="" class="input input-height" autocomplete="off" required />
                 </div>
+
                 <div class="fui-basic-input input-field">
                     <label for="subject" class="">Tiêu đề</label>
-                    <input type="text" name="TieuDe" placeholder="" class="input input-height" id="subject" autocomplete="off" required/>
+                    <input type="text" name="subject" id="subject" placeholder="" class="input input-height" autocomplete="off" required />
                 </div>
+
                 <div class="fui-basic-textarea input-field">
                     <label for="content" class="">Nội dung</label>
                     <textarea id="content" name="content" class="tarea area-height" rows="4" cols="50" required></textarea>
                 </div>
+
                 <div class="submit-btn">
                     <button class="btn" id="submitBtn" disabled>Gửi yêu cầu</button>
                 </div>
@@ -175,12 +179,12 @@
                     required: true,
                     minlength: 2
                 },
-                Email: {
+                email: {
                     required: true,
                     email: true,
                     validEmail: true
                 },
-                TieuDe: {
+                subject: {
                     required: true,
                     minlength: 2
                 },
@@ -194,12 +198,12 @@
                     required: "Vui lòng nhập họ và tên",
                     minlength: "Tên phải dài ít nhất 2 ký tự"
                 },
-                Email: {
+                email: {
                     required: "Vui lòng nhập email",
                     email: "Vui lòng nhập đúng định dạng email",
                     validEmail: "Email phải có @"
                 },
-                TieuDe: {
+                subject: {
                     required: "Vui lòng nhập tiêu đề",
                     minlength: "Tiêu đề phải dài ít nhất 2 ký tự"
                 },
@@ -229,73 +233,53 @@
         toggleSubmitButton();
     });
 </script>
-
-
-
-
-
 <script>
-    // ====== LƯU / PHỤC HỒI / XOÁ FORM ======
+    $(document).ready(function() {
+
+        $("input, textarea").each(function() {
+            $(this).on("input", function() {
+                sessionStorage.setItem($(this).attr("name"), $(this).val());
+            });
+
+            let valueSaved = sessionStorage.getItem($(this).attr("name"));
+            if (valueSaved != null) {
+                $(this).val(valueSaved);
+            }
+        });
+
+        let isTabClosed = false;
+
+        document.addEventListener("visibilitychange", function() {
+            if (document.hidden) {
+                isTabClosed = true;
+            } else {
+                isTabClosed = false;
+            }
+        });
+
+
+    });
 
     let isReloading = false;
 
-    // ====== LƯU / PHỤC HỒI / XOÁ FORM ======
-
-    function saveFormData() {
-        const formData = {
-            name: $('#name').val(),
-            email: $('#email').val(),
-            subject: $('#subject').val(),
-            content: $('#content').val()
-        };
-        sessionStorage.setItem("contactFormData", JSON.stringify(formData));
-    }
-
-    function restoreFormData() {
-        const savedData = sessionStorage.getItem("contactFormData");
-        if (savedData) {
-            const data = JSON.parse(savedData);
-            $('#name').val(data.name || "");
-            $('#email').val(data.email || "");
-            $('#subject').val(data.subject || "");
-            $('#content').val(data.content || "");
+    window.addEventListener('beforeunload', function() {
+        if (!isReloading) {
+            sessionStorage.clear();
+            console.log("Đã xóa sessionStorage (đóng tab)");
         }
-    }
+    });
 
-    function clearFormData() {
-        sessionStorage.removeItem("contactFormData");
-    }
-
-    // 🔑 Bắt sự kiện nhấn F5 hoặc Ctrl+R
-    window.addEventListener('keydown', function (e) {
-        if (e.key === 'F5' || (e.ctrlKey && e.key.toLowerCase() === 'r')) {
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
             isReloading = true;
         }
     });
+</script>
+<script>
 
-    // ❗ Chỉ giữ lại dữ liệu nếu:
-    // - Nhấn F5 / Ctrl+R (isReloading = true)
-    // - Đang ở đúng controller AboutController
-    window.addEventListener("pageshow", function () {
-        const currentPath = window.location.pathname;
-        const isOnAboutController = currentPath.includes("AboutController");
-
-        if (!isReloading || !isOnAboutController) {
-            clearFormData();
-        }
-
-        // Reset lại flag reload sau khi xử lý
-        isReloading = false;
-    });
 
     // ====== MAIN SCRIPT ======
     $(document).ready(function () {
-        restoreFormData();
-
-        $('#name, #email, #subject, #content').on('input', function () {
-            saveFormData();
-        });
-
         $('.contact-form').submit(function (event) {
             event.preventDefault();
 
@@ -345,8 +329,6 @@
                     $('#spinner').hide();
 
                     if (response.success) {
-                        clearFormData();
-
                         $('#name').val("");
                         $('#email').val("");
                         $('#subject').val("");
