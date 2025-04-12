@@ -401,4 +401,50 @@ public class AjaxResponse {
         return text.toString();
     }
 
+    // Các phương thức hiện có giữ nguyên, chỉ thêm mới:
+
+    public void addRoleList(List<Role> roleList) {
+        this.text.add(String.format("\"roles\":%s", roleListToJson(roleList)));
+    }
+
+    public void addRoleResourcePermissionList(List<RoleResourcePermission> permissionList) {
+        this.text.add(String.format("\"permissions\":%s", permissionListToJson(permissionList)));
+    }
+
+    private String roleListToJson(List<Role> roleList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (Role role : roleList) {
+            StringJoiner jsonRoleJoiner = new StringJoiner(",", "{", "}");
+
+            jsonRoleJoiner.add(String.format("\"id\":%d", role.getId()))
+                    .add(String.format("\"name\":\"%s\"", role.getName()))
+                    .add(String.format("\"description\":\"%s\"", role.getDescription() != null ? role.getDescription() : ""));
+
+            jsonArrayJoiner.add(jsonRoleJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
+    private String permissionListToJson(List<RoleResourcePermission> permissionList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (RoleResourcePermission perm : permissionList) {
+            StringJoiner jsonPermJoiner = new StringJoiner(",", "{", "}");
+
+            jsonPermJoiner.add(String.format("\"id\":%d", perm.getId()))
+                    .add(String.format("\"roleId\":%d", perm.getRoleId()))
+                    .add(String.format("\"resourceId\":%d", perm.getResourceId()))
+                    .add(String.format("\"permissionId\":%d", perm.getPermissionId()))
+                    .add(String.format("\"resourceName\":\"%s\"", perm.getResourceName()))
+                    .add(String.format("\"permissionName\":\"%s\"", perm.getPermissionName()))
+                    .add(String.format("\"roleName\":\"%s\"", perm.getRoleName()));
+
+            jsonArrayJoiner.add(jsonPermJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
 }

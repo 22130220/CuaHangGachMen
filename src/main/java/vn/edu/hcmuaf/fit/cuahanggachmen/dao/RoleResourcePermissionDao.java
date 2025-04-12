@@ -25,13 +25,24 @@ public class RoleResourcePermissionDao extends BaseDao{
 
     }
 
+    public boolean deleteByRoleId(int roleId) {
+        int rowsAffected = handle.createUpdate("DELETE FROM role_resource_permission WHERE roleId = :roleId")
+                .bind("roleId", roleId)
+                .execute();
+        return rowsAffected > 0;
+    }
+
     /**
      * Lấy danh sách tất cả RoleResourcePermission
      */
     public List<RoleResourcePermission> getAll() {
-        return handle.createQuery("SELECT rrp.*, r.name AS resourceName, p.name AS permissionName, ro.name as roleName FROM role_resource_permission rrp JOIN resource r ON rrp.resourceId = r.id JOIN permission p ON rrp.permissionId = p.id JOIN role ro ON rrp.roleId = ro.id WHERE rrp.roleId = ro.id;")
-                        .mapToBean(RoleResourcePermission.class)
-                        .list();
+        return handle.createQuery("SELECT rrp.*, r.name AS resourceName, p.name AS permissionName, ro.name AS roleName " +
+                        "FROM role_resource_permission rrp " +
+                        "JOIN resource r ON rrp.resourceId = r.id " +
+                        "JOIN permission p ON rrp.permissionId = p.id " +
+                        "JOIN role ro ON rrp.roleId = ro.id")
+                .mapToBean(RoleResourcePermission.class)
+                .list();
     }
 
     /**
