@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.UUID" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -7,39 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Nhập</title>
 
-
     <link rel="stylesheet" href="/assets/css/login.css">
 
-
     <!-- Thêm favicon -->
-    <link
-            rel="icon"
-            type="image/x-icon"
-            href="../assets/icons/logo2_no_text.svg"
-    />
+    <link rel="icon" type="image/x-icon" href="../assets/icons/logo2_no_text.svg" />
 
     <!-- Nhúng phông chữ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-            href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-            rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
 
     <!-- Font Awesome-->
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-    />
-    <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js"
-            integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-    ></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/js/all.min.js" integrity="sha512-6sSYJqDreZRZGkJ3b+YfdhB3MzmuP9R7X1QZ6g5aIXhRvR1Y/N/P47jmnkENm7YL3oqsmI6AK+V6AD99uWDnIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
@@ -56,7 +37,6 @@
 </head>
 <body>
 
-
 <!-- Thanh Header -->
 <header>
     <a href="/">
@@ -64,17 +44,12 @@
             <img src="../assets/icons/logo2.svg" alt="Logo Shop" />
         </div>
     </a>
-
 </header>
 
 <!-- Mục Lục -->
 <nav class="breadcrumb">
     <a href="/">Home</a> > <a href="#!">Đăng nhập</a>
 </nav>
-
-
-
-
 
 <div class="login-container">
     <p class="welcome">Đăng Nhập Tài Khoản</p>
@@ -92,16 +67,14 @@
         <div class="g-recaptcha"
              data-sitekey="6LcfgQArAAAAAHMpZPwzWzPKURK6ID6AAh2bnoFH"
              data-callback="recaptchaCallback"
-             data-expired-callback="recaptchaExpired">va
+             data-expired-callback="recaptchaExpired">
         </div>
         <div class="options">
             <label><input type="checkbox" name="remember"> Ghi nhớ đăng nhập</label>
             <a href="forgetpassword">Quên mật khẩu?</a>
         </div>
 
-<%--        <a href="./home.html"><div class="sign-in">Đăng Nhập</div></a>--%>
         <button type="submit" id="login-btn" class="sign-in" disabled>Đăng Nhập</button>
-
     </form>
 
     <div class="separator">
@@ -109,7 +82,13 @@
         <span><a href="register">Đăng ký ngay.</a></span>
     </div>
 
-    <!-- Nút đăng nhập qua Google và Facebook -->
+    <!-- Tạo state ngẫu nhiên và lưu vào session -->
+    <%
+        String state = UUID.randomUUID().toString();
+        session.setAttribute("zaloState", state);
+    %>
+
+    <!-- Nút đăng nhập qua Google, Facebook và Zalo -->
     <div class="social-login">
         <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
 &redirect_uri=http://localhost:8080/googlelogin
@@ -121,6 +100,9 @@
         <a href="https://www.facebook.com/v20.0/dialog/oauth?client_id=1294677724960043&redirect_uri=http://localhost:8080/facebooklogin&scope=public_profile" class="social-button facebook">
             <i class="fa-brands fa-facebook"></i> Đăng nhập với Facebook
         </a>
+        <a href="https://oauth.zaloapp.com/v4/permission?app_id=3385901349907197462&redirect_uri=http://localhost:8080/zalologin&state=<%=state%>&scope=id,name,picture&prompt=consent" class="social-button zalo">
+            <i class="fa-brands fa-zalo"></i> Đăng nhập với Zalo
+        </a>
     </div>
 
     <div class="separator">
@@ -128,10 +110,9 @@
         <span><a href="register">Đăng ký ngay.</a></span>
     </div>
 
-
-
     <button class="create-account"><a href="register">Tạo Tài Khoản</a></button>
 </div>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
@@ -177,7 +158,6 @@
             }
         });
 
-        // Kích hoạt nút đăng nhập khi hợp lệ
         $("#email, #password").on("keyup", function () {
             if ($("#login-form").valid()) {
                 $("#login-btn").prop("disabled", false);
@@ -187,7 +167,6 @@
         });
     });
 </script>
-
 
 <script>
     function recaptchaCallback() {
@@ -204,4 +183,3 @@
 </script>
 
 </html>
-

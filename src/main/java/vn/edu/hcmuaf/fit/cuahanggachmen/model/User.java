@@ -16,14 +16,15 @@ public class User implements Serializable {
     private String salt;
     private int role;
     private String password;
-    private String fbid; // Thêm trường fbid
+    private String fbid;
+    private String zaloid; // Thêm trường zaloId
     private int sex;
 
     public User() {}
 
     public User(int id, String fullname, String email, String phone, String avatar, String address,
                 LocalDateTime birthtime, boolean status, LocalDateTime createtime, String salt,
-                int role, String password, String fbid, int sex) {
+                int role, String password, String fbid, String zaloid, int sex) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
@@ -36,7 +37,8 @@ public class User implements Serializable {
         this.salt = salt;
         this.role = role;
         this.password = password;
-        this.fbid = fbid; // Thêm fbid vào constructor
+        this.fbid = fbid;
+        this.zaloid = zaloid; // Thêm zaloId vào constructor
         this.sex = sex;
     }
 
@@ -55,7 +57,8 @@ public class User implements Serializable {
                 ", salt='" + salt + '\'' +
                 ", role=" + role +
                 ", password='" + password + '\'' +
-                ", fbid='" + fbid + '\'' + // Thêm fbid vào toString
+                ", fbid='" + fbid + '\'' +
+                ", zaloId='" + zaloid + '\'' + // Thêm zaloId vào toString
                 ", sex=" + sex +
                 '}';
     }
@@ -97,8 +100,11 @@ public class User implements Serializable {
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
 
-    public String getFbid() { return fbid; } // Getter cho fbid
-    public void setFbid(String fbid) { this.fbid = fbid; } // Setter cho fbid
+    public String getFbid() { return fbid; }
+    public void setFbid(String fbid) { this.fbid = fbid; }
+
+    public String getZaloId() { return zaloid; } // Getter cho zaloId
+    public void setZaloId(String zaloId) { this.zaloid = zaloId; } // Setter cho zaloId
 
     public int getSex() { return sex; }
     public void setSex(int sex) { this.sex = sex; }
