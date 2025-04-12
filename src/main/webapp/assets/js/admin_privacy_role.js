@@ -54,7 +54,7 @@ const buttonRoleConfig = [
                     let formData = new FormData();
                     formData.append('id', deleteId);
                     sendAjaxRequest({
-                        url: '/admin/get-role',
+                        url: '/admin/get-role-v2',
                         data: formData,
                         successMessage: null,
                         errorMessage: null,
@@ -163,7 +163,7 @@ let resourceTable = initDataTable('#resource', '/admin/get-resource', 'resources
 
 );
 
-let roleTable = initDataTable('#roles', '/admin/get-role', 'roles', null,
+let roleTable = initDataTable('#roles', '/admin/get-role-v2', 'roles', null,
     [
         {
             targets: 0,
@@ -201,7 +201,7 @@ $('#res_add').on('click', function () {
 $('#add_role_btn').on('click', function () {
     let formData = new FormData($('#add_role_form')[0]);
     sendAjaxRequest({
-        url: '/admin/get-role',
+        url: '/admin/get-role-v2',
         data: formData,
         successMessage: null,
         errorMessage: null,
@@ -243,7 +243,7 @@ $('#add_resource_btn').on('click', function () {
 $('#update_role_btn').on('click', function () {
     let formData = new FormData($('#modify_role_form')[0]);
     sendAjaxRequest({
-        url: '/admin/get-role',
+        url: '/admin/get-role-v2',
         data: formData,
         successMessage: null,
         errorMessage: null,
