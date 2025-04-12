@@ -6,10 +6,8 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
-import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ResourceDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.RoleDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.Resource;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Role;
 
 import java.io.IOException;
@@ -18,8 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @MultipartConfig
-@WebServlet(name = "GetSetRole", value = "/admin/get-role")
-public class GetSetRole extends HttpServlet {
+@WebServlet(name = "GetSetRole", value = "/admin/get-role-v2")
+public class GetSetRoleV2 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Handle handle = DBConect.get().open();
