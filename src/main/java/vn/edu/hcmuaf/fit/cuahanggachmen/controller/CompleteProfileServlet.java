@@ -72,6 +72,23 @@ public class CompleteProfileServlet extends HttpServlet {
         updatedUser.setSex(sex);
         updatedUser.setCreatetime(LocalDateTime.now());
 
+        // Lưu vào cơ sở dữ liệu nếu là người dùng mới
+        if (tempUser != null) {
+            if (tempUser.getFbid() != null) {
+                userDao.insertFacebookUser(updatedUser);
+            } else if (tempUser.getZaloId() != null) {
+                userDao.insertZaloUser(updatedUser);
+            }
+            session.removeAttribute("tempUser");
+            session.setAttribute("auth", updatedUser);
+        } else {
+            if (user.getFbid() != null) {
+                userDao.updateUserFaceBook(user);
+            } else if (user.getZaloId() != null) {
+                userDao.updateUserZalo(user);
+            }
+        }
+
         // Tạo token xác minh
         String token = UUID.randomUUID().toString() + "." + Base64.getEncoder().encodeToString(email.getBytes());
         VerificationTokenStore.addToken(token, updatedUser);
