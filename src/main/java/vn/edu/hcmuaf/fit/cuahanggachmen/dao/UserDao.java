@@ -224,5 +224,46 @@ public class UserDao extends BaseDao {
                 .bind("salt", salt)
                 .execute();
     }
+    // Tìm user bằng Zalo ID
+    public User findByZaloId(String zaloId) {
+        return handle.createQuery("SELECT * FROM users WHERE zaloid = :zaloId AND status=1")
+                .bind("zaloId", zaloId)
+                .map(new UserMapper())
+                .findOne()
+                .orElse(null);
+    }
 
+    // Insert user với Zalo ID
+    public int insertZaloUser(User user) {
+        return handle.createUpdate("INSERT INTO users (zaloid, fullname, email, avatar, status, phone, address, birthtime, sex) " +
+                        "VALUES (:zaloId, :fullname, :email, :avatar, :status, :phone, :address, :birthtime, :sex)")
+                .bind("zaloId", user.getZaloId())
+                .bind("fullname", user.getFullname())
+                .bind("email", user.getEmail())
+                .bind("avatar", user.getAvatar())
+                .bind("status", user.isStatus())
+                .bind("phone", user.getPhone())
+                .bind("address", user.getAddress())
+                .bind("birthtime", user.getBirthtime())
+                .bind("sex", user.getSex())
+                .executeAndReturnGeneratedKeys("id")
+                .mapTo(int.class)
+                .one();
+    }
+
+    // Update user dựa trên Zalo ID
+    public int updateUserZalo(User user) {
+        return handle.createUpdate("UPDATE users SET fullname = :fullname, email = :email, avatar = :avatar, " +
+                        "phone = :phone, address = :address, birthtime = :birthtime, sex = :sex " +
+                        "WHERE zaloid = :zaloId")
+                .bind("fullname", user.getFullname())
+                .bind("email", user.getEmail())
+                .bind("avatar", user.getAvatar())
+                .bind("phone", user.getPhone())
+                .bind("address", user.getAddress())
+                .bind("birthtime", user.getBirthtime())
+                .bind("sex", user.getSex())
+                .bind("zaloId", user.getZaloId())
+                .execute();
+    }
 }
