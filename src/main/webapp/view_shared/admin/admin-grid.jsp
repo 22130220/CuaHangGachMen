@@ -95,6 +95,14 @@
                 Quản lý khách hàng
             </p>
         </a>
+        <a href="/admin/manage-contact" class="item5 sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-user-tag"></i>
+            </div>
+            <p class="text">
+                Quản lý Liên hệ
+            </p>
+        </a>
 
         <a href="/admin/manage-voucher" class="item5 sidebar-button">
             <div class="sidebar-icon">

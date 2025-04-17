@@ -1,14 +1,16 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 
+import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
-public class Contact {
+public class Contact implements Serializable {
     private int id;
     private String fullname;
     private String email;
     private String title;
     private String content;
-    private LocalDateTime date;
+    private LocalDateTime SendDate;
     private boolean isReply;
 
 
@@ -17,13 +19,23 @@ public class Contact {
 
     public Contact( String content, LocalDateTime date, String title, String email, String fullname) {
         this.content = content;
-        this.date = date;
+        this.SendDate = date;
         this.title = title;
         this.email = email;
         this.fullname = fullname;
     }
 
     public Contact() {
+    }
+
+    public Contact(int id, LocalDateTime sendDate, String email, String title, String fullname, String content, boolean isReply) {
+        this.content = content;
+        this.SendDate = sendDate;
+        this.title = title;
+        this.email = email;
+        this.fullname = fullname;
+        this.id=id;
+        this.isReply = isReply;
     }
 
     public int getId() {
@@ -67,11 +79,11 @@ public class Contact {
     }
 
     public LocalDateTime getDate() {
-        return date;
+        return SendDate;
     }
 
     public void setDate(LocalDateTime date) {
-        this.date = date;
+        this.SendDate = date;
     }
 
     public boolean isReply() {
@@ -91,7 +103,7 @@ public class Contact {
                 ", email='" + email + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", date=" + date +
+                ", date=" + SendDate +
                 ", isReply=" + isReply +
                 '}';
     }

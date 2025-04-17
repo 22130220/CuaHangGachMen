@@ -1,7 +1,9 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Contact;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.ContactMapper;
 
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class ContactDAO extends BaseDao{
     }
 
     public void update(Contact ct) {
-        String sql = "UPDATE Feedback SET Fullname = ?, Email = ?, Title = ?, Content = ?, SendDate = ?, IsReply = ? WHERE ID = ?";
+        String sql = "UPDATE contact SET Fullname = ?, Email = ?, Title = ?, Content = ?, SendDate = ?, IsReply = ? WHERE ID = ?";
                 handle.createUpdate(sql)
                         .bind(0, ct.getFullname())
                         .bind(1, ct.getEmail())
@@ -37,7 +39,7 @@ public class ContactDAO extends BaseDao{
     }
 
     public void delete(int id) {
-        String sql = "DELETE FROM Feedback WHERE ID = ?";
+        String sql = "DELETE FROM contact WHERE ID = ?";
                 handle.createUpdate(sql)
                         .bind(0, id)
                         .execute();
@@ -45,7 +47,7 @@ public class ContactDAO extends BaseDao{
     }
 
     public Contact getById(int id) {
-        String sql = "SELECT * FROM Feedback WHERE ID = ?";
+        String sql = "SELECT * FROM contact WHERE ID = ?";
             return    handle.createQuery(sql)
                         .bind(0, id)
                         .mapToBean(Contact.class)
@@ -55,11 +57,20 @@ public class ContactDAO extends BaseDao{
     }
 
     public List<Contact> getList() {
-        String sql = "SELECT * FROM Feedback ORDER BY SendDate DESC";
+        String sql = "SELECT * FROM contact";
         return handle.createQuery(sql)
-                        .mapToBean(Contact.class)
+                        .map(new ContactMapper())
                         .list();
+    }
 
+    public static void main(String[] args) {
+        DBConect.mySqlDataSource();
+        Handle handle = DBConect.get().open();
+        ContactDAO dao = new ContactDAO(handle);
+        List<Contact> list = dao.getList();
+        for (Contact ct : list) {
+            System.out.println(ct);
+        }
     }
 
 
