@@ -1,0 +1,62 @@
+name: Docker Build and Push
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_LOGIN_USER }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: docker-container
+
+      - name: Get PR number
+        id: pr
+        run: echo "PR_NUMBER=$(echo $GITHUB_REF | cut -d'/' -f3)" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_LOGIN_USER }}/cuahanggachmen:pr-${{ steps.pr.outputs.PR_NUMBER }}
+            ${{ secrets.DOCKER_LOGIN_USER }}/cuahanggachmen:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKER_LOGIN_USER }}/cuahanggachmen:cache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_LOGIN_USER }}/cuahanggachmen:cache,mode=max
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-push # Chạy sau khi build-and-push hoàn thành
+    steps:
+      # Bước 1: Cài đặt SSH key
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: unnecessary # Sẽ cập nhật known_hosts ở bước sau
+
+      # Bước 2: Thêm known_hosts
+      - name: Add known_hosts
+        run: |
+          ssh-keyscan -p ${{ secrets.SSH_PORT || 22 }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      # Bước 3: Chạy deploy.sh qua SSH
+      - name: Deploy to server
+        run: |
+          ssh -p ${{ secrets.SSH_PORT || 22 }} ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} \
+            "bash /home/${{ secrets.SSH_USERNAME }}/deploy.sh"
