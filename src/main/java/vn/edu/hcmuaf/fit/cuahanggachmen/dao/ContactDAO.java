@@ -50,7 +50,7 @@ public class ContactDAO extends BaseDao{
         String sql = "SELECT * FROM contact WHERE ID = ?";
             return    handle.createQuery(sql)
                         .bind(0, id)
-                        .mapToBean(Contact.class)
+                        .map(new ContactMapper())
                         .findOne()
                         .orElse(null);
 
