@@ -67,6 +67,23 @@
   <!-- Sweet alert 2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+  <style>
+    .permission-item {
+      cursor: pointer;
+      padding: 5px;
+      margin: 5px 0;
+    }
+    .permission-item:hover {
+      background-color: #f0f0f0;
+    }
+    .resource-list {
+      margin-left: 20px;
+      display: none;
+    }
+    .resource-list.active {
+      display: block;
+    }
+  </style>
 </head>
 
 <body>
@@ -99,90 +116,38 @@
               <table id="rolesTable" class="display" style="width:100%">
                 <thead>
                 <tr>
-                  <th>Role Name</th>
-                  <th>Status</th>
+                  <th>Tên quyền</th>
+                  <th> Mô tả </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <td>App Admin</td>
-                  <td>Cannot be modified</td>
-                </tr>
-                <tr>
-                  <td>Backup Only</td>
-                  <td>Cannot be modified</td>
-                </tr>
-                <tr>
-                  <td>Restore Only</td>
-                  <td>Cannot be modified</td>
-                </tr>
-                <tr>
-                  <td>SYSADMIN</td>
-                  <td>Cannot be modified</td>
-                </tr>
-
-                <tr class="selected">
-                  <td>roleTier1</td>
-                  <td>
-                    Cannot be modified
-                  </td>
-                </tr>
-
+                <c:forEach var="role" items="${roles}">
+                  <tr>
+                    <td>${role.name}</td>
+                    <td>${role.description}</td>
+                  </tr>
+                </c:forEach>
                 </tbody>
               </table>
               <div class="total-roles text-left">
-                TOTAL: 5
+                TOTAL: ${roles.size()}
               </div>
             </div>
           </div>
 
           <!-- Cột phải: Permission groups -->
           <div class="_2c">
-            <h3 class="text_entry_title">roleTier1</h3>
+            <h3 class="text_entry_title" id="selectedRoleName">Chọn một role để xem quyền</h3>
             <div class="card">
-
               <div class="title-icon">
-
                 <div class="action-buttons">
-                  <div class="button bg_orange f-cl-white" data-micromodal-trigger="modify_role_modal">Modify role</div>
-                  <div class="button bg_red f-cl-white" data-micromodal-trigger="delete_role_modal">Delete role</div>
+                  <div class="button bg_orange f-cl-white" data-micromodal-trigger="modify_role_modal">Chỉnh sửa quyền</div>
+                  <div class="button bg_red f-cl-white" data-micromodal-trigger="delete_role_modal">Xóa quyền</div>
                 </div>
               </div>
-              <h4>Permission groups</h4>
-              <div class="permission-group">
-                <h4><i class="fa-solid fa-chevron-down"></i> Job</h4>
-                <div class="permission-items">
-                  <div class="permission-item">
-                    <span class="sos">view</span>
-                    <span>roleTier</span>
-                  </div>
-                  <div class="permission-item">
-                    <span class="sos">run</span>
-                    <span>roleTier</span>
-                  </div>
-                </div>
-              </div>
-              <div class="permission-group">
-                <h4><i class="fa-solid fa-chevron-down"></i> Screen</h4>
-                <div class="permission-items">
-                  <div class="permission-item">
-                    <span class="sos">view</span>
-                    <span>roleTier1</span>
-                  </div>
-                </div>
-              </div>
-              <div class="permission-group">
-                <h4><i class="fa-solid fa-chevron-down"></i> Site</h4>
-                <div class="permission-items">
-                  <div class="permission-item">
-                    <span class="sos">create</span>
-                    <span>roleTier1</span>
-                  </div>
-                  <div class="permission-item">
-                    <span class="sos">view</span>
-                    <span>roleTier2</span>
-                  </div>
-                </div>
+              <h4>Nhóm các quyền </h4>
+              <div id="permissionGroups">
+                <!-- Permissions sẽ được cập nhật qua AJAX -->
               </div>
             </div>
           </div>
@@ -208,11 +173,9 @@
             <div class="fui-basic-input" style="width: 100%">
               <label for="role_permissions" class="f-bold f-s-14 f-cl-black">Quyền</label>
               <select name="role_permissions" id="role_permissions" class="input input-bordered f-s-14" multiple required>
-                <option value="job_view">Job - View</option>
-                <option value="job_run">Job - Run</option>
-                <option value="screen_view">Screen - View</option>
-                <option value="site_create">Site - Create</option>
-                <option value="site_view">Site - View</option>
+                <option value="read">Read</option>
+                <option value="execute">Execute</option>
+                <option value="read_write_execute">Read, Write, Execute</option>
               </select>
             </div>
           </div>
@@ -241,11 +204,9 @@
             <div class="fui-basic-input" style="width: 100%">
               <label for="modify_role_permissions" class="f-bold f-s-14 f-cl-black">Quyền</label>
               <select name="modify_role_permissions" id="modify_role_permissions" class="input input-bordered f-s-14" multiple required>
-                <option value="job_view">Job - View</option>
-                <option value="job_run">Job - Run</option>
-                <option value="screen_view">Screen - View</option>
-                <option value="site_create">Site - Create</option>
-                <option value="site_view">Site - View</option>
+                <option value="read">Read</option>
+                <option value="execute">Execute</option>
+                <option value="read_write_execute">Read, Write, Execute</option>
               </select>
             </div>
           </div>
@@ -284,6 +245,97 @@
 <script src="/assets/js/notification.js"></script>
 <script src="/assets/js/accordion.js"></script>
 <script src="/assets/js/exitfFunc.js"></script>
+
+<script>
+  $(document).ready(function() {
+    // Khởi tạo DataTable
+    $('#rolesTable').DataTable({
+      responsive: true,
+      select: true,
+      pageLength: 10
+    });
+
+    // Xử lý khi chọn một row trong bảng roles
+    $('#rolesTable').on('select.dt', function(e, dt, type, indexes) {
+      var rowData = dt.rows(indexes).data().toArray();
+      var roleName = rowData[0][0]; // Lấy tên role từ cột đầu tiên
+
+      // Cập nhật tiêu đề role được chọn
+      $('#selectedRoleName').text(roleName);
+
+      // Gửi AJAX để lấy permissions của role
+      $.ajax({
+        url: '/admin/role/api',
+        method: 'GET',
+        data: { roleName: roleName },
+        success: function(response) {
+          if (response.success) {
+            // Cập nhật giao diện với permissions
+            updatePermissionsUI(response.permissions);
+          } else {
+            alert('Không thể tải quyền: ' + response.error);
+            $('#permissionGroups').html('<p>Không có quyền nào cho role này.</p>');
+          }
+        },
+        error: function() {
+          alert('Lỗi khi tải quyền của role');
+          $('#permissionGroups').html('<p>Đã xảy ra lỗi khi tải quyền.</p>');
+        }
+      });
+    });
+
+    // Hàm cập nhật giao diện permissions
+    function updatePermissionsUI(permissions) {
+      // Lấy danh sách permissionName duy nhất
+      var permissionNames = [...new Set(permissions.map(perm => perm.permissionName))];
+
+      // Tạo HTML cho danh sách permissionName
+      var html = '';
+      permissionNames.forEach(function(permName) {
+        html += '<div class="permission-group">';
+        html += '<h4 class="permission-item" data-permission="' + permName + '"><i class="fa-solid fa-chevron-down"></i> ' + permName + '</h4>';
+        html += '<div class="resource-list" id="resources-' + permName.replace(/[^a-zA-Z0-9]/g, '') + '">';
+        // Danh sách resource sẽ được thêm khi click
+        html += '</div>';
+        html += '</div>';
+      });
+
+      // Nếu không có permissions, hiển thị thông báo
+      if (permissionNames.length === 0) {
+        html = '<p>Không có quyền nào cho role này.</p>';
+      }
+
+      // Cập nhật vào DOM
+      $('#permissionGroups').html(html);
+
+      // Thêm sự kiện click cho mỗi permissionName
+      $('.permission-item').on('click', function() {
+        var permName = $(this).data('permission');
+        var resourceListId = '#resources-' + permName.replace(/[^a-zA-Z0-9]/g, '');
+
+        // Nếu danh sách resource đã hiển thị, ẩn nó đi
+        if ($(resourceListId).hasClass('active')) {
+          $(resourceListId).removeClass('active');
+          return;
+        }
+
+        // Lấy danh sách resourceName cho permissionName này
+        var resources = permissions
+                .filter(perm => perm.permissionName === permName)
+                .map(perm => perm.resourceName);
+
+        // Tạo HTML cho danh sách resourceName
+        var resourceHtml = '';
+        resources.forEach(function(resource) {
+          resourceHtml += '<div class="resource-item">' + resource + '</div>';
+        });
+
+        // Cập nhật danh sách resource và hiển thị
+        $(resourceListId).html(resourceHtml).addClass('active');
+      });
+    }
+  });
+</script>
 
 </body>
 </html>
