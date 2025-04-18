@@ -1,7 +1,7 @@
 const buttonShowRole = function () {
     var selectedRows = roleTable.rows({ selected: true }).count();
-    roleTable.button(0).enable(selectedRows === 1);
-    roleTable.button(1).enable(selectedRows > 0);
+    roleTable.button(0).enable(selectedRows === 1); // Chỉnh sửa
+    roleTable.button(1).enable(selectedRows === 1); // Đổi trạng thái
 };
 
 const buttonShowResource = function () {
@@ -26,34 +26,41 @@ const buttonRoleConfig = [
         enabled: false
     },
     {
-        text: 'Xoá',
-        className: 'red',
+        text: 'Đổi trạng thái',
+        className: 'blue',
         action: function (e, dt, node, config) {
-            var data = dt.rows({ selected: true }).data();
-            let deleteId = [];
-            data.each(function(rowData, index) {
-                deleteId.push(rowData.id);
-            });
+            let data = dt.row({ selected: true }).data();
+            let newStatus = !data.status; // Đổi trạng thái: true -> false, false -> true
+            let statusText = newStatus ? 'Kích hoạt' : 'Hủy';
 
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: "btn btn-success",
-                    cancelButton: "btn btn-danger"
-                },
-                buttonsStyling: false
-            });
-            swalWithBootstrapButtons.fire({
-                title: `Bạn có chắc muốn xoá ${deleteId.length} mục này ?`,
-                text: "Hành động này sẽ không thể quay lại!",
-                icon: "warning",
+            Swal.fire({
+                title: `Xác nhận ${statusText} quyền`,
+                html: `Bạn có muốn <strong>${statusText.toLowerCase()}</strong> quyền <strong>"${data.name}"</strong>?<br>Hành động này sẽ thay đổi trạng thái của quyền.`,
+                icon: newStatus ? 'success' : 'warning',
                 showCancelButton: true,
-                confirmButtonText: "Có",
-                cancelButtonText: "Không",
-                reverseButtons: true
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy bỏ',
+                customClass: {
+                    popup: 'modern-swal-popup',
+                    title: 'swal-title',
+                    htmlContainer: 'swal-html',
+                    confirmButton: 'btn btn-primary btn-modern',
+                    cancelButton: 'btn btn-secondary btn-modern'
+                },
+                buttonsStyling: false,
+                reverseButtons: true,
+                backdrop: true,
+                padding: '1.5rem',
+                width: '500px',
+                allowOutsideClick: false
             }).then((result) => {
                 if (result.isConfirmed) {
                     let formData = new FormData();
-                    formData.append('id', deleteId);
+                    formData.append('role_id_update', data.id);
+                    formData.append('role_name_update', data.name);
+                    formData.append('role_description_update', data.description);
+                    formData.append('status', newStatus);
+
                     sendAjaxRequest({
                         url: '/admin/get-role-v2',
                         data: formData,
@@ -61,10 +68,10 @@ const buttonRoleConfig = [
                         errorMessage: null,
                         tableToReload: roleTable,
                         modalToClose: null,
-                        type: 'DELETE',
+                        type: 'PUT',
                         onSuccess: function (resp) {
                             if (resp.success) {
-                                notyf.success(resp.message);
+                                notyf.success(`Đã ${statusText.toLowerCase()} quyền thành công`);
                             } else {
                                 notyf.error(resp.message);
                             }

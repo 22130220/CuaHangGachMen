@@ -276,18 +276,6 @@
                                     <input type="text" name="role_description_update" id="role_description_update" class="input input-bordered f-s-14" placeholder="Nhập mô tả" />
                                 </div>
                             </div>
-
-                            <!-- Status Field -->
-                            <div class="form-group _4c">
-                                <div class="fui-basic-input flex-column gap-6">
-                                    <label for="status_update" class="f-bold f-s-14 f-cl-black">Trạng thái</label>
-                                    <select name="status" id="status_update" class="input input-bordered f-s-14" required>
-                                        <option value="true">Kích hoạt</option>
-                                        <option value="false">Hủy</option>
-                                    </select>
-                                </div>
-                            </div>
-
                             <input type="hidden" name="role_id_update" id="role_id_update" />
                             <!-- Submit Button -->
                             <div class="_1c">
