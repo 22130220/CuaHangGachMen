@@ -315,6 +315,7 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="/assets/js/flmngr/flmngr.js"></script>
 <script src="/assets/js/ckeditorLoadFile.js"></script>
 <script src="/assets/js/datatable_addproduct.js"></script>
 <script src="/assets/js/adminDatatable.js"></script>
