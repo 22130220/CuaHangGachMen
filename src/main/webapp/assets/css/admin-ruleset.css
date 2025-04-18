@@ -350,6 +350,9 @@ a.green {
     padding: 1rem;
     align-items: center;
     justify-content: center;
+    font-family: "Be Vietnam Pro", sans-serif;
+    outline: none;
+    border: none;
 }
 
 .f-bold{
@@ -420,13 +423,17 @@ a.green {
 }
 
 .flex-row{
-    /*display: flex;*/
-    /*flex-direction: row;*/
+    display: flex;
+    flex-direction: row;
 }
 
 .flex-column{
     display: flex;
     flex-direction: column;
+}
+
+.full-width {
+    width: 100%;
 }
 
 .gap-6{
@@ -786,4 +793,58 @@ a.green {
 .resource-details .detail-item {
     border-bottom: 1px solid #e4e4e4;
     padding: 0.5rem 0;
+}
+
+#image-thumb {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các ảnh xuống dòng nếu không đủ chỗ */
+    gap: 25px; /* Thay margin trên .image để khoảng cách đồng đều */
+}
+
+#image-thumb .image {
+    border: 1px solid #DDD;
+    box-shadow: 5px 5px 0 0 #DDD;
+    background-color: white;
+    padding: 10px;
+    display: flex; /* Thay inline-flex để tránh khoảng cách không mong muốn */
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+}
+
+#image-thumb .image div {
+    width: 350px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;   /* Ẩn phần ảnh vượt ra ngoài */
+}
+
+#image-thumb .image div img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; /* Giữ tỷ lệ ảnh, không bị méo */
+    display: block; /* Loại bỏ khoảng trắng dưới ảnh */
+}
+
+#image-thumb .image p {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    color: #444;
+}
+
+.input-has-button {
+    position: relative;
+}
+
+.button-input{
+    position: absolute;
+    right: 0;
+    height: 38px;
+    padding: 0 8px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
 }

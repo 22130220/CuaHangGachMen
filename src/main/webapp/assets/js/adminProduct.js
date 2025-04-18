@@ -1,3 +1,11 @@
+var desEditor = loadCKEditorTextarea('des')
+let flmngr = null;
+desEditor.on('instanceReady', function () {
+    desEditor.getFlmngr((Flmngr) => {
+        flmngr = Flmngr;
+    });
+});
+
 var specTable = null;
 var colorTable = null;
 var category = null;
@@ -129,7 +137,7 @@ var productTable = initDataTable('#example', '/admin/get-product', function(d)
             let data = dt.row({ selected: true }).data();
             linkDes = data.description;
             pid = data.id;
-            action = updateEle;
+            // action = updateEle;
             loadFileCKEditor(linkDes, pid);
         },
         enabled: false
@@ -147,8 +155,8 @@ var productTable = initDataTable('#example', '/admin/get-product', function(d)
     }
 ], function (e, dt) {
     const selectedRows = dt.rows({ selected: true }).count();
-    dt.button(9).enable(selectedRows === 1); // Button chỉnh sửa
-    dt.button(10).enable(selectedRows > 0); // Button xóa
+    dt.button(8).enable(selectedRows === 1); // Button chỉnh sửa
+    dt.button(9).enable(selectedRows > 0); // Button trạng thái
 },{ paging: true, searching: true });
 
 function openSpecModal(productId) {
@@ -445,7 +453,7 @@ function openColorModal(productForColorId) {
             className: 'blue',
             action: function (e, dt, node, config) {
                 let data = dt.row({ selected: true }).data();
-                action = updateEle;
+                // action = updateEle;
                 colorRowId = data.id;
                 MicroModal.close('update_color_modal');
                 $("#update_color_val").val(data.url);
@@ -461,6 +469,7 @@ function openColorModal(productForColorId) {
             text: 'Thêm',
             className: 'green',
             action: function (e, dt, node, config) {
+                $("#add_color_val").val('');
                 MicroModal.close('update_color_modal');
                 MicroModal.show('add_color', {
                     onClose: function() {
@@ -557,4 +566,40 @@ $("#add_color_btn").on('click', function () {
         });
     }
 });
+
+function loadFileCKEditor(linkDescription, productId) {
+    $.ajax({
+        url: '/admin/des',
+        type: 'GET',
+        data: {
+            pid: pid,
+            linkDes: linkDescription
+        },
+        dataType: 'text',
+        success: function (data) {
+            console.log(data);
+            desEditor.setData(data);
+            MicroModal.show('update_des');
+
+        },
+        error: function () {
+            alert('Không thể tải danh sách sản phẩm.');
+        }
+    });
+}
+
+function selectImageChange(button, name) {
+    const input = button.closest('.fui-basic-input').querySelector(`input[name="${name}"]`);
+
+    flmngr.open({
+        isMultiple: false,
+        acceptExtensions: ["png", "jpeg", "jpg", "webp", "gif"],
+        onFinish: (files) => {
+            if (files && files.length > 0) {
+                const imageUrl = files[0].url;
+                input.value = imageUrl;
+            }
+        }
+    });
+}
 

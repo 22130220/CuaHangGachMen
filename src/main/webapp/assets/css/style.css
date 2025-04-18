@@ -56,6 +56,24 @@ a {
   opacity: 0.9;
   cursor: pointer;
 }
+
+.btn-green {
+  display: inline-block;
+  min-width: 118px;
+  padding: 0 16px;
+  line-height: 50px;
+  color: #fff;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  border-radius: 5px;
+  background: #2e2100ff;
+}
+
+.btn-green:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
 .heading {
 
   color: #171100;

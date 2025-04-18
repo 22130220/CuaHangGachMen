@@ -3,7 +3,6 @@ let updateEle = 'Cập nhật';
 let delEle = 'Xoá';
 
 let vid;
-
 let setActive = [];
 let action;
 
@@ -14,6 +13,13 @@ let colorRowId;
 let linkDes;
 
 var editor = CKEDITOR.replace('des');
+let flmngr = null;
+editor.on('instanceReady', function () {
+    editor.getFlmngr((Flmngr) => {
+        flmngr = Flmngr;
+    });
+});
+
 
 function isNullOrEmptyOrWhitespace(str) {
     return str === null || str === undefined || /^\s*$/.test(str) || str === "";
@@ -716,26 +722,7 @@ function deleteColor(colorIdToDel) {
     });
 }
 
-function loadFileCKEditor(linkDescription, productId) {
-    $.ajax({
-        url: '/admin/des',
-        type: 'GET',
-        data: {
-            pid: pid,
-            linkDes: linkDescription
-        },
-        dataType: 'text',
-        success: function (data) {
-            console.log(data);
-            editor.setData(data);
-            MicroModal.show('update_des');
 
-        },
-        error: function () {
-            alert('Không thể tải danh sách sản phẩm.');
-        }
-    });
-}
 
 $("#update_des_btn").on('click', function () {
     const value =  editor.getData();

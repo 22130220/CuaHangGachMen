@@ -83,6 +83,9 @@
 
     <!-- Sweet alert 2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- flmngr -->
+    <script src="https://cdn.skypack.dev/flmngr"></script>
     <style>
         div.container {
             max-width: 1200px;
@@ -207,8 +210,13 @@
 
                     <div class="product-img _4c">
                         <div class="fui-basic-input flex-column gap-6">
-                            <label for="img_thumbnail" class="f-bold f-s-14 f-cl-black">Giá trị</label>
-                            <input type="file" name="img_thumbnail" accept=".jpg, .jpeg, .png" class="input input-bordered f-s-14" id="img_thumbnail" autocomplete="off" required/>
+                            <label for="img_thumbnail" class="f-bold f-s-14 f-cl-black">Ảnh đại diện</label>
+<%--                            <input type="file" name="img_thumbnail" accept=".jpg, .jpeg, .png" class="input input-bordered f-s-14" id="img_thumbnail" autocomplete="off" required/>--%>
+                            <input type="text" name="img_thumbnail" class="input input-bordered f-s-14" id="img_thumbnail" autocomplete="off" readonly/>
+                            <div id="btn" class="button bg_green f-cl-white" style="opacity:0.2;cursor:default">Chọn ảnh đại diện</div>
+                            <div id="loading" style="font-size:12px">Loading file manager...</div>
+                            <div id="image-thumb">
+                            </div>
                         </div>
                     </div>
 
@@ -315,11 +323,11 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-<script src="/assets/js/flmngr/flmngr.js"></script>
 <script src="/assets/js/ckeditorLoadFile.js"></script>
 <script src="/assets/js/datatable_addproduct.js"></script>
 <script src="/assets/js/adminDatatable.js"></script>
 <script src="/assets/js/script.js"></script>
+<script src="/assets/js/flmngr/admin_addproduct_upload.js"></script>
 <script src="/assets/js/img-uploading.js"></script>
 <script src="/assets/js/accordion.js"></script>
 <script>
