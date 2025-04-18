@@ -103,42 +103,41 @@
             </nav>
 
             <!-- Bảng danh sách roles và permissions -->
-                    <!-- Cột trái: Danh sách roles -->
-                    <div class="_2c">
-                        <div class="card">
-
-                            <div class="title-icon">
-                                <p class="text_entry_title">Quyền</p>
-                                <button class="button bg_green f-cl-white" id="role_add">Thêm</button>
-                            </div>
-                            <table id="roles" class="display" style="width:100%">
-                                <thead>
-                                <tr>
-                                    <th>Tên quyền</th>
-                                    <th>Mô tả</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
+            <!-- Cột trái: Danh sách roles -->
+            <div class="_2c">
+                <div class="card">
+                    <div class="title-icon">
+                        <p class="text_entry_title">Quyền</p>
+                        <button class="button bg_green f-cl-white" id="role_add">Thêm</button>
                     </div>
+                    <table id="roles" class="display" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>Tên quyền</th>
+                            <th>Mô tả</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
 
-                    <div class="_2c">
-                        <div class="card">
-
-                            <div class="title-icon">
-                                <p class="text_entry_title"> Hạng mục</p>
-                                <button class="button bg_green f-cl-white" id="res_add">Thêm</button>
-                            </div>
-                            <table id="resource" class="display" style="width:100%">
-                                <thead>
-                                <tr>
-                                    <th>Hạng mục</th>
-                                    <th>Tên danh mục</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
+            <div class="_2c">
+                <div class="card">
+                    <div class="title-icon">
+                        <p class="text_entry_title"> Hạng mục</p>
+                        <button class="button bg_green f-cl-white" id="res_add">Thêm</button>
                     </div>
+                    <table id="resource" class="display" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>Hạng mục</th>
+                            <th>Tên danh mục</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -176,7 +175,7 @@
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
                 <header class="modal__header">
-                    <h2 class="modal__title">Thêm mới dữ liệu</h2>
+                    <h2 class="modal__title">Chỉnh sửa dữ liệu</h2>
                     <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
                 </header>
                 <div class="modal-content-content">
@@ -193,7 +192,7 @@
                             <input type="hidden" name="resource_id_update" id="resource_id_update" />
                             <!-- Submit Button -->
                             <div class="_1c">
-                                <button class="button bg_green f-cl-white" type="button" id="update_resource_btn">Thêm</button>
+                                <button class="button bg_green f-cl-white" type="button" id="update_resource_btn">Cập nhật</button>
                             </div>
                         </form>
                     </div>
@@ -202,89 +201,112 @@
         </div>
     </div>
 
-
-        <!-- Modal: Create Role -->
-        <div class="modal micromodal-slide" id="create_role_modal" aria-hidden="true">
-            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
-                    <header class="modal__header">
-                        <h2 class="modal__title" id="create_role_title">Thêm mới dữ liệu</h2>
-                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                    </header>
-                    <div class="modal-content-content">
-                        <div class="modal__content">
-                            <form id="add_role_form" class="main-grid">
-                                <!-- Name Field -->
-                                <div class="form-group _4c">
-                                    <div class="fui-basic-input flex-column gap-6">
-                                        <label for="role_name" class="f-bold f-s-14 f-cl-black">Tên</label>
-                                        <input type="text" name="role_name" id="role_name" class="input input-bordered f-s-14" placeholder="Nhập tên" required />
-                                    </div>
+    <!-- Modal: Create Role -->
+    <div class="modal micromodal-slide" id="create_role_modal" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title" id="create_role_title">Thêm mới dữ liệu</h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div class="modal-content-content">
+                    <div class="modal__content">
+                        <form id="add_role_form" class="main-grid">
+                            <!-- Name Field -->
+                            <div class="form-group _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="role_name" class="f-bold f-s-14 f-cl-black">Tên</label>
+                                    <input type="text" name="role_name" id="role_name" class="input input-bordered f-s-14" placeholder="Nhập tên" required />
                                 </div>
+                            </div>
 
-                                <!-- Description Field -->
-                                <div class="form-group _4c">
-                                    <div class="fui-basic-input flex-column gap-6">
-                                        <label for="role_description" class="f-bold f-s-14 f-cl-black">Mô tả</label>
-                                        <input type="text" name="role_description" id="role_description" class="input input-bordered f-s-14" placeholder="Nhập mô tả" />
-                                    </div>
+                            <!-- Description Field -->
+                            <div class="form-group _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="role_description" class="f-bold f-s-14 f-cl-black">Mô tả</label>
+                                    <input type="text" name="role_description" id="role_description" class="input input-bordered f-s-14" placeholder="Nhập mô tả" />
                                 </div>
+                            </div>
 
-                                <!-- Submit Button -->
-                                <div class="_1c">
-                                    <button class="button bg_green f-cl-white" type="button" id="add_role_btn">Thêm</button>
+                            <!-- Status Field -->
+                            <div class="form-group _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="status" class="f-bold f-s-14 f-cl-black">Trạng thái</label>
+                                    <select name="status" id="status" class="input input-bordered f-s-14" required>
+                                        <option value="true">Kích hoạt</option>
+                                        <option value="false">Hủy</option>
+                                    </select>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="_1c">
+                                <button class="button bg_green f-cl-white" type="button" id="add_role_btn">Thêm</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="modal micromodal-slide" id="update_role_modal" aria-hidden="true">
-            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
-                    <header class="modal__header">
-                        <h2 class="modal__title">Thêm mới dữ liệu</h2>
-                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-                    </header>
-                    <div class="modal-content-content">
-                        <div class="modal__content">
-                            <form id="modify_role_form" class="main-grid">
-                                <!-- Name Field -->
-                                <div class="form-group _4c">
-                                    <div class="fui-basic-input flex-column gap-6">
-                                        <label for="role_name_update" class="f-bold f-s-14 f-cl-black">Tên</label>
-                                        <input type="text" name="role_name_update" id="role_name_update" class="input input-bordered f-s-14" placeholder="Nhập tên" required />
-                                    </div>
+    <!-- Modal: Update Role -->
+    <div class="modal micromodal-slide" id="update_role_modal" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title">Chỉnh sửa dữ liệu</h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div class="modal-content-content">
+                    <div class="modal__content">
+                        <form id="modify_role_form" class="main-grid">
+                            <!-- Name Field -->
+                            <div class="form-group _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="role_name_update" class="f-bold f-s-14 f-cl-black">Tên</label>
+                                    <input type="text" name="role_name_update" id="role_name_update" class="input input-bordered f-s-14" placeholder="Nhập tên" required />
                                 </div>
+                            </div>
 
-                                <!-- Description Field -->
-                                <div class="form-group _4c">
-                                    <div class="fui-basic-input flex-column gap-6">
-                                        <label for="role_description_update" class="f-bold f-s-14 f-cl-black">Mô tả</label>
-                                        <input type="text" name="role_description_update" id="role_description_update" class="input input-bordered f-s-14" placeholder="Nhập mô tả" />
-                                    </div>
+                            <!-- Description Field -->
+                            <div class="form-group _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="role_description_update" class="f-bold f-s-14 f-cl-black">Mô tả</label>
+                                    <input type="text" name="role_description_update" id="role_description_update" class="input input-bordered f-s-14" placeholder="Nhập mô tả" />
                                 </div>
-                                <input type="hidden" name="role_id_update" id="role_id_update" />
-                                <!-- Submit Button -->
-                                <div class="_1c">
-                                    <button class="button bg_green f-cl-white" type="button" id="update_role_btn">Thêm</button>
+                            </div>
+
+                            <!-- Status Field -->
+                            <div class="form-group _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="status_update" class="f-bold f-s-14 f-cl-black">Trạng thái</label>
+                                    <select name="status" id="status_update" class="input input-bordered f-s-14" required>
+                                        <option value="true">Kích hoạt</option>
+                                        <option value="false">Hủy</option>
+                                    </select>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+
+                            <input type="hidden" name="role_id_update" id="role_id_update" />
+                            <!-- Submit Button -->
+                            <div class="_1c">
+                                <button class="button bg_green f-cl-white" type="button" id="update_role_btn">Cập nhật</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-<script src="/assets/js/script.js"></script>
-<script src="/assets/js/notification.js"></script>
-<script src="/assets/js/accordion.js"></script>
-<script src="/assets/js/exitfFunc.js"></script>
-<script src="/assets/js/adminDatatable.js"></script>
-<script src="/assets/js/admin_privacy_role.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/notification.js"></script>
+    <script src="/assets/js/accordion.js"></script>
+    <script src="/assets/js/exitfFunc.js"></script>
+    <script src="/assets/js/adminDatatable.js"></script>
+    <script src="/assets/js/admin_privacy_role.js"></script>
 </body>
 </html>

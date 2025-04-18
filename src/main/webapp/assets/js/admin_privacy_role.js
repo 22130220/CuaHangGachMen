@@ -1,4 +1,3 @@
-// Function to initialize the data table
 const buttonShowRole = function () {
     var selectedRows = roleTable.rows({ selected: true }).count();
     roleTable.button(0).enable(selectedRows === 1);
@@ -20,6 +19,8 @@ const buttonRoleConfig = [
             $('#modify_role_form')[0].reset();
             $('#role_id_update').val(data.id);
             $('#role_name_update').val(data.name);
+            $('#role_description_update').val(data.description);
+            $('#status_update').val(data.status.toString());
             MicroModal.show('update_role_modal');
         },
         enabled: false
@@ -64,8 +65,7 @@ const buttonRoleConfig = [
                         onSuccess: function (resp) {
                             if (resp.success) {
                                 notyf.success(resp.message);
-                            }
-                            else {
+                            } else {
                                 notyf.error(resp.message);
                             }
                         }
@@ -75,7 +75,7 @@ const buttonRoleConfig = [
         },
         enabled: false
     }
-]
+];
 
 const buttonResourceConfig = [
     {
@@ -86,7 +86,6 @@ const buttonResourceConfig = [
             $('#modify_resource_form')[0].reset();
             $('#resource_id_update').val(data.id);
             $('#resource_name_update').val(data.name);
-            $('#resource_description_update').val(data.description);
             MicroModal.show('update_resource_modal');
         },
         enabled: false
@@ -131,8 +130,7 @@ const buttonResourceConfig = [
                         onSuccess: function (resp) {
                             if (resp.success) {
                                 notyf.success(resp.message);
-                            }
-                            else {
+                            } else {
                                 notyf.error(resp.message);
                             }
                         }
@@ -142,7 +140,8 @@ const buttonResourceConfig = [
         },
         enabled: false
     }
-]
+];
+
 const columns = [
     {
         targets: 0,
@@ -155,12 +154,12 @@ const columns = [
         className: 'dt-center',
     },
 ];
+
 let resourceTable = initDataTable('#resource', '/admin/get-resource', 'resources', null,
     columns,
     buttonResourceConfig,
     buttonShowResource,
     { paging: true, searching: false }
-
 );
 
 let roleTable = initDataTable('#roles', '/admin/get-role-v2', 'roles', null,
@@ -175,23 +174,24 @@ let roleTable = initDataTable('#roles', '/admin/get-role-v2', 'roles', null,
             data: 'description',
             className: 'dt-center',
         },
+        {
+            targets: 2,
+            data: 'status',
+            className: 'dt-center',
+            render: function (data, type, row) {
+                return data ? 'Kích hoạt' : 'Hủy';
+            }
+        },
     ],
     buttonRoleConfig,
     buttonShowRole,
     { paging: true, searching: false }
 );
 
-
-function openModal(modalSelector, inputSelector, bind) {
-    MicroModal.show(modalSelector);
-    $("#" + inputSelector).val(bind);
-};
-
 $('#role_add').on('click', function () {
     $('#add_role_form')[0].reset();
     MicroModal.show('create_role_modal');
 });
-
 
 $('#res_add').on('click', function () {
     $('#add_resource_form')[0].reset();
@@ -210,10 +210,9 @@ $('#add_role_btn').on('click', function () {
         type: 'POST',
         onSuccess: function (resp) {
             if (resp.success) {
-                notyf.success(resp.message)
-            }
-            else {
-                notyf.error(resp.message)
+                notyf.success(resp.message);
+            } else {
+                notyf.error(resp.message);
             }
         }
     });
@@ -231,10 +230,9 @@ $('#add_resource_btn').on('click', function () {
         type: 'POST',
         onSuccess: function (resp) {
             if (resp.success) {
-                notyf.success(resp.message)
-            }
-            else {
-                notyf.error(resp.message)
+                notyf.success(resp.message);
+            } else {
+                notyf.error(resp.message);
             }
         }
     });
@@ -252,10 +250,9 @@ $('#update_role_btn').on('click', function () {
         type: 'PUT',
         onSuccess: function (resp) {
             if (resp.success) {
-                notyf.success(resp.message)
-            }
-            else {
-                notyf.error(resp.message)
+                notyf.success(resp.message);
+            } else {
+                notyf.error(resp.message);
             }
         }
     });
@@ -273,10 +270,9 @@ $('#update_resource_btn').on('click', function () {
         type: 'PUT',
         onSuccess: function (resp) {
             if (resp.success) {
-                notyf.success(resp.message)
-            }
-            else {
-                notyf.error(resp.message)
+                notyf.success(resp.message);
+            } else {
+                notyf.error(resp.message);
             }
         }
     });

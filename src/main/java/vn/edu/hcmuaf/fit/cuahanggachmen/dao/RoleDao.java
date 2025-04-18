@@ -13,62 +13,49 @@ public class RoleDao extends BaseDao{
         super(handle);
     }
 
-    /**
-     * Thêm mới một Role
-     */
-    public int insertRole(String name, String description) {
-        return handle.createUpdate("INSERT INTO role (name, description) VALUES (:name, :description)")
-                    .bind("name", name)
-                    .bind("description", description)
-                    .execute();
+    public int insertRole(String name, String description, boolean status) {
+        return handle.createUpdate("INSERT INTO role (name, description, status) VALUES (:name, :description, :status)")
+                .bind("name", name)
+                .bind("description", description)
+                .bind("status", status)
+                .execute();
     }
 
-    /**
-     * Lấy danh sách tất cả Role
-     */
     public List<Role> getAllRoles() {
         return handle.createQuery("SELECT * FROM role")
-                        .map((rs, ctx) -> new Role(
-                                rs.getInt("id"),
-                                rs.getString("name"),
-                                rs.getString("description")
-                        ))
-                        .list();
+                .map((rs, ctx) -> new Role(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getBoolean("status")
+                ))
+                .list();
     }
 
-    /**
-     * Tìm Role theo ID
-     */
     public Optional<Role> getRoleById(int id) {
         return handle.createQuery("SELECT * FROM role WHERE id = :id")
-                        .bind("id", id)
-                        .map((rs, ctx) -> new Role(
-                                rs.getInt("id"),
-                                rs.getString("name"),
-                                rs.getString("description")
-                        ))
-                        .findOne();
+                .bind("id", id)
+                .map((rs, ctx) -> new Role(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getBoolean("status")
+                ))
+                .findOne();
     }
 
-    /**
-     * Cập nhật Role
-     */
-    public int updateRole(int id, String newName, String newDescription) {
-        int rowsAffected = handle.createUpdate("UPDATE role SET name = :name, description = :description WHERE id = :id")
-                        .bind("name", newName)
-                        .bind("description", newDescription)
-                        .bind("id", id)
-                        .execute();
-        return rowsAffected;
+    public int updateRole(int id, String newName, String newDescription, boolean status) {
+        return handle.createUpdate("UPDATE role SET name = :name, description = :description, status = :status WHERE id = :id")
+                .bind("name", newName)
+                .bind("description", newDescription)
+                .bind("status", status)
+                .bind("id", id)
+                .execute();
     }
 
-    /**
-     * Xóa Role theo ID
-     */
     public int deleteRole(int id) {
-        int rowsAffected = handle.createUpdate("DELETE FROM role WHERE id = :id")
-                        .bind("id", id)
-                        .execute();
-        return rowsAffected;
+        return handle.createUpdate("DELETE FROM role WHERE id = :id")
+                .bind("id", id)
+                .execute();
     }
 }
