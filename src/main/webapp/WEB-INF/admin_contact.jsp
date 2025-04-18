@@ -85,7 +85,7 @@
 
     <!--Notyf-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Sweet alert 2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -93,6 +93,66 @@
         div.container {
             max-width: 1200px;
         }
+        th {
+            vertical-align: middle !important;
+            text-align: center !important;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        /* Modal Box */
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Textarea for admin reply */
+        #adminReply {
+            width: 100%;
+            height: 80px;
+            margin-top: 5px;
+            resize: vertical;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        /* Gửi phản hồi button */
+        #sendReplyBtn {
+            margin-top: 10px;
+            padding: 8px 14px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #sendReplyBtn:hover {
+            background-color: #45a049;
+        }
+
     </style>
 </head>
 <body>
@@ -120,7 +180,8 @@
                         <th>Email</th>
                         <th>Tiêu đề</th>
                         <th>Ngày gửi</th>
-                        <th>check</th>
+                        <th>Check</th>
+                        <th>Chức năng</th>
                     </tr>
                     </thead>
                     <tfoot></tfoot>
@@ -130,7 +191,57 @@
     </div>
 </div>
 
+
+
+<div class="modal micromodal-slide" id="contactModal" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <header class="modal__header">
+                <h2 class="modal__title">Chi tiết liên hệ</h2>
+                <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+            </header>
+
+            <form id="replyForm" class="modal__content">
+                <div class="modal__field">
+                    <label><strong>Email:</strong></label>
+                    <div id="modalEmail" class="modal__value"></div>
+                </div>
+                <div class="modal__field">
+                    <label><strong>Tiêu đề:</strong></label>
+                    <div id="modalTitle" class="modal__value"></div>
+                </div>
+                <div class="modal__field">
+                    <label><strong>Nội dung:</strong></label>
+                    <div id="modalContent" class="modal__value"></div>
+                </div>
+
+                <!-- input ẩn để gửi id -->
+                <input type="hidden" id="contactIdHidden" name="id" />
+
+                <div class="modal__field">
+                    <label for="adminReply"><strong>Phản hồi:</strong></label>
+                    <textarea id="adminReply" name="reply" class="modal__textarea" placeholder="Nhập phản hồi của bạn..." required></textarea>
+                </div>
+
+                <div class="modal__actions">
+                    <button type="submit" class="modal__button">Gửi phản hồi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
 </body>
+<script src="/assets/js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>
     // KHỞI TẠO BẢNG
     let table = new DataTable('#example', {
@@ -145,13 +256,28 @@
                 render: function (data) {
                     return data ? 'true' : 'false';
                 }
+            },
+            {
+                "data": "id",
+                render: function (data, type, row) {
+                    if (!row.isReply) {
+                        return `<i data-target="\${data}" title="phản hồi" class="fa-solid fa-envelope" onclick="getModel(\${data})"></i>`;
+                    } else {
+                        return ''; // hoặc có thể return dấu check ✅ nếu muốn
+                    }
+                }
             }
         ]
     });
 
     table.on('init', function () {
-        const colIndex = 4; // cột "check"
+        const colIndex = 4; // cột "Check"
         const headerCell = document.querySelectorAll('#example thead tr')[0].children[colIndex];
+
+        // Reset CSS th
+        headerCell.style.padding = "8px";
+        headerCell.style.verticalAlign = "middle";
+        headerCell.style.textAlign = "center";
 
         // Tạo wrapper chứa tiêu đề + select
         const wrapper = document.createElement("div");
@@ -159,6 +285,7 @@
         wrapper.style.flexDirection = "column";
         wrapper.style.alignItems = "center";
         wrapper.style.justifyContent = "center";
+        wrapper.style.gap = "4px"; // tạo khoảng cách giữa tiêu đề và select
 
         // Lấy tiêu đề cũ
         const title = headerCell.innerText || headerCell.textContent;
@@ -166,12 +293,16 @@
         // Gán lại tiêu đề vào div
         const titleDiv = document.createElement("div");
         titleDiv.textContent = title;
-        titleDiv.style.marginBottom = "4px";
+        titleDiv.style.fontWeight = "bold";
+        titleDiv.style.fontSize = "14px";
 
         // Tạo dropdown
         const select = document.createElement("select");
-        select.style.width = "80px";
-        select.style.fontSize = "12px";
+        select.style.width = "90px";
+        select.style.fontSize = "13px";
+        select.style.padding = "2px 4px";
+        select.style.textAlign = "center";
+
         select.innerHTML = `
         <option value="">-- Tất cả --</option>
         <option value="true">true</option>
@@ -187,6 +318,80 @@
         wrapper.appendChild(select);
         headerCell.appendChild(wrapper);
     });
+    function getModel(id) {
+        const contactId = id;
+        console.log("Click icon ✉ với id:", contactId);
+
+        $.ajax({
+            url: `/ContactManagerDetailController?id=\${contactId}`,
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                const contact = response.data;
+
+                $('#modalEmail').text(contact.email);
+                $('#modalTitle').text(contact.title);
+                $('#modalContent').text(contact.content);
+                $('#contactIdHidden').val(contactId);
+                $('#adminReply').val('');
+                $('#sendReplyBtn').attr('data-id', contactId);
+
+                // $('#contactModal').css('display', 'flex');
+                MicroModal.show('contactModal');
+            },
+            error: function (xhr, status, error) {
+                alert("Không thể tải dữ liệu liên hệ");
+                console.error("Lỗi AJAX:", status, error);
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        $('#replyForm').on('submit', function (e) {
+            e.preventDefault();
+
+            let formData = $(this).serialize(); // Dữ liệu sẽ là id=123&reply=abc
+
+            $.ajax({
+                url: '/ResponseController',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    MicroModal.close('contactModal'); // ✅ sửa đúng tên hàm
+
+                    const notyf = new Notyf();
+                    if (response.success) {
+                        notyf.open({
+                            duration: 1000,
+                            position: { x: 'right', y: 'bottom' },
+                            type: "success",
+                            message: "Phản hồi thành công",
+                        });
+                        table.ajax.reload(null, false);
+                    } else {
+                        notyf.open({
+                            duration: 1000,
+                            position: { x: 'right', y: 'bottom' },
+                            type: "error",
+                            message: "Phản hồi không thành công",
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Lỗi khi gửi phản hồi:', error);
+                    const notyf = new Notyf();
+                    notyf.open({
+                        duration: 1000,
+                        position: { x: 'right', y: 'bottom' },
+                        type: "error",
+                        message: "Có lỗi xảy ra khi gửi phản hồi",
+                    });
+                }
+            });
+        });
+    });
+
 </script>
 
 
