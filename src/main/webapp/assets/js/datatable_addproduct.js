@@ -214,7 +214,7 @@ $("#add_spec_btn").on('click', function () {
     } else {
        specTable.row.add([
            text,
-           `<div class="fui-basic-input flex-column gap-6">
+           `<div class="fui-basic-input flex-column full-width gap-6">
                 <input type="text" name="spec" value="${value}" class="input input-bordered f-s-14"  autocomplete="off" required/>
             </div>`,
            `<input type="hidden" name="spec_id" value="${sel}" readonly required>`]).draw();
@@ -299,8 +299,9 @@ $("#add_color_btn").on('click', function () {
         colorTable.row.add([
             text,
 
-            `<div class="fui-basic-input flex-column gap-6">
-                <input type="file" name="color" class="input input-bordered f-s-14" accept=".jpg, .jpeg, .png" required>
+            `<div class="fui-basic-input flex-row gap-6 input-has-button">
+                <input type="text" name="color" class="input input-bordered f-s-14 full-width" readonly required>
+                <button type="button" class="button bg_green f-cl-white button-input" onclick="selectImage(this)" style="cursor: default;"> Chọn ảnh </button>
             </div>`,
             `<input type="hidden" name="color_id" value="${sel}" readonly>`]).draw();
         MicroModal.close('add_color');
