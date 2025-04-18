@@ -27,6 +27,8 @@ dependencies {
     implementation 'javax.json:javax.json-api:1.1.4'
     implementation 'org.glassfish:javax.json:1.1.4'
     implementation 'org.json:json:20230227'
+    implementation 'commons-fileupload:commons-fileupload:1.5'
+    implementation 'commons-io:commons-io:2.16.1'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.0-M2'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.11.0-M2'
