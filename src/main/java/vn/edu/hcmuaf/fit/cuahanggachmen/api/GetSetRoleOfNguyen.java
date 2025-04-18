@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@WebServlet(name = "GetSetRole", value = "/admin/role/api")
+@WebServlet(name = "GetSetRoleOfNguyen", value = "/admin/role/api")
 public class GetSetRoleOfNguyen extends HttpServlet {
 
     @Override
