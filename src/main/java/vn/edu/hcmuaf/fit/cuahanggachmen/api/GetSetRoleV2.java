@@ -2,9 +2,11 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.RoleDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
@@ -15,11 +17,12 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @MultipartConfig
 @WebServlet(name = "GetSetRole", value = "/admin/get-role-v2")
 public class GetSetRoleV2 extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Handle handle = DBConect.get().open();
         List<Role> ls = new RoleDao(handle).getAllRoles();
         Map<String, List<Role>> map = new HashMap<>();
@@ -34,14 +37,15 @@ public class GetSetRoleV2 extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String roleName = request.getParameter("role_name");
         String roleDescription = request.getParameter("role_description");
+        boolean status = Boolean.parseBoolean(request.getParameter("status")); // Lấy status từ request
 
         Handle handle = DBConect.get().open();
         RoleDao roleDao = new RoleDao(handle);
 
-        int success = roleDao.insertRole(roleName, roleDescription);
+        int success = roleDao.insertRole(roleName, roleDescription, status);
         JsonObject ob = new JsonObject();
         ob.addProperty("success", success > 0);
         ob.addProperty("message", success > 0 ? "Thêm thành công" : "Thêm thất bại");
@@ -51,11 +55,10 @@ public class GetSetRoleV2 extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.print(ob);
         handle.close();
-
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String id = req.getParameter("id");
 
         int success = 0;
@@ -78,19 +81,19 @@ public class GetSetRoleV2 extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String roleId = req.getParameter("role_id_update");
         String roleName = req.getParameter("role_name_update");
         String roleDescription = req.getParameter("role_description_update");
+        boolean status = Boolean.parseBoolean(req.getParameter("status")); // Lấy status từ request
 
-        int success = 0;
         Handle handle = DBConect.get().open();
         RoleDao roleDao = new RoleDao(handle);
-        success = roleDao.updateRole(Integer.parseInt(roleId), roleName, roleDescription);
+        int success = roleDao.updateRole(Integer.parseInt(roleId), roleName, roleDescription, status);
 
         JsonObject ob = new JsonObject();
         ob.addProperty("success", success > 0);
-        ob.addProperty("message", success > 0 ? "Câp nhật thành công" : "Cập nhật thất bại");
+        ob.addProperty("message", success > 0 ? "Cập nhật thành công" : "Cập nhật thất bại");
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
