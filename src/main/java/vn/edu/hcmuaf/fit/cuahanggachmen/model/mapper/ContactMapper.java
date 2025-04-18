@@ -21,7 +21,8 @@ public class ContactMapper implements RowMapper<Contact> {
                 rs.getString("Title"),
                 rs.getString("Fullname"),
                 rs.getString("Content"),
-                rs.getBoolean("IsReply")
+                rs.getBoolean("IsReply"),
+                rs.getString("Response")
         );
     }
 

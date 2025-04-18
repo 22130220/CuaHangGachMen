@@ -12,6 +12,7 @@ public class Contact implements Serializable {
     private String content;
     private LocalDateTime SendDate;
     private boolean isReply;
+    private String response;
 
 
 
@@ -28,7 +29,7 @@ public class Contact implements Serializable {
     public Contact() {
     }
 
-    public Contact(int id, LocalDateTime sendDate, String email, String title, String fullname, String content, boolean isReply) {
+    public Contact(int id, LocalDateTime sendDate, String email, String title, String fullname, String content, boolean isReply,String response) {
         this.content = content;
         this.SendDate = sendDate;
         this.title = title;
@@ -36,6 +37,7 @@ public class Contact implements Serializable {
         this.fullname = fullname;
         this.id=id;
         this.isReply = isReply;
+        this.response=response;
     }
 
     public int getId() {
@@ -94,6 +96,21 @@ public class Contact implements Serializable {
         isReply = reply;
     }
 
+    public LocalDateTime getSendDate() {
+        return SendDate;
+    }
+
+    public void setSendDate(LocalDateTime sendDate) {
+        SendDate = sendDate;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
 
     @Override
     public String toString() {
@@ -103,8 +120,9 @@ public class Contact implements Serializable {
                 ", email='" + email + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", date=" + SendDate +
+                ", SendDate=" + SendDate +
                 ", isReply=" + isReply +
+                ", response='" + response + '\'' +
                 '}';
     }
 }

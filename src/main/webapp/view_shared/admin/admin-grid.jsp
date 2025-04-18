@@ -97,7 +97,7 @@
         </a>
         <a href="/admin/manage-contact" class="item5 sidebar-button">
             <div class="sidebar-icon">
-                <i class="fa-solid fa-user-tag"></i>
+                <i class="fa-regular fa-envelope"></i>
             </div>
             <p class="text">
                 Quản lý Liên hệ

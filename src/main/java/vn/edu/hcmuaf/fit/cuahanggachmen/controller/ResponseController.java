@@ -46,6 +46,7 @@ public class ResponseController extends HttpServlet {
         boolean emailSent = emailService.send(contact.getEmail(), "Reply "+contact.getTitle(), emailBody);
         resp.addBool("success",emailSent);
         contact.setReply(true);
+        contact.setResponse(reply);
         ctdao.update(contact);
         handle.close();
         response.setStatus(HttpServletResponse.SC_OK);
