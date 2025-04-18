@@ -26,7 +26,7 @@ public class ContactDAO extends BaseDao{
     }
 
     public void update(Contact ct) {
-        String sql = "UPDATE contact SET Fullname = ?, Email = ?, Title = ?, Content = ?, SendDate = ?, IsReply = ? WHERE ID = ?";
+        String sql = "UPDATE contact SET Fullname = ?, Email = ?, Title = ?, Content = ?, SendDate = ?, IsReply = ?, Response = ? WHERE ID = ?";
                 handle.createUpdate(sql)
                         .bind(0, ct.getFullname())
                         .bind(1, ct.getEmail())
@@ -34,6 +34,7 @@ public class ContactDAO extends BaseDao{
                         .bind(3, ct.getContent())
                         .bind(4, ct.getDate())
                         .bind(5, ct.isReply())
+                        .bind(6, ct.getResponse())
                         .bind(6, ct.getId())
                         .execute();
     }

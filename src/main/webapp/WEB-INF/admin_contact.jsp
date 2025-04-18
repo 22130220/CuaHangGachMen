@@ -152,6 +152,42 @@
         #sendReplyBtn:hover {
             background-color: #45a049;
         }
+        td{
+            text-align: center;
+        }
+        .modal__button {
+            display: inline-block;
+            padding: 0.6em 1.4em;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            background-color: #ff6f61;      /* Màu nền chính */
+            border: none;
+            border-radius: 0.4em;           /* Bo góc mềm mại */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition:
+                    background-color 0.3s ease,
+                    transform 0.2s ease,
+                    box-shadow 0.2s ease;
+        }
+
+        .modal__button:hover {
+            background-color: #ff8a75;      /* Sáng hơn khi hover */
+            transform: translateY(-2px);    /* Nâng nhẹ */
+            box-shadow: 0 6px 10px rgba(0,0,0,0.15);
+        }
+
+        .modal__button:active {
+            background-color: #e65b50;      /* Tối hơn khi nhấn */
+            transform: translateY(0);
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+        }
+
+        .modal__button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255,111,97,0.4);
+        }
 
     </style>
 </head>
@@ -164,7 +200,7 @@
                 <div class="nav-back-prev">
                     <div class="breadcumb">
                         <div class="breadcumb-icon f-s-25">
-                            <i class="fa-solid fa-user-tag"></i>
+                            <i class="fa-regular fa-envelope"></i>
                         </div>
                         <a href="#" class="f-bold f-s-25 breadcumb-text">Quản lý contact</a>
                     </div>
@@ -233,6 +269,54 @@
 
 
 
+<div class="modal micromodal-slide" id="contactModalDetail" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <header class="modal__header">
+                <h2 class="modal__title">Chi tiết liên hệ</h2>
+                <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+            </header>
+
+            <form id="replyFormDetail" class="modal__content">
+                <div class="modal__field">
+                    <label><strong>Họ và tên:</strong></label>
+                    <div id="modalNameDetail" class="modal__value"></div>
+                </div>
+                <div class="modal__field">
+                    <label><strong>Email:</strong></label>
+                    <div id="modalEmailDetail" class="modal__value"></div>
+                </div>
+                <div class="modal__field">
+                    <label><strong>Tiêu đề:</strong></label>
+                    <div id="modalTitleDetail" class="modal__value"></div>
+                </div>
+                <div class="modal__field">
+                    <label><strong>Nội dung:</strong></label>
+                    <textarea id="modalContentDetail" rows="6" cols="80"  class="modal__textarea" disabled ></textarea>
+                </div>
+                <div class="modal__field">
+                    <label for="adminReply"><strong>Phản hồi:</strong></label>
+                    <textarea id="adminReplyDetail" rows="6" cols="80"  class="modal__textarea" disabled ></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -261,12 +345,13 @@
                 "data": "id",
                 render: function (data, type, row) {
                     if (!row.isReply) {
-                        return `<i data-target="\${data}" title="phản hồi" class="fa-solid fa-envelope" onclick="getModel(\${data})"></i>`;
+                        return `<i style="align-items: center" data-target="\${data}" title="phản hồi" class="fa-solid fa-envelope" onclick="getModel(\${data})"></i>`;
                     } else {
-                        return ''; // hoặc có thể return dấu check ✅ nếu muốn
+                        return `<i data-target="\${data}" title="chi tiết" class="fa-regular fa-comment" onclick="getModelChiTiet(\${data})"></i>`;
                     }
                 }
-            }
+            },
+
         ]
     });
 
@@ -345,6 +430,38 @@
             }
         });
     }
+
+    function getModelChiTiet(id){
+        const contactId = id;
+
+        $.ajax({
+            url: `/ContactDetailController?id=\${contactId}`,
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                const contact = response.data;
+                $('#modalNameDetail').text(contact.fullname);
+                $('#modalEmailDetail').text(contact.email);
+                $('#modalTitleDetail').text(contact.title);
+                $('#modalContentDetail').val(contact.content);
+                $('#adminReplyDetail').val(contact.response);
+
+                // $('#contactModal').css('display', 'flex');
+                MicroModal.show('contactModalDetail');
+            },
+            error: function (xhr, status, error) {
+                alert("Không thể tải dữ liệu liên hệ");
+                console.error("Lỗi AJAX:", status, error);
+            }
+        });
+    }
+
+
+
+
+
+
+
 
 
     $(document).ready(function () {
