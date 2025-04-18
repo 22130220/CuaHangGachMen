@@ -33,6 +33,119 @@
             margin-bottom: 11px;
             display: block;
         }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(2px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .modal-content img {
+            width: 50px;
+            margin-bottom: 15px;
+        }
+
+        .modal-content h3 {
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            color: #666;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-buttons button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+
+        .continue-btn {
+            background-color: #0068ff; /* Màu Zalo */
+            color: white;
+        }
+
+        .continue-btn:hover {
+            background-color: #005ce6;
+            transform: scale(1.05);
+        }
+
+        .cancel-btn {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .cancel-btn:hover {
+            background-color: #d0d0d0;
+            transform: scale(1.05);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive modal */
+        @media (max-width: 480px) {
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+            }
+
+            .modal-buttons button {
+                width: 100%;
+            }
+        }
+
+        /* Định dạng biểu tượng Zalo */
+        .social-button.zalo img {
+            width: 20px;
+            height: 20px;
+            margin-right: 0px;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -47,8 +160,8 @@
 </header>
 
 <!-- Mục Lục -->
-<nav class="breadcrumb">
-    <a href="/">Home</a> > <a href="#!">Đăng nhập</a>
+<nav class="breadcrumb").
+<a href="/">Home</a> > <a href="#!">Đăng nhập</a>
 </nav>
 
 <div class="login-container">
@@ -100,8 +213,8 @@
         <a href="https://www.facebook.com/v20.0/dialog/oauth?client_id=1294677724960043&redirect_uri=http://localhost:8080/facebooklogin&scope=public_profile" class="social-button facebook">
             <i class="fa-brands fa-facebook"></i> Đăng nhập với Facebook
         </a>
-        <a href="https://oauth.zaloapp.com/v4/permission?app_id=3385901349907197462&redirect_uri=http://localhost:8080/zalologin&state=<%=state%>&scope=id,name,picture&prompt=consent" class="social-button zalo">
-            <i class="fa-brands fa-zalo"></i> Đăng nhập với Zalo
+        <a href="#" class="social-button zalo" onclick="showZaloConfirmModal()">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMDg68zSJU2TpKyMFJwkWpuGsXF_FTMJguqA&s" alt="Zalo Logo"> Đăng nhập với Zalo
         </a>
     </div>
 
@@ -113,7 +226,19 @@
     <button class="create-account"><a href="register">Tạo Tài Khoản</a></button>
 </div>
 
-</body>
+<!-- Zalo Confirmation Modal -->
+<div id="zaloConfirmModal" class="modal">
+    <div class="modal-content">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMDg68zSJU2TpKyMFJwkWpuGsXF_FTMJguqA&s" alt="Zalo Logo">
+        <h3>Xác nhận đăng nhập Zalo</h3>
+        <p>Bạn đang đăng nhập qua Zalo. Tiếp tục để trải nghiệm dịch vụ tốt hơn!</p>
+        <div class="modal-buttons">
+            <button class="continue-btn" onclick="continueZaloLogin()">Tiếp tục</button>
+            <button class="cancel-btn" onclick="closeZaloConfirmModal()">Hủy</button>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 
@@ -166,9 +291,19 @@
             }
         });
     });
-</script>
 
-<script>
+    function showZaloConfirmModal() {
+        document.getElementById("zaloConfirmModal").style.display = "block";
+    }
+
+    function closeZaloConfirmModal() {
+        document.getElementById("zaloConfirmModal").style.display = "none";
+    }
+
+    function continueZaloLogin() {
+        window.location.href = "https://oauth.zaloapp.com/v4/permission?app_id=3385901349907197462&redirect_uri=http://localhost:8080/zalologin&state=<%=state%>&scope=id,name,picture&prompt=consent";
+    }
+
     function recaptchaCallback() {
         document.getElementById("login-btn").disabled = false;
     }
@@ -181,5 +316,5 @@
         document.getElementById("login-btn").disabled = true;
     });
 </script>
-
+</body>
 </html>
