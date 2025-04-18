@@ -83,6 +83,13 @@
     .resource-list.active {
       display: block;
     }
+    .permission-checkbox {
+      margin-right: 10px;
+    }
+    .resource-checkbox {
+      margin-left: 20px;
+      margin-top: 5px;
+    }
   </style>
 </head>
 
@@ -103,7 +110,7 @@
           </div>
         </div>
         <div class="funcproduct">
-          <div class="button bg_blue f-cl-white" id="createRole" data-micromodal-trigger="create_role_modal">Tạo Role</div>
+          <div class="button bg_blue f-cl-white" id="createRole" data-micromodal-trigger="create_role_modal">Tạo vai trò và tài nguyên </div>
         </div>
       </nav>
 
@@ -118,6 +125,7 @@
                 <tr>
                   <th>Tên quyền</th>
                   <th> Mô tả </th>
+                  <th>Trạng thái</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -125,27 +133,28 @@
                   <tr>
                     <td>${role.name}</td>
                     <td>${role.description}</td>
+                    <td>${role.status ? 'Kích hoạt' : 'Hủy'}</td>
                   </tr>
                 </c:forEach>
                 </tbody>
               </table>
               <div class="total-roles text-left">
-                TOTAL: ${roles.size()}
+                TỔNG SỐ QUYỀN: ${roles.size()}
               </div>
             </div>
           </div>
 
           <!-- Cột phải: Permission groups -->
           <div class="_2c">
-            <h3 class="text_entry_title" id="selectedRoleName">Chọn một role để xem quyền</h3>
+            <h3 class="text_entry_title" id="selectedRoleName">Chọn một quyền để xem vai trò và tài nguyên.</h3>
             <div class="card">
               <div class="title-icon">
                 <div class="action-buttons">
-                  <div class="button bg_orange f-cl-white" data-micromodal-trigger="modify_role_modal">Chỉnh sửa quyền</div>
-                  <div class="button bg_red f-cl-white" data-micromodal-trigger="delete_role_modal">Xóa quyền</div>
+                  <div class="button bg_orange f-cl-white" data-micromodal-trigger="modify_role_modal">Chỉnh sửa vai trò và tài nguyên </div>
+                  <div class="button bg_red f-cl-white" data-micromodal-trigger="delete_role_modal">Xóa vai trò và tài nguyên</div>
                 </div>
               </div>
-              <h4>Nhóm các quyền </h4>
+              <h4> Các vai trò và tài nguyên </h4>
               <div id="permissionGroups">
                 <!-- Permissions sẽ được cập nhật qua AJAX -->
               </div>
@@ -161,22 +170,25 @@
     <div class="modal__overlay" tabindex="-1" data-micromodal-close>
       <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
         <header class="modal__header">
-          <h2 class="modal__title" id="create_role_title">Tạo Role Mới</h2>
+          <h2 class="modal__title" id="create_role_title">Tạo Vai Trò và Tài Nguyên</h2>
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
         <div class="modal-content-content">
           <div class="modal__content">
             <div class="fui-basic-input" style="width: 100%">
-              <label for="role_name" class="f-bold f-s-14 f-cl-black">Tên Role</label>
-              <input type="text" name="role_name" placeholder="Nhập tên role" class="input input-bordered f-s-14" style="width: 100%" id="role_name" autocomplete="off" required/>
+              <label for="role_select" class="f-bold f-s-14 f-cl-black">Chọn Role</label>
+              <select name="role_select" id="role_select" class="input input-bordered f-s-14" required>
+                <option value="">Chọn một role</option>
+                <c:forEach var="role" items="${roles}">
+                  <option value="${role.id}">${role.name}</option>
+                </c:forEach>
+              </select>
             </div>
             <div class="fui-basic-input" style="width: 100%">
-              <label for="role_permissions" class="f-bold f-s-14 f-cl-black">Quyền</label>
-              <select name="role_permissions" id="role_permissions" class="input input-bordered f-s-14" multiple required>
-                <option value="read">Read</option>
-                <option value="execute">Execute</option>
-                <option value="read_write_execute">Read, Write, Execute</option>
-              </select>
+              <label class="f-bold f-s-14 f-cl-black">Chọn Quyền</label>
+              <div id="permissions_list">
+                <!-- Permissions sẽ được tải qua AJAX -->
+              </div>
             </div>
           </div>
           <footer class="modal__footer">
@@ -248,6 +260,9 @@
 
 <script>
   $(document).ready(function() {
+    // Khởi tạo Notyf
+    const notyf = new Notyf();
+
     // Khởi tạo DataTable
     $('#rolesTable').DataTable({
       responsive: true,
@@ -270,70 +285,197 @@
         data: { roleName: roleName },
         success: function(response) {
           if (response.success) {
-            // Cập nhật giao diện với permissions
             updatePermissionsUI(response.permissions);
           } else {
-            alert('Không thể tải quyền: ' + response.error);
+            notyf.error('Không thể tải quyền: ' + response.error);
             $('#permissionGroups').html('<p>Không có quyền nào cho role này.</p>');
           }
         },
-        error: function() {
-          alert('Lỗi khi tải quyền của role');
-          $('#permissionGroups').html('<p>Đã xảy ra lỗi khi tải quyền.</p>');
+        error: function(xhr, status, error) {
+          var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+          notyf.error('Lỗi khi tải quyền của role: ' + errorMessage);
         }
       });
     });
 
     // Hàm cập nhật giao diện permissions
     function updatePermissionsUI(permissions) {
-      // Lấy danh sách permissionName duy nhất
       var permissionNames = [...new Set(permissions.map(perm => perm.permissionName))];
-
-      // Tạo HTML cho danh sách permissionName
       var html = '';
       permissionNames.forEach(function(permName) {
         html += '<div class="permission-group">';
         html += '<h4 class="permission-item" data-permission="' + permName + '"><i class="fa-solid fa-chevron-down"></i> ' + permName + '</h4>';
         html += '<div class="resource-list" id="resources-' + permName.replace(/[^a-zA-Z0-9]/g, '') + '">';
-        // Danh sách resource sẽ được thêm khi click
         html += '</div>';
         html += '</div>';
       });
 
-      // Nếu không có permissions, hiển thị thông báo
       if (permissionNames.length === 0) {
         html = '<p>Không có quyền nào cho role này.</p>';
       }
 
-      // Cập nhật vào DOM
       $('#permissionGroups').html(html);
 
-      // Thêm sự kiện click cho mỗi permissionName
       $('.permission-item').on('click', function() {
         var permName = $(this).data('permission');
         var resourceListId = '#resources-' + permName.replace(/[^a-zA-Z0-9]/g, '');
 
-        // Nếu danh sách resource đã hiển thị, ẩn nó đi
         if ($(resourceListId).hasClass('active')) {
           $(resourceListId).removeClass('active');
           return;
         }
 
-        // Lấy danh sách resourceName cho permissionName này
         var resources = permissions
                 .filter(perm => perm.permissionName === permName)
                 .map(perm => perm.resourceName);
 
-        // Tạo HTML cho danh sách resourceName
         var resourceHtml = '';
         resources.forEach(function(resource) {
           resourceHtml += '<div class="resource-item">' + resource + '</div>';
         });
 
-        // Cập nhật danh sách resource và hiển thị
         $(resourceListId).html(resourceHtml).addClass('active');
       });
     }
+
+    // Xử lý khi mở modal tạo role
+    $('#createRole').on('click', function() {
+      $.ajax({
+        url: '/admin/role/api/permissions',
+        method: 'GET',
+        success: function(response) {
+          if (response.success) {
+            updatePermissionsModal(response.permissions);
+          } else {
+            notyf.error('Không thể tải danh sách quyền: ' + response.error);
+          }
+        },
+        error: function(xhr, status, error) {
+          var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+          notyf.error('Lỗi khi tải danh sách quyền: ' + errorMessage);
+        }
+      });
+    });
+
+    // Hàm cập nhật danh sách permissions trong modal
+    function updatePermissionsModal(permissions) {
+      var html = '';
+      permissions.forEach(function(perm) {
+        html += '<div class="permission-group">';
+        html += '<label><input type="checkbox" class="permission-checkbox" value="' + perm.id + '" data-permission-id="' + perm.id + '"> ' + perm.name + '</label>';
+        html += '<div class="resource-list" id="resources-create-' + perm.id + '"></div>';
+        html += '</div>';
+      });
+      $('#permissions_list').html(html);
+
+      $('.permission-checkbox').on('change', function() {
+        var permId = $(this).data('permission-id');
+        var resourceListId = '#resources-create-' + permId;
+
+        if ($(this).is(':checked')) {
+          $.ajax({
+            url: '/admin/role/api/resources',
+            method: 'GET',
+            success: function(response) {
+              if (response.success) {
+                var resourceHtml = '';
+                response.resources.forEach(function(resource) {
+                  resourceHtml += '<label class="resource-checkbox"><input type="checkbox" name="resources[' + permId + '][]" value="' + resource.id + '"> ' + resource.name + '</label><br>';
+                });
+                $(resourceListId).html(resourceHtml).addClass('active');
+              } else {
+                notyf.error('Không thể tải danh sách tài nguyên: ' + response.error);
+              }
+            },
+            error: function(xhr, status, error) {
+              var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+              notyf.error('Lỗi khi tải danh sách tài nguyên: ' + errorMessage);
+            }
+          });
+        } else {
+          $(resourceListId).html('').removeClass('active');
+        }
+      });
+    }
+
+    // Xử lý khi nhấn nút Tạo
+    $('#create_role_btn').on('click', function() {
+      var roleIdStr = $('#role_select').val();
+      var roleId = parseInt(roleIdStr);
+
+      // Kiểm tra roleId hợp lệ
+      if (!roleIdStr || isNaN(roleId) || roleId <= 0) {
+        notyf.error('Vui lòng chọn một vai trò hợp lệ');
+        return;
+      }
+
+      var permissions = [];
+
+      $('.permission-checkbox:checked').each(function() {
+        var permIdStr = $(this).val();
+        var permId = parseInt(permIdStr);
+        var resources = [];
+        $('input[name="resources[' + permId + '][]"]:checked').each(function() {
+          var resourceId = parseInt($(this).val());
+          if (!isNaN(resourceId) && resourceId > 0) {
+            resources.push(resourceId.toString()); // Chuyển resourceId thành chuỗi
+          }
+        });
+        if (resources.length > 0 && !isNaN(permId) && permId > 0) {
+          permissions.push({
+            permissionId: permId.toString(), // Chuyển permissionId thành chuỗi
+            resourceIds: resources
+          });
+        }
+      });
+
+      if (permissions.length === 0) {
+        notyf.error('Vui lòng chọn ít nhất một quyền và tài nguyên');
+        return;
+      }
+
+      // Tạo payload JSON
+      var payload = {
+        roleId: roleId.toString(), // Chuyển roleId thành chuỗi
+        permissions: permissions
+      };
+
+      // Gửi AJAX để tạo role-resource-permission
+      $.ajax({
+        url: '/admin/role/api/create',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function(response) {
+          if (response.success) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Thành công',
+              text: 'Tạo vai trò và tài nguyên thành công',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              MicroModal.close('create_role_modal');
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Lỗi',
+              text: 'Lỗi khi tạo vai trò và tài nguyên: ' + response.error
+            });
+          }
+        },
+        error: function(xhr, status, error) {
+          var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+          Swal.fire({
+            icon: 'error',
+            title: 'Lỗi',
+            text: 'Lỗi khi tạo vai trò và tài nguyên: ' + errorMessage
+          });
+        }
+      });
+
+    });
   });
 </script>
 
