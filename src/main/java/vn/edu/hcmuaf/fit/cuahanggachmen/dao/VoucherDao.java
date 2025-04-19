@@ -21,12 +21,14 @@ public class VoucherDao extends BaseDao {
     }
 
     // Insert a new Voucher
-    public int insert(Voucher Voucher) {
-        return handle.createUpdate("INSERT INTO vouchers (code, discountValue, expireDate, isActive) VALUES (:code, :VoucherValue, :expireDate, :isActive)")
-                     .bind("code", Voucher.getCode())
-                    .bind("VoucherValue", Voucher.getDiscountValue())
-                    .bind("expireDate", Voucher.getExpireDate())
-                    .bind("isActive", Voucher.isActive()).execute();
+    public int insert(Voucher voucher) {
+        return handle.createUpdate("INSERT INTO vouchers (code, discountValue, expireDate, isActive, VoucherTypeId) VALUES (:code, :VoucherValue, :expireDate, :isActive, :VoucherTypeId)")
+                .bind("code", voucher.getCode())
+                .bind("VoucherValue", voucher.getDiscountValue())
+                .bind("expireDate", voucher.getExpireDate())
+                .bind("isActive", voucher.isActive())
+                .bind("VoucherTypeId", voucher.getVoucherType())
+                .execute();
     }
 
     // Find Voucher by ID
@@ -48,14 +50,16 @@ public class VoucherDao extends BaseDao {
 
 
     // Update a Voucher
-    public int update(Voucher Voucher) {
-        return handle.createUpdate("UPDATE vouchers SET code = :code, discountValue = :VoucherValue, expireDate = :expireDate, isActive = :isActive WHERE Id = :id")
-                    .bind("id", Voucher.getId())
-                    .bind("code", Voucher.getCode())
-                    .bind("VoucherValue", Voucher.getDiscountValue())
-                    .bind("expireDate", Voucher.getExpireDate())
-                    .bind("isActive", Voucher.isActive())
-                    .execute();
+    public int update(Voucher voucher) {
+        return handle.createUpdate(
+                        "UPDATE vouchers SET code = :code, discountValue = :VoucherValue, expireDate = :expireDate, isActive = :isActive, VoucherTypeId = :VoucherTypeId WHERE Id = :id")
+                .bind("id", voucher.getId())
+                .bind("code", voucher.getCode())
+                .bind("VoucherValue", voucher.getDiscountValue())
+                .bind("expireDate", voucher.getExpireDate())
+                .bind("isActive", voucher.isActive())
+                .bind("VoucherTypeId", voucher.getVoucherType())
+                .execute();
     }
 
     public int updateActive(int id, boolean active) {
@@ -95,6 +99,7 @@ public class VoucherDao extends BaseDao {
         Voucher.setExpireDate(rowView.getColumn("ExpireDate", LocalDateTime.class));
         Voucher.setActive(rowView.getColumn("IsActive", Boolean.class));
         Voucher.setCreateDate(rowView.getColumn("CreateDate", LocalDateTime.class));
+        Voucher.setVoucherType(rowView.getColumn("VoucherTypeId", Integer.class));
         return Voucher;
     }
 

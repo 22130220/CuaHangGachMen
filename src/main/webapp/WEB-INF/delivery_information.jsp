@@ -109,7 +109,7 @@
         <div class="discount">
 
             <input type="text" id="discount" placeholder="Nhập mã giảm giá">
-            <div class="btn-secondary" id="btn_usage">Sử dụng</div>
+            <button class="btn-secondary" id="btn_usage" disabled>Sử dụng</button>
         </div>
         <hr>
         <div class="price-summary">
