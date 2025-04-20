@@ -4,9 +4,15 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Cart;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Voucher;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "delivery_information", value = "/delivery_information")
 public class Delivery_InfController extends HttpServlet {
@@ -16,6 +22,7 @@ public class Delivery_InfController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
+        User user = (User) session.getAttribute("auth");
 
         if (cart == null || cart.getItems().isEmpty()) {
             response.sendRedirect("cart"); // Nếu giỏ hàng rỗng, quay lại trang giỏ hàng
@@ -24,7 +31,13 @@ public class Delivery_InfController extends HttpServlet {
 
         // Tính phí vận chuyển (tạm tính / 10)
 //        double shippingFee = cart.getTotal() / 10.0;
+        Handle handle = DBConect.get().open();
+        VoucherDao voucherDao = new VoucherDao(handle);
+        List<Voucher> listOrder =voucherDao.findAllUnusedOrderByUser(user.getId());
+        List<Voucher> listShip =voucherDao.findAllUnusedShipByUser(user.getId());
 
+        request.setAttribute("orderVouchers", listOrder);
+        request.setAttribute("shippingVouchers", listShip);
         // Truyền thông tin sang JSP
         request.setAttribute("cart", cart);
 //        request.setAttribute("shippingFee", shippingFee);

@@ -213,26 +213,26 @@
                 </script>
 
                 <!-- Vouchers -->
-                <div class="vouchers">
+<%--                <div class="vouchers">--%>
 
-                    <c:forEach var="vsc" items="${vs}">
-                        <div class="voucher-card">
-                            <div class="voucher-content">
-                                <img src="https://theme.hstatic.net/200000796751/1001266995/14/home_coupon_2_img.png?v=66"
-                                     alt="Voucher">
-                                <div class="voucher-info">
-                                    <p><b><c:out value="${vsc.discountValue}"/></b></p>
+<%--                    <c:forEach var="vsc" items="${vs}">--%>
+<%--                        <div class="voucher-card">--%>
+<%--                            <div class="voucher-content">--%>
+<%--                                <img src="https://theme.hstatic.net/200000796751/1001266995/14/home_coupon_2_img.png?v=66"--%>
+<%--                                     alt="Voucher">--%>
+<%--                                <div class="voucher-info">--%>
+<%--                                    <p><b><c:out value="${vsc.discountValue}"/></b></p>--%>
 
-                                    <p>Mã: <b class="a">${vsc.code}</b></p>
-                                    <p>HSD: ${vsc.expireDate} </p>
-                                </div>
-                            </div>
-                            <button class="btn-copy">SAO CHÉP MÃ</button>
-                        </div>
-                    </c:forEach>
+<%--                                    <p>Mã: <b class="a">${vsc.code}</b></p>--%>
+<%--                                    <p>HSD: ${vsc.expireDate} </p>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                            <button class="btn-copy">SAO CHÉP MÃ</button>--%>
+<%--                        </div>--%>
+<%--                    </c:forEach>--%>
 
 
-                </div>
+<%--                </div>--%>
             </div>
         </c:if>
     </div>
