@@ -8,9 +8,21 @@ public class Cart implements Serializable {
     private List<CartItem> items;
     private double discount;
     private int voucherId;
+    private List<Integer> listVoucherId;
 
     public Cart() {
         items = new ArrayList<>();
+        listVoucherId = new ArrayList<>();
+    }
+    public void addVoucherID(int voucherId) {
+        listVoucherId.add(voucherId);
+    }
+    public List<Integer> getListVoucherId() {
+        return listVoucherId;
+    }
+
+    public void setListVoucherId(List<Integer> listVoucherId) {
+        this.listVoucherId = listVoucherId;
     }
 
     public List<CartItem> getItems() {

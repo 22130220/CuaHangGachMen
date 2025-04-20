@@ -2,7 +2,6 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.Voucher;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.VoucherType;
 
 import java.util.List;

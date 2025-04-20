@@ -3,10 +3,19 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 import java.time.LocalDateTime;
 
 public class VoucherUsage {
+    private int id;
     private int voucherId;
     private int userId;
     private int orderId;
     private LocalDateTime usageDate;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     // Getters and Setters
     public int getVoucherId() {
@@ -46,6 +55,14 @@ public class VoucherUsage {
         this.userId = userId;
         this.orderId = orderId;
         this.usageDate = usageDate;
+    }
+
+    public VoucherUsage(int id, int voucherId, int userId, LocalDateTime usageDate, int orderId) {
+        this.id = id;
+        this.voucherId = voucherId;
+        this.userId = userId;
+        this.usageDate = usageDate;
+        this.orderId = orderId;
     }
 
     @Override

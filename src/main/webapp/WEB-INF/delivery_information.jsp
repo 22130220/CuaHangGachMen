@@ -21,6 +21,42 @@
 
     <!--Notyf-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <style>
+        .discount {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .discount select,
+        .discount button {
+            padding: 8px 12px;
+            font-size: 14px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            min-width: 200px;
+            height: 40px;
+        }
+
+        .discount button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .discount button:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+
+        .discount button:hover:enabled {
+            background-color: #388e3c;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -78,6 +114,7 @@
             <input type="hidden" id="district1" name="district1" value="">
             <input type="hidden" id="ward1" name="ward1" value="">
             <input type="hidden" id="voucherID" name="voucherID" value="Không có mã voucher">
+            <input type="hidden" id="voucherIDShip" name="voucherIDShip" value="Không có mã voucher">
             <input type="hidden" id="finalTotal1" name="finalTotal" value="">
 
 
@@ -107,8 +144,24 @@
             </c:forEach>
         </ul>
         <div class="discount">
+            <%--            <input type="text" id="discount" placeholder="Nhập mã giảm giá">--%>
+            <!-- Select: Giảm giá đơn hàng -->
+            <select id="voucherOrder">
+                <option value="">-- Giảm giá đơn hàng --</option>
+                <c:forEach var="voucher" items="${orderVouchers}">
+                    <option value="${voucher.id}">${voucher.code}-${voucher.discountValue}</option>
+                </c:forEach>
+            </select>
 
-            <input type="text" id="discount" placeholder="Nhập mã giảm giá">
+            <!-- Select: Giảm giá phí vận chuyển -->
+            <select id="voucherShipping">
+                <option value="">-- Giảm giá phí vận chuyển --</option>
+                <c:forEach var="voucher" items="${shippingVouchers}">
+                    <option value="${voucher.id}">${voucher.code}-${voucher.discountValue}</option>
+                </c:forEach>
+            </select>
+
+            <%--            <input type="text" id="discount" placeholder="Nhập mã giảm giá">--%>
             <button class="btn-secondary" id="btn_usage" disabled>Sử dụng</button>
         </div>
         <hr>
@@ -116,10 +169,11 @@
             <p>Tạm tính:
                 <fmt:formatNumber value="${cart.total}" type="number" maxFractionDigits="0"/>₫
             </p>
-            <p id="feeValue">Phí vận chuyển:
-                <fmt:formatNumber value="0" type="number" maxFractionDigits="0"/>₫
+            <p >Phí vận chuyển:
+               <span id="feeValue"><fmt:formatNumber value="0" type="number" maxFractionDigits="0"/></span> ₫
             </p>
             <p id="dis_val"></p>
+            <p id="dis_val1"></p>
             <hr>
             <h3>Tổng cộng:
                 <span id="totalPrice"><fmt:formatNumber value="${cart.total}" type="number" maxFractionDigits="0"/></span>₫
@@ -128,7 +182,7 @@
     </aside>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-<script src="/assets/js/ajaxVoucher.js"></script>
+
 
 <script>
     const apiToken = 'db44e853-cc14-11ef-b1ed-769685acafa5';
@@ -221,7 +275,7 @@
         const toDistrictID = document.getElementById('district').value;
         const toWardID = document.getElementById('ward').value;
         const weight = 100;
-
+        let originalTotalPrice = 0;
         if (!toDistrictID || !toWardID || !weight) {
             alert('Vui lòng nhập đầy đủ thông tin!');
             return;
@@ -301,9 +355,10 @@
             })
             .then (data =>{
                 if(data.success){
-                    $('#feeValue').text(fee.toLocaleString()+" đ")  ;
+                    $('#feeValue').text(fee.toLocaleString('vi-VN'))  ;
                     $('#totalPrice').text(data.totalPrice.toLocaleString())
                     $('#finalTotal1').val(data.totalPrice)
+                    originalTotalPrice = data.totalPrice;
                 }
 
             })
@@ -311,10 +366,76 @@
                 console.error('Error updating session fee:', error);
             });
     }
+
+
+    function checkAddressSelection() {
+        const hasProvince = $('#province').val();
+        const hasDistrict = $('#district').val();
+        const hasWard = $('#ward').val();
+        if (!hasProvince || !hasDistrict || !hasWard) {
+            $('#btn_usage').prop('disabled', true);
+        } else {
+            $('#btn_usage').prop('disabled', false);
+            $('#tooltip_warn').hide();
+        }
+    }
+
+
+    $(document).ready(function () {
+        const notyf = new Notyf();
+        // ✅ Gắn đúng chỗ - DUY NHẤT MỘT LẦN
+        $("#btn_usage").on('click', function () {
+            if ($(this).prop('disabled')) return;
+            const code = $("#voucherOrder").val();
+            const code2 = $("#voucherShipping").val();
+
+            $.ajax({
+                url: '/user/voucher',
+                type: 'GET',
+                data: {
+                    code: code,
+                    code2: code2,
+                    price:originalTotalPrice
+                },
+                success: function (response) {
+                    if (response.status) {
+                        notyf.success("Voucher được áp dụng");
+                        if (response.discount !== null) {
+                            $("#dis_val").text("Giảm giá order: " + response.discount.toLocaleString('vi-VN') + "₫");
+                            $("#dis_val1").text("Giảm giá ship: " + response.discountShip.toLocaleString('vi-VN') + "₫");
+                            // const f1 = parseFloat(rootPrice1);
+                            // const f2 = parseFloat(response.discount);
+                            // const f22 = parseFloat(response.discountShip);
+                            // let f3 = f1 - f2 - f22;
+                            // if (f3 < 0) f3 = 0;
+                            $("#totalPrice").text(response.price.toLocaleString('vi-VN'));
+                            $("#voucherID").val(response.voucherID > 0 ? response.voucherID : "Không áp dụng mã giảm order");
+                            $("#voucherIDShip").val(response.voucherIDShip > 0 ? response.voucherIDShip : "Không áp dụng mã giảm giá ship");
+                            $("#finalTotal1").val(response.price);
+                        }
+                    } else {
+                        notyf.error("bị lỗi");
+                    }
+                }
+            });
+        });
+
+        // Địa chỉ thay đổi thì kiểm tra lại
+        $('#province, #district, #ward').on('change', checkAddressSelection);
+        checkAddressSelection(); // kiểm tra lần đầu
+
+        // Tooltip nếu chưa chọn địa chỉ
+        $('#usage_wrapper').on('click', function () {
+            if ($('#btn_usage').prop('disabled')) {
+                $('#tooltip_warn').fadeIn();
+                setTimeout(() => $('#tooltip_warn').fadeOut(), 2000);
+            }
+        });
+    });
 </script>
 
 
-
+<%--<script src="/assets/js/ajaxVoucher.js"></script>--%>
 
 
 </body>

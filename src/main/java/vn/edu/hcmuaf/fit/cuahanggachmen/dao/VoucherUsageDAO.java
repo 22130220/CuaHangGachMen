@@ -43,6 +43,22 @@ public class VoucherUsageDAO extends BaseDao {
                         .findFirst();
     }
 
+    public VoucherUsage findByIdAndUser(int voucherId, int userId) {
+        return handle.createQuery(
+                        "SELECT * FROM voucherusage vcur " +
+                                "JOIN vouchers v ON vcur.VoucherID = v.ID " +
+                                "WHERE v.ID = :voucherId AND vcur.UserID = :userId AND v.isActive = 1")
+                .bind("voucherId", voucherId)
+                .bind("userId", userId)
+                .map(this::mapRow)
+                .findFirst()
+                .orElse(null);
+    }
+
+
+
+
+
     // Update a VoucherUsage
     public void update(VoucherUsage voucherUsage) {
         handle.createUpdate("UPDATE voucherusage SET OrderID = :orderId, UsageDate = :usageDate " +
@@ -72,6 +88,7 @@ public class VoucherUsageDAO extends BaseDao {
     // RowMapper to map database rows to VoucherUsage objects
     private VoucherUsage mapRow(RowView rowView) {
         VoucherUsage voucherUsage = new VoucherUsage();
+        voucherUsage.setId(rowView.getColumn("ID",Integer.class));
         voucherUsage.setVoucherId(rowView.getColumn("VoucherID", Integer.class));
         voucherUsage.setUserId(rowView.getColumn("UserID", Integer.class));
         voucherUsage.setOrderId(rowView.getColumn("OrderID", Integer.class));
