@@ -38,7 +38,7 @@ public class VnPayController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        HttpSession session =req.getSession();
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
@@ -49,9 +49,9 @@ public class VnPayController extends HttpServlet {
         String vnp_IpAddr = ConfigVNPay.getIpAddress(req);
 
         String vnp_TmnCode = ConfigVNPay.vnp_TmnCode;
-
-        double shippingFee = cart.getTotal() / 10.0;
-        long amount = (long) (cart.getTotal() +shippingFee)  * 100;
+        String finalTotal = session.getAttribute("finalTotal").toString();
+//        double shippingFee = cart.getTotal() / 10.0;
+        long amount = (long) (Double.valueOf(finalTotal) * 100);
 
         System.out.println(cart.getTotal());
         System.out.println(amount);

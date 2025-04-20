@@ -56,10 +56,10 @@ public class CheckoutVNPay extends HttpServlet {
             order.setUserId(u.getId());
             order.setOrderDate(LocalDateTime.now());
             double totalPrice=Double.parseDouble(finalTotal);
-            if(c.getVoucherId() > 0) {
-                totalPrice = totalPrice - c.getDiscount();
-                if(totalPrice < 0) totalPrice =0;
-            }
+//            if(c.getVoucherId() > 0) {
+//                totalPrice = totalPrice - c.getDiscount();
+//                if(totalPrice < 0) totalPrice =0;
+//            }
             order.setTotalPrice(BigDecimal.valueOf(totalPrice));
             lastRowId = dao.insert(order);
 
@@ -81,15 +81,17 @@ public class CheckoutVNPay extends HttpServlet {
 
                 if(rowCount == c.getItems().size()) {
                     // Nếu có sử dụng voucher, lưu thông tin VoucherUsage
-                    if (  c.getVoucherId() > 0) {
-                        VoucherUsage voucherUsage = new VoucherUsage();
-                        voucherUsage.setVoucherId(c.getVoucherId());
-                        voucherUsage.setUserId(u.getId());
-                        voucherUsage.setOrderId(lastRowId);
-                        voucherUsage.setUsageDate(LocalDateTime.now());
+                    if (  c.getListVoucherId().size() > 0) {
+                        for (Integer id : c.getListVoucherId()) {
+                            VoucherUsage voucherUsage = new VoucherUsage();
+                            voucherUsage.setVoucherId(id);
+                            voucherUsage.setUserId(u.getId());
+                            voucherUsage.setOrderId(lastRowId);
+                            voucherUsage.setUsageDate(LocalDateTime.now());
+                            VoucherUsageDAO voucherUsageDAO = new VoucherUsageDAO(handle);
+                            voucherUsageDAO.insert(voucherUsage);
+                        }
 
-                        VoucherUsageDAO voucherUsageDAO = new VoucherUsageDAO(handle);
-                        voucherUsageDAO.insert(voucherUsage);
                     }
 
                     // Gửi email xác nhận đơn hàng
@@ -121,10 +123,6 @@ public class CheckoutVNPay extends HttpServlet {
                     response.sendRedirect("/WEB-INF/404.jsp");
                 }
             }
-
-
-
-
 
         }
 
