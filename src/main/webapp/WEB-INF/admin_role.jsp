@@ -151,7 +151,7 @@
               <div class="title-icon">
                 <div class="action-buttons">
                   <div class="button bg_orange f-cl-white" data-micromodal-trigger="modify_role_modal">Chỉnh sửa vai trò và tài nguyên </div>
-                  <div class="button bg_red f-cl-white" data-micromodal-trigger="delete_role_modal">Xóa vai trò và tài nguyên</div>
+<%--                  <div class="button bg_red f-cl-white" data-micromodal-trigger="delete_role_modal">Xóa vai trò và tài nguyên</div>--%>
                 </div>
               </div>
               <h4> Các vai trò và tài nguyên </h4>
@@ -204,22 +204,24 @@
     <div class="modal__overlay" tabindex="-1" data-micromodal-close>
       <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
         <header class="modal__header">
-          <h2 class="modal__title" id="modify_role_title">Chỉnh sửa Role</h2>
+          <h2 class="modal__title" id="modify_role_title">Chỉnh sửa Vai Trò và Tài Nguyên</h2>
           <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
         </header>
         <div class="modal-content-content">
           <div class="modal__content">
             <div class="fui-basic-input" style="width: 100%">
-              <label for="modify_role_name" class="f-bold f-s-14 f-cl-black">Tên Role</label>
-              <input type="text" name="modify_role_name" placeholder="Nhập tên role" class="input input-bordered f-s-14" style="width: 100%" id="modify_role_name" autocomplete="off" required/>
+              <label for="modify_role_select" class="f-bold f-s-14 f-cl-black">Chọn Role</label>
+              <select name="modify_role_select" id="modify_role_select" class="input input-bordered f-s-14" disabled>
+                <c:forEach var="role" items="${roles}">
+                  <option value="${role.id}">${role.name}</option>
+                </c:forEach>
+              </select>
             </div>
             <div class="fui-basic-input" style="width: 100%">
-              <label for="modify_role_permissions" class="f-bold f-s-14 f-cl-black">Quyền</label>
-              <select name="modify_role_permissions" id="modify_role_permissions" class="input input-bordered f-s-14" multiple required>
-                <option value="read">Read</option>
-                <option value="execute">Execute</option>
-                <option value="read_write_execute">Read, Write, Execute</option>
-              </select>
+              <label class="f-bold f-s-14 f-cl-black">Chọn Quyền</label>
+              <div id="modify_permissions_list">
+                <!-- Permissions sẽ được tải qua AJAX -->
+              </div>
             </div>
           </div>
           <footer class="modal__footer">
@@ -231,25 +233,25 @@
   </div>
 
   <!-- Modal: Delete Role -->
-  <div class="modal micromodal-slide" id="delete_role_modal" aria-hidden="true">
-    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
-        <header class="modal__header">
-          <h2 class="modal__title">Xóa Role</h2>
-          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
-        </header>
-        <div class="modal-content-content">
-          <div class="modal__content">
-            <p>Bạn có chắc chắn muốn xóa role này không?</p>
-          </div>
-          <footer class="modal__footer">
-            <button class="button bg_red f-cl-white" id="delete_role_btn">Xóa</button>
-          </footer>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<%--  <div class="modal micromodal-slide" id="delete_role_modal" aria-hidden="true">--%>
+<%--    <div class="modal__overlay" tabindex="-1" data-micromodal-close>--%>
+<%--      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">--%>
+<%--        <header class="modal__header">--%>
+<%--          <h2 class="modal__title">Xóa Role</h2>--%>
+<%--          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>--%>
+<%--        </header>--%>
+<%--        <div class="modal-content-content">--%>
+<%--          <div class="modal__content">--%>
+<%--            <p>Bạn có chắc chắn muốn xóa role này không?</p>--%>
+<%--          </div>--%>
+<%--          <footer class="modal__footer">--%>
+<%--            <button class="button bg_red f-cl-white" id="delete_role_btn">Xóa</button>--%>
+<%--          </footer>--%>
+<%--        </div>--%>
+<%--      </div>--%>
+<%--    </div>--%>
+<%--  </div>--%>
+<%--</div>--%>
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
@@ -475,6 +477,203 @@
         }
       });
 
+    });
+
+    // Xử lý khi mở modal chỉnh sửa
+    $('[data-micromodal-trigger="modify_role_modal"]').on('click', function() {
+      var selectedRow = $('#rolesTable').DataTable().rows({ selected: true }).data();
+      if (selectedRow.length === 0) {
+        notyf.error('Vui lòng chọn một vai trò để chỉnh sửa');
+        return;
+      }
+
+      var roleName = selectedRow[0][0]; // Lấy tên role từ cột đầu tiên
+
+      // Tìm roleId từ danh sách roles
+      var roleId = null;
+      <c:forEach var="role" items="${roles}">
+      if ("${role.name}" === roleName) {
+        roleId = "${role.id}";
+      }
+      </c:forEach>
+
+      if (!roleId) {
+        notyf.error('Không tìm thấy vai trò');
+        return;
+      }
+
+      // Cập nhật roleId vào modal
+      $('#modify_role_select').val(roleId);
+
+      // Tải permissions hiện tại của role
+      $.ajax({
+        url: '/admin/role/api',
+        method: 'GET',
+        data: { roleName: roleName },
+        success: function(response) {
+          if (response.success) {
+            // Tải danh sách tất cả permissions
+            $.ajax({
+              url: '/admin/role/api/permissions',
+              method: 'GET',
+              success: function(permResponse) {
+                if (permResponse.success) {
+                  updateModifyPermissionsModal(permResponse.permissions, response.permissions, roleId);
+                } else {
+                  notyf.error('Không thể tải danh sách quyền: ' + permResponse.error);
+                }
+              },
+              error: function(xhr, status, error) {
+                var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+                notyf.error('Lỗi khi tải danh sách quyền: ' + errorMessage);
+              }
+            });
+          } else {
+            notyf.error('Không thể tải quyền hiện tại: ' + response.error);
+          }
+        },
+        error: function(xhr, status, error) {
+          var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+          notyf.error('Lỗi khi tải quyền hiện tại: ' + errorMessage);
+        }
+      });
+    });
+
+    // Hàm cập nhật danh sách permissions trong modal chỉnh sửa
+    function updateModifyPermissionsModal(allPermissions, currentPermissions, roleId) {
+      var html = '';
+      allPermissions.forEach(function(perm) {
+        html += '<div class="permission-group">';
+        // Kiểm tra xem permission này có trong currentPermissions không
+        var isChecked = currentPermissions.some(function(currentPerm) {
+          return currentPerm.permissionId === perm.id;
+        });
+        html += '<label><input type="checkbox" class="permission-checkbox" value="' + perm.id + '" data-permission-id="' + perm.id + '" ' + (isChecked ? 'checked' : '') + '> ' + perm.name + '</label>';
+        html += '<div class="resource-list" id="modify-resources-' + perm.id + '"></div>';
+        html += '</div>';
+      });
+      $('#modify_permissions_list').html(html);
+
+      // Tải resources cho các permission đã chọn
+      $('.permission-checkbox').each(function() {
+        var permId = $(this).data('permission-id');
+        var resourceListId = '#modify-resources-' + permId;
+
+        if ($(this).is(':checked')) {
+          loadResourcesForPermission(permId, resourceListId, currentPermissions);
+        }
+      });
+
+      $('.permission-checkbox').on('change', function() {
+        var permId = $(this).data('permission-id');
+        var resourceListId = '#modify-resources-' + permId;
+
+        if ($(this).is(':checked')) {
+          loadResourcesForPermission(permId, resourceListId, currentPermissions);
+        } else {
+          $(resourceListId).html('').removeClass('active');
+        }
+      });
+    }
+
+    // Hàm tải resources cho permission
+    function loadResourcesForPermission(permId, resourceListId, currentPermissions) {
+      $.ajax({
+        url: '/admin/role/api/resources',
+        method: 'GET',
+        success: function(response) {
+          if (response.success) {
+            var resourceHtml = '';
+            response.resources.forEach(function(resource) {
+              // Kiểm tra xem resource này có trong currentPermissions không
+              var isResourceChecked = currentPermissions.some(function(currentPerm) {
+                return currentPerm.permissionId === permId && currentPerm.resourceId === resource.id;
+              });
+              resourceHtml += '<label class="resource-checkbox"><input type="checkbox" name="resources[' + permId + '][]" value="' + resource.id + '" ' + (isResourceChecked ? 'checked' : '') + '> ' + resource.name + '</label><br>';
+            });
+            $(resourceListId).html(resourceHtml).addClass('active');
+          } else {
+            notyf.error('Không thể tải danh sách tài nguyên: ' + response.error);
+          }
+        },
+        error: function(xhr, status, error) {
+          var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+          notyf.error('Lỗi khi tải danh sách tài nguyên: ' + errorMessage);
+        }
+      });
+    }
+
+    // Xử lý khi nhấn nút Cập nhật
+    $('#modify_role_btn').on('click', function() {
+      var roleIdStr = $('#modify_role_select').val();
+      var roleId = parseInt(roleIdStr);
+
+      // Kiểm tra roleId hợp lệ
+      if (!roleIdStr || isNaN(roleId) || roleId <= 0) {
+        notyf.error('Vai trò không hợp lệ');
+        return;
+      }
+
+      var permissions = [];
+
+      $('.permission-checkbox:checked').each(function() {
+        var permIdStr = $(this).val();
+        var permId = parseInt(permIdStr);
+        var resources = [];
+        $('input[name="resources[' + permId + '][]"]:checked').each(function() {
+          var resourceId = parseInt($(this).val());
+          if (!isNaN(resourceId) && resourceId > 0) {
+            resources.push(resourceId.toString());
+          }
+        });
+        if (resources.length > 0 && !isNaN(permId) && permId > 0) {
+          permissions.push({
+            permissionId: permId.toString(),
+            resourceIds: resources
+          });
+        }
+      });
+
+      // Tạo payload JSON
+      var payload = {
+        roleId: roleId.toString(),
+        permissions: permissions
+      };
+
+      // Gửi AJAX để cập nhật role-resource-permission
+      $.ajax({
+        url: '/admin/role/api/update',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function(response) {
+          if (response.success) {
+            Swal.fire({
+              icon: 'success',
+              title: 'Thành công',
+              text: 'Cập nhật vai trò và tài nguyên thành công',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              MicroModal.close('modify_role_modal');
+              location.reload();
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Lỗi',
+              text: 'Lỗi khi cập nhật vai trò và tài nguyên: ' + response.error
+            });
+          }
+        },
+        error: function(xhr, status, error) {
+          var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+          Swal.fire({
+            icon: 'error',
+            title: 'Lỗi',
+            text: 'Lỗi khi cập nhật vai trò và tài nguyên: ' + errorMessage
+          });
+        }
+      });
     });
   });
 </script>

@@ -87,4 +87,32 @@ public class RoleResourcePermissionDao extends BaseDao {
                 .execute();
         return rowsAffected > 0;
     }
+
+    /**
+     * Cập nhật RoleResourcePermission theo ID
+     */
+    public boolean update(int id, int roleId, int resourceId, int permissionId) {
+        // Kiểm tra ràng buộc khóa ngoại trước khi cập nhật
+        RoleDao roleDao = new RoleDao(handle);
+        ResourceDao resourceDao = new ResourceDao(handle);
+        PermissionDao permissionDao = new PermissionDao(handle);
+
+        if (roleDao.getRoleById(roleId).isEmpty()) {
+            throw new IllegalArgumentException("roleId không tồn tại: " + roleId);
+        }
+        if (resourceDao.getResourceById(resourceId).isEmpty()) {
+            throw new IllegalArgumentException("resourceId không tồn tại: " + resourceId);
+        }
+        if (permissionDao.getPermissionById(permissionId).isEmpty()) {
+            throw new IllegalArgumentException("permissionId không tồn tại: " + permissionId);
+        }
+
+        int rowsAffected = handle.createUpdate("UPDATE role_resource_permission SET roleId = :roleId, resourceId = :resourceId, permissionId = :permissionId WHERE id = :id")
+                .bind("id", id)
+                .bind("roleId", roleId)
+                .bind("resourceId", resourceId)
+                .bind("permissionId", permissionId)
+                .execute();
+        return rowsAffected > 0;
+    }
 }
