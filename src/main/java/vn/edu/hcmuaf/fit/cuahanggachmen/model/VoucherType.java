@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 
-public class VoucherType {
+import java.io.Serializable;
+
+public class VoucherType implements Serializable {
     private int id;
     private String name;
 

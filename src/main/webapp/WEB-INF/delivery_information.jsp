@@ -167,7 +167,7 @@
         <hr>
         <div class="price-summary">
             <p>Tạm tính:
-                <fmt:formatNumber value="${cart.total}" type="number" maxFractionDigits="0"/>₫
+               <span id="phiDonHangBd"><fmt:formatNumber value="${cart.total}" type="number" maxFractionDigits="0"/></span> ₫
             </p>
             <p >Phí vận chuyển:
                <span id="feeValue"><fmt:formatNumber value="0" type="number" maxFractionDigits="0"/></span> ₫
@@ -188,6 +188,10 @@
     const apiToken = 'db44e853-cc14-11ef-b1ed-769685acafa5';
     const baseURL = 'https://dev-online-gateway.ghn.vn';
     checkFirst =true;
+    let originalTotalPrice = 0;
+    let feeVanChuyen =0;
+    let feeDonHang=document.getElementById('phiDonHangBd').textContent.trim();
+    let feeNumber = parseInt(feeDonHang.replace(/\./g, ''));
 
     function loadProvinces() {
         fetch(baseURL+'/shiip/public-api/master-data/province', {
@@ -275,7 +279,7 @@
         const toDistrictID = document.getElementById('district').value;
         const toWardID = document.getElementById('ward').value;
         const weight = 100;
-        let originalTotalPrice = 0;
+
         if (!toDistrictID || !toWardID || !weight) {
             alert('Vui lòng nhập đầy đủ thông tin!');
             return;
@@ -359,6 +363,7 @@
                     $('#totalPrice').text(data.totalPrice.toLocaleString())
                     $('#finalTotal1').val(data.totalPrice)
                     originalTotalPrice = data.totalPrice;
+                    feeVanChuyen= fee;
                 }
 
             })
@@ -395,7 +400,9 @@
                 data: {
                     code: code,
                     code2: code2,
-                    price:originalTotalPrice
+                    price:originalTotalPrice,
+                    feevn:feeVanChuyen,
+                    feedh:feeNumber,
                 },
                 success: function (response) {
                     if (response.status) {

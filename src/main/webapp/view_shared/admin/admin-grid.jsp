@@ -112,6 +112,14 @@
                 Quản lý Voucher
             </p>
         </a>
+        <a href="/admin/manage-vouchertype" class="item5 sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-user-tag"></i>
+            </div>
+            <p class="text">
+                Quản lý VoucherType
+            </p>
+        </a>
 
         <!-- Accounts with collapsible sub-items -->
         <div class="sidebar-button has-subitems">
