@@ -30,6 +30,10 @@ public class UserVoucherUsage extends HttpServlet {
         String code = request.getParameter("code");
         String code2 = request.getParameter("code2");
         String price =request.getParameter("price");
+        String feevn= request.getParameter("feevn");
+        String feedh =request.getParameter("feedh");
+        Double feevn1 = Double.parseDouble(feevn);
+        Double feedh1 = Double.parseDouble(feedh);
         Double price2 = Double.valueOf(price);
         User u = (User) request.getSession().getAttribute("auth");
         int userId = u.getId();
@@ -82,7 +86,9 @@ public class UserVoucherUsage extends HttpServlet {
         cart.setListVoucherId(listVoucherId);
 
 // Gửi response
-        double finalPrice = price2 - discount - discountShip;
+        double feevn2=Math.min(feevn1,discountShip);
+        double feedh2=Math.min(feedh1,discount);
+        double finalPrice = price2 - feedh2 - feevn2;
         if (finalPrice < 0) {
             finalPrice = 0;
         }
