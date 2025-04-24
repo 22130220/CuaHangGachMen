@@ -211,6 +211,125 @@ public class GetSetRoleOfNguyen extends HttpServlet {
                     responseData.put("error", "Lỗi khi thêm dữ liệu: " + e.getMessage());
                     sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, responseData);
                 }
+            } else if ("/update".equals(pathInfo)) {
+                // Đọc dữ liệu JSON từ request
+                BufferedReader reader = request.getReader();
+                StringBuilder jsonBuilder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    jsonBuilder.append(line);
+                }
+
+                // Kiểm tra JSON rỗng
+                if (jsonBuilder.length() == 0) {
+                    responseData.put("success", false);
+                    responseData.put("error", "Dữ liệu JSON rỗng");
+                    sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, responseData);
+                    return;
+                }
+
+                // Parse JSON
+                Map<String, Object> requestData;
+                try {
+                    requestData = gson.fromJson(jsonBuilder.toString(), Map.class);
+                } catch (Exception e) {
+                    responseData.put("success", false);
+                    responseData.put("error", "Dữ liệu JSON không hợp lệ: " + e.getMessage());
+                    sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, responseData);
+                    return;
+                }
+
+                // Kiểm tra dữ liệu đầu vào
+                if (requestData == null || !requestData.containsKey("roleId") || !requestData.containsKey("permissions")) {
+                    responseData.put("success", false);
+                    responseData.put("error", "Dữ liệu không đầy đủ: Thiếu roleId hoặc permissions");
+                    sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, responseData);
+                    return;
+                }
+
+                String roleIdStr = String.valueOf(requestData.get("roleId"));
+                List<Map<String, Object>> permissions = (List<Map<String, Object>>) requestData.get("permissions");
+
+                // Chuyển đổi roleId thành int
+                int roleId;
+                try {
+                    roleId = Integer.parseInt(roleIdStr);
+                } catch (NumberFormatException e) {
+                    responseData.put("success", false);
+                    responseData.put("error", "roleId không hợp lệ: " + roleIdStr);
+                    sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, responseData);
+                    return;
+                }
+
+                if (permissions == null) {
+                    responseData.put("success", false);
+                    responseData.put("error", "Dữ liệu không hợp lệ: permissions rỗng");
+                    sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, responseData);
+                    return;
+                }
+
+                // Bắt đầu giao dịch
+                handle.begin();
+                try {
+                    // Xóa tất cả permissions hiện tại của roleId
+                    permissionDao.deleteByRoleId(roleId);
+
+                    // Thêm lại các permissions mới
+                    for (Map<String, Object> perm : permissions) {
+                        if (!perm.containsKey("permissionId") || !perm.containsKey("resourceIds")) {
+                            responseData.put("success", false);
+                            responseData.put("error", "Dữ liệu không hợp lệ: Thiếu permissionId hoặc resourceIds");
+                            sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, responseData);
+                            return;
+                        }
+
+                        String permissionIdStr = String.valueOf(perm.get("permissionId"));
+                        List<String> resourceIds = (List<String>) perm.get("resourceIds");
+
+                        // Chuyển đổi permissionId thành int
+                        int permissionId;
+                        try {
+                            permissionId = Integer.parseInt(permissionIdStr);
+                        } catch (NumberFormatException e) {
+                            responseData.put("success", false);
+                            responseData.put("error", "permissionId không hợp lệ: " + permissionIdStr);
+                            sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, responseData);
+                            return;
+                        }
+
+                        if (resourceIds == null || resourceIds.isEmpty()) {
+                            continue; // Bỏ qua nếu không có resource nào được chọn
+                        }
+
+                        for (String resourceIdStr : resourceIds) {
+                            // Chuyển đổi resourceId thành int
+                            int resourceId;
+                            try {
+                                resourceId = Integer.parseInt(resourceIdStr);
+                            } catch (NumberFormatException e) {
+                                responseData.put("success", false);
+                                responseData.put("error", "resourceId không hợp lệ: " + resourceIdStr);
+                                sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, responseData);
+                                return;
+                            }
+
+                            // Thêm mới permission
+                            permissionDao.insert(roleId, resourceId, permissionId);
+                        }
+                    }
+
+                    // Commit giao dịch
+                    handle.commit();
+                    responseData.put("success", true);
+                    responseData.put("message", "Cập nhật vai trò và tài nguyên thành công");
+                    sendResponse(response, HttpServletResponse.SC_OK, responseData);
+                } catch (IllegalArgumentException e) {
+                    // Rollback giao dịch nếu có lỗi
+                    handle.rollback();
+                    responseData.put("success", false);
+                    responseData.put("error", "Lỗi khi cập nhật dữ liệu: " + e.getMessage());
+                    sendResponse(response, HttpServletResponse.SC_BAD_REQUEST, responseData);
+                }
             } else {
                 responseData.put("success", false);
                 responseData.put("error", "Đường dẫn không hợp lệ");
