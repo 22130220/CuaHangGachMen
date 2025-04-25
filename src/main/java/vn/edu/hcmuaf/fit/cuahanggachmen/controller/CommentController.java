@@ -31,7 +31,7 @@ public class CommentController extends HttpServlet {
         Integer id = Integer.parseInt(pid);
         ReviewDao dao = new ReviewDao(handle);
         List<Review> rv = null;
-       rv = dao.findReviewsByProductId(id);
+       rv = dao.findReviewsByProductIdHasStatus(id);
 
         AjaxResponse resp =  new AjaxResponse();
         resp.addReviewList(rv);
