@@ -43,15 +43,26 @@ public class GetSetVoucherType extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Handle handle = DBConect.get().open();
-        String type = request.getParameter("type");
+        int so=0;
         String action = request.getParameter("action");
-        VoucherType vouchertype = new VoucherType();
-        vouchertype.setName(type);
-        VoucherTypeDao voucherTypeDao = new VoucherTypeDao(handle);
-        int so=voucherTypeDao.insert(vouchertype);
         AjaxResponse resp = new AjaxResponse();
-        handle.close();
+        VoucherType vouchertype = new VoucherType();
+        VoucherTypeDao voucherTypeDao = new VoucherTypeDao(handle);
+        if(action.equalsIgnoreCase("Thêm")){
+            String type = request.getParameter("type");
+            vouchertype.setName(type);
+             so=voucherTypeDao.insert(vouchertype);
+
+        }else if(action.equalsIgnoreCase("sửa")){
+            String id = request.getParameter("id");
+            String name = request.getParameter("type");
+            int id1=Integer.parseInt(id);
+            vouchertype.setId(id1);
+            vouchertype.setName(name);
+             so=voucherTypeDao.update(vouchertype);
+        }
         resp.addBool("success",so>0);
+        handle.close();
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
