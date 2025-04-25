@@ -53,6 +53,13 @@ public class ReviewDao extends BaseDao {
         return count > 0;
     }
 
+    public List<Review> getAllv2() {
+        Query query = handle.createQuery("select us.fullname, us.avatar, rv.*\n" +
+                "from products p JOIN review rv on p.id = rv.ProductID\n" +
+                "join users us on us.id = rv.UserID\n");
+        return query.map(new ReviewMapper()).list();
+    }
+
     // Tìm các review theo UserID
     public List<Review> findReviewsByUserId(int userId) {
             Query query = handle.createQuery("SELECT * FROM review WHERE UserID = :userId");
@@ -70,7 +77,7 @@ public class ReviewDao extends BaseDao {
             return query.map(new ReviewMapper()).list();
     }
 
-    // Tìm các review theo ProductID
+    // Tìm các review theo ProductID và trạng thái
     public List<Review> findReviewsByProductIdHasStatus(int productId) {
         Query query = handle.createQuery("select us.fullname, us.avatar, rv.*\n" +
                 "from products p JOIN review rv on p.id = rv.ProductID\n" +
@@ -112,5 +119,7 @@ public class ReviewDao extends BaseDao {
                         .mapTo(Double.class)
                         .one();
     }
+
+
 }
 

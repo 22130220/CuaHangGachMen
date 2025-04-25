@@ -400,6 +400,33 @@
         </div>
     </div>
 
+    <div class="modal micromodal-slide" id="update_review_modal" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title">
+                        Mô tả sản phẩm
+                    </h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div class="modal-content-content">
+                    <div class="modal__content">
+                        <table id="review" class="display compact" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Người bình luận</th>
+                                <th>Bình luận</th>
+                                <th>Ngày bình luận </th>
+                                <th>Trạng thái </th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal micromodal-slide" id="add_color" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
             <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">

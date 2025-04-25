@@ -8,6 +8,7 @@ desEditor.on('instanceReady', function () {
 
 var specTable = null;
 var colorTable = null;
+var reviewTable = null;
 var category = null;
 var manufacturer = null;
 var material = null;
@@ -152,11 +153,22 @@ var productTable = initDataTable('#example', '/admin/get-product', function(d)
             MicroModal.show('update_id_modal');
         },
         enabled: false
-    }
+    },
+        {
+            text: 'Bình luận',
+            className: 'green',
+            action: (e, dt) => {
+                let data = dt.row({ selected: true }).data();
+                openReviewModal(data.id)
+            },
+            enabled: false
+        },
+
 ], function (e, dt) {
     const selectedRows = dt.rows({ selected: true }).count();
     dt.button(8).enable(selectedRows === 1); // Button chỉnh sửa
     dt.button(9).enable(selectedRows > 0); // Button trạng thái
+        dt.button(10).enable(selectedRows === 1); // Button bình luận
 },{ paging: true, searching: true });
 
 function openSpecModal(productId) {
@@ -602,4 +614,93 @@ function selectImageChange(button, name) {
         }
     });
 }
+
+const revievColumnDef = [
+    {
+        targets:0,
+        data: 'userName',
+        className: 'dt-center',
+        searchPanes: {
+            show: true
+        }
+    },
+    {
+        targets: 1,
+        data: 'reviewText',
+        className: 'dt-center'
+
+    },
+    {
+        targets: 2,
+        data: 'reviewDate',
+        className: 'dt-center',
+        searchPanes: {
+            show: true
+        }
+    },
+    {
+        targets: 3,
+        data: 'stauus',
+        render: data => data ? `<td><div class="isActive"> Đã duyệt </div></td>` : `<td><div class="deActive"> Chưa duyệt </div></td>`,
+        className: 'dt-center',
+        searchPanes: {
+            show: true
+        }
+    }
+]
+
+const reviewButton = [
+    {
+        extend: 'searchPanes',
+        config: {
+            cascadePanes: true,
+            initCollapsed: false,
+            orderable: false
+        }
+    },
+    {
+        text: 'Hiển thị',
+        className: 'green',
+        action: (e, dt) => {
+            let data = dt.row({ selected: true }).data();
+
+        },
+        enabled: false
+    },
+    {
+        text: 'Ẩn đi',
+        className: 'red',
+        action: (e, dt) => {
+            let data = dt.rows({ selected: true }).data();
+
+        },
+        enabled: false
+    }
+]
+
+const buttonShowReview = function () {
+    var selectedRows = resourceTable.rows({ selected: true }).count();
+    resourceTable.button(2).enable(selectedRows === 1);
+    resourceTable.button(3).enable(selectedRows > 0);
+};
+
+function openReviewModal(productId) {
+    let pid = productId;
+    if (!reviewTable) {
+        reviewTable = initDataTable('#review', '/admin/comment', 'review', function(d){ d.productId = productId; },
+            revievColumnDef,
+            reviewButton,
+            buttonShowReview,
+            {paging: true, searching: true}
+        );
+    } else {
+        reviewTable.settings()[0].ajax.data = function (d) {
+            d.productId = productId;
+        };
+        reviewTable.ajax.reload();
+    }
+    MicroModal.show('update_review_modal');
+}
+
+
 
