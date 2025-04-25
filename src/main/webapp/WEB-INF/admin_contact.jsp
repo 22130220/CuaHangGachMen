@@ -475,7 +475,7 @@
                 type: 'POST',
                 data: formData,
                 success: function (response) {
-                    MicroModal.close('contactModal'); // ✅ sửa đúng tên hàm
+                    MicroModal.close('contactModal');
 
                     const notyf = new Notyf();
                     if (response.success) {
