@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherTypeDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Voucher;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.VoucherType;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 
@@ -41,6 +42,20 @@ public class GetSetVoucherType extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        Handle handle = DBConect.get().open();
+        String type = request.getParameter("type");
+        String action = request.getParameter("action");
+        VoucherType vouchertype = new VoucherType();
+        vouchertype.setName(type);
+        VoucherTypeDao voucherTypeDao = new VoucherTypeDao(handle);
+        int so=voucherTypeDao.insert(vouchertype);
+        AjaxResponse resp = new AjaxResponse();
+        handle.close();
+        resp.addBool("success",so>0);
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print(resp.getText());
     }
 }

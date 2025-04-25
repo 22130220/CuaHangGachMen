@@ -83,6 +83,44 @@
         div.container {
             max-width: 1200px;
         }
+        .modal__field {
+            margin-bottom: 1rem;
+        }
+
+        .modal__input {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 1.1rem; /* tăng cỡ chữ khi nhập */
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        .modal__input::placeholder {
+            font-size: 1.1rem; /* tăng cỡ placeholder */
+            color: #aaa;
+        }
+
+        .modal__input:focus {
+            border-color: #3cb371; /* xanh lá nhẹ */
+            box-shadow: 0 0 0 3px rgba(60, 179, 113, 0.2);
+        }
+
+        .modal__button {
+            background-color: #3cb371; /* xanh lá */
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.1rem; /* tăng cỡ chữ nút */
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .modal__button:hover {
+            background-color: #34a863;
+        }
     </style>
 </head>
 <body>
@@ -100,7 +138,7 @@
                     </div>
                 </div>
                 <div class="funcvouchertype">
-                    <div class="button bg_green f-cl-white" id="add" data-micromodal-trigger="add_modal">Thêm mới</div>
+                    <div class="button bg_green f-cl-white" id="add" data-micromodal-trigger="addVoucherTypeModal">Thêm mới</div>
                 </div>
             </nav>
             <div class="product-table table _4c _6r">
@@ -115,20 +153,38 @@
             </div>
         </div>
     </div>
+
+    <div class="modal micromodal-slide" id="addVoucherTypeModal" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title">Thêm loại voucher</h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <form id="addForm" class="modal__content">
+                    <div class="modal__field">
+                        <label for="modalName"><strong>Name:</strong></label>
+                        <input type="text" id="modalName" name="type" class="modal__input" placeholder="Nhập tên loại voucher" required />
+                    </div>
+                    <div class="modal__actions">
+                        <button type="submit" class="modal__button">Thêm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
+
+
+
 </body>
+<script src="/assets/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>
-    var notyf = new Notyf();
-    let addEle = 'Thêm';
-    let updateEle = 'Cập nhật';
-    let delEle = 'Xoá';
-
-    let vid;
-
-    let setActive = [];
-
-    let action;
+    let action ='';
     var table=new DataTable('#vouchertp',{
         ajax: {
             url: '/GetSetVoucherType',
@@ -193,6 +249,65 @@
         var selectedRows = table.rows({ selected: true }).count();
         table.button(1).enable(selectedRows === 1);
     });
+    const addButton = document.getElementById("add");
+    if (addButton) {
+        addButton.addEventListener("click", function () {
+            MicroModal.show('addVoucherTypeModal');
+            action='Thêm';
+            console.log(action);
+        });
+    }
+
+
+
+    $(document).ready(function () {
+        $('#addForm').on('submit', function (e) {
+            e.preventDefault();
+
+            let formData = $(this).serializeArray(); // Đây là array
+            formData.push({ name: 'action', value: action });
+            $.ajax({
+                url: '/GetSetVoucherType',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    MicroModal.close('addVoucherTypeModal');
+
+                    const notyf = new Notyf();
+                    if (response.success) {
+                        notyf.open({
+                            duration: 1000,
+                            position: { x: 'right', y: 'bottom' },
+                            type: "success",
+                            message: "Thêm thành công",
+                        });
+                        table.ajax.reload(null, false);
+                    } else {
+                        notyf.open({
+                            duration: 1000,
+                            position: { x: 'right', y: 'bottom' },
+                            type: "error",
+                            message: "Thêm không thành công",
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Lỗi khi Thêm:', error);
+                    const notyf = new Notyf();
+                    notyf.open({
+                        duration: 1000,
+                        position: { x: 'right', y: 'bottom' },
+                        type: "error",
+                        message: "Có lỗi xảy ra khi thêm",
+                    });
+                }
+            });
+        });
+    });
+
+
+
+
 </script>
 
 
