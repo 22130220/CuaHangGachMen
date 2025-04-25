@@ -70,11 +70,21 @@ public class ReviewDao extends BaseDao {
             return query.map(new ReviewMapper()).list();
     }
 
+    // Tìm các review theo ProductID
+    public List<Review> findReviewsByProductIdHasStatus(int productId) {
+        Query query = handle.createQuery("select us.fullname, us.avatar, rv.*\n" +
+                "from products p JOIN review rv on p.id = rv.ProductID\n" +
+                "join users us on us.id = rv.UserID\n" +
+                "WHERE rv.ProductID = :id AND rv.status = 1;");
+        query.bind("id", productId);
+        return query.map(new ReviewMapper()).list();
+    }
+
     // Cập nhật rating và nội dung review
     public void updateReview(int userId, int productId, int rating, String reviewText) {
             Update update = handle.createUpdate("UPDATE review SET Rating = :rating, ReviewText = :reviewText " +
                     "WHERE UserID = :userId AND ProductID = :productId");
-            update.bind("userId", userId)
+                    update.bind("userId", userId)
                     .bind("productId", productId)
                     .bind("rating", rating)
                     .bind("reviewText", reviewText)

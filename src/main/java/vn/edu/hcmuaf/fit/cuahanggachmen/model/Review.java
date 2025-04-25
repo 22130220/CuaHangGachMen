@@ -12,21 +12,24 @@ public class Review implements Serializable {
         private LocalDateTime reviewDate;
         private int orderId;
         private String avatar;
+        private boolean status;
 
+    public Review(int userId, String userName, int productId, int rating, String reviewText, LocalDateTime reviewDate, int orderId, String avatar, boolean status) {
+        this.userId = userId;
+        this.userName = userName;
+        this.productId = productId;
+        this.rating = rating;
+        this.reviewText = reviewText;
+        this.reviewDate = reviewDate;
+        this.orderId = orderId;
+        this.avatar = avatar;
+        this.status = status;
+    }
 
+    public Review() {
+    }
 
-    public Review() {}
-
-        public Review(int userId, int productId, int rating, String reviewText, LocalDateTime reviewDate, int orderId) {
-            this.userId = userId;
-            this.productId = productId;
-            this.rating = rating;
-            this.reviewText = reviewText;
-            this.reviewDate = reviewDate;
-            this.orderId = orderId;
-        }
-
-        // Getters và Setters
+    // Getters và Setters
         public int getUserId() {
             return userId;
         }
@@ -91,8 +94,15 @@ public class Review implements Serializable {
         this.avatar = avatar;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
 
-        @Override
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    @Override
         public String toString() {
             return "Review{" +
                     "userId=" + userId +

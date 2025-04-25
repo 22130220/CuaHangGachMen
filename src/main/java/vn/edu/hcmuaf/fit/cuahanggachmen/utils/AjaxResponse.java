@@ -165,7 +165,8 @@ public class AjaxResponse {
                     .add(String.format("\"reviewText\":\"%s\"", review.getReviewText()))
                     .add(String.format("\"reviewDate\":\"%s\"", review.getReviewDate()))
                     .add(String.format("\"orderId\":%d", review.getOrderId()))
-                    .add(String.format("\"avatar\":\"%s\"", review.getAvatar()));
+                    .add(String.format("\"avatar\":\"%s\"", review.getAvatar()))
+                    .add(String.format("\"status\":%b", review.isStatus()));
 
             // Thêm đối tượng review vào mảng JSON
             jsonArrayJoiner.add(jsonReviewJoiner.toString());
