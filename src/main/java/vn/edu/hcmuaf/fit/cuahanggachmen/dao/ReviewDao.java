@@ -120,6 +120,12 @@ public class ReviewDao extends BaseDao {
                         .one();
     }
 
+    public int setStatus(int reviewId, int status) {
+        Update update = handle.createUpdate("UPDATE review SET status = :status WHERE id = :reviewId");
+        update.bind("status", status).bind("reviewId", reviewId);
+        return update.execute();
+    }
+
 
 }
 
