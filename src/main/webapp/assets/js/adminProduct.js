@@ -662,8 +662,28 @@ const reviewButton = [
         text: 'Hiển thị',
         className: 'green',
         action: (e, dt) => {
-            let data = dt.row({ selected: true }).data();
+            let data = dt.rows({ selected: true }).data();
 
+            let reviewIdToShow = [];
+            data.each(function(rowData) {
+                reviewIdToShow.push(rowData.id);
+            });
+            let formData = new FormData();
+            formData.append('status', 1);
+            formData.append('reviewId', JSON.stringify(reviewIdToShow));
+            sendAjaxRequest({
+                url: '/admin/comment',
+                type: 'PUT',
+                data: formData,
+                successMessage: null,
+                errorMessage: null,
+                tableToReload: reviewTable,
+                modalToClose: 'update_review_modal',
+                onSuccess: function (response) {
+                    if (response.success) notyf.success(response.message);
+                    else notyf.error(response.message);
+                }
+            });
         },
         enabled: false
     },
@@ -679,9 +699,9 @@ const reviewButton = [
 ]
 
 const buttonShowReview = function () {
-    var selectedRows = resourceTable.rows({ selected: true }).count();
-    resourceTable.button(2).enable(selectedRows === 1);
-    resourceTable.button(3).enable(selectedRows > 0);
+    var selectedRows = reviewTable.rows({ selected: true }).count();
+    reviewTable.button(1).enable(selectedRows === 1);
+    reviewTable.button(2).enable(selectedRows === 1);
 };
 
 function openReviewModal(productId) {
