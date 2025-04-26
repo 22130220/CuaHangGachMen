@@ -138,9 +138,87 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Cột phải: Danh sách permissions -->
+            <div class="_2c">
+                <div class="card">
+                    <div class="title-icon">
+                        <p class="text_entry_title">Quyền chi tiết</p>
+                        <button class="button bg_green f-cl-white" id="perm_add">Thêm</button>
+                    </div>
+                    <table id="permissions" class="display" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên quyền</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
+        <!-- Modal: Create Permission -->
+        <div class="modal micromodal-slide" id="create_permission_modal" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">Thêm mới quyền chi tiết</h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
+                            <form id="add_permission_form" class="main-grid">
+                                <!-- Name Field -->
+                                <div class="form-group _4c">
+                                    <div class="fui-basic-input flex-column gap-6">
+                                        <label for="permission_name" class="f-bold f-s-14 f-cl-black">Tên quyền</label>
+                                        <input type="text" name="permission_name" id="permission_name" class="input input-bordered f-s-14" placeholder="Nhập tên quyền" required />
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="_1c">
+                                    <button class="button bg_green f-cl-white" type="button" id="add_permission_btn">Thêm</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal: Update Permission -->
+        <div class="modal micromodal-slide" id="update_permission_modal" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">Chỉnh sửa quyền chi tiết</h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <div class="modal__content">
+                            <form id="modify_permission_form" class="main-grid">
+                                <!-- Name Field -->
+                                <div class="form-group _4c">
+                                    <div class="fui-basic-input flex-column gap-6">
+                                        <label for="permission_name_update" class="f-bold f-s-14 f-cl-black">Tên quyền</label>
+                                        <input type="text" name="permission_name_update" id="permission_name_update" class="input input-bordered f-s-14" placeholder="Nhập tên quyền" required />
+                                    </div>
+                                </div>
+
+                                <input type="hidden" name="permission_id_update" id="permission_id_update" />
+                                <!-- Submit Button -->
+                                <div class="_1c">
+                                    <button class="button bg_green f-cl-white" type="button" id="update_permission_btn">Cập nhật</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <!-- Modal: Create resource -->
     <div class="modal micromodal-slide" id="create_resource_modal" aria-hidden="true">
         <div class="modal__overlay" tabindex="-1" data-micromodal-close>
