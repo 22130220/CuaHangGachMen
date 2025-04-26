@@ -28,6 +28,7 @@ public class AdminFilter implements Filter {
 //        User u = (User) session.getAttribute("auth");
 //
 //        if (session != null  && u != null && u.getRole() == 1) {
+
             chain.doFilter(request, response);
 //        } else {
 //            httpResponse.sendRedirect(httpRequest.getContextPath() + "/WEB-INF/404.jsp");

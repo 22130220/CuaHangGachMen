@@ -640,7 +640,7 @@ const revievColumnDef = [
     },
     {
         targets: 3,
-        data: 'stauus',
+        data: 'status',
         render: data => data ? `<td><div class="isActive"> Đã duyệt </div></td>` : `<td><div class="deActive"> Chưa duyệt </div></td>`,
         className: 'dt-center',
         searchPanes: {
@@ -664,13 +664,19 @@ const reviewButton = [
         action: (e, dt) => {
             let data = dt.rows({ selected: true }).data();
 
-            let reviewIdToShow = [];
+            let userToShow = [];
+            let orderToShow = [];
+            let productToShow = [];
             data.each(function(rowData) {
-                reviewIdToShow.push(rowData.id);
+                userToShow.push(rowData.userId);
+                orderToShow.push(rowData.orderId);
+                productToShow.push(rowData.productId);
             });
             let formData = new FormData();
             formData.append('status', 1);
-            formData.append('reviewId', JSON.stringify(reviewIdToShow));
+            formData.append('userId', JSON.stringify(userToShow));
+            formData.append('orderId', JSON.stringify(orderToShow));
+            formData.append('productId', JSON.stringify(productToShow));
             sendAjaxRequest({
                 url: '/admin/comment',
                 type: 'PUT',
@@ -678,7 +684,7 @@ const reviewButton = [
                 successMessage: null,
                 errorMessage: null,
                 tableToReload: reviewTable,
-                modalToClose: 'update_review_modal',
+                modalToClose: null,
                 onSuccess: function (response) {
                     if (response.success) notyf.success(response.message);
                     else notyf.error(response.message);
@@ -693,6 +699,32 @@ const reviewButton = [
         action: (e, dt) => {
             let data = dt.rows({ selected: true }).data();
 
+            let userToShow = [];
+            let orderToShow = [];
+            let productToShow = [];
+            data.each(function(rowData) {
+                userToShow.push(rowData.userId);
+                orderToShow.push(rowData.orderId);
+                productToShow.push(rowData.productId);
+            });
+            let formData = new FormData();
+            formData.append('status', 0);
+            formData.append('userId', JSON.stringify(userToShow));
+            formData.append('orderId', JSON.stringify(orderToShow));
+            formData.append('productId', JSON.stringify(productToShow));
+            sendAjaxRequest({
+                url: '/admin/comment',
+                type: 'PUT',
+                data: formData,
+                successMessage: null,
+                errorMessage: null,
+                tableToReload: reviewTable,
+                modalToClose: null,
+                onSuccess: function (response) {
+                    if (response.success) notyf.success(response.message);
+                    else notyf.error(response.message);
+                }
+            });
         },
         enabled: false
     }

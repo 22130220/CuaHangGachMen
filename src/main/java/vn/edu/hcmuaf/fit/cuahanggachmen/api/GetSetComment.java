@@ -44,9 +44,14 @@ public class GetSetComment extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String reid = req.getParameter("reviewId");
+        String pid = req.getParameter("productId");
+        String oId = req.getParameter("orderId");
+        String uid = req.getParameter("userId");
+
         String status = req.getParameter("status");
-        String reviewId[] = AjaxParseRequest.parse(reid);
+        String productId[] = AjaxParseRequest.parse(pid);
+        String orderId[] = AjaxParseRequest.parse(oId);
+        String userId[] = AjaxParseRequest.parse(uid);
         int statusId = Integer.parseInt(status);
 
         Handle handle = DBConect.get().open();
@@ -54,8 +59,8 @@ public class GetSetComment extends HttpServlet {
 
         int success = 0;
 
-        for (String id : reviewId) {
-            success += dao.setStatus(Integer.parseInt(id), statusId);
+        for (int i = 0; i < productId.length; i++) {
+            success += dao.setStatus(Integer.parseInt(userId[i]), Integer.parseInt(productId[i]), Integer.parseInt(orderId[i]), statusId);
         }
 
         JsonObject ob = new JsonObject();

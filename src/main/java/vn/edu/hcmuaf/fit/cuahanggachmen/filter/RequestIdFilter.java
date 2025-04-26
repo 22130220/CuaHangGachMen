@@ -28,6 +28,11 @@ public class RequestIdFilter implements Filter {
 
         httpRequest.setAttribute(REQUEST_ID_HEADER, correlationId);
 
+        httpResponse.setHeader("Access-Control-Allow-Origin", "*");
+        httpResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        httpResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        httpResponse.setHeader("Access-Control-Max-Age", "3600");
+
         chain.doFilter(request, response);
     }
 
