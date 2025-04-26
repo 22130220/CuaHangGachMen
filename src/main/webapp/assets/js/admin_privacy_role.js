@@ -284,3 +284,143 @@ $('#update_resource_btn').on('click', function () {
         }
     });
 });
+
+// Button enable/disable logic for permissions
+const buttonShowPermission = function () {
+    var selectedRows = permissionTable.rows({ selected: true }).count();
+    permissionTable.button(0).enable(selectedRows === 1); // Chỉnh sửa
+    permissionTable.button(1).enable(selectedRows > 0); // Xoá
+};
+
+// Configuration for permission table buttons
+const buttonPermissionConfig = [
+    {
+        text: 'Chỉnh Sửa',
+        className: 'green',
+        action: function (e, dt, node, config) {
+            let data = dt.row({ selected: true }).data();
+            $('#modify_permission_form')[0].reset();
+            $('#permission_id_update').val(data.id);
+            $('#permission_name_update').val(data.name);
+            MicroModal.show('update_permission_modal');
+        },
+        enabled: false
+    },
+    {
+        text: 'Xoá',
+        className: 'red',
+        action: function (e, dt, node, config) {
+            var data = dt.rows({ selected: true }).data();
+            let deleteId = [];
+            data.each(function(rowData, index) {
+                deleteId.push(rowData.id);
+            });
+
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success",
+                    cancelButton: "btn btn-danger"
+                },
+                buttonsStyling: false
+            });
+            swalWithBootstrapButtons.fire({
+                title: `Bạn có chắc muốn xoá ${deleteId.length} quyền này?`,
+                text: "Hành động này sẽ không thể quay lại!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Có",
+                cancelButtonText: "Không",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let formData = new FormData();
+                    formData.append('id', deleteId);
+                    sendAjaxRequest({
+                        url: '/admin/get-permission',
+                        data: formData,
+                        successMessage: null,
+                        errorMessage: null,
+                        tableToReload: permissionTable,
+                        modalToClose: null,
+                        type: 'DELETE',
+                        onSuccess: function (resp) {
+                            if (resp.success) {
+                                notyf.success(resp.message);
+                            } else {
+                                notyf.error(resp.message);
+                            }
+                        }
+                    });
+                }
+            });
+        },
+        enabled: false
+    }
+];
+
+// Initialize DataTable for permissions
+let permissionTable = initDataTable('#permissions', '/admin/get-permission', 'permissions', null,
+    [
+        {
+            targets: 0,
+            data: 'id',
+            className: 'dt-center',
+        },
+        {
+            targets: 1,
+            data: 'name',
+            className: 'dt-center',
+        },
+    ],
+    buttonPermissionConfig,
+    buttonShowPermission,
+    { paging: true, searching: false }
+);
+
+// Handle "Thêm" button for permissions
+$('#perm_add').on('click', function () {
+    $('#add_permission_form')[0].reset();
+    MicroModal.show('create_permission_modal');
+});
+
+// Handle "Thêm" button click in the modal
+$('#add_permission_btn').on('click', function () {
+    let formData = new FormData($('#add_permission_form')[0]);
+    sendAjaxRequest({
+        url: '/admin/get-permission',
+        data: formData,
+        successMessage: null,
+        errorMessage: null,
+        tableToReload: permissionTable,
+        modalToClose: 'create_permission_modal',
+        type: 'POST',
+        onSuccess: function (resp) {
+            if (resp.success) {
+                notyf.success(resp.message);
+            } else {
+                notyf.error(resp.message);
+            }
+        }
+    });
+});
+
+// Handle "Cập nhật" button click in the modal
+$('#update_permission_btn').on('click', function () {
+    let formData = new FormData($('#modify_permission_form')[0]);
+    sendAjaxRequest({
+        url: '/admin/get-permission',
+        data: formData,
+        successMessage: null,
+        errorMessage: null,
+        tableToReload: permissionTable,
+        modalToClose: 'update_permission_modal',
+        type: 'PUT',
+        onSuccess: function (resp) {
+            if (resp.success) {
+                notyf.success(resp.message);
+            } else {
+                notyf.error(resp.message);
+            }
+        }
+    });
+});
