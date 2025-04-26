@@ -447,4 +447,32 @@ public class AjaxResponse {
         return jsonArrayJoiner.toString();
     }
 
+    public void addBannerList(List<Banner> bannerList) {
+        this.text.add(String.format("\"banners\":%s", bannerListToJson(bannerList)));
+    }
+
+    private String bannerListToJson(List<Banner> bannerList) {
+        StringJoiner jsonArrayJoiner = new StringJoiner(",", "[", "]");
+
+        for (Banner banner : bannerList) {
+            StringJoiner jsonBannerJoiner = new StringJoiner(",", "{", "}");
+
+            jsonBannerJoiner.add(String.format("\"id\":%d", banner.getId()))
+                    .add(String.format("\"title\":\"%s\"", banner.getTitle() != null ? banner.getTitle() : ""))
+                    .add(String.format("\"imageUrl\":\"%s\"", banner.getImageUrl() != null ? banner.getImageUrl() : ""))
+                    .add(String.format("\"link\":\"%s\"", banner.getLink() != null ? banner.getLink() : ""))
+                    .add(String.format("\"position\":\"%s\"", banner.getPosition() != null ? banner.getPosition() : ""))
+                    .add(String.format("\"isActive\":%b", banner.isActive()))
+                    .add(String.format("\"startDate\":%s", banner.getStartDate() != null ? "\"" + banner.getStartDate().toString() + "\"" : "null"))
+                    .add(String.format("\"endDate\":%s", banner.getEndDate() != null ? "\"" + banner.getEndDate().toString() + "\"" : "null"))
+                    .add(String.format("\"priority\":%d", banner.getPriority()))
+                    .add(String.format("\"createdAt\":%s", banner.getCreatedAt() != null ? "\"" + banner.getCreatedAt().toString() + "\"" : "null"))
+                    .add(String.format("\"updatedAt\":%s", banner.getUpdatedAt() != null ? "\"" + banner.getUpdatedAt().toString() + "\"" : "null"));
+
+            jsonArrayJoiner.add(jsonBannerJoiner.toString());
+        }
+
+        return jsonArrayJoiner.toString();
+    }
+
 }
