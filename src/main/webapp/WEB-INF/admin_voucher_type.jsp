@@ -188,6 +188,13 @@
                         <input type="text" id="modalmodifyName" name="type" class="modal__input" required />
                     </div>
                     <input type="hidden" id="idmodify" name="id">
+                    <div class="fui-basic-input" style="width: 100%">
+                        <label for="update_active" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+                        <select name="update_active" id="update_active" class="input input-bordered f-s-14" required>
+                            <option value="true">Bật</option>
+                            <option value="false">Tắt</option>
+                        </select>
+                    </div>
                     <div class="modal__actions">
                         <button type="submit" class="modal__button">Xác nhận</button>
                     </div>
@@ -196,6 +203,32 @@
         </div>
     </div>
 
+    <div class="modal micromodal-slide" id="update_id_modal2" aria-hidden="true">
+        <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="modal__header">
+                    <h2 class="modal__title">
+                        Cập nhật trạng thái
+                    </h2>
+                    <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div class="modal-content-content">
+                    <div class="modal__content">
+                        <div class="fui-basic-input" style="width: 100%">
+                            <label for="update_active_id" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+                            <select name="update_active_id" id="update_active_id" class="input input-bordered f-s-14" required>
+                                <option value="true">Bật</option>
+                                <option value="false">Tắt</option>
+                            </select>
+                        </div>
+                    </div>
+                    <footer class="modal__footer">
+                        <button class="button bg_green f-cl-white" id="update_id_btn3">Cập nhật</button>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </div>
@@ -206,6 +239,7 @@
 <script src="/assets/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>
+    let setActive = [];
     let action ='';
     var table=new DataTable('#vouchertp',{
         ajax: {
@@ -228,6 +262,22 @@
                         },
                         enabled: false
                     },
+                    {
+                        text: 'Trạng thái',
+                        className: 'red',
+                        action: function (e, dt, node, config) {
+                            // console.log('Rows: ' + dt.rows({ selected: true }).count());
+                            var data = dt.rows({ selected: true }).data();
+                            setActive = [];
+                            data.each(function(rowData, index) {
+                                setActive.push(rowData.id);
+                            });
+                            console.log(setActive)
+                            action = 'cp';
+                            MicroModal.show('update_id_modal2');
+                        },
+                        enabled: false
+                    }
                 ]
             },
         },
@@ -241,6 +291,17 @@
             {
                 targets: 1,
                 data: 'name',
+                className: 'dt-center'
+            },
+            {
+                targets: 2,
+                data: 'isActive',
+                width: '15%',
+                render: function (data) {
+                    if(data) {
+                        return `<td> <div class="isActive"> Đang bật </div> </td>`
+                    } else return `<td> <div class="deActive"> Đã tắt </div> </td>`
+                },
                 className: 'dt-center'
             },
         ],
@@ -270,6 +331,7 @@
     table.on('select deselect', function () {
         var selectedRows = table.rows({ selected: true }).count();
         table.button(1).enable(selectedRows === 1);
+        table.button(2).enable(selectedRows > 0);
     });
     const addButton = document.getElementById("add");
     if (addButton) {
@@ -297,6 +359,7 @@
 
                     const notyf = new Notyf();
                     if (response.success) {
+                        table.rows().deselect();
                         notyf.open({
                             duration: 1000,
                             position: { x: 'right', y: 'bottom' },
@@ -305,6 +368,7 @@
                         });
                         table.ajax.reload(null, false);
                     } else {
+                        table.rows().deselect();
                         notyf.open({
                             duration: 1000,
                             position: { x: 'right', y: 'bottom' },
@@ -314,6 +378,7 @@
                     }
                 },
                 error: function (xhr, status, error) {
+                    table.rows().deselect();
                     console.error('Lỗi khi Thêm:', error);
                     const notyf = new Notyf();
                     notyf.open({
@@ -338,7 +403,7 @@
                 data: formData,
                 success: function (response) {
                     MicroModal.close('modifiVoucherTypeModal');
-
+                    table.rows().deselect();
                     const notyf = new Notyf();
                     if (response.success) {
                         notyf.open({
@@ -358,6 +423,7 @@
                     }
                 },
                 error: function (xhr, status, error) {
+                    table.rows().deselect();
                     console.error('Lỗi khi Sửa:', error);
                     const notyf = new Notyf();
                     notyf.open({
@@ -369,6 +435,41 @@
                 }
             });
         });
+    });
+
+    $("#update_id_btn3").on('click', function () {
+        const active = $("#update_active_id").val();
+
+        console.log(setActive)
+        $.ajax({
+            url: '/GetSetVoucherType',
+            type: 'POST',
+            traditional: true,
+            data: {
+                id: setActive,
+                active: active,
+                action: action
+
+            },
+            success: function (data) {
+                MicroModal.close('update_id_modal2');
+                const notyf = new Notyf();
+                if(data.success) {
+                    notyf.success( " thành công");
+                    table.ajax.reload();
+                    table.rows().deselect();
+                } else {
+                    notyf.error(" thất bại");
+                    table.rows().deselect();
+                }
+            },
+            error: function () {
+                table.rows().deselect();
+                MicroModal.close('update_id_modal2');
+                const notyf = new Notyf();
+                notyf.error(" thất bại");
+            }
+        })
     });
 
     function openModal(modalSelector,name,id) {
