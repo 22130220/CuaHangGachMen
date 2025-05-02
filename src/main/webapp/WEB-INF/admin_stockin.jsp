@@ -157,6 +157,36 @@
 </div>
 
 
+<div class="modal micromodal-slide" id="phieuChiTietModal" aria-hidden="true">
+  <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+    <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+      <header class="modal__header">
+        <h2 class="modal__title">Chi tiết của phiếu nhập</h2>
+        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+      </header>
+      <div class="modal__content">
+        <table id="stockindetail" class="display compact" style="width:100%">
+          <thead>
+          <tr>
+            <th>Id</th>
+            <th>stockId</th>
+            <th>productId</th>
+            <th>ColorId</th>
+            <th>Số lượng</th>
+            <th>tổng tiền</th>
+          </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
 </div>
 
 
@@ -248,6 +278,14 @@
         },
         className: 'dt-center'
       },
+      {
+        targets: 5,
+        data: 'id',
+        className: 'dt-center',
+        render:function (data,row){
+          return `<i style="align-items: center" data-target="\${data}" title="Xem chi tiết"  class="fa-solid fa-file" onclick="getModel('phieuChiTietModal',\${data})"></i>`;
+        }
+      },
     ],
     'autoWidth': false,
     language: {
@@ -288,22 +326,6 @@
 
 
 
-
-
-
-  // function handleUserClick(id){
-  //   if (document.getElementById('userNhap')) {
-  //     MicroModal.init(); // ← đảm bảo Micromodal re-init DOM mỗi lần cần
-  //     MicroModal.show('userNhap');
-  //   } else {
-  //     console.error("❌ Modal userNhap không tồn tại.");
-  //   }
-  // }
-  // function handleUserClick(id) {
-  //   // MicroModal.init(); // đảm bảo micromodal không bị lỗi removeEventListener
-  //   MicroModal.show('userNhap');
-  // }
-
   function openModal(modalSelector,id) {
 
     $.ajax({
@@ -322,6 +344,87 @@
         console.error("Lỗi khi gửi:", error);
       }
     });
+  }
+  function getModel(modalSelector,id){
+    const tableId = '#stockindetail';
+    const dataUrl = '/GetSetStockInDetail';
+    if ($.fn.DataTable.isDataTable(tableId)) {
+      const table = $(tableId).DataTable();
+      table.ajax.url(dataUrl + '?id=' + id).load();
+    } else {
+      var table=new DataTable('#stockindetail',{
+        ajax: {
+          url: dataUrl,
+          data:{id:id},
+          dataSrc: 'data'
+        },
+        fixedHeader: true,
+        layout: {
+          topStart: {
+            buttons: [
+              'colvis',
+            ]
+          },
+        },
+        select: true,
+        columnDefs: [
+          {
+            targets: 0,
+            data: 'id',
+            className: 'dt-center'
+          },
+          {
+            targets: 1,
+            data: 'stockId',
+            className: 'dt-center'
+          },
+          {
+            targets: 2,
+            data: 'productId',
+            className: 'dt-center',
+          },
+          {
+            targets: 3,
+            data: 'colorId',
+            className: 'dt-center'
+          },
+          {
+            targets: 4,
+            data: 'quantity',
+            className: 'dt-center'
+          },
+          {
+            targets: 5,
+            data: 'unitPrice',
+            className: 'dt-center'
+          },
+          {
+            targets: 6,
+            data: 'totalPrice',
+            className: 'dt-center'
+          },
+
+        ],
+        'autoWidth': false,
+        language: {
+          lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
+          zeroRecords: "Không tìm thấy kết quả",
+          info: "Hiển thị trang _PAGE_ của _PAGES_",
+          infoEmpty: "Không có dữ liệu",
+          infoFiltered: "(lọc từ _MAX_ tổng mục)"
+        },
+        createdRow: function (row, data, dataIndex) {
+          // Thêm lớp CSS để căn giữa các ô
+          $('td', row).css({
+            'text-align': 'center',
+            'vertical-align': 'middle',
+            'align-content': 'center',
+          });
+        }
+      });
+
+    }
+    MicroModal.show(modalSelector);
   }
 
 
