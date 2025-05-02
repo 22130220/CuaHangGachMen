@@ -120,6 +120,17 @@ public class UserDao extends BaseDao {
                 .findOne()
                 .orElse(null);
     }
+
+    public User getUserById1(int id) {
+        return handle.createQuery("SELECT * FROM users WHERE id = :id")
+                .bind("id", id) // Gắn giá trị id
+                .map(new UserMapper())
+                .findOne()
+                .orElse(null);
+    }
+
+
+
     public User findByEmail(String email) {
         return handle.createQuery("SELECT * FROM users WHERE email = :email AND status=1")
                 .bind("email", email) // Gắn giá trị id

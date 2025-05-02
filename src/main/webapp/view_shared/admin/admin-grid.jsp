@@ -120,6 +120,14 @@
                 Quản lý VoucherType
             </p>
         </a>
+        <a href="/admin/manage-stockin" class="item5 sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-user-tag"></i>
+            </div>
+            <p class="text">
+                Quản lý Nhập kho
+            </p>
+        </a>
 
         <!-- Accounts with collapsible sub-items -->
         <div class="sidebar-button has-subitems">
