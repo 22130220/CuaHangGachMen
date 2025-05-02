@@ -66,7 +66,7 @@
                     <div>
                         <img src="https://vcci-hcm.org.vn/wp-content/uploads/2022/12/1.png" alt="MOMO">
                     </div>
-                    <div>Thanh Toán qua MOMO</div>
+                    <div>Thanh Toán qua ZaloPay</div>
                 </div>
             </form>
 
@@ -80,7 +80,9 @@
         </section>
 
         <div class="price-summary">
-            <p>Mã voucher đã dùng: ${sessionScope.voucherID}</p>
+            <p>Mã voucher đã dùng: ${sessionScope.voucherID}  </br>
+                ${sessionScope.voucherIDShip}       </br>
+                ${sessionScope.voucherOther}        </p>
             <h3>Tổng cộng thanh toán: ${sessionScope.finalTotal}₫</h3>
         </div>
         <aside class="sidebar">

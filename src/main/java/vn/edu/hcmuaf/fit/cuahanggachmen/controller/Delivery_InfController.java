@@ -33,11 +33,9 @@ public class Delivery_InfController extends HttpServlet {
 //        double shippingFee = cart.getTotal() / 10.0;
         Handle handle = DBConect.get().open();
         VoucherDao voucherDao = new VoucherDao(handle);
-        List<Voucher> listOrder =voucherDao.findAllUnusedOrderByUser(user.getId());
-        List<Voucher> listShip =voucherDao.findAllUnusedShipByUser(user.getId());
+        List<Voucher> listVoucher = voucherDao.findAllUnusedVouchersByUser(user.getId());
 
-        request.setAttribute("orderVouchers", listOrder);
-        request.setAttribute("shippingVouchers", listShip);
+        request.setAttribute("Vouchers", listVoucher);
         // Truyền thông tin sang JSP
         request.setAttribute("cart", cart);
 //        request.setAttribute("shippingFee", shippingFee);

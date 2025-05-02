@@ -86,7 +86,7 @@ body {
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 100%;
+    /*width: 100%;*/
   }
   
   input::placeholder {
