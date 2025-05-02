@@ -27,75 +27,76 @@ public class UserVoucherUsage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Handle handle = DBConect.get().open();
-        String code = request.getParameter("code");
-        String code2 = request.getParameter("code2");
-        String price =request.getParameter("price");
-        String feevn= request.getParameter("feevn");
-        String feedh =request.getParameter("feedh");
+        String[] ids = request.getParameterValues("ids");
+        String price = request.getParameter("price");
+        String feevn = request.getParameter("feevn");
+        String feedh = request.getParameter("feedh");
+
         Double feevn1 = Double.parseDouble(feevn);
         Double feedh1 = Double.parseDouble(feedh);
         Double price2 = Double.valueOf(price);
+
         User u = (User) request.getSession().getAttribute("auth");
         int userId = u.getId();
 
         VoucherDao vDao = new VoucherDao(handle);
-        Voucher vcOrder = (code != null && !code.isEmpty()) ? vDao.findByID(code) : null;
-        Voucher vcShip = (code2 != null && !code2.isEmpty()) ? vDao.findByID(code2) : null;
-
         VoucherUsageDAO voucherUsageDAO = new VoucherUsageDAO(handle);
-        VoucherUsage voucherUsageOrder = (vcOrder != null) ? voucherUsageDAO.findByIdAndUser(vcOrder.getId(), userId) : null;
-        VoucherUsage voucherUsageShip  = (vcShip != null)  ? voucherUsageDAO.findByIdAndUser(vcShip.getId(), userId)  : null;
-
         AjaxResponse resp = new AjaxResponse();
         HttpSession session = request.getSession();
         Cart cart = (Cart) session.getAttribute("cart");
-        List<Integer> listVoucherId = new ArrayList<>();
 
         double discount = 0;
         double discountShip = 0;
+        double discountOther = 0;
+        List<Integer> listVoucherId = new ArrayList<>();
 
-// Logic áp dụng voucher theo điều kiện
-        if (vcOrder != null && voucherUsageOrder != null && vcShip != null) {
-            // Dùng order, còn ship
-            listVoucherId.add(vcShip.getId());
-            discountShip = vcShip.getDiscountValue().doubleValue();
-            resp.addInt("voucherIDShip", vcShip.getId());
-            System.out.println("Đã dùng order, áp dụng ship.");
-        } else if (vcShip != null && voucherUsageShip != null && vcOrder != null) {
-            // Dùng ship, còn order
-            listVoucherId.add(vcOrder.getId());
-            discount = vcOrder.getDiscountValue().doubleValue();
-            resp.addInt("voucherID", vcOrder.getId());
-            System.out.println("Đã dùng ship, áp dụng order.");
-        } else {
-            // Cả hai chưa dùng hoặc chỉ gửi 1 mã và chưa dùng
-            if (vcOrder != null && voucherUsageOrder == null) {
-                listVoucherId.add(vcOrder.getId());
-                discount = vcOrder.getDiscountValue().doubleValue();
-                resp.addInt("voucherID", vcOrder.getId());
+        boolean appliedOrder = false;
+        boolean appliedShip = false;
+
+        if (ids != null) {
+            for (String id : ids) {
+                if (id == null || id.trim().isEmpty()) continue;
+
+                Voucher voucher = vDao.findByID(id);
+                if (voucher == null) continue;
+
+                VoucherUsage usage = voucherUsageDAO.findByIdAndUser(voucher.getId(), userId);
+                if (usage != null) continue; // đã dùng → bỏ qua
+
+                int type = voucher.getVoucherType(); // 1: ORDER, 2: SHIP, khác: OTHER
+
+                if (type == 1 && !appliedOrder) {
+                    discount += voucher.getDiscountValue().doubleValue();
+                    listVoucherId.add(voucher.getId());
+                    appliedOrder = true;
+                    resp.addInt("voucherID", voucher.getId());
+                } else if (type == 2 && !appliedShip) {
+                    discountShip += voucher.getDiscountValue().doubleValue();
+                    listVoucherId.add(voucher.getId());
+                    appliedShip = true;
+                    resp.addInt("voucherIDShip", voucher.getId());
+                } else if (type != 1 && type != 2) {
+                    discountOther += voucher.getDiscountValue().doubleValue();
+                    listVoucherId.add(voucher.getId());
+                    resp.addInt("voucherIDOther",voucher.getId());
+                }
             }
-            if (vcShip != null && voucherUsageShip == null) {
-                listVoucherId.add(vcShip.getId());
-                discountShip = vcShip.getDiscountValue().doubleValue();
-                resp.addInt("voucherIDShip", vcShip.getId());
-            }
-            System.out.println("Áp dụng những mã còn lại chưa dùng.");
         }
 
 // Gán vào cart
         cart.setListVoucherId(listVoucherId);
 
-// Gửi response
-        double feevn2=Math.min(feevn1,discountShip);
-        double feedh2=Math.min(feedh1,discount);
-        double finalPrice = price2 - feedh2 - feevn2;
-        if (finalPrice < 0) {
-            finalPrice = 0;
-        }
+// Tính tổng giảm giá, kiểm soát không vượt quá phí gốc
+        double feevn2 = Math.min(feevn1, discountShip);
+        double feedh2 = Math.min(feedh1, discount);
+        double finalPrice = price2 - feevn2 - feedh2 - discountOther;
+        if (finalPrice < 0) finalPrice = 0;
 
+// Trả kết quả
         resp.addDouble("price", finalPrice);
         resp.addDouble("discount", discount);
         resp.addDouble("discountShip", discountShip);
+        resp.addDouble("discountOther", discountOther);
         resp.addBool("status", true);
 
         response.setStatus(HttpServletResponse.SC_OK);
@@ -104,30 +105,6 @@ public class UserVoucherUsage extends HttpServlet {
         PrintWriter out = response.getWriter();
         out.print(resp.getText());
         handle.close();
-//        resp.addBool("status", status);
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        response.setContentType("application/json");
-//        response.setCharacterEncoding("UTF-8");
-//        PrintWriter out = response.getWriter();
-//        out.print(resp.getText());
-//        handle.close();
-
-
-
-
-//        if(!status) {
-//            VoucherDao vDao = new VoucherDao(handle);
-//            Voucher vs = null;
-//            vs = vDao.findByName(code).orElse(null);
-//            if(vs != null) {
-//                HttpSession session = request.getSession();
-//                Cart cart = (Cart)session.getAttribute("cart");
-//                cart.setDiscount(vs.getDiscountValue().doubleValue());
-//                cart.setVoucherId(vs.getId());
-//                resp.addDouble("discount", vs.getDiscountValue().doubleValue());
-//                resp.addInt("voucherID", vs.getId()); // Trả về ID của voucher
-//            } else status = true;
-//        }
     }
 
     @Override

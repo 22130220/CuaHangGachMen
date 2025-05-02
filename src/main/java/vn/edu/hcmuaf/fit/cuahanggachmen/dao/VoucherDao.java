@@ -100,40 +100,25 @@ public class VoucherDao extends BaseDao {
                 .list();
     }
 
-    public List<Voucher> findAllUnusedShipByUser(int userId) {
-        // Bước 1: Lấy tất cả voucher shipping còn hiệu lực
-        List<Voucher> allShipVouchers = handle.createQuery(
-                        "SELECT * FROM vouchers WHERE isActive = 1 AND VoucherTypeId = 2")
-                .map(this::mapRow)
-                .list();
-        // Bước 2: Lấy danh sách voucher đã dùng của người dùng này
-        List<Integer> usedVoucherIds = handle.createQuery(
-                        "SELECT VoucherID FROM voucherusage WHERE UserID = :userId")
-                .bind("userId", userId)
-                .mapTo(Integer.class)
-                .list();
-        // Bước 3: Loại bỏ các voucher đã dùng
-        return allShipVouchers.stream()
-                .filter(v -> !usedVoucherIds.contains(v.getId()))
-                .collect(Collectors.toList());
-    }
-
-    public List<Voucher> findAllUnusedOrderByUser(int userId) {
-        // Bước 1: Lấy tất cả voucher loại order (VoucherTypeId = 1) còn hiệu lực
-        List<Voucher> allOrderVouchers = handle.createQuery(
-                        "SELECT * FROM vouchers WHERE isActive = 1 AND VoucherTypeId = 1")
-                .map(this::mapRow)
+    public List<Voucher> findAllUnusedVouchersByUser(int userId) {
+        // Bước 1: Lấy tất cả voucher còn hiệu lực và loại voucher còn hoạt động
+        List<Voucher> allValidVouchers = handle.createQuery(
+                        "SELECT v.* " +
+                                "FROM vouchers v " +
+                                "JOIN voucher_type vt ON v.VoucherTypeId = vt.ID " +
+                                "WHERE v.IsActive = 1 AND vt.isActive = 1"
+                ).map(this::mapRow)
                 .list();
 
-        // Bước 2: Lấy danh sách ID voucher đã dùng của user
+        // Bước 2: Lấy danh sách các voucher đã dùng bởi user
         List<Integer> usedVoucherIds = handle.createQuery(
-                        "SELECT VoucherID FROM voucherusage WHERE UserID = :userId")
-                .bind("userId", userId)
+                        "SELECT VoucherID FROM voucherusage WHERE UserID = :userId"
+                ).bind("userId", userId)
                 .mapTo(Integer.class)
                 .list();
 
-        // Bước 3: Lọc ra những voucher chưa dùng
-        return allOrderVouchers.stream()
+        // Bước 3: Trả về các voucher chưa được dùng
+        return allValidVouchers.stream()
                 .filter(v -> !usedVoucherIds.contains(v.getId()))
                 .collect(Collectors.toList());
     }
