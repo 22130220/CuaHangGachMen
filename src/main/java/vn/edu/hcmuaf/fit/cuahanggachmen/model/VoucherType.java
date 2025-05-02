@@ -5,13 +5,25 @@ import java.io.Serializable;
 public class VoucherType implements Serializable {
     private int id;
     private String name;
-
+    private boolean isActive;
 
     public VoucherType() {
+    }
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public VoucherType(int id, String name) {
         this.id = id;
+        this.name = name;
+    }
+    public VoucherType(int id, boolean isActive, String name) {
+        this.id = id;
+        this.isActive = isActive;
         this.name = name;
     }
 
@@ -36,6 +48,7 @@ public class VoucherType implements Serializable {
         return "VoucherType{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", isActive=" + isActive +
                 '}';
     }
 }

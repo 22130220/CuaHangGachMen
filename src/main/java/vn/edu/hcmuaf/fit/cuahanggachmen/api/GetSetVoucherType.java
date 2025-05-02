@@ -44,6 +44,7 @@ public class GetSetVoucherType extends HttpServlet {
             throws ServletException, IOException {
         Handle handle = DBConect.get().open();
         int so=0;
+        String active = null;
         String action = request.getParameter("action");
         AjaxResponse resp = new AjaxResponse();
         VoucherType vouchertype = new VoucherType();
@@ -51,15 +52,26 @@ public class GetSetVoucherType extends HttpServlet {
         if(action.equalsIgnoreCase("Thêm")){
             String type = request.getParameter("type");
             vouchertype.setName(type);
+            vouchertype.setActive(true);
              so=voucherTypeDao.insert(vouchertype);
 
         }else if(action.equalsIgnoreCase("sửa")){
             String id = request.getParameter("id");
             String name = request.getParameter("type");
+            active = request.getParameter("update_active");
+            boolean isActive = Boolean.parseBoolean(active);
             int id1=Integer.parseInt(id);
             vouchertype.setId(id1);
             vouchertype.setName(name);
+            vouchertype.setActive(isActive);
              so=voucherTypeDao.update(vouchertype);
+        }else if (action.equalsIgnoreCase("cp")) {
+            String[] ids = request.getParameterValues("id");
+            String realAcive = request.getParameter("active");
+            Boolean isActive = Boolean.parseBoolean(realAcive);
+            for (String s : ids) {
+                so += voucherTypeDao.updateActive(Integer.parseInt(s), isActive);
+            }
         }
         resp.addBool("success",so>0);
         handle.close();

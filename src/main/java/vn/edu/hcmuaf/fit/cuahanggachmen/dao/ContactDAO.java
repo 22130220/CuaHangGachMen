@@ -35,7 +35,7 @@ public class ContactDAO extends BaseDao{
                         .bind(4, ct.getDate())
                         .bind(5, ct.isReply())
                         .bind(6, ct.getResponse())
-                        .bind(6, ct.getId())
+                        .bind(7, ct.getId())
                         .execute();
     }
 
