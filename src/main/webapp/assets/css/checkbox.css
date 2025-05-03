@@ -57,3 +57,7 @@
 .fui-checkbox-custom .label {
     cursor: pointer;
 }
+
+.mt-3 {
+    margin-top: 30px;
+}

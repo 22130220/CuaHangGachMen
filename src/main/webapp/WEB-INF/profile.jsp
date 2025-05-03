@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="/assets/css/cacthanhphancodinh.css">
     <link rel="stylesheet" href="/assets/css/giohang.css">
     <link rel="stylesheet" href="/assets/css/dropdown_user_menu.css">
+    <link rel="stylesheet" href="/assets/css/checkbox.css">
     <!-- Thêm favicon -->
     <link
             rel="icon"
@@ -43,6 +44,12 @@
     ></script>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!--Notyf-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
+    <!-- Sweet alert 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         .noibatthu3{
@@ -154,13 +161,26 @@
                     <button type="submit" class="save-btn">Đổi mật khẩu</button>
                 </form>
             </c:if>
+
         </div>
         <c:if test="${not empty message}">
             <div class="alert">
                     ${message}
             </div>
         </c:if>
+        <div class="fui-checkbox-custom mt-3">
+            <div class="input-wrap">
+                <input type="checkbox" name="priceRange" id="price1"
+                       class="input-checkbox filter" onchange="checkTotp(this)" <c:if test="${hasTotpToken}">checked</c:if> />
+                <span class="check-icon">
+                                    <i class="fa-solid fa-check"></i>
+                                 </span>
+            </div>
+            <label class="label s-12 cl-brown" for="price1">Xác thực TOTP</label>
+        </div>
     </main>
+
+
 </div>
 
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
@@ -241,6 +261,40 @@
             alert('Vui lòng chọn file dưới 1MB!');
         }
     });
+
+    function checkTotp(button) {
+        if (button.checked) {
+            Swal.fire({
+                title: 'Xác thực TOTP',
+                text: 'Bạn có muốn xác thực TOTP không?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Có',
+                cancelButtonText: 'Không'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/totp';
+                } else {
+                    button.checked = false;
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Hủy xác thực TOTP',
+                text: 'Bạn có chắc chắn muốn hủy xác thực TOTP không?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Có',
+                cancelButtonText: 'Không'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    alert('Đã hủy xác thực TOTP');
+                } else {
+                    button.checked = true;
+                }
+            });
+        }
+    }
 </script>
 
 </body>
