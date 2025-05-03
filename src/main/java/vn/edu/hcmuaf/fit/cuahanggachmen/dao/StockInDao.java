@@ -16,9 +16,10 @@ public class StockInDao extends BaseDao{
     // Thêm mới 1 phiếu nhập kho
     public int insertNhapMua(StockIn stockIn) {
         return handle.createUpdate("INSERT INTO StockIn (createDate, userId, updatedAt, isActive,typeId) " +
-                        "VALUES (:createDate, :userId, NULL, 1,1)")
+                        "VALUES (:createDate, :userId, :updateAt, 1,1)")
                 .bind("createDate", stockIn.getCreateDate())
                 .bind("userId", stockIn.getUserId())
+                .bind("updateAt",stockIn.getCreateDate())
                 .executeAndReturnGeneratedKeys("id")
                 .mapTo(Integer.class)
                 .one();
