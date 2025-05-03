@@ -99,4 +99,9 @@ public class TOTPController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/");
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
 }

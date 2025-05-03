@@ -29,7 +29,9 @@ public class ProfileController extends HttpServlet {
             Handle handle = DBConect.get().open();
             UserDao userDao = new UserDao(handle);
             User fullUserInfo = userDao.getUserById(user.getId()); // Lấy thông tin đầy đủ từ DB
+            String hasTotpToken = userDao.getSecretKey(user.getId());
             request.setAttribute("user", fullUserInfo); // Truyền thông tin qua JSP
+            request.setAttribute("hasTotpToken", !hasTotpToken.isEmpty() && hasTotpToken != null ? true : false);
             if(fullUserInfo.getBirthtime() != null) {
                 String birthDate = fullUserInfo.getBirthtime().toLocalDate().toString();// Định dạng yyyy-MM-dd
                 request.setAttribute("birthtime", birthDate);
