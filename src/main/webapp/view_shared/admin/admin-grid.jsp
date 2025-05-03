@@ -142,12 +142,12 @@
             </div>
         </div>
         <div class="subitems" style="display: none;">
-            <a href="/admin/manage-user" class="sub-sidebar-button subitem">
+            <a href="/admin/user-role" class="sub-sidebar-button subitem">
                 <div class="sidebar-icon">
                     <i class="fa-solid fa-user"></i>
                 </div>
                 <p class="text">
-                    User
+                    User Role
                 </p>
             </a>
             <a href="/admin/role" class="sub-sidebar-button subitem">
@@ -158,22 +158,22 @@
                     Role
                 </p>
             </a>
-            <a href="/admin/resource-group" class="sub-sidebar-button subitem">
-                <div class="sidebar-icon">
-                    <i class="fa-solid fa-users-rectangle"></i>
-                </div>
-                <p class="text">
-                    Resource Group
-                </p>
-            </a>
-            <a href="/admin/identity" class="sub-sidebar-button subitem">
-                <div class="sidebar-icon">
-                    <i class="fa-solid fa-id-card"></i>
-                </div>
-                <p class="text">
-                    Identity
-                </p>
-            </a>
+<%--            <a href="/admin/resource-group" class="sub-sidebar-button subitem">--%>
+<%--                <div class="sidebar-icon">--%>
+<%--                    <i class="fa-solid fa-users-rectangle"></i>--%>
+<%--                </div>--%>
+<%--                <p class="text">--%>
+<%--                    Resource Group--%>
+<%--                </p>--%>
+<%--            </a>--%>
+<%--            <a href="/admin/identity" class="sub-sidebar-button subitem">--%>
+<%--                <div class="sidebar-icon">--%>
+<%--                    <i class="fa-solid fa-id-card"></i>--%>
+<%--                </div>--%>
+<%--                <p class="text">--%>
+<%--                    Identity--%>
+<%--                </p>--%>
+<%--            </a>--%>
 
             <a href="/admin/privacy-role" class="sub-sidebar-button subitem">
                 <div class="sidebar-icon">
