@@ -82,6 +82,7 @@
 
     <!-- chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body>
@@ -90,7 +91,7 @@
 
     <!-- Nội dung chính -->
     <div class="content grid-item content-grid">
-        <div class="main-grid">
+        <div class="main-grid" x-data="summary">
             <!-- Thanh điều hướng -->
             <nav class="navbar tag-line _4c _1r">
                 <div class="nav-back-prev">
@@ -104,44 +105,108 @@
                 <div class="funcproduct">
                 </div>
             </nav>
-
-            <div class="_2c _2r">
-                <div class="card">
+                <div class="card _1c _2r">
                     <div class="title-icon">
-                        <p class="text_entry_title">Doanh thu</p>
+                        <p class="text_entry_title">Tổng doanh thu</p>
+                        <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>
                     </div>
-                    <canvas id="revenueChart"></canvas>
-                </div>
-            </div>
-
-            <div class="_2c _3r">
-                <div class="card">
-                    <div class="title-icon">
-                        <p class="text_entry_title">Doanh thu</p>
+                    <div class="content-entry">
+                        <p class="big-title f-cl-black f-bold f-s-30">
+                            24242323
+                        </p>
+                        <p class="less-title f-cl-black f-bold f-s-16">
+                            VNĐ
+                        </p>
                     </div>
-                    <canvas id="pieChart"></canvas>
-                </div>
-            </div>
-
-            <div class="_2c _1r">
-                <div class="card">
-                    <div class="title-icon">
-                        <p class="text_entry_title">Doanh thu</p>
-                    </div>
-                    <canvas id="lineChart"></canvas>
 
                 </div>
-            </div>
 
-            <div class="_2c _3r">
-                <div class="card">
+                <div class="card _1c _2r">
                     <div class="title-icon">
-                        <p class="text_entry_title">Doanh thu</p>
+                        <p class="text_entry_title">Số lượng bán ra</p>
+                        <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>
                     </div>
-                    <canvas id="doughnutChart"></canvas>
+                    <div class="content-entry">
+                        <p class="big-title f-cl-black f-bold f-s-30">
+                            24242323
+                        </p>
+                        <p class="less-title f-cl-black f-bold f-s-16">
+                            VNĐ
+                        </p>
+                    </div>
 
                 </div>
-            </div>
+
+                <div class="card _1c _2r">
+                    <div class="title-icon">
+                        <p class="text_entry_title">Số Lượng nhập vào</p>
+                        <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>
+                    </div>
+                    <div class="content-entry">
+                        <p class="big-title f-cl-black f-bold f-s-30">
+                            24242323
+                        </p>
+                        <p class="less-title f-cl-black f-bold f-s-16">
+                            VNĐ
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="card _1c _2r">
+                    <div class="title-icon">
+                        <p class="text_entry_title">Tổng doanh thu</p>
+                        <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>
+                    </div>
+                    <div class="content-entry">
+                        <p class="big-title f-cl-black f-bold f-s-30">
+                            24242323
+                        </p>
+                        <p class="less-title f-cl-black f-bold f-s-16">
+                            VNĐ
+                        </p>
+                    </div>
+
+                </div>
+
+
+<%--            <div class="_2c _2r">--%>
+<%--                <div class="card">--%>
+<%--                    <div class="title-icon">--%>
+<%--                        <p class="text_entry_title">Doanh thu</p>--%>
+<%--                    </div>--%>
+<%--                    <canvas id="revenueChart"></canvas>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+
+<%--            <div class="_2c _3r">--%>
+<%--                <div class="card">--%>
+<%--                    <div class="title-icon">--%>
+<%--                        <p class="text_entry_title">Doanh thu</p>--%>
+<%--                    </div>--%>
+<%--                    <canvas id="pieChart"></canvas>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+
+<%--            <div class="_2c _1r">--%>
+<%--                <div class="card">--%>
+<%--                    <div class="title-icon">--%>
+<%--                        <p class="text_entry_title">Doanh thu</p>--%>
+<%--                    </div>--%>
+<%--                    <canvas id="lineChart"></canvas>--%>
+
+<%--                </div>--%>
+<%--            </div>--%>
+
+<%--            <div class="_2c _3r">--%>
+<%--                <div class="card">--%>
+<%--                    <div class="title-icon">--%>
+<%--                        <p class="text_entry_title">Doanh thu</p>--%>
+<%--                    </div>--%>
+<%--                    <canvas id="doughnutChart"></canvas>--%>
+
+<%--                </div>--%>
+<%--            </div>--%>
 
         </div>
     </div>
@@ -155,48 +220,86 @@
     <script src="/assets/js/exitfFunc.js"></script>
     <script src="/assets/js/adminDatatable.js"></script>
         <script>
-            const ctx = document.getElementById('revenueChart').getContext('2d');
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('summary', () => ({
+                    totalRevenue: 0,
+                    outStock: 0,
+                    inStock: 0,
+                    async init() {
+                        try {
+                            const form = new FormData();
+                            form.append('totalRevenue', 'totalRevenue');
+                            const response = await fetch("/admin/total-revenue", {
+                                method: "POST",
+                                body: form
+                            });
+                            if (!response.ok) {
+                                throw new Error("Lỗi từ server: " + response.status);
+                            }
 
-            const revenueChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5'],
-                    datasets: [{
-                        label: 'Doanh thu (triệu VND)',
-                        data: [120, 150, 180, 90, 200],
-                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Triệu VND'
-                            }
-                        },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Tháng'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: true
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false
+                            // // Nhận JSON phản hồi từ Servlet
+                            // const result = await response.json();
+                            // console.log("Phản hồi từ server:", result);
+                        } catch (error) {
+                            console.error("Đã xảy ra lỗi:", error);
                         }
                     }
-                }
-            });
+                }))
+            })
+        </script>
+        <script>
+            fetch('/admin/get-monthly-revenue')
+                .then(res => res.json())
+                .then(data => {
+                    const labels = data.map(item => `Tháng ${item.month}/${item.year}`);
+                    const revenues = data.map(item => (item.total / 1000000).toFixed(2)); // chuyển sang triệu VND
+
+                    const ctx = document.getElementById('revenueChart').getContext('2d');
+
+                    const revenueChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Doanh thu (triệu VND)',
+                                data: revenues,
+                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Triệu VND'
+                                    }
+                                },
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Tháng/Năm'
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: true
+                                },
+                                tooltip: {
+                                    mode: 'index',
+                                    intersect: false
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Lỗi khi lấy dữ liệu doanh thu:', error);
+                });
 
             const pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
                 type: 'pie',
