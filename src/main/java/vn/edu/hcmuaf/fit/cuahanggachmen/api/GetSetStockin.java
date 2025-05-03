@@ -51,6 +51,7 @@ public class GetSetStockin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Handle handle = DBConect.get().open();
+        int so =0;
         String action = request.getParameter("action");
         StockInDao stockInDao = new StockInDao(handle);
         StockIn stockIn = new StockIn();
@@ -67,6 +68,14 @@ public class GetSetStockin extends HttpServlet {
             stockIn.setUpdateDate(LocalDateTime.now());
             boolean check=  stockInDao.update(stockIn);
             resp.addBool("success", check);
+        }else if(action.equalsIgnoreCase("cp")){
+            String[] ids = request.getParameterValues("id");
+            String realAcive = request.getParameter("active");
+            Boolean isActive = Boolean.parseBoolean(realAcive);
+            for (String s : ids) {
+                so += stockInDao.updateActive(Integer.parseInt(s), isActive);
+            }
+            resp.addBool("success", so>0);
         }
 
         handle.close();
