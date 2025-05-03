@@ -80,6 +80,13 @@ public class StockInDao extends BaseDao{
         return rowsAffected > 0;
     }
 
+    public int updateActive(int id, boolean active) {
+        return handle.createUpdate("UPDATE StockIn SET isActive = :isActive WHERE id = :id")
+                .bind("id", id)
+                .bind("isActive", active)
+                .execute();
+    }
+
     // Xoá mềm: đặt isActive = 0
     public boolean deleteById(int id) {
         int rowsAffected = handle.createUpdate(
