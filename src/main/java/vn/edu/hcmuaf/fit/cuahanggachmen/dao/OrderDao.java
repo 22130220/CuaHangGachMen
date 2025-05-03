@@ -4,6 +4,7 @@ import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.result.RowView;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Order;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.RevenueByMonth;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -115,6 +116,16 @@ public class OrderDao extends BaseDao {
 
     public int transcPerDay()  {
         return handle.createQuery("SELECT COUNT(*) FROM orders WHERE DATE(OrderDate) = :targetDate;").bind("targetDate", LocalDate.now()).mapTo(Integer.class).one();
+    }
+
+    public List<RevenueByMonth> getMonthlRevenue() {
+        return handle.createQuery(" SELECT\n" +
+                "                YEAR(OrderDate) AS year,\n" +
+                "                MONTH(OrderDate) AS month,\n" +
+                "                SUM(TotalPrice) AS total\n" +
+                "                FROM `orders`\n" +
+                "                GROUP BY YEAR(OrderDate), MONTH(OrderDate)\n" +
+                "                ORDER BY YEAR(OrderDate), MONTH(OrderDate)").mapToBean(RevenueByMonth.class).list();
     }
 
     // Map database row to Order object
