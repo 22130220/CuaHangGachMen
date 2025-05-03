@@ -14,9 +14,9 @@ public class StockInDao extends BaseDao{
     }
 
     // Thêm mới 1 phiếu nhập kho
-    public int insert(StockIn stockIn) {
-        return handle.createUpdate("INSERT INTO StockIn (createDate, userId, updatedAt, isActive) " +
-                        "VALUES (:createDate, :userId, NULL, 1)")
+    public int insertNhapMua(StockIn stockIn) {
+        return handle.createUpdate("INSERT INTO StockIn (createDate, userId, updatedAt, isActive,typeId) " +
+                        "VALUES (:createDate, :userId, NULL, 1,1)")
                 .bind("createDate", stockIn.getCreateDate())
                 .bind("userId", stockIn.getUserId())
                 .executeAndReturnGeneratedKeys("id")
@@ -26,12 +26,25 @@ public class StockInDao extends BaseDao{
 
     // Lấy tất cả phiếu nhập kho còn hoạt động
     public List<StockIn> findAll() {
+        return handle.createQuery("SELECT * FROM StockIn")
+                .map((rs, ctx) -> new StockIn(
+                        rs.getInt("id"),
+                        rs.getObject("createDate", LocalDateTime.class),
+                        rs.getInt("userId"),
+                        rs.getObject("updatedAt", LocalDateTime.class),
+                        rs.getInt("typeId"),
+                        rs.getBoolean("isActive")
+                ))
+                .list();
+    }
+    public List<StockIn> findAllIsActive() {
         return handle.createQuery("SELECT * FROM StockIn WHERE isActive = 1")
                 .map((rs, ctx) -> new StockIn(
                         rs.getInt("id"),
                         rs.getObject("createDate", LocalDateTime.class),
                         rs.getInt("userId"),
                         rs.getObject("updatedAt", LocalDateTime.class),
+                        rs.getInt("typeId"),
                         rs.getBoolean("isActive")
                 ))
                 .list();
@@ -46,6 +59,7 @@ public class StockInDao extends BaseDao{
                         rs.getObject("createDate", LocalDateTime.class),
                         rs.getInt("userId"),
                         rs.getObject("updatedAt", LocalDateTime.class),
+                        rs.getInt("typeId"),
                         rs.getBoolean("isActive")
                 ))
                 .findOne()
@@ -55,11 +69,12 @@ public class StockInDao extends BaseDao{
     // Cập nhật phiếu nhập kho (cập nhật ngày sửa)
     public boolean update(StockIn stockIn) {
         int rowsAffected = handle.createUpdate(
-                        "UPDATE StockIn SET createDate = :createDate, userId = :userId, updatedAt = :updatedAt " +
-                                "WHERE id = :id AND isActive = 1")
-                .bind("createDate", stockIn.getCreateDate())
+                        "UPDATE StockIn SET userId = :userId, updatedAt = :updatedAt, typeId = :typeId, isActive = :isActive " +
+                                "WHERE id = :id")
                 .bind("userId", stockIn.getUserId())
                 .bind("updatedAt", stockIn.getUpdateDate())
+                .bind("typeId", stockIn.getTypeId())
+                .bind("isActive", stockIn.isActive())
                 .bind("id", stockIn.getId())
                 .execute();
         return rowsAffected > 0;

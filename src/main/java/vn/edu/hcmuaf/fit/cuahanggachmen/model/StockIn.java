@@ -7,17 +7,27 @@ public class StockIn {
     private LocalDateTime createDate;
     private int userId;
     private LocalDateTime updateDate;
+    private int typeId;
     private boolean isActive;
 
     public StockIn() {
     }
 
-    public StockIn(int id, LocalDateTime createDate, int userId, LocalDateTime updateDate, boolean isActive) {
+    public StockIn(int id, LocalDateTime createDate, int userId, LocalDateTime updateDate,int typeId ,boolean isActive) {
         this.id = id;
         this.createDate = createDate;
         this.userId = userId;
         this.updateDate = updateDate;
+        this.typeId=typeId;
         this.isActive = isActive;
+    }
+
+    public int getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
     public int getId() {
@@ -66,6 +76,7 @@ public class StockIn {
                 ", createDate=" + createDate +
                 ", userId=" + userId +
                 ", updateDate=" + updateDate +
+                ", typeId=" + typeId +
                 ", isActive=" + isActive +
                 '}';
     }
