@@ -11,6 +11,7 @@ import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.StockInDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.StockIn;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.LocalDateTimeAdapter;
 
 import java.io.IOException;
@@ -49,6 +50,30 @@ public class GetSetStockin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Handle handle = DBConect.get().open();
+        String action = request.getParameter("action");
+        StockInDao stockInDao = new StockInDao(handle);
+        StockIn stockIn = new StockIn();
+        AjaxResponse resp = new AjaxResponse();
+        if(action.equalsIgnoreCase("sửa")){
+            String id =request.getParameter("id");
+            String active = request.getParameter("update_active");
+            String userId= request.getParameter("userId");
+            String typeId= request.getParameter("type");
+            stockIn.setId(Integer.parseInt(id));
+            stockIn.setUserId(Integer.parseInt(userId));
+            stockIn.setTypeId(Integer.parseInt(typeId));
+            stockIn.setActive(Boolean.parseBoolean(active));
+            stockIn.setUpdateDate(LocalDateTime.now());
+            boolean check=  stockInDao.update(stockIn);
+            resp.addBool("success", check);
+        }
 
+        handle.close();
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print(resp.getText());
     }
 }

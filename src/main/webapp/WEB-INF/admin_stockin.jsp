@@ -78,7 +78,33 @@
 
   <!-- Sweet alert 2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    .modal__button {
+      background-color: #4fe613; /* màu xanh dương hiện đại */
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.25s ease, transform 0.15s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
+    .modal__button:hover {
+      background-color: #2563eb; /* xanh đậm hơn khi hover */
+      transform: translateY(-1px);
+    }
+
+    .modal__button:active {
+      background-color: #1d4ed8;
+      transform: translateY(1px);
+    }
+    .btn-detail {
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
@@ -155,7 +181,20 @@
     </div>
   </div>
 </div>
-
+<div class="modal micromodal-slide" id="typeModal" aria-hidden="true">
+  <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+    <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+      <header class="modal__header">
+        <h2 class="modal__title">Thể loại phiếu  nhập</h2>
+        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+      </header>
+      <div class="modal__content">
+        <div id="type-id">Mã thể loại: </div>
+        <div id="type-name">Tên: </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal micromodal-slide" id="phieuChiTietModal" aria-hidden="true">
   <div class="modal__overlay" tabindex="-1" data-micromodal-close>
@@ -183,7 +222,48 @@
 </div>
 
 
+<div class="modal micromodal-slide" id="modifiStockInModal" aria-hidden="true">
+  <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+    <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+      <header class="modal__header">
+        <h2 class="modal__title">Sửa loại voucher</h2>
+        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+      </header>
+      <form id="StockinupdateForm" class="modal__content">
+        <!-- ID (readonly) -->
+        <div class="fui-basic-input" style="width: 100%">
+          <label for="idmodify" class="f-bold f-s-14 f-cl-black">ID</label>
+          <input type="text" id="idmodify" name="id" class="input input-bordered f-s-14" readonly>
+        </div>
 
+        <!-- User ID -->
+        <div class="fui-basic-input" style="width: 100%">
+          <label for="userId" class="f-bold f-s-14 f-cl-black">User ID</label>
+          <input type="number" id="userId" name="userId" class="input input-bordered f-s-14" readonly  required>
+        </div>
+        <!-- Kích hoạt -->
+        <div class="fui-basic-input" style="width: 100%">
+          <label for="update_active" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+          <select name="update_active" id="update_active" class="input input-bordered f-s-14" required>
+            <option value="true">Bật</option>
+            <option value="false">Tắt</option>
+          </select>
+        </div>
+
+        <!-- Thể loại phiếu nhập -->
+        <div class="fui-basic-input" style="width: 100%">
+          <label for="type" class="f-bold f-s-14 f-cl-black">Thể loại phiếu nhập</label>
+          <select name="type" id="type" class="input input-bordered f-s-14" required>
+          </select>
+        </div>
+
+        <div class="modal__actions">
+          <button type="submit" class="modal__button">Xác nhận</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 
@@ -219,7 +299,7 @@
               let data = dt.row({ selected: true }).data();
               action = 'sửa';
               vid = data.id;
-              // openModal('##', data.name,data.id,data.isActive);
+              openModal3('modifiStockInModal', data.id,data.userId,data.isActive,data.typeId);
             },
             enabled: false
           },
@@ -243,7 +323,7 @@
       },
     },
     select: true,
-    columnDefs: [
+    columnDefs:  [
       {
         targets: 0,
         data: 'id',
@@ -269,14 +349,11 @@
       },
       {
         targets: 4,
-        data: 'isActive',
-        width: '15%',
-        render: function (data) {
-          if(data) {
-            return `<td> <div class="isActive"> Đang bật </div> </td>`
-          } else return `<td> <div class="deActive"> Đã tắt </div> </td>`
-        },
-        className: 'dt-center'
+        data: 'typeId',
+        className: 'dt-center',
+        render: function (data, type, row) {
+          return `<div class="btn-detail" onclick="openModal2('typeModal',\${row.typeId})">\${data}</div>`;
+        }
       },
       {
         targets: 5,
@@ -285,6 +362,17 @@
         render:function (data,row){
           return `<i style="align-items: center" data-target="\${data}" title="Xem chi tiết"  class="fa-solid fa-file" onclick="getModel('phieuChiTietModal',\${data})"></i>`;
         }
+      },
+      {
+        targets: 6,
+        data: 'isActive',
+        width: '15%',
+        render: function (data) {
+          if(data) {
+            return `<td> <div class="isActive"> Đang bật </div> </td>`
+          } else return `<td> <div class="deActive"> Đã tắt </div> </td>`
+        },
+        className: 'dt-center'
       },
     ],
     'autoWidth': false,
@@ -345,6 +433,27 @@
       }
     });
   }
+
+  function openModal2(modalSelector,id) {
+    $.ajax({
+      url: '/GetSetTypeOfReceipt',
+      type: 'GET',
+      data: { id: id },
+      success: function(resp) {
+        if(resp.status){
+          $('#type-id').text("Mã thể loại: " + resp.id);
+          $('#type-name').text("Thể loại: " + resp.Type);
+          MicroModal.show(modalSelector);
+        }
+      },
+      error: function(xhr, status, error) {
+        console.error("Lỗi khi gửi:", error);
+      }
+    });
+  }
+
+
+
   function getModel(modalSelector,id){
     const tableId = '#stockindetail';
     const dataUrl = '/GetSetStockInDetail';
@@ -426,9 +535,76 @@
     }
     MicroModal.show(modalSelector);
   }
+  function openModal3(modalSelector, id, userId,isActive, typeId ) {
+    $.ajax({
+      url: "/GetAllTypeOfReceipt",
+      method: "GET",
+      success: function (typeList) {
+        const $select = $("#type");
+        $select.empty();
+        $select.append(`<option value="">-- Chọn thể loại --</option>`);
+        typeList.forEach(t => {
+          $select.append(`<option value="\${t.id}">\${t.type}</option>`);
+        });
+        $("#idmodify").val(id);
+        $("#userId").val(userId);
+        $("#update_active").val(isActive ? "true" : "false");
+        $select.val(typeId);
+        MicroModal.show(modalSelector);
+      },
+      error: function () {
+        alert("Không thể tải danh sách thể loại phiếu nhập.");
+      }
+    });
+  }
 
+  $(document).ready(function () {
+    $('#StockinupdateForm').on('submit', function (e) {
+      e.preventDefault();
 
+      let formData = $(this).serializeArray(); // Đây là array
+      formData.push({ name: 'action', value: action });
+      $.ajax({
+        url: '/GetSetStockin',
+        type: 'POST',
+        data: formData,
+        success: function (response) {
+          MicroModal.close('modifiStockInModal');
 
+          const notyf = new Notyf();
+          if (response.success) {
+            table.rows().deselect();
+            notyf.open({
+              duration: 1000,
+              position: { x: 'right', y: 'bottom' },
+              type: "success",
+              message: "Sửa thành công",
+            });
+            table.ajax.reload(null, false);
+          } else {
+            table.rows().deselect();
+            notyf.open({
+              duration: 1000,
+              position: { x: 'right', y: 'bottom' },
+              type: "error",
+              message: "Sửa không thành công",
+            });
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error('Lỗi khi Sửa:', error);
+          const notyf = new Notyf();
+          table.rows().deselect();
+          notyf.open({
+            duration: 1000,
+            position: { x: 'right', y: 'bottom' },
+            type: "error",
+            message: "Có lỗi xảy ra khi sửa",
+          });
+        }
+      });
+    });
+  });
 
 </script>
 
