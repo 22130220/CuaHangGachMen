@@ -19,7 +19,7 @@ public class BannerDao extends BaseDao {
     }
 
     // Lấy tất cả banner
-    public List<Banner> getAllBanners() {
+    public List<Banner>getAllBanners() {
         return handle.createQuery("SELECT * FROM banners")
                 .map(new BannerMapper())
                 .list();
@@ -59,11 +59,34 @@ public class BannerDao extends BaseDao {
         }
     }
 
-    // Cập nhật banner
+    // Cập nhật trạng thái banner
+    public int updateBannerStatus(int id, boolean isActive) {
+        return handle.createUpdate("UPDATE banners SET is_active = :isActive WHERE id = :id")
+                .bind("isActive", isActive)
+                .bind("id", id)
+                .execute();
+    }
+
+    // Cập nhật thông tin chi tiết banner
+    public int updateBannerDetails(Banner banner) {
+        return handle.createUpdate("UPDATE banners SET title = :title, image_url = :imageUrl, link = :link, " +
+                        "position = :position, start_date = :startDate, end_date = :endDate, priority = :priority WHERE id = :id")
+                .bind("title", banner.getTitle())
+                .bind("imageUrl", banner.getImageUrl())
+                .bind("link", banner.getLink())
+                .bind("position", banner.getPosition())
+                .bind("startDate", banner.getStartDate())
+                .bind("endDate", banner.getEndDate())
+                .bind("priority", banner.getPriority())
+                .bind("id", banner.getId())
+                .execute();
+    }
+
+    // Phương thức cũ, có thể bỏ nếu không cần nữa
     public int updateBanner(Banner banner) {
         return handle.createUpdate("UPDATE banners SET title = :title, image_url = :imageUrl, link = :link, " +
-                        "position = :position, is_active = :isActive, start_date = :startDate, end_date = :endDate, priority = :priority " +
-                        "WHERE id = :id")
+                        "position = :position, is_active = :isActive, start_date = :startDate, end_date = :endDate, " +
+                        "priority = :priority WHERE id = :id")
                 .bind("title", banner.getTitle())
                 .bind("imageUrl", banner.getImageUrl())
                 .bind("link", banner.getLink())
