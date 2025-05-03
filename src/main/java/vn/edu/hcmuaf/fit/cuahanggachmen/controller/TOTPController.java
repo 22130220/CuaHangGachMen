@@ -1,16 +1,24 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 
+import com.google.gson.JsonObject;
 import dev.samstevens.totp.exceptions.QrGenerationException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
+import org.json.JSONObject;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.TOTPUtils;
 
+import javax.json.Json;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.stream.Collectors;
+
 
 @WebServlet(name = "TOTPController", value = "/totp")
 public class TOTPController extends HttpServlet {
@@ -102,6 +110,73 @@ public class TOTPController extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        User u = (User) session.getAttribute("auth");
+        int success = 0;
+        if (u != null) {
+            Handle handle = DBConect.get().open();
+            UserDao dao = new UserDao(handle);
+            success += dao.insertSecretKey(u.getId(), null);
+            success += dao.insertRecoveryCode(u.getId(), null);
+            session.removeAttribute("secretKey");
+            session.removeAttribute("dataUri");
+            session.removeAttribute("verifyTotpState");
+            handle.close();
+        }
+        JsonObject json = new JsonObject();
+        json.addProperty("success", success == 2);
+        json.addProperty("message", success == 2 ? "Xoá thành công TOTP" : "Có lỗi xảy ra, vui lòng thử lại sau");
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter out = resp.getWriter();
+        out.print(json.toString());
+    }
 
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        User u = (User) session.getAttribute("auth");
+        boolean isVerify = false;
+        if (u != null) {
+            Handle handle = DBConect.get().open();
+            UserDao dao = new UserDao(handle);
+            String secretKey = dao.getSecretKey(u.getId());
+            if (secretKey == null || secretKey.isEmpty()) {
+                JsonObject json = new JsonObject();
+                json.addProperty("success", false);
+                json.addProperty("message", "Không được truy cập vào đây");
+                resp.setStatus(HttpServletResponse.SC_OK);
+                resp.setContentType("application/json");
+                resp.setCharacterEncoding("UTF-8");
+                PrintWriter out = resp.getWriter();
+                out.print(json.toString());
+                handle.close();
+                return;
+            }
+            BufferedReader reader = req.getReader();
+            String body = reader.lines().collect(Collectors.joining());
+
+            JSONObject json = new JSONObject(body);
+            String code = json.getString("code");
+            if (TOTPUtils.verifyCode(secretKey, code)) {
+                isVerify = true;
+            }
+            handle.close();
+        }
+
+        AjaxResponse response = new AjaxResponse();
+        response.addBool("success", isVerify);
+        response.addString("message", isVerify ? "Xác thực thành công" : "Mã xác thực không chính xác");
+        JsonObject json = new JsonObject();
+        json.addProperty("success", isVerify);
+        json.addProperty("message", isVerify ? "Xác thực thành công" : "Mã xác thực không chính xác");
+
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter out = resp.getWriter();
+        out.print(json.toString());
     }
 }

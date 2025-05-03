@@ -9,8 +9,8 @@
     <title>Profile Page</title>
     <link rel="stylesheet" href="/assets/css/hoso.css">
     <!-- Nhúng phông chữ -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
             href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
             rel="stylesheet"
@@ -52,7 +52,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        .noibatthu3{
+        .noibatthu3 {
             margin-top: -26px;
         }
     </style>
@@ -82,9 +82,13 @@
             <li><b>Tài Khoản Của Tôi</b></li>
             <li class="active">Hồ Sơ</li>
             <hr>
-            <a href="completeorderhistory"><li>Đơn Mua</li></a>
+            <a href="completeorderhistory">
+                <li>Đơn Mua</li>
+            </a>
             <hr>
-            <a href="/"><li>Quay về trang chủ</li></a>
+            <a href="/">
+                <li>Quay về trang chủ</li>
+            </a>
         </ul>
     </aside>
 
@@ -121,8 +125,10 @@
                 <div class="form-group radio-group">
                     <label>Giới tính</label>
                     <div class="radio-options">
-                        <label><input type="radio" name="gender" value="male" ${user.sex == 1 ? 'checked' : ''}> Nam</label>
-                        <label><input type="radio" name="gender" value="female" ${user.sex == 0 ? 'checked' : ''}> Nữ</label>
+                        <label><input type="radio" name="gender" value="male" ${user.sex == 1 ? 'checked' : ''}>
+                            Nam</label>
+                        <label><input type="radio" name="gender" value="female" ${user.sex == 0 ? 'checked' : ''}>
+                            Nữ</label>
                     </div>
                 </div>
                 <button type="submit" class="save-btn">Lưu</button>
@@ -132,7 +138,7 @@
             <form method="POST" action="/uploadAvatar" enctype="multipart/form-data">
                 <div class="upload-photo">
                     <div class="photo-preview">
-                        <img id="preview" src="${user.avatar}" alt="Avatar hiện tại" />
+                        <img id="preview" src="${user.avatar}" alt="Avatar hiện tại"/>
                     </div>
                     <label class="upload-btn">
                         Đổi Ảnh
@@ -171,7 +177,8 @@
         <div class="fui-checkbox-custom mt-3">
             <div class="input-wrap">
                 <input type="checkbox" name="priceRange" id="price1"
-                       class="input-checkbox filter" onchange="checkTotp(this)" <c:if test="${hasTotpToken}">checked</c:if> />
+                       class="input-checkbox filter" onchange="checkTotp(this)"
+                       <c:if test="${hasTotpToken}">checked</c:if> />
                 <span class="check-icon">
                                     <i class="fa-solid fa-check"></i>
                                  </span>
@@ -185,21 +192,22 @@
 
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="../assets/js/search.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         // Hàm kiểm tra email có đuôi @gmail.com, @yahoo.com hoặc @outlook.com
-        $.validator.addMethod("validEmail", function(value, element) {
+        $.validator.addMethod("validEmail", function (value, element) {
             return this.optional(element) || /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)$/.test(value);
         }, "Email phải thuộc @gmail.com, @yahoo.com hoặc @outlook.com");
 
         // Hàm kiểm tra số điện thoại có đúng 10 chữ số
-        $.validator.addMethod("validPhone", function(value, element) {
+        $.validator.addMethod("validPhone", function (value, element) {
             return this.optional(element) || /^[0-9]{10}$/.test(value);
         }, "Số điện thoại phải có đúng 10 chữ số");
 
         $("#validationHoSo").validate({
-            onkeyup: function(element) {
+            onkeyup: function (element) {
                 $(element).valid(); // Kiểm tra lỗi ngay khi nhập
             },
             rules: {
@@ -240,7 +248,7 @@
                     minlength: "Địa chỉ phải dài ít nhất 2 ký tự"
                 }
             },
-            errorPlacement: function(error, element) {
+            errorPlacement: function (error, element) {
                 error.css("color", "red");
                 error.insertAfter(element);
             }
@@ -249,11 +257,12 @@
 </script>
 
 <script>
-    document.getElementById('fileInput').addEventListener('change', function(event) {
+    let isVerrified = false;
+    document.getElementById('fileInput').addEventListener('change', function (event) {
         const file = event.target.files[0];
         if (file && file.size <= 1048576) { // Kiểm tra kích thước file (1MB)
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 document.getElementById('preview').src = e.target.result;
             };
             reader.readAsDataURL(file);
@@ -279,16 +288,112 @@
                 }
             });
         } else {
+            if(isVerrified) {
+                Swal.fire({
+                    title: 'Xác thực TOTP',
+                    text: 'Bạn có muốn hủy xác thực TOTP không?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Có',
+                    cancelButtonText: 'Không'
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        button.checked = false;
+                        isVerrified = false;
+                        try {
+                            const response = await fetch(`/totp`, {
+                                method: "DELETE",
+                            });
+
+                            if (!response.ok) {
+                                notyf.error("Có lỗi xảy ra");
+                            } else {
+                                const data = await response.json();
+                                notyf.success(data.message);
+                                isVerrified = false;
+                                window.location.replace(window.location.href);
+                            }
+                        } catch (error) {
+                            notyf.error("Có lỗi xảy ra khi xác thực mã TOTP");
+                            button.checked = true;
+                        }
+                    } else {
+                        button.checked = true;
+                    }
+                });
+                return;
+            }
             Swal.fire({
-                title: 'Hủy xác thực TOTP',
-                text: 'Bạn có chắc chắn muốn hủy xác thực TOTP không?',
-                icon: 'warning',
+                title: "Hãy nhập mã xác thực để tiếp tục",
+                input: "text",
+                inputAttributes: {
+                    autocapitalize: "off"
+                },
                 showCancelButton: true,
-                confirmButtonText: 'Có',
-                cancelButtonText: 'Không'
-            }).then((result) => {
+                confirmButtonText: "Kiểm tra",
+                showLoaderOnConfirm: true,
+                cancelButtonText: 'Huỷ',
+                preConfirm: async (code) => {
+                    try {
+                        const githubUrl = `/totp`;
+                        const response = await fetch(githubUrl, {
+                            method: "PUT",
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ code: code })
+                        });
+                        if (!response.ok) {
+                            notyf.error("Có lỗi xảy ra khi xác thực mã TOTP");
+                        } else{
+                            return response.json();
+                        }
+                    } catch (error) {
+                        isVerrified = false;
+                        notyf.error("Có lỗi xảy ra khi xác thực mã TOTP");
+                    }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then(async (result) => {
+                const notyf = new Notyf();
                 if (result.isConfirmed) {
-                    alert('Đã hủy xác thực TOTP');
+                    if (result.value.success) {
+                        isVerrified = true;
+                        notyf.success("Xác thực mã TOTP thành công");
+                        Swal.fire({
+                            title: 'Xác thực TOTP',
+                            text: 'Bạn có muốn hủy xác thực TOTP không?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Có',
+                            cancelButtonText: 'Không'
+                        }).then(async (result) => {
+                            if (result.isConfirmed) {
+                                button.checked = false;
+                                isVerrified = false;
+                                try {
+                                    const response = await fetch(`/totp`, {
+                                        method: "DELETE",
+                                    });
+
+                                    if (!response.ok) {
+                                        notyf.error("Có lỗi xảy ra");
+                                    } else {
+                                        const data = await response.json();
+                                        notyf.success(data.message);
+                                        isVerrified = false;
+                                        window.location.replace(window.location.href);
+                                    }
+                                } catch (error) {
+                                    notyf.error("Có lỗi xảy ra khi xác thực mã TOTP");
+                                    button.checked = true;
+                                }
+                            } else {
+                                button.checked = true;
+                            }
+                        });
+                    } else {
+                        notyf.error(result.value.message);
+                        button.checked = true;
+                    }
                 } else {
                     button.checked = true;
                 }
