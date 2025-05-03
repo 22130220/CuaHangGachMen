@@ -227,6 +227,389 @@
 <script src="/assets/js/accordion.js"></script>
 <script src="/assets/js/exitfFunc.js"></script>
 
+<script>
+  $(document).ready(function() {
+    const notyf = new Notyf();
 
+    $('#usersTable').DataTable({
+      responsive: true,
+      select: true,
+      pageLength: 10
+    });
+
+    $('#usersTable').on('select.dt', function(e, dt, type, indexes) {
+      var rowData = dt.rows(indexes).data().toArray();
+      var userEmail = rowData[0][0];
+
+      $('#selectedUserEmail').text(userEmail);
+
+      console.log('Fetching roles for userEmail:', userEmail);
+
+      $.ajax({
+        url: '/admin/user-role/api',
+        method: 'GET',
+        data: { userEmail: userEmail },
+        success: function(response) {
+          console.log('Response from /admin/user-role/api:', response);
+
+          try {
+            if (typeof response === 'string') {
+              if (response.trim() === '') {
+                throw new Error('Phản hồi rỗng từ server');
+              }
+              response = JSON.parse(response);
+            }
+            if (response && response.success) {
+              updateRolesUI(response.userRoles, response.users, response.roles);
+            } else {
+              notyf.error('Không thể tải vai trò: ' + (response.error || 'Không có dữ liệu'));
+              $('#roleList').html('<p>Không có vai trò nào cho người dùng này.</p>');
+            }
+          } catch (e) {
+            console.error('Error parsing JSON:', e);
+            notyf.error('Lỗi phân tích JSON: ' + e.message);
+            $('#roleList').html('<p>Lỗi khi tải dữ liệu vai trò.</p>');
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX error:', status, error);
+          console.error('Response text:', xhr.responseText);
+          var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+          notyf.error('Lỗi khi tải vai trò của người dùng: ' + errorMessage);
+        }
+      });
+    });
+
+    function updateRolesUI(userRoles, users, allRoles) {
+      var user = users.find(u => u.email === $('#selectedUserEmail').text());
+      if (!user) {
+        $('#roleList').html('<p>Không tìm thấy người dùng.</p>');
+        return;
+      }
+
+      var userId = user.id;
+      var roles = userRoles.filter(ur => ur.userId === userId);
+      var html = '';
+
+      if (roles.length === 0) {
+        html = '<p>Người dùng này chưa có vai trò nào.</p>';
+      } else {
+        roles.forEach(function(role) {
+          var roleName = allRoles.find(r => r.id === role.roleId)?.name || 'Vai trò không xác định';
+          html += '<div class="role-item">';
+          html += '<span>' + roleName + '</span>';
+          html += '</div>';
+        });
+      }
+
+      $('#roleList').html(html);
+    }
+
+    $('#createUserRole').on('click', function() {
+      console.log('Fetching roles for create modal');
+
+      $.ajax({
+        url: '/admin/user-role/api/roles',
+        method: 'GET',
+        success: function(response) {
+          console.log('Response from /admin/user-role/api/roles:', response);
+
+          try {
+            if (typeof response === 'string') {
+              if (response.trim() === '') {
+                throw new Error('Phản hồi rỗng từ server');
+              }
+              response = JSON.parse(response);
+            }
+            if (response && response.success) {
+              updateRolesModal(response.roles);
+            } else {
+              notyf.error('Không thể tải danh sách vai trò: ' + (response.error || 'Không có dữ liệu'));
+            }
+          } catch (e) {
+            console.error('Error parsing JSON:', e);
+            notyf.error('Lỗi phân tích JSON: ' + e.message);
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX error:', status, error);
+          console.error('Response text:', xhr.responseText);
+          var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+          notyf.error('Lỗi khi tải danh sách vai trò: ' + errorMessage);
+        }
+      });
+    });
+
+    function updateRolesModal(roles) {
+      var html = '';
+      roles.forEach(function(role) {
+        html += '<div class="role-group">';
+        html += '<label><input type="checkbox" class="role-checkbox" value="' + role.id + '" data-role-id="' + role.id + '"> ' + role.name + '</label>';
+        html += '</div>';
+      });
+      $('#roles_list').html(html);
+    }
+
+    $('#create_user_role_btn').on('click', function() {
+      var userIdStr = $('#user_select').val();
+      var userId = parseInt(userIdStr);
+
+      if (!userIdStr || isNaN(userId) || userId <= 0) {
+        notyf.error('Vui lòng chọn một người dùng hợp lệ');
+        return;
+      }
+
+      var roleIds = [];
+      $('.role-checkbox:checked').each(function() {
+        var roleId = parseInt($(this).val());
+        if (!isNaN(roleId) && roleId > 0) {
+          roleIds.push(roleId.toString());
+        }
+      });
+
+      if (roleIds.length === 0) {
+        notyf.error('Vui lòng chọn ít nhất một vai trò');
+        return;
+      }
+
+      var payload = {
+        userId: userId.toString(),
+        roleIds: roleIds
+      };
+
+      console.log('Sending create request:', payload);
+
+      $.ajax({
+        url: '/admin/user-role/api/create',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function(response) {
+          console.log('Response from /admin/user-role/api/create:', response);
+
+          try {
+            if (typeof response === 'string') {
+              if (response.trim() === '') {
+                throw new Error('Phản hồi rỗng từ server');
+              }
+              response = JSON.parse(response);
+            }
+            if (response && response.success) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Thành công',
+                text: 'Thêm vai trò cho người dùng thành công',
+                confirmButtonText: 'OK'
+              }).then(() => {
+                MicroModal.close('create_user_role_modal');
+                location.reload();
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Lỗi khi thêm vai trò: ' + (response.error || 'Không xác định')
+              });
+            }
+          } catch (e) {
+            console.error('Error parsing JSON:', e);
+            Swal.fire({
+              icon: 'error',
+              title: 'Lỗi',
+              text: 'Lỗi phân tích JSON: ' + e.message
+            });
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX error:', status, error);
+          console.error('Response text:', xhr.responseText);
+          var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+          Swal.fire({
+            icon: 'error',
+            title: 'Lỗi',
+            text: 'Lỗi khi thêm vai trò: ' + errorMessage
+          });
+        }
+      });
+    });
+
+    $('[data-micromodal-trigger="modify_user_role_modal"]').on('click', function() {
+      var selectedRow = $('#usersTable').DataTable().rows({ selected: true }).data();
+      if (selectedRow.length === 0) {
+        notyf.error('Vui lòng chọn một người dùng để chỉnh sửa');
+        return;
+      }
+
+      var userEmail = selectedRow[0][0];
+      var userId = null;
+      <c:forEach var="user" items="${users}">
+      if ("${user.email}" === userEmail) {
+        userId = "${user.id}";
+      }
+      </c:forEach>
+
+      if (!userId) {
+        notyf.error('Không tìm thấy người dùng');
+        return;
+      }
+
+      $('#modify_user_select').val(userId);
+
+      console.log('Fetching current roles for userEmail:', userEmail);
+
+      $.ajax({
+        url: '/admin/user-role/api',
+        method: 'GET',
+        data: { userEmail: userEmail },
+        success: function(response) {
+          console.log('Response from /admin/user-role/api:', response);
+
+          try {
+            if (typeof response === 'string') {
+              if (response.trim() === '') {
+                throw new Error('Phản hồi rỗng từ server');
+              }
+              response = JSON.parse(response);
+            }
+            if (response && response.success) {
+              $.ajax({
+                url: '/admin/user-role/api/roles',
+                method: 'GET',
+                success: function(roleResponse) {
+                  console.log('Response from /admin/user-role/api/roles:', roleResponse);
+
+                  try {
+                    if (typeof roleResponse === 'string') {
+                      if (roleResponse.trim() === '') {
+                        throw new Error('Phản hồi rỗng từ server');
+                      }
+                      roleResponse = JSON.parse(roleResponse);
+                    }
+                    if (roleResponse && roleResponse.success) {
+                      updateModifyRolesModal(roleResponse.roles, response.userRoles, userId);
+                    } else {
+                      notyf.error('Không thể tải danh sách vai trò: ' + (roleResponse.error || 'Không có dữ liệu'));
+                    }
+                  } catch (e) {
+                    console.error('Error parsing JSON:', e);
+                    notyf.error('Lỗi phân tích JSON danh sách vai trò: ' + e.message);
+                  }
+                },
+                error: function(xhr, status, error) {
+                  console.error('AJAX error:', status, error);
+                  console.error('Response text:', xhr.responseText);
+                  var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+                  notyf.error('Lỗi khi tải danh sách vai trò: ' + errorMessage);
+                }
+              });
+            } else {
+              notyf.error('Không thể tải vai trò hiện tại: ' + (response.error || 'Không có dữ liệu'));
+            }
+          } catch (e) {
+            console.error('Error parsing JSON:', e);
+            notyf.error('Lỗi phân tích JSON: ' + e.message);
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX error:', status, error);
+          console.error('Response text:', xhr.responseText);
+          var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+          notyf.error('Lỗi khi tải vai trò hiện tại: ' + errorMessage);
+        }
+      });
+    });
+
+    function updateModifyRolesModal(allRoles, currentUserRoles, userId) {
+      var html = '';
+      allRoles.forEach(function(role) {
+        var isChecked = currentUserRoles.some(function(currentRole) {
+          return currentRole.userId === parseInt(userId) && currentRole.roleId === role.id;
+        });
+        html += '<div class="role-group">';
+        html += '<label><input type="checkbox" class="role-checkbox" value="' + role.id + '" data-role-id="' + role.id + '" ' + (isChecked ? 'checked' : '') + '> ' + role.name + '</label>';
+        html += '</div>';
+      });
+      $('#modify_roles_list').html(html);
+    }
+
+    $('#modify_user_role_btn').on('click', function() {
+      var userIdStr = $('#modify_user_select').val();
+      var userId = parseInt(userIdStr);
+
+      if (!userIdStr || isNaN(userId) || userId <= 0) {
+        notyf.error('Người dùng không hợp lệ');
+        return;
+      }
+
+      var roleIds = [];
+      $('.role-checkbox:checked').each(function() {
+        var roleId = parseInt($(this).val());
+        if (!isNaN(roleId) && roleId > 0) {
+          roleIds.push(roleId.toString());
+        }
+      });
+
+      var payload = {
+        userId: userId.toString(),
+        roleIds: roleIds
+      };
+
+      console.log('Sending update request:', payload);
+
+      $.ajax({
+        url: '/admin/user-role/api/update',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(payload),
+        success: function(response) {
+          console.log('Response from /admin/user-role/api/update:', response);
+
+          try {
+            if (typeof response === 'string') {
+              if (response.trim() === '') {
+                throw new Error('Phản hồi rỗng từ server');
+              }
+              response = JSON.parse(response);
+            }
+            if (response && response.success) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Thành công',
+                text: 'Cập nhật vai trò thành công',
+                confirmButtonText: 'OK'
+              }).then(() => {
+                MicroModal.close('modify_user_role_modal');
+                location.reload();
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Lỗi',
+                text: 'Lỗi khi cập nhật vai trò: ' + (response.error || 'Không xác định')
+              });
+            }
+          } catch (e) {
+            console.error('Error parsing JSON:', e);
+            Swal.fire({
+              icon: 'error',
+              title: 'Lỗi',
+              text: 'Lỗi phân tích JSON: ' + e.message
+            });
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX error:', status, error);
+          console.error('Response text:', xhr.responseText);
+          var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
+          Swal.fire({
+            icon: 'error',
+            title: 'Lỗi',
+            text: 'Lỗi khi cập nhật vai trò: ' + errorMessage
+          });
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>
