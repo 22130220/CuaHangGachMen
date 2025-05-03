@@ -104,6 +104,32 @@
     .btn-detail {
       cursor: pointer;
     }
+    #stockInDetailTable {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    #stockInDetailTable th,
+    #stockInDetailTable td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: center;
+    }
+
+    #stockInDetailTable thead {
+      background-color: #f3f4f6; /* xám nhẹ */
+      font-weight: 600;
+    }
+
+    #stockInDetailTable tbody tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    #stockInDetailTable tbody tr:hover {
+      background-color: #e0f2fe; /* xanh nhạt khi hover */
+    }
   </style>
 </head>
 <body>
@@ -123,7 +149,7 @@
           </div>
         </div>
         <div class="funcvouchertype">
-          <div class="button bg_green f-cl-white" id="add" data-micromodal-trigger="add_modal">Thêm mới</div>
+          <div class="button bg_green f-cl-white" id="add" data-micromodal-trigger="add_modal">Nhập hàng</div>
         </div>
       </nav>
       <div class="product-table table _4c _6r">
@@ -144,7 +170,7 @@
 
   <div class="modal micromodal-slide" id="add_modal" aria-hidden="true">
     <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+      <div class="modal__container" style="max-width: 900px;" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
         <header class="modal__header">
           <h2 class="modal__title" id="add_title">
             Thêm
@@ -153,6 +179,41 @@
         </header>
         <div class="modal-content-content">
           <div class="modal__content">
+            <div class="modal__content">
+              <!-- Nhập từng dòng -->
+              <div class="fui-basic-input">
+                <label>Sản phẩm</label>
+                <select id="productId" class="input input-bordered f-s-14" style="width: 100%"></select>
+              </div>
+              <div class="fui-basic-input">
+                <label>Màu</label>
+                <select id="colorId" class="input input-bordered f-s-14" style="width: 100%"></select>
+              </div>
+              <div class="fui-basic-input">
+                <label>Số lượng</label>
+                <input type="number" id="quantity" class="input input-bordered f-s-14" style="width: 100%" />
+              </div>
+              <div class="fui-basic-input">
+                <label>Đơn giá</label>
+                <input type="number" id="unitPrice" class="input input-bordered f-s-14" style="width: 100%" />
+              </div>
+
+              <button id="addDetailBtn" type="button" class="button bg_green f-cl-white mt-2">Thêm dòng</button>
+
+              <!-- DataTable hiển thị danh sách chi tiết -->
+              <table id="stockInDetailTable" class="display" style="width:100%; margin-top: 20px">
+                <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Color</th>
+                  <th>Quantity</th>
+                  <th>Unit Price</th>
+                  <th>Xóa</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
           </div>
           <footer class="modal__footer">
             <button class="button bg_green f-cl-white add" id="add_btn">Thêm</button>
@@ -303,7 +364,7 @@
 <script src="/assets/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>
-
+  let stockInDetails = [];
   let setActive = [];
   let action ='';
   let detailuser='';
@@ -313,6 +374,7 @@
       dataSrc: 'data'
     },
     fixedHeader: true,
+    searching: true,
     layout: {
       topStart: {
         buttons: [
@@ -432,11 +494,111 @@
   const addButton = document.getElementById("add");
   if (addButton) {
     addButton.addEventListener("click", function () {
-      MicroModal.show('add_modal');
+
+      $.ajax({
+        url: '/GetListProdudctAndColor',
+        type: 'GET',
+        success: function (res) {
+          const productList = res.productList;
+          const colorList = res.colorList;
+
+          const $select = $("#productId");
+          $select.empty().append(`<option value="">-- Chọn sản phẩm --</option>`);
+          productList.forEach(t => {
+            $select.append(`<option value="\${t.id}">\${t.name}</option>`);
+          });
+
+          const $selectcolor = $("#colorId");
+          $selectcolor.empty().append(`<option value="">-- Chọn màu --</option>`);
+          colorList.forEach(c => {
+            $selectcolor.append(`<option value="\${c.ID}">\${c.Name}</option>`);
+          });
+
+          MicroModal.show('add_modal');
+        },
+        error: function () {
+          alert("Không thể tải danh sách.");
+        }
+      });
+      action='Thêm';
+
     });
   }
+  $("#addDetailBtn").on("click", function () {
+    const productId = $("#productId").val();
+    const productText = $("#productId option:selected").text();
+    const colorId = $("#colorId").val();
+    const colorText = $("#colorId option:selected").text();
+    const quantity = parseInt($("#quantity").val(), 10);
+    const unitPrice = parseFloat($("#unitPrice").val());
 
+    if (!productId || !colorId || !quantity || !unitPrice) {
+      alert("Vui lòng nhập đầy đủ.");
+      return;
+    }
 
+    stockInDetails.push({
+      productId: parseInt(productId, 10),
+      colorId: parseInt(colorId, 10),
+      quantity,
+      unitPrice
+    });
+
+    console.log(stockInDetails)
+    const rowHtml = `
+    <tr>
+      <td>\${productText}</td>
+      <td>\${colorText}</td>
+      <td>\${quantity}</td>
+      <td>\${unitPrice.toFixed(2)}</td>
+      <td><button type="button" class="btn-delete">X</button></td>
+    </tr>
+  `;
+    $("#stockInDetailTable tbody").append(rowHtml);
+  });
+
+  $("#stockInDetailTable").on("click", ".btn-delete", function () {
+    const rowIndex = $(this).closest("tr").index();
+    stockInDetails.splice(rowIndex, 1); // Xóa trong mảng
+    $(this).closest("tr").remove();     // Xóa trong HTML
+    console.log(stockInDetails)
+  });
+  $("#add_btn").on("click", function () {
+    $.ajax({
+      url: "/AddStockIn",
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(stockInDetails),
+      success: function (response) {
+        table.ajax.reload(null, false);
+        stockInDetails = [];
+        const notyf = new Notyf();
+        $("#stockInDetailTable tbody").empty();
+        MicroModal.close("add_modal");
+        if (response.success) {
+          table.rows().deselect();
+          notyf.open({
+            duration: 1000,
+            position: { x: 'right', y: 'bottom' },
+            type: "success",
+            message: "Nhập kho thành công",
+          });
+
+        } else {
+          table.rows().deselect();
+          notyf.open({
+            duration: 1000,
+            position: { x: 'right', y: 'bottom' },
+            type: "error",
+            message: "Nhập kho không thành công",
+          });
+        }
+      },
+      error: function () {
+        alert("Có lỗi khi lưu dữ liệu.");
+      }
+    });
+  });
 
 
   function openModal(modalSelector,id) {
