@@ -18,8 +18,8 @@ public class TypeOfReceiptDao extends BaseDao{
                 .mapTo(int.class)
                 .one();
     }
-    public void update(TypeOfReceipt receipt) {
-        handle.createUpdate("UPDATE TypeOfReceipt SET Name = :type, isActive = :isActive WHERE id = :id")
+    public int update(TypeOfReceipt receipt) {
+        return handle.createUpdate("UPDATE TypeOfReceipt SET Name = :type, isActive = :isActive WHERE id = :id")
                 .bind("type", receipt.getType())
                 .bind("isActive", receipt.isActive())
                 .bind("id", receipt.getId())
