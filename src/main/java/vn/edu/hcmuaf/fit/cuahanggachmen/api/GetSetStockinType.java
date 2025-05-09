@@ -58,6 +58,16 @@ public class GetSetStockinType extends HttpServlet {
             typeOfReceipt.setActive(true);
             so=typeOfReceiptDao.insert(typeOfReceipt);
 
+        }else if(action.equalsIgnoreCase("sửa")){
+            String id = request.getParameter("id");
+            String name = request.getParameter("type");
+            active = request.getParameter("update_active");
+            boolean isActive = Boolean.parseBoolean(active);
+            int id1=Integer.parseInt(id);
+            typeOfReceipt.setId(id1);
+            typeOfReceipt.setType(name);
+            typeOfReceipt.setActive(isActive);
+            so=typeOfReceiptDao.update(typeOfReceipt);
         }
         resp.addBool("success",so>0);
         handle.close();

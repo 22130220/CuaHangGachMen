@@ -175,6 +175,35 @@
     </div>
 </div>
 
+
+<div class="modal micromodal-slide" id="modifiStockinTypeModal" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <header class="modal__header">
+                <h2 class="modal__title">Sửa thể loại nhập kho</h2>
+                <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+            </header>
+            <form id="modifyForm" class="modal__content">
+                <div class="modal__field">
+                    <label for="modalName"><strong>Name:</strong></label>
+                    <input type="text" id="modalmodifyName" name="type" class="modal__input" required />
+                </div>
+                <input type="hidden" id="idmodify" name="id">
+                <div class="fui-basic-input" style="width: 100%">
+                    <label for="update_active" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+                    <select name="update_active" id="update_active" class="input input-bordered f-s-14" required>
+                        <option value="true">Bật</option>
+                        <option value="false">Tắt</option>
+                    </select>
+                </div>
+                <div class="modal__actions">
+                    <button type="submit" class="modal__button">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 <script src="/assets/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
@@ -198,7 +227,7 @@
                             let data = dt.row({ selected: true }).data();
                             action = 'sửa';
                             vid = data.id;
-                            // openModal('modifiVoucherTypeModal', data.name,data.id);
+                            openModal('modifiStockinTypeModal', data.type,data.id);
                         },
                         enabled: false
                     },
@@ -293,7 +322,7 @@
                 type: 'POST',
                 data: formData,
                 success: function (response) {
-                    MicroModal.close('addStockinTypeModal');
+                    MicroModal.close('modifiStockinTypeModal');
                     const notyf = new Notyf();
                     if (response.success) {
                         table.rows().deselect();
@@ -329,6 +358,66 @@
         });
     });
 
+    $(document).ready(function () {
+        $('#modifyForm').on('submit', function (e) {
+            e.preventDefault();
+
+            let formData = $(this).serializeArray(); // Đây là array
+            formData.push({ name: 'action', value: action });
+            $.ajax({
+                url: '/GetSetStockinType',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    MicroModal.close('modifiStockinTypeModal');
+                    table.rows().deselect();
+                    const notyf = new Notyf();
+                    if (response.success) {
+                        notyf.open({
+                            duration: 1000,
+                            position: { x: 'right', y: 'bottom' },
+                            type: "success",
+                            message: "Sửa thành công",
+                        });
+                        table.ajax.reload(null, false);
+                    } else {
+                        notyf.open({
+                            duration: 1000,
+                            position: { x: 'right', y: 'bottom' },
+                            type: "error",
+                            message: "Sửa không thành công",
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    table.rows().deselect();
+                    console.error('Lỗi khi Sửa:', error);
+                    const notyf = new Notyf();
+                    notyf.open({
+                        duration: 1000,
+                        position: { x: 'right', y: 'bottom' },
+                        type: "error",
+                        message: "Có lỗi xảy ra khi sửa",
+                    });
+                }
+            });
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+    function openModal(modalSelector,name,id) {
+        MicroModal.show(modalSelector);
+        $("#modalmodifyName").val(name);
+        $("#idmodify").val(id);
+    }
 </script>
 
 
