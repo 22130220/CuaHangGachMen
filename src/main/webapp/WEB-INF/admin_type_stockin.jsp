@@ -138,7 +138,7 @@
                     </div>
                 </div>
                 <div class="funcvouchertype">
-                    <div class="button bg_green f-cl-white" id="add" data-micromodal-trigger="addVoucherTypeModal">Thêm mới</div>
+                    <div class="button bg_green f-cl-white" id="add" data-micromodal-trigger="addStockinTypeModal">Thêm mới</div>
                 </div>
             </nav>
             <div class="product-table table _4c _6r">
@@ -155,6 +155,26 @@
         </div>
     </div>
 </div>
+<div class="modal micromodal-slide" id="addStockinTypeModal" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <header class="modal__header">
+                <h2 class="modal__title">Thêm loại nhập kho</h2>
+                <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+            </header>
+            <form id="addForm" class="modal__content">
+                <div class="modal__field">
+                    <label for="modalName"><strong>Name:</strong></label>
+                    <input type="text" id="modalName" name="type" class="modal__input" placeholder="Nhập tên loại nhập kho" required />
+                </div>
+                <div class="modal__actions">
+                    <button type="submit" class="modal__button">Thêm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
 <script src="/assets/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
@@ -253,6 +273,62 @@
         table.button(1).enable(selectedRows === 1);
         table.button(2).enable(selectedRows > 0);
     });
+
+    const addButton = document.getElementById("add");
+    if (addButton) {
+        addButton.addEventListener("click", function () {
+            MicroModal.show('addStockinTypeModal');
+            action='Thêm';
+            console.log(action);
+        });
+    }
+
+    $(document).ready(function () {
+        $('#addForm').on('submit', function (e) {
+            e.preventDefault();
+            let formData = $(this).serializeArray(); // Đây là array
+            formData.push({ name: 'action', value: action });
+            $.ajax({
+                url: '/GetSetStockinType',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    MicroModal.close('addStockinTypeModal');
+                    const notyf = new Notyf();
+                    if (response.success) {
+                        table.rows().deselect();
+                        notyf.open({
+                            duration: 1000,
+                            position: { x: 'right', y: 'bottom' },
+                            type: "success",
+                            message: "Thêm thành công",
+                        });
+                        table.ajax.reload(null, false);
+                    } else {
+                        table.rows().deselect();
+                        notyf.open({
+                            duration: 1000,
+                            position: { x: 'right', y: 'bottom' },
+                            type: "error",
+                            message: "Thêm không thành công",
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    table.rows().deselect();
+                    console.error('Lỗi khi Thêm:', error);
+                    const notyf = new Notyf();
+                    notyf.open({
+                        duration: 1000,
+                        position: { x: 'right', y: 'bottom' },
+                        type: "error",
+                        message: "Có lỗi xảy ra khi thêm",
+                    });
+                }
+            });
+        });
+    });
+
 </script>
 
 

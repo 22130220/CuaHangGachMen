@@ -10,6 +10,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherTypeDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.TypeOfReceipt;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.VoucherType;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,6 +44,32 @@ public class GetSetStockinType extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        Handle handle = DBConect.get().open();
+        int so=0;
+        String active = null;
+        String action = request.getParameter("action");
+        AjaxResponse resp = new AjaxResponse();
+        TypeOfReceipt typeOfReceipt = new TypeOfReceipt();
+        TypeOfReceiptDao typeOfReceiptDao = new TypeOfReceiptDao(handle);
+        if(action.equalsIgnoreCase("Thêm")){
+            String type = request.getParameter("type");
+            typeOfReceipt.setType(type);
+            typeOfReceipt.setActive(true);
+            so=typeOfReceiptDao.insert(typeOfReceipt);
+
+        }
+        resp.addBool("success",so>0);
+        handle.close();
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        out.print(resp.getText());
+
+
+
+
 
     }
 }
