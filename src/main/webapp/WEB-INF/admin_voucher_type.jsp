@@ -147,6 +147,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Thể loại</th>
+                        <th>Trạng thái</th>
                     </tr>
                     </thead>
                 </table>
