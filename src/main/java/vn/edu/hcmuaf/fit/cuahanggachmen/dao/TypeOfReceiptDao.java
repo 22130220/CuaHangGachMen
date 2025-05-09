@@ -31,6 +31,12 @@ public class TypeOfReceiptDao extends BaseDao{
                 .bind("id", id)
                 .execute();
     }
+    public int updateActive(int id, boolean active) {
+        return handle.createUpdate("UPDATE TypeOfReceipt SET isActive = :isActive WHERE id = :id")
+                .bind("id", id)
+                .bind("isActive", active)
+                .execute();
+    }
 
     public List<TypeOfReceipt> findAllActive() {
         return handle.createQuery("SELECT * FROM TypeOfReceipt WHERE isActive = 1")

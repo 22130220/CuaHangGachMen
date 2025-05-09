@@ -242,4 +242,40 @@
     });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const parentItem = document.querySelector('.sidebar-button1.has-subitems1');
+        const subItems = document.querySelector('.subitems1');
+        const toggleIcon = parentItem.querySelector('.toggle-icon1');
+
+        const isMenuOpen = localStorage.getItem('accountsMenuOpen') === 'true';
+        if (isMenuOpen) {
+            subItems.style.display = 'block';
+            toggleIcon.classList.add('active');
+        } else {
+            subItems.style.display = 'none';
+            toggleIcon.classList.remove('active');
+        }
+
+        parentItem.addEventListener('click', function (event) {
+            if (subItems.style.display === 'none' || subItems.style.display === '') {
+                subItems.style.display = 'block';
+                toggleIcon.classList.add('active');
+                localStorage.setItem('accountsMenuOpen', 'true'); // Lưu trạng thái mở
+            } else {
+                subItems.style.display = 'none';
+                toggleIcon.classList.remove('active');
+                localStorage.setItem('accountsMenuOpen', 'false'); // Lưu trạng thái đóng
+            }
+        });
+
+        const subItemLinks = document.querySelectorAll('.subitems1 .sidebar-button1.subitem1');
+        subItemLinks.forEach(function (subItem) {
+            subItem.addEventListener('click', function (event) {
+                event.stopPropagation();
+            });
+        });
+    });
+</script>
+
 </html>
