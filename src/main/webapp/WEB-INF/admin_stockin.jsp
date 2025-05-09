@@ -160,6 +160,8 @@
             <th>Ngày tạo</th>
             <th>Người nhập</th>
             <th>Ngày update</th>
+            <th>Thể loại</th>
+            <th>Chức năng</th>
             <th>Kích hoạt</th>
           </tr>
           </thead>
