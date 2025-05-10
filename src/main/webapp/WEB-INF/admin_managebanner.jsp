@@ -83,6 +83,13 @@
 
     <!-- Flmngr -->
     <script src="https://cdn.skypack.dev/flmngr"></script>
+
+    <!-- Inline CSS để ẩn div chứa textarea -->
+    <style>
+        #editor-container {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
 <div class="admin-container grid-layout">
@@ -209,7 +216,10 @@
     </div>
 </div>
 
-<textarea id="editor"></textarea>
+<!-- Bọc textarea trong div và ẩn nó -->
+<div id="editor-container">
+    <textarea id="editor"></textarea>
+</div>
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>

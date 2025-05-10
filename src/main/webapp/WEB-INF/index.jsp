@@ -67,27 +67,21 @@
 
 <div class="slider">
     <div class="slides">
-        <div class="slide">
-            <img src="/assets/img/ceramic-india-1-1.jpg" alt="Ảnh 1"/>
-        </div>
-        <div class="slide">
-            <img src="/assets/img/banner-home-1.png" alt="Ảnh 2"/>
-        </div>
-        <div class="slide">
-            <img src="/assets/img/banner-home-2.png" alt="Ảnh 3"/>
-        </div>
-        <!-- Thêm ảnh tùy thích -->
+        <c:forEach var="banner" items="${banners}" varStatus="status">
+            <div class="slide">
+                <img src="${banner.imageUrl}" alt="${banner.title}"/>
+            </div>
+        </c:forEach>
     </div>
     <!-- Nút điều khiển bên trong ảnh -->
-    <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
-    <a class="next" onclick="changeSlide(1)">&#10095;</a>
+    <a class="prev" onclick="changeSlide(-1)">❮</a>
+    <a class="next" onclick="changeSlide(1)">❯</a>
 </div>
 
 <div class="dots">
-    <span class="dot" onclick="currentSlide(0)"></span>
-    <span class="dot" onclick="currentSlide(1)"></span>
-    <span class="dot" onclick="currentSlide(2)"></span>
-    <!-- Thêm dấu chấm tương ứng với số ảnh -->
+    <c:forEach var="banner" items="${banners}" varStatus="status">
+        <span class="dot" onclick="currentSlide(${status.index})"></span>
+    </c:forEach>
 </div>
 
 
