@@ -9,10 +9,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.action.ActionResult;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.StatusCode;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.Category;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.Size;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.UserPermission;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -59,6 +56,14 @@ public class ListProductController extends HttpServlet {
 
 
         request.setAttribute("rs", rs);
+
+        BannerDao bannerDao = new BannerDao(handle);
+
+        // Lấy banner cho trang Category
+        List<Banner> banners = bannerDao.getBannersByPosition("Category");
+        request.setAttribute("banners", banners);
+
+
         handle.close();
         request.getRequestDispatcher("/WEB-INF/list_product.jsp").forward(request,response);
     }
