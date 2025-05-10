@@ -3,60 +3,80 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Category;
 
-import java.sql.SQLException;
 import java.util.List;
 
-public class CategoryDao extends BaseDao{
+public class CategoryDao extends BaseDao {
 
     public CategoryDao(Handle handle) {
-        super(handle);
+        super(handle, true, 5, 1000);
     }
 
     public int insert(Category category) {
-        return handle.createUpdate("INSERT INTO category (Name, Status) VALUES (:name, :status)")
-                        .bind("name", category.getName())
-                        .bind("status", category.isStatus())
-                        .execute();
+        int result = handle.createUpdate("INSERT INTO category (Name, Status) VALUES (:name, :status)")
+                .bind("name", category.getName())
+                .bind("status", category.isStatus())
+                .execute();
+        clearCache();
+        return result;
     }
+
     public List<Category> findAllWithStatus() {
-        return handle.createQuery("SELECT * FROM category WHERE Status=1")
-                .mapToBean(Category.class)
-                .list();
+        String cacheKey = "categories_active";
+        return getFromCacheOrCompute(cacheKey, List.class, () ->
+                handle.createQuery("SELECT * FROM category WHERE Status=1")
+                        .mapToBean(Category.class)
+                        .list()
+        );
     }
 
     public Category findById(int id) {
-            return handle.createQuery("SELECT * FROM category WHERE ID = :id")
+        String cacheKey = "category_" + id;
+        return getFromCacheOrCompute(cacheKey, Category.class, () ->
+                handle.createQuery("SELECT * FROM category WHERE ID = :id")
                         .bind("id", id)
                         .mapToBean(Category.class)
                         .findOne()
-                        .orElse(null);
+                        .orElse(null)
+        );
     }
 
-
     public List<Category> findAll() {
-            return handle.createQuery("SELECT * FROM category")
+        String cacheKey = "categories_all";
+        return getFromCacheOrCompute(cacheKey, List.class, () ->
+                handle.createQuery("SELECT * FROM category")
                         .mapToBean(Category.class)
-                        .list();
+                        .list()
+        );
     }
 
     public int update(Category category) {
-            return handle.createUpdate("UPDATE category SET Name = :name, Status = :status WHERE ID = :id")
-                        .bind("name", category.getName())
-                        .bind("status", category.isStatus())
-                        .bind("id", category.getId())
-                        .execute();
+        int result = handle.createUpdate("UPDATE category SET Name = :name, Status = :status WHERE ID = :id")
+                .bind("name", category.getName())
+                .bind("status", category.isStatus())
+                .bind("id", category.getId())
+                .execute();
+
+        invalidateCache("category_" + category.getId());
+        clearCache();
+        return result;
     }
 
     public int updateActive(int id, boolean active) {
-            return handle.createUpdate("UPDATE category SET status = :status WHERE Id = :id")
-                        .bind("id", id)
-                        .bind("status", active)
-                        .execute();
+        int result = handle.createUpdate("UPDATE category SET status = :status WHERE Id = :id")
+                .bind("id", id)
+                .bind("status", active)
+                .execute();
+        invalidateCache("category_" + id);
+        clearCache();
+        return result;
     }
 
     public int deleteById(int id) {
-            return handle.createUpdate("DELETE FROM category WHERE ID = :id")
-                        .bind("id", id)
-                        .execute();
+        int result = handle.createUpdate("DELETE FROM category WHERE ID = :id")
+                .bind("id", id)
+                .execute();
+        invalidateCache("category_" + id);
+        clearCache();
+        return result;
     }
 }
