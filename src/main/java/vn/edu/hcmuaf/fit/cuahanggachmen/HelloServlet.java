@@ -6,8 +6,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.BannerDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Banner;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 
 import java.io.IOException;
@@ -26,6 +28,7 @@ public class HelloServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Handle handle = DBConect.get().open();
         ProductDao productDao = new ProductDao(handle);
+        BannerDao bannerDao = new BannerDao(handle);
 
         // BÁN CHẠY
         List<Product> productList = null;
@@ -43,6 +46,9 @@ public class HelloServlet extends HttpServlet {
 
         request.setAttribute("mostViewedProducts", mostViewedProducts);
 
+        // BANNER CHO TRANG HOME
+        List<Banner> banners = bannerDao.getBannersByPosition("Home");
+        request.setAttribute("banners", banners);
         handle.close();
         request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
     }
