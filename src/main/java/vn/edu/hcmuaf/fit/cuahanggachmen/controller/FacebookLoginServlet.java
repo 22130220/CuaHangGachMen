@@ -19,7 +19,8 @@ import java.util.Scanner;
 public class FacebookLoginServlet extends HttpServlet {
     private static final String APP_ID = "1294677724960043";
     private static final String APP_SECRET = "f6384e2655c9ada72158424340512e76";
-    private static final String REDIRECT_URI = "http://localhost:8080/facebooklogin";
+//    private static final String REDIRECT_URI = "http://localhost:8080/facebooklogin";
+    private static final String REDIRECT_URI = "http://webtmdt.site/facebooklogin";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
