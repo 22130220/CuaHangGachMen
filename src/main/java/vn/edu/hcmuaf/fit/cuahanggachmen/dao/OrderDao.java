@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 public class OrderDao extends BaseDao {
     public OrderDao(Handle handle) {
-        super(handle);
+        super(handle, false, 0, 0);
     }
 
     // Insert a new Order

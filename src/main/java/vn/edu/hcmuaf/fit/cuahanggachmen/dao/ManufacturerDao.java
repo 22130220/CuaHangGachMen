@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Category;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Manufacturer;
 
 import java.util.List;
@@ -8,46 +9,62 @@ import java.util.List;
 public class ManufacturerDao extends BaseDao {
 
     public ManufacturerDao(Handle handle) {
-        super(handle);
+        super(handle, true, 3 * 60, 1000);
     }
 
     public int insert(Manufacturer manufacturer)  {
-            return handle.createUpdate("INSERT INTO manufacturer (Name) VALUES (:name)")
+        int result = handle.createUpdate("INSERT INTO manufacturer (Name) VALUES (:name)")
                         .bind("name", manufacturer.getName())
                         .execute();
+        clearCache();
+        return result;
     }
     public List<Manufacturer> findAllWithStatus()  {
-        return handle.createQuery("SELECT * FROM manufacturer WHERE status=1")
-                .mapToBean(Manufacturer.class)
-                .list();
+        String cacheKey = "manufacturers_active";
+        return getFromCacheOrCompute(cacheKey, List.class, () ->
+                handle.createQuery("SELECT * FROM manufacturer WHERE status=1")
+                        .mapToBean(Manufacturer.class)
+                        .list()
+        );
     }
 
     public Manufacturer findById(int id)  {
-            return handle.createQuery("SELECT * FROM manufacturer WHERE ID = :id")
+        String cacheKey = "manufacturer_" + id;
+        return getFromCacheOrCompute(cacheKey, Manufacturer.class, () ->
+                handle.createQuery("SELECT * FROM manufacturer WHERE ID = :id")
                         .bind("id", id)
                         .mapToBean(Manufacturer.class)
                         .findOne()
-                        .orElse(null);
+                        .orElse(null)
+        );
     }
 
     public List<Manufacturer> findAll()  {
-            return handle.createQuery("SELECT * FROM manufacturer")
+        String cacheKey = "manufacturers_all";
+        return getFromCacheOrCompute(cacheKey, List.class, () ->
+                handle.createQuery("SELECT * FROM manufacturer")
                         .mapToBean(Manufacturer.class)
-                        .list();
+                        .list()
+        );
     }
 
 
     public int update(Manufacturer manufacturer)  {
-            return handle.createUpdate("UPDATE manufacturer SET Name = :name WHERE ID = :id")
-                        .bind("name", manufacturer.getName())
-                        .bind("id", manufacturer.getId())
-                        .execute();
+        int result = handle.createUpdate("UPDATE manufacturer SET Name = :name, Status = :status WHERE ID = :id")
+                .bind("name", manufacturer.getName())
+                .bind("status", manufacturer.isStatus())
+                .bind("id", manufacturer.getId())
+                .execute();
+        clearCache();
+        return result;
     }
 
 
     public int deleteById(int id)  {
-            return handle.createUpdate("DELETE FROM manufacturer WHERE ID = :id")
-                        .bind("id", id)
-                        .execute();
+        int result = handle.createUpdate("DELETE FROM manufacturer WHERE ID = :id")
+                .bind("id", id)
+                .execute();
+        clearCache();
+        return result;
     }
 }

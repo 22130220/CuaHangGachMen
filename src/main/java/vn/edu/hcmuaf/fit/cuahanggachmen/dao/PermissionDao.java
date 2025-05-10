@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class PermissionDao extends BaseDao {
     public PermissionDao(Handle handle) {
-        super(handle);
+        super(handle, false, 3 * 60, 1000);
     }
 
     /**

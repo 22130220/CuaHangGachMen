@@ -10,7 +10,7 @@ import java.util.List;
 
 public class OrderDaos extends BaseDao{
     public OrderDaos(Handle handle) {
-        super(handle);
+        super(handle, false, 0, 0);
     }
 
     //    // Insert Order

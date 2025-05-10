@@ -5,6 +5,7 @@ import com.github.benmanes.caffeine.cache.Caffeine;
 import org.jdbi.v3.core.Handle;
 
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 public abstract class BaseDao implements AutoCloseable {
     protected Handle handle;
@@ -35,7 +36,7 @@ public abstract class BaseDao implements AutoCloseable {
     }
 
 
-    protected <T> T getFromCacheOrCompute(String cacheKey, Class<T> type, java.util.function.Supplier<T> supplier) {
+    protected <T> T getFromCacheOrCompute(String cacheKey, Class<T> type, Supplier<T> supplier) {
         if (cacheEnabled && cache != null) {
             return type.cast(cache.get(cacheKey, key -> supplier.get()));
         }
