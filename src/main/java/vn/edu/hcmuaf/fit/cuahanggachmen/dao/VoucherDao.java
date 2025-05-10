@@ -18,7 +18,7 @@ public class VoucherDao extends BaseDao {
 
 
     public VoucherDao(Handle handle) {
-        super(handle);
+        super(handle, false, 0, 0);
     }
 
     // Insert a new Voucher

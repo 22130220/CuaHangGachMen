@@ -8,7 +8,7 @@ import java.util.List;
 
 public class StockInDetailDao extends BaseDao{
     public StockInDetailDao(Handle handle) {
-        super(handle);
+        super(handle, false, 0, 0);
     }
 
     // Thêm dòng chi tiết

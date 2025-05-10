@@ -10,7 +10,7 @@ import java.util.List;
 public class StockInDao extends BaseDao{
 
     public StockInDao(Handle handle) {
-        super(handle);
+        super(handle, false, 0, 0);
     }
 
     // Thêm mới 1 phiếu nhập kho
