@@ -160,7 +160,7 @@
 </header>
 
 <!-- Mục Lục -->
-<nav class="breadcrumb").
+<nav class="breadcrumb")>
 <a href="/">Home</a> > <a href="#!">Đăng nhập</a>
 </nav>
 
@@ -213,7 +213,7 @@
 <%--        <a href="https://www.facebook.com/v20.0/dialog/oauth?client_id=1294677724960043&redirect_uri=http://localhost:8080/facebooklogin&scope=public_profile" class="social-button facebook">--%>
 <%--            <i class="fa-brands fa-facebook"></i> Đăng nhập với Facebook--%>
 <%--        </a>--%>
-        <a href="https://www.facebook.com/v20.0/dialog/oauth?client_id=1294677724960043&redirect_uri=http://webtmdt.site/facebooklogin&scope=public_profile" class="social-button facebook">
+        <a href="https://www.facebook.com/v20.0/dialog/oauth?client_id=1294677724960043&redirect_uri=https://webtmdt.site/facebooklogin&scope=public_profile" class="social-button facebook">
             <i class="fa-brands fa-facebook"></i> Đăng nhập với Facebook
         </a>
         <a href="#" class="social-button zalo" onclick="showZaloConfirmModal()">

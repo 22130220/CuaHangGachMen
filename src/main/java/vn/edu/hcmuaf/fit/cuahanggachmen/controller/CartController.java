@@ -12,8 +12,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.BannerDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Banner;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Cart;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.CartItem;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Voucher;
@@ -62,6 +64,12 @@ public class CartController extends HttpServlet {
         request.setAttribute("listo", list1);
         request.setAttribute("page", page);
         request.setAttribute("num", num);
+
+        BannerDao bannerDao = new BannerDao(handle);
+
+        // Lấy banner cho trang giỏ hàng
+        List<Banner> banners = bannerDao.getBannersByPosition("Cart");
+        request.setAttribute("banners", banners);
 
         request.getRequestDispatcher("/WEB-INF/cart.jsp").forward(request, response);
 
