@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TypeOfReceiptDao extends BaseDao{
     public TypeOfReceiptDao(Handle handle) {
-        super(handle);
+        super(handle, false, 0, 0);
     }
     public int insert(TypeOfReceipt receipt) {
         return handle.createUpdate("INSERT INTO TypeOfReceipt (Name, isActive) VALUES (:type, :isActive)")

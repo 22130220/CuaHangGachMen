@@ -19,12 +19,12 @@ public abstract class BaseDao implements AutoCloseable {
     }
 
     public BaseDao(Handle handle, boolean cacheEnabled, long cacheExpirationSeconds, long cacheMaximumSize) {
-        if (cacheExpirationSeconds <= 0) {
-            throw new IllegalArgumentException("Cache expiration time must be positive");
-        }
-        if (cacheMaximumSize <= 0) {
-            throw new IllegalArgumentException("Cache maximum size must be positive");
-        }
+//        if (cacheExpirationSeconds <= 0) {
+//            throw new IllegalArgumentException("Cache expiration time must be positive");
+//        }
+//        if (cacheMaximumSize <= 0) {
+//            throw new IllegalArgumentException("Cache maximum size must be positive");
+//        }
         this.handle = handle;
         this.cacheEnabled = cacheEnabled;
         this.cacheExpirationSeconds = cacheExpirationSeconds;

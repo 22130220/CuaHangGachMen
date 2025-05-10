@@ -45,7 +45,7 @@ public class AuthService {
         UserDao usDao = new UserDao(handle);
         boolean result = false;
 
-        String recoveryCode = usDao.getRecoryCode(uId);
+        String recoveryCode = usDao.getRecoveryCode(uId);
 //        if(recoveryCode != null && !recoveryCode.isEmpty()) {
 //            handle.close();
 //            return true;

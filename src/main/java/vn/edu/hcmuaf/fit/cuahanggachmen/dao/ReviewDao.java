@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ReviewDao extends BaseDao {
     public ReviewDao(Handle handle) {
-        super(handle);
+        super(handle, false, 0, 0);
     }
 
     // Thêm một bản ghi mới vào bảng Review

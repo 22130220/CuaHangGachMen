@@ -11,7 +11,7 @@ import java.util.Optional;
 public class VoucherUsageDAO extends BaseDao {
 
     public VoucherUsageDAO(Handle handle) {
-        super(handle);
+        super(handle, false, 0, 0);
     }
 
     // Insert a new VoucherUsage

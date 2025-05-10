@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class RoleResourcePermissionDao extends BaseDao {
     public RoleResourcePermissionDao(Handle handle) {
-        super(handle);
+        super(handle, false, 0, 0);
     }
 
     /**
