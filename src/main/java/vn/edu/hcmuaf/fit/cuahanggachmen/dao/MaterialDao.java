@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Category;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Material;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public class MaterialDao extends BaseDao {
 
     public MaterialDao(Handle handle) {
-        super(handle);
+        super(handle, true, 3 * 60, 1000);
     }
 
     public int insert(Material material)  {
@@ -17,37 +18,53 @@ public class MaterialDao extends BaseDao {
                         .execute();
     }
     public List<Material> findAllWithStatus()  {
-        return handle.createQuery("SELECT * FROM material WHERE status=1")
-                .mapToBean(Material.class)
-                .list();
+        String cacheKey = "materials_active";
+        return getFromCacheOrCompute(cacheKey, List.class, () ->
+                handle.createQuery("SELECT * FROM material WHERE status=1")
+                        .mapToBean(Material.class)
+                        .list()
+        );
+
     }
 
     public Material findById(int id)  {
-        return handle.createQuery("SELECT * FROM material WHERE ID = :id")
+        String cacheKey = "material_" + id;
+        return getFromCacheOrCompute(cacheKey, Material.class, () ->
+                handle.createQuery("SELECT * FROM material WHERE ID = :id")
                         .bind("id", id)
                         .mapToBean(Material.class)
                         .findOne()
-                        .orElse(null);
+                        .orElse(null)
+        );
     }
 
     public List<Material> findAll()  {
-        return handle.createQuery("SELECT * FROM material")
+        String cacheKey = "materials_all";
+        return getFromCacheOrCompute(cacheKey, List.class, () ->
+                handle.createQuery("SELECT * FROM material")
                         .mapToBean(Material.class)
-                        .list();
+                        .list()
+        );
     }
 
 
     public int update(Material material)  {
-        return handle.createUpdate("UPDATE material SET Name = :name WHERE ID = :id")
+        int result =  handle.createUpdate("UPDATE material SET Name = :name WHERE ID = :id")
                         .bind("name", material.getName())
                         .bind("id", material.getId())
                         .execute();
+        clearCache();
+        return result;
     }
 
 
     public int deleteById(int id)  {
-        return handle.createUpdate("DELETE FROM material WHERE ID = :id")
+
+        int result = handle.createUpdate("DELETE FROM material WHERE ID = :id")
                         .bind("id", id)
                         .execute();
+
+        clearCache();
+        return result;
     }
 }

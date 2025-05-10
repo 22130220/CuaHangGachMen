@@ -5,7 +5,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.model.LogModel;
 
 public class LogDao extends BaseDao{
     public LogDao(Handle handle) {
-        super(handle);
+        super(handle, false, 0, 0); // Cache disabled
     }
 
 

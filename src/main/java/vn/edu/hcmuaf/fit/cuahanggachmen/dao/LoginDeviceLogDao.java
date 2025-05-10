@@ -8,12 +8,12 @@ import java.util.List;
 
 public class LoginDeviceLogDao extends BaseDao {
     public LoginDeviceLogDao(Handle handle) {
-        super(handle);
+        super(handle, false, 0, 0);
     }
 
     // Thêm một bản ghi mới
     public int insertLog(LoginDeviceLog log) {
-        
+
         return handle.createUpdate("INSERT INTO login_device_log (deviceId, deviceIp, userAgent,isLocked, userId, loginLevel, os, browser) " +
                                 "VALUES (:deviceId, :deviceIp, :userAgent, :isLocked, :userId, :loginLevel, :os, :browser)")
                         .bindBean(log)

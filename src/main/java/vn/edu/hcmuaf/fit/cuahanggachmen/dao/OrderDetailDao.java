@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 public class OrderDetailDao extends BaseDao {
     public OrderDetailDao(Handle handle) {
-        super(handle);
+        super(handle, false, 0, 0);
     }
 
     public boolean hasUserPurchasedProduct(int userId, int productId) {
