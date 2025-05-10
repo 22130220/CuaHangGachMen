@@ -209,10 +209,12 @@
     </div>
 </div>
 
+<textarea id="editor"></textarea>
+
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-<script src="/assets/js/script.js"></script>
 <script src="/assets/js/ckeditorLoadFile.js"></script>
+<script src="/assets/js/script.js"></script>
 <script src="/assets/js/adminDatatable.js"></script>
 <script src="/assets/js/adminBanner.js"></script>
 <script src="/assets/js/notification.js"></script>

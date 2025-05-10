@@ -1,3 +1,11 @@
+var desEditor = editor
+let flmngr = null;
+desEditor.on('instanceReady', function () {
+    desEditor.getFlmngr((Flmngr) => {
+        flmngr = Flmngr;
+    });
+});
+
 // Khởi tạo DataTable cho bảng banner
 let positions = null;
 var bannerTable = initDataTable('#bannerTable', '/admin/get-banner', function(d) {

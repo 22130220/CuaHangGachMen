@@ -9,6 +9,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+@MultipartConfig
 @WebServlet(name = "get-banner", value = "/admin/get-banner")
 public class GetBanner extends HttpServlet {
     private Gson gson = new GsonBuilder()
