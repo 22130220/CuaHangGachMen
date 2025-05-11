@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="funcproduct">
-                    <a href="#" class="button bg_green f-cl-white">Thêm mới</a>
+                    <a href="#" class="button bg_green f-cl-white" onclick="MicroModal.show('add_banner_modal')">Thêm mới</a>
                 </div>
             </nav>
             <div class="product-table table _4c _6r">
@@ -176,7 +176,7 @@
                                 <div class="fui-basic-input flex-column gap-6 input-has-button">
                                     <label for="banner_image_url" class="f-bold f-s-14 f-cl-black">Hình ảnh</label>
                                     <input type="text" name="image_url" id="banner_image_url" placeholder="URL hình ảnh" class="input input-bordered f-s-14" readonly>
-                                    <button type="button" class="button bg_green f-cl-white button-input" onclick="selectImageChange(this, 'image_url')">Chọn ảnh</button>
+                                    <button type="button" style="margin-top: 27px" class="button bg_green f-cl-white button-input" onclick="selectImageChange(this, 'image_url')">Chọn ảnh</button>
                                 </div>
                                 <div class="fui-basic-input flex-column gap-6">
                                     <label for="banner_link" class="f-bold f-s-14 f-cl-black">Link</label>
@@ -213,6 +213,70 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal thêm banner mới -->
+        <div class="modal micromodal-slide" id="add_banner_modal" aria-hidden="true">
+            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+                <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-3-title">
+                    <header class="modal__header">
+                        <h2 class="modal__title">Thêm banner mới</h2>
+                        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                    </header>
+                    <div class="modal-content-content">
+                        <form id="addBannerForm" class="main-grid">
+                            <div class="modal__content _4c">
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="add_banner_title" class="f-bold f-s-14 f-cl-black">Tiêu đề</label>
+                                    <input type="text" name="title" id="add_banner_title" placeholder="Nhập tiêu đề banner" class="input input-bordered f-s-14">
+                                </div>
+                                <div class="fui-basic-input flex-column gap-6 input-has-button">
+                                    <label for="add_banner_image_url" class="f-bold f-s-14 f-cl-black">Hình ảnh</label>
+                                    <input type="text" name="image_url" id="add_banner_image_url" placeholder="URL hình ảnh" class="input input-bordered f-s-14" readonly>
+                                    <button type="button" style="margin-top: 27px" class="button bg_green f-cl-white button-input" onclick="selectImageChange(this, 'image_url')">Chọn ảnh</button>
+                                </div>
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="add_banner_link" class="f-bold f-s-14 f-cl-black">Link</label>
+                                    <input type="text" name="link" id="add_banner_link" placeholder="Nhập link" class="input input-bordered f-s-14">
+                                </div>
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="add_banner_position" class="f-bold f-s-14 f-cl-black">Vị trí</label>
+                                    <select name="position" id="add_banner_position" class="input input-bordered f-s-14">
+                                        <option value="Home">Home</option>
+                                        <option value="Category">Category</option>
+                                        <option value="Cart">Cart</option>
+                                        <option value="Checkout">Checkout</option>
+                                        <option value="Blog">Blog</option>
+                                    </select>
+                                </div>
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="add_banner_start_date" class="f-bold f-s-14 f-cl-black">Ngày bắt đầu</label>
+                                    <input type="datetime-local" name="start_date" id="add_banner_start_date" class="input input-bordered f-s-14">
+                                </div>
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="add_banner_end_date" class="f-bold f-s-14 f-cl-black">Ngày kết thúc</label>
+                                    <input type="datetime-local" name="end_date" id="add_banner_end_date" class="input input-bordered f-s-14">
+                                </div>
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="add_banner_priority" class="f-bold f-s-14 f-cl-black">Ưu tiên</label>
+                                    <input type="number" name="priority" id="add_banner_priority" placeholder="Nhập mức ưu tiên" class="input input-bordered f-s-14">
+                                </div>
+                                <div class="fui-basic-input flex-column gap-6">
+                                    <label for="add_banner_is_active" class="f-bold f-s-14 f-cl-black">Trạng thái</label>
+                                    <select name="is_active" id="add_banner_is_active" class="input input-bordered f-s-14">
+                                        <option value="true">Hoạt động</option>
+                                        <option value="false">Không hoạt động</option>
+                                    </select>
+                                </div>
+                                <footer class="modal__footer">
+                                    <button type="button" class="button bg_green f-cl-white" id="add_banner_btn">Thêm mới</button>
+                                </footer>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 

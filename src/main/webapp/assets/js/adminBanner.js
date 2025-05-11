@@ -259,3 +259,46 @@ function selectImageChange(button, name) {
         }
     });
 }
+
+// Xử lý thêm banner mới
+$(document).ready(function() {
+    $("#addBannerForm").validate({
+        rules: {
+            title: { required: true, minlength: 2 },
+            image_url: { required: true },
+            priority: { required: true, number: true, min: 0 }
+        },
+        messages: {
+            title: {
+                required: "Vui lòng nhập tiêu đề banner",
+                minlength: "Tiêu đề phải dài ít nhất 2 ký tự"
+            },
+            image_url: { required: "Vui lòng nhập URL hình ảnh" },
+            priority: {
+                required: "Vui lòng nhập mức ưu tiên",
+                number: "Ưu tiên phải là số",
+                min: "Ưu tiên không được âm"
+            }
+        },
+        submitHandler: function(form) {
+            formAjaxRequest({
+                url: '/admin/manage-banner',
+                formSelector: '#addBannerForm',
+                successMessage: "Thêm banner thành công",
+                errorMessage: "Thêm banner thất bại",
+                tableToReload: bannerTable,
+                modalToClose: 'add_banner_modal',
+                type: 'POST',
+                onSuccess: function(resp) {
+                    // Reset form sau khi thêm thành công
+                    $('#addBannerForm')[0].reset();
+                }
+            });
+        }
+    });
+
+    $('#add_banner_btn').click(function(e) {
+        e.preventDefault();
+        $("#addBannerForm").submit();
+    });
+});
