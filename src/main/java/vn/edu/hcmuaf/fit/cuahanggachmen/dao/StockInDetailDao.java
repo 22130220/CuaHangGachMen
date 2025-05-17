@@ -2,8 +2,13 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.StockInDetail;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StockInDetailDao extends BaseDao{
@@ -28,20 +33,67 @@ public class StockInDetailDao extends BaseDao{
     }
 
     // Lấy tất cả dòng theo stockId
-    public List<StockInDetail> findByStockId(int stockId) {
-        return handle.createQuery("SELECT * FROM StockInDetail WHERE stockId = :stockId")
-                .bind("stockId", stockId)
-                .map((rs, ctx) -> new StockInDetail(
-                        rs.getInt("id"),
-                        rs.getInt("stockId"),
-                        rs.getInt("productId"),
-                        rs.getInt("colorId"),
-                        rs.getInt("quantity"),
-                        rs.getDouble("unitPrice"),
-                        rs.getDouble("totalPrice")
-                ))
-                .list();
+//    public List<StockInDetail> findByStockId(int stockId) {
+//        return handle.createQuery("SELECT * FROM StockInDetail WHERE stockId = :stockId")
+//                .bind("stockId", stockId)
+//                .map((rs, ctx) -> new StockInDetail(
+//                        rs.getInt("id"),
+//                        rs.getInt("stockId"),
+//                        rs.getInt("productId"),
+//                        rs.getInt("colorId"),
+//                        rs.getInt("quantity"),
+//                        rs.getDouble("unitPrice"),
+//                        rs.getDouble("totalPrice")
+//                ))
+//                .list();
+//    }
+    public List<StockInDetail> findAllStockId(int stockId) {
+        List<StockInDetail> stockInList = new ArrayList<>();
+
+        try (Handle handle = DBConect.get().open()) {
+            ProductDao productDao = new ProductDao(handle);
+            ColorDao colorDao = new ColorDao(handle);
+
+            String sql = "SELECT * FROM StockInDetail WHERE stockId = ?";
+            try (PreparedStatement stmt = handle.getConnection().prepareStatement(sql)) {
+                stmt.setInt(1, stockId);  // bind đúng vị trí tham số
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        int id = rs.getInt("id");
+                        int stockId1 = rs.getInt("stockId");
+                        int productId = rs.getInt("productId");
+                        int colorId = rs.getInt("colorId");
+                        int quantity = rs.getInt("quantity");
+                        double unitPrice = rs.getDouble("unitPrice");
+                        double totalPrice = rs.getDouble("totalPrice");
+
+                        // Lấy sản phẩm và màu
+                        Product pd = productDao.findById1(productId);
+                        Color cl = colorDao.findById1(colorId);
+
+                        // Tạo đối tượng StockInDetail
+                        StockInDetail st = new StockInDetail(
+                                id, stockId1, productId, colorId, quantity,
+                                cl != null ? cl.getName() : null,
+                                pd != null ? pd.getName() : null,
+                                unitPrice, totalPrice
+                        );
+
+                        stockInList.add(st);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // hoặc log.error(...)
+        }
+
+        return stockInList;
     }
+
+
+
     // Tìm theo ID
     public StockInDetail findById(int id) {
         return handle.createQuery("SELECT * FROM StockInDetail WHERE id = :id")
@@ -89,8 +141,10 @@ public class StockInDetailDao extends BaseDao{
         DBConect.mySqlDataSource();
         Handle handle1=DBConect.get().open();
         StockInDetailDao dao = new StockInDetailDao(handle1);
-        StockInDetail detail = dao.findById(1);
-        System.out.println(detail);
+        List<StockInDetail> ls = dao.findAllStockId(1);
+        for (StockInDetail s : ls) {
+            System.out.println(s);
+        }
     }
 
 

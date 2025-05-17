@@ -26,7 +26,7 @@ public class GetSetStockInDetail extends HttpServlet {
         Handle handle = DBConect.get().open();
         String id = request.getParameter("id");
         StockInDetailDao stockInDao = new StockInDetailDao(handle);
-        List<StockInDetail> list =stockInDao.findByStockId(Integer.parseInt(id));
+        List<StockInDetail> list =stockInDao.findAllStockId(Integer.parseInt(id));
         Gson gson = new Gson();
         Map<String, Object> responseMap = new HashMap<>();
         responseMap.put("data", list);

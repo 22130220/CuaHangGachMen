@@ -11,6 +11,11 @@ public class Color implements Serializable {
 
     }
 
+    public Color(int ID, String name) {
+        this.ID = ID;
+        this.Name = name;
+    }
+
     public Color(int ID, String name, String Url) {
         this.ID = ID;
         this.Name = name;

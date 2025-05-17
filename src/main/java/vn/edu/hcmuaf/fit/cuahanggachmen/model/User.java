@@ -22,6 +22,11 @@ public class User implements Serializable {
 
     public User() {}
 
+    public User(int id, String fullname) {
+        this.id = id;
+        this.fullname = fullname;
+    }
+
     public User(int id, String fullname, String email, String phone, String avatar, String address,
                 LocalDateTime birthtime, boolean status, LocalDateTime createtime, String salt,
                 int role, String password, String fbid, String zaloid, int sex) {

@@ -6,6 +6,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Review;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.ProductMapper;
 
 import java.util.List;
@@ -77,6 +78,17 @@ public class ProductDao extends BaseDao {
         }
         );
     }
+    public Product findById1(int id){
+        return handle.createQuery("SELECT * FROM products WHERE ID = :id")
+                .bind("id",id)
+                .map((rs, ctx) -> new Product(
+                        rs.getInt("id"),
+                        rs.getString("name")
+                ))
+                .findOne()
+                .orElse(null);
+    }
+
 
     // Tìm sản phẩm theo ID
     public Product findById(int id) {

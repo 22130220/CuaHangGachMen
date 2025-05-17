@@ -8,11 +8,27 @@ public class StockInDetail {
     private int quantity;
     private double unitPrice;
     private double totalPrice;
+    private String productName;
+    private String colorName;
+
+
+
 
 
     public StockInDetail() {
     }
 
+    public StockInDetail(int id, int stockId, int productId, int colorId, int quantity, String colorName, String productName,double unitPrice, double totalPrice) {
+        this.id = id;
+        this.stockId = stockId;
+        this.productId = productId;
+        this.colorId = colorId;
+        this.quantity = quantity;
+        this.colorName = colorName;
+        this.productName = productName;
+        this.totalPrice = totalPrice;
+        this.unitPrice = unitPrice;
+    }
 
     public StockInDetail(int id, int stockId, int productId, int colorId, int quantity, double unitPrice, double totalPrice) {
         this.id = id;
@@ -81,6 +97,22 @@ public class StockInDetail {
         this.totalPrice = totalPrice;
     }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getColorName() {
+        return colorName;
+    }
+
+    public void setColorName(String colorName) {
+        this.colorName = colorName;
+    }
+
     @Override
     public String toString() {
         return "StockInDetail{" +
@@ -91,6 +123,8 @@ public class StockInDetail {
                 ", quantity=" + quantity +
                 ", unitPrice=" + unitPrice +
                 ", totalPrice=" + totalPrice +
+                ", productName='" + productName + '\'' +
+                ", colorName='" + colorName + '\'' +
                 '}';
     }
 }

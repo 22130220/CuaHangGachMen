@@ -41,6 +41,12 @@ public class Product implements Serializable{
     public Product() {
     }
 
+    public Product( int id,String name) {
+        this.id = id;
+        this.name = name;
+
+    }
+
     public Product(int id, String name, int pricePerBox, int stock, String description, boolean status,
                    int rating, boolean discount, BigDecimal promotionPrice, int quantityPerBox,
                    LocalDateTime createDate, int categoryId, int sizeId, int materialId,
