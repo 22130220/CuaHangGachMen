@@ -7,6 +7,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.model.OrderDetailWithName;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
 public class OrderDetailDao extends BaseDao {
     public OrderDetailDao(Handle handle) {
         super(handle, false, 0, 0);
@@ -23,78 +24,80 @@ public class OrderDetailDao extends BaseDao {
                 .one();
         return count > 0;
     }
+
     // Insert a new OrderDetail
     public int insert(OrderDetail orderDetail)  {
-            return handle.createUpdate(
-                            "INSERT INTO orderdetail (OrderID, ProductID, Quantity, Price, Color) " +
-                                    "VALUES (:orderId, :productId, :quantity, :price, :color)"
-                    )
-                    .bind("orderId", orderDetail.getOrderId())
-                    .bind("productId", orderDetail.getProductId())
-                    .bind("quantity", orderDetail.getQuantity())
-                    .bind("price", orderDetail.getPrice())
-                    .bind("color", orderDetail.getColor())
-                    .execute();
+        return handle.createUpdate(
+                        "INSERT INTO orderdetail (OrderID, ProductID, Quantity, Price, Color) " +
+                                "VALUES (:orderId, :productId, :quantity, :price, :color)"
+                )
+                .bind("orderId", orderDetail.getOrderId())
+                .bind("productId", orderDetail.getProductId())
+                .bind("quantity", orderDetail.getQuantity())
+                .bind("price", orderDetail.getPrice())
+                .bind("color", orderDetail.getColor())
+                .execute();
     }
 
     // Find OrderDetail by OrderID and ProductID
     public Optional<OrderDetail> findByOrderAndProduct(int orderId, int productId)  {
-            return handle.createQuery("SELECT * FROM orderdetail WHERE OrderID = :orderId AND ProductID = :productId")
-                        .bind("orderId", orderId)
-                        .bind("productId", productId)
-                        .map(this::mapRow)
-                        .findFirst();
+        return handle.createQuery("SELECT * FROM orderdetail WHERE OrderID = :orderId AND ProductID = :productId")
+                .bind("orderId", orderId)
+                .bind("productId", productId)
+                .map(this::mapRow)
+                .findFirst();
     }
 
     // Find all OrderDetails by OrderID
     public List<OrderDetail> findByOrderId(int orderId)  {
-            return handle.createQuery("SELECT * FROM orderdetail WHERE OrderID = :orderId")
-                        .bind("orderId", orderId)
-                        .map(this::mapRow)
-                        .list();
+        return handle.createQuery("SELECT * FROM orderdetail WHERE OrderID = :orderId")
+                .bind("orderId", orderId)
+                .map(this::mapRow)
+                .list();
     }
 
     // Find all OrderDetails by OrderID
     public List<OrderDetailWithName> findByOrderIdWithName(int orderId)  {
-            return handle.createQuery("SELECT od.*, p.imgThumbnail as img, p.name as name FROM orderdetail od JOIN products p ON od.ProductID = p.id WHERE OrderID = :orderId")
-                        .bind("orderId", orderId)
-                        .mapToBean(OrderDetailWithName.class)
-                        .list();
+        return handle.createQuery("SELECT od.*, p.imgThumbnail as img, p.name as name FROM orderdetail od JOIN products p ON od.ProductID = p.id WHERE OrderID = :orderId")
+                .bind("orderId", orderId)
+                .mapToBean(OrderDetailWithName.class)
+                .list();
     }
 
     // Update an OrderDetail
     public int update(OrderDetail orderDetail)  {
-            return handle.createUpdate(
-                            "UPDATE orderdetail SET Quantity = :quantity, Price = :price, CreateDate = :createDate " +
-                                    "WHERE OrderID = :orderId AND ProductID = :productId"
-                    )
-                    .bind("orderId", orderDetail.getOrderId())
-                    .bind("productId", orderDetail.getProductId())
-                    .bind("quantity", orderDetail.getQuantity())
-                    .bind("price", orderDetail.getPrice())
-                    .bind("createDate", orderDetail.getCreateDate())
-                    .execute();
+        return handle.createUpdate(
+                        "UPDATE orderdetail SET Quantity = :quantity, Price = :price, CreateDate = :createDate " +
+                                "WHERE OrderID = :orderId AND ProductID = :productId"
+                )
+                .bind("orderId", orderDetail.getOrderId())
+                .bind("productId", orderDetail.getProductId())
+                .bind("quantity", orderDetail.getQuantity())
+                .bind("price", orderDetail.getPrice())
+                .bind("createDate", orderDetail.getCreateDate())
+                .execute();
     }
 
     // Delete an OrderDetail by OrderID and ProductID
     public int delete(int orderId, int productId)  {
-            return handle.createUpdate("DELETE FROM orderdetail WHERE OrderID = :orderId AND ProductID = :productId")
-                        .bind("orderId", orderId)
-                        .bind("productId", productId)
-                        .execute();
+        return handle.createUpdate("DELETE FROM orderdetail WHERE OrderID = :orderId AND ProductID = :productId")
+                .bind("orderId", orderId)
+                .bind("productId", productId)
+                .execute();
     }
 
     public List<OrderDetail> findDeliveredOrderDetailsByUserId(int userId)  {
-            return handle.createQuery(
-                                "SELECT od.OrderID, od.ProductID, od.Quantity, od.Price, od.Color, od.CreateDate, p.imgThumbnail, p.name " +
-                                        "FROM orderdetail od " +
-                                        "JOIN products p ON p.id = od.ProductID " +
-                                        "JOIN orders o ON od.OrderID = o.ID " +
-                                        "WHERE o.UserID = :userId AND o.Status = 'Delivered'")
-                        .bind("userId", userId)
-                        .map(this::mapRow)
-                        .list();
+        return handle.createQuery(
+                        "SELECT od.OrderID, od.ProductID, od.Quantity, od.Price, od.Color, od.CreateDate, p.imgThumbnail, p.name " +
+                                "FROM orderdetail od " +
+                                "JOIN products p ON p.id = od.ProductID " +
+                                "JOIN orders o ON od.OrderID = o.ID " +
+                                "WHERE o.UserID = :userId AND o.Status = 'Delivered'")
+                .bind("userId", userId)
+                .map(this::mapRow)
+                .list();
     }
+
     public List<OrderDetail> findAllOrderDetailsByUserId(int userId) {
         return handle.createQuery(
                         "SELECT od.OrderID, od.ProductID, od.Quantity, od.Price, od.Color, od.CreateDate, p.imgThumbnail, p.name " +
@@ -106,6 +109,7 @@ public class OrderDetailDao extends BaseDao {
                 .map(this::mapRow)
                 .list();
     }
+
     public List<OrderDetail> findOrderDetailsByUserIdAndStatus(int userId, String status) {
         return handle.createQuery(
                         "SELECT od.OrderID, od.ProductID, od.Quantity, od.Price, od.Color, od.CreateDate, p.imgThumbnail, p.name " +
@@ -140,6 +144,14 @@ public class OrderDetailDao extends BaseDao {
         return handle.createQuery("SELECT TotalPrice FROM orders WHERE ID = :orderId")
                 .bind("orderId", orderId)
                 .mapTo(Integer.class)
+                .one();
+    }
+
+    // Thêm phương thức để lấy Payment từ bảng orders
+    public String getOrderPayment(int orderId) {
+        return handle.createQuery("SELECT Payment FROM orders WHERE ID = :orderId")
+                .bind("orderId", orderId)
+                .mapTo(String.class)
                 .one();
     }
 

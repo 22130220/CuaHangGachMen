@@ -71,7 +71,7 @@
                     <c:forEach var="entry" items="${orderGroups}">
                         <div class="order-group">
                             <div class="order-header">
-                                <span>Đơn hàng #${entry.key} - Ngày tạo: ${orderCreateDates[entry.key]} - Trạng thái: ${orderStatusDisplayMap[entry.key]} - Tổng: ₫${orderTotalPrices[entry.key]}</span>
+                                <span>Đơn hàng #${entry.key} - Ngày tạo: ${orderCreateDates[entry.key]} - Trạng thái: ${orderStatusDisplayMap[entry.key]} - Tổng: ₫${orderTotalPrices[entry.key]} - Phương thức thanh toán: ${orderPayments[entry.key]}</span>
                                 <c:set var="orderStatus" value="${orderStatusMap[entry.key]}" />
                                 <c:if test="${orderStatus == 'Processing' || orderStatus == 'Shipping'}">
                                     <div class="mualaine" onclick="confirmCancelOrder(${entry.key})" style="display: inline-block; cursor: pointer;">
@@ -96,7 +96,6 @@
                                             </a>
                                         </c:when>
                                         <c:when test="${orderStatus == 'Cancelled'}">
-
                                             <a class="mualaine" href="/pdetail?pid=${order.productId}" style="display: inline-block;">
                                                 <div class="mualai">Mua lại</div>
                                             </a>
@@ -169,7 +168,7 @@
             return;
         }
 
-        $.ajax({
+        hibaiba        $.ajax({
             url: "/completeorderhistory",
             type: "GET",
             data: {

@@ -66,12 +66,13 @@ public class HistoryOrderController extends HttpServlet {
         Map<Integer, List<OrderDetail>> orderGroups = orderDetails.stream()
                 .collect(Collectors.groupingBy(OrderDetail::getOrderId));
 
-        // Lấy trạng thái, ngày tạo và TotalPrice của từng đơn hàng
+        // Lấy trạng thái, ngày tạo, TotalPrice và Payment của từng đơn hàng
         Map<Integer, String> orderStatusMap = new HashMap<>(); // Trạng thái gốc (tiếng Anh)
         Map<Integer, String> orderStatusDisplayMap = new HashMap<>(); // Trạng thái hiển thị (tiếng Việt)
         Map<Integer, LocalDateTime> orderCreateDateMap = new HashMap<>();
         Map<Integer, String> orderCreateDateStrMap = new HashMap<>(); // Lưu định dạng "dd-MM-yyyy"
         Map<Integer, Integer> orderTotalPriceMap = new HashMap<>();
+        Map<Integer, String> orderPaymentMap = new HashMap<>(); // Lưu Payment
         DateTimeFormatter isoFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; // Định dạng "2025-03-27T17:12:42"
         DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy"); // Định dạng "27-03-2025"
 
@@ -79,10 +80,12 @@ public class HistoryOrderController extends HttpServlet {
             String orderStatus = orderDetailDao.getOrderStatus(orderId);
             LocalDateTime createDate = orderDetailDao.getOrderCreateDate(orderId);
             Integer totalPrice = orderDetailDao.getOrderTotalPrice(orderId);
+            String payment = orderDetailDao.getOrderPayment(orderId); // Lấy Payment
             orderStatusMap.put(orderId, orderStatus);
             orderStatusDisplayMap.put(orderId, translateStatusToVietnamese(orderStatus)); // Dịch sang tiếng Việt
             orderCreateDateMap.put(orderId, createDate);
             orderTotalPriceMap.put(orderId, totalPrice);
+            orderPaymentMap.put(orderId, payment != null ? payment : "Không xác định"); // Xử lý null
             // Chuyển đổi CreateDate sang định dạng "dd-MM-yyyy"
             String createDateStr = createDate.format(displayFormatter);
             orderCreateDateStrMap.put(orderId, createDateStr);
@@ -120,6 +123,11 @@ public class HistoryOrderController extends HttpServlet {
                     if (createDateStr.contains(keyword)) {
                         suggestions.add("Ngày: " + createDateStr);
                     }
+                    // Gợi ý theo phương thức thanh toán
+                    String payment = orderPaymentMap.get(orderId);
+                    if (payment.toLowerCase().contains(keyword)) {
+                        suggestions.add("Phương thức thanh toán: " + payment);
+                    }
                 }
             }
 
@@ -141,6 +149,8 @@ public class HistoryOrderController extends HttpServlet {
                 keyword = keyword.replace("trạng thái: ", "");
             } else if (keyword.startsWith("ngày: ")) {
                 keyword = keyword.replace("ngày: ", "");
+            } else if (keyword.startsWith("phương thức thanh toán: ")) {
+                keyword = keyword.replace("phương thức thanh toán: ", "");
             }
 
             Map<Integer, List<OrderDetail>> filteredOrderGroups = new HashMap<>();
@@ -191,6 +201,13 @@ public class HistoryOrderController extends HttpServlet {
                         }
                     }
                 }
+                // Tìm theo phương thức thanh toán
+                if (!matches) {
+                    String payment = orderPaymentMap.get(orderId);
+                    if (payment.toLowerCase().contains(keyword)) {
+                        matches = true;
+                    }
+                }
 
                 if (matches) {
                     filteredOrderGroups.put(orderId, orders);
@@ -210,7 +227,7 @@ public class HistoryOrderController extends HttpServlet {
                     sortedOrderGroups.sort((o1, o2) -> orderCreateDateMap.get(o1.getKey()).compareTo(orderCreateDateMap.get(o2.getKey())));
                     break;
                 case "totalPriceDesc":
-                    sortedOrderGroups.sort((o1, o2) -> orderTotalPriceMap.get(o2.getKey()).compareTo(orderTotalPriceMap.get(o1.getKey())));
+                    sortedOrderGroups.sort((o1, o2) -> orderTotalPriceMap.get(o2.getKey()).compareTo(orderTotalPriceMap.get(o2.getKey())));
                     break;
                 case "totalPriceAsc":
                     sortedOrderGroups.sort((o1, o2) -> orderTotalPriceMap.get(o1.getKey()).compareTo(orderTotalPriceMap.get(o1.getKey())));
@@ -251,11 +268,12 @@ public class HistoryOrderController extends HttpServlet {
                     String orderStatusDisplay = translateStatusToVietnamese(orderStatus); // Dịch sang tiếng Việt
                     LocalDateTime createDate = orderCreateDateMap.get(orderId);
                     Integer totalPrice = orderTotalPriceMap.get(orderId);
+                    String payment = orderPaymentMap.get(orderId); // Lấy Payment
                     String createDateStr = createDate.format(displayFormatter); // Hiển thị theo định dạng "27-03-2025"
 
                     out.println("<div class=\"order-group\">");
                     out.println("<div class=\"order-header\">");
-                    out.println("<span>Đơn hàng #" + orderId + " - Ngày tạo: " + createDateStr + " - Trạng thái: " + orderStatusDisplay + " - Tổng: ₫" + totalPrice + "</span>");
+                    out.println("<span>Đơn hàng #" + orderId + " - Ngày tạo: " + createDateStr + " - Trạng thái: " + orderStatusDisplay + " - Tổng: ₫" + totalPrice + " - Phương thức thanh toán: " + payment + "</span>");
                     if ("Processing".equals(orderStatus) || "Shipping".equals(orderStatus)) {
                         // Thay liên kết <a> bằng div với sự kiện onclick
                         out.println("<div class=\"mualaine\" onclick=\"confirmCancelOrder(" + orderId + ")\" style=\"display: inline-block; cursor: pointer;\">");
@@ -279,7 +297,6 @@ public class HistoryOrderController extends HttpServlet {
                             out.println("<div class=\"mualai\">Xem chi tiết</div>");
                             out.println("</a>");
                         } else if ("Cancelled".equals(orderStatus)) {
-
                             out.println("<a class=\"mualaine\" href=\"/pdetail?pid=" + order.getProductId() + "\" style=\"display: inline-block;\">");
                             out.println("<div class=\"mualai\">Mua lại</div>");
                             out.println("</a>");
@@ -308,6 +325,7 @@ public class HistoryOrderController extends HttpServlet {
             request.setAttribute("orderStatusDisplayMap", orderStatusDisplayMap); // Trạng thái hiển thị (tiếng Việt)
             request.setAttribute("orderCreateDates", orderCreateDateStrMap); // Truyền định dạng "dd-MM-yyyy"
             request.setAttribute("orderTotalPrices", orderTotalPriceMap);
+            request.setAttribute("orderPayments", orderPaymentMap); // Truyền Payment
             request.setAttribute("orderDetails", orderDetails);
             handle.close();
             request.getRequestDispatcher("/WEB-INF/complete_order_history.jsp").forward(request, response);
