@@ -21,6 +21,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.model.wrapper.StockInRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.annotation.Inherited;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.List;
