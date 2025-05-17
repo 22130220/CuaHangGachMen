@@ -1,0 +1,8 @@
+permissions:
+  excute: 1
+  write: 2
+  write, excute: 3
+  read: 4
+  read, excute: 5
+  read, write: 6
+  read, write, excute: 7
