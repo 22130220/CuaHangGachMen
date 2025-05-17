@@ -78,6 +78,11 @@
 
   <!-- Sweet alert 2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Alpine Plugins -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Alpine Core -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style>
     .modal__button {
       background-color: #4fe613; /* màu xanh dương hiện đại */
@@ -130,6 +135,32 @@
     #stockInDetailTable tbody tr:hover {
       background-color: #e0f2fe; /* xanh nhạt khi hover */
     }
+
+    ul.custom-option-list {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 0;
+      margin-top: 4px;
+      list-style: none;
+      background-color: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    ul.custom-option-list li {
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    ul.custom-option-list li:hover {
+      background-color: #f3f4f6; /* giống hover của option */
+    }
+
+    ul.custom-option-list li:active {
+      background-color: #e5e7eb; /* nhấn giữ */
+    }
   </style>
 </head>
 <body>
@@ -181,11 +212,29 @@
         </header>
         <div class="modal-content-content">
           <div class="modal__content">
-            <div class="modal__content">
+            <div class="modal__content" x-data="changeSelectToText">
               <!-- Nhập từng dòng -->
               <div class="fui-basic-input">
                 <label>Sản phẩm</label>
-                <select id="productId" class="input input-bordered f-s-14" style="width: 100%"></select>
+                <template x-if="isInputText === false">
+                  <select  @dblclick="toggleChangeInput" id="productId" class="input input-bordered f-s-14" style="width: 100%"></select>
+                </template>
+                <template x-if="isInputText">
+                  <div>
+                    <input  type="hidden"  x-model="dataInputID"  id="productId3"  />
+                    <input  type="text" @dblclick="toggleChangeInput" x-model="dataInput" @keyup="danhsachsearch" id="productId1" class="input input-bordered f-s-14" style="width: 100%" />
+                    <template x-if="isNhanText===true">
+                      <ul class="custom-option-list">
+                        <template x-for="color in colors" :key="color.id">
+                          <li x-text="color.name" @click="nhanTen(color)"></li>
+                        </template>
+                      </ul>
+                    </template>
+                  </div>
+                </template>
+
+
+
               </div>
               <div class="fui-basic-input">
                 <label>Màu</label>
@@ -197,7 +246,7 @@
               </div>
               <div class="fui-basic-input">
                 <label>Đơn giá</label>
-                <input type="number" id="unitPrice" class="input input-bordered f-s-14" style="width: 100%" />
+                <input x-mask:dynamic="$money($input, ',')"  type="text" id="unitPrice" class="input input-bordered f-s-14" style="width: 100%" />
               </div>
 
               <button id="addDetailBtn" type="button" class="button bg_green f-cl-white mt-2">Thêm dòng</button>
@@ -366,6 +415,75 @@
 <script src="/assets/js/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>
+
+
+
+
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('changeSelectToText', () => ({
+      isInputText: true,
+      isNhanText: true,
+      colors: [
+      ],
+      dataInput: '',
+      dataInputID: '',
+      danhsachsearch() {
+        if (!this.dataInput || this.dataInput.trim() === '') {
+          this.colors = []; // reset nếu input trống
+          return;
+        }
+        this.isNhanText=true;
+
+        $.ajax({
+          url: `/GetDanhSanPhamSearch?data=\${this.dataInput}`,
+          type: 'GET',
+          success: (res) => {
+            this.colors = res.data;
+          },
+          error: function () {
+            alert("Không thể tải danh sách.");
+          }
+        });
+      },
+      nhanTen(colorIs){
+        this.dataInput = colorIs.name;
+        this.dataInputID=colorIs.id;
+        this.isNhanText = false;
+      },
+      toggleChangeInput() {
+        this.isInputText = !this.isInputText;
+        if(this.isInputText===false){
+          $.ajax({
+            url: '/GetListProdudctAndColor',
+            type: 'GET',
+            success: function (res) {
+              const productList = res.productList;
+              const colorList = res.colorList;
+
+              const $select = $("#productId");
+              $select.empty().append(`<option value="">-- Chọn sản phẩm --</option>`);
+              productList.forEach(t => {
+                $select.append(`<option value="\${t.id}">\${t.name}</option>`);
+              });
+
+              const $selectcolor = $("#colorId");
+              $selectcolor.empty().append(`<option value="">-- Chọn màu --</option>`);
+              colorList.forEach(c => {
+                $selectcolor.append(`<option value="\${c.ID}">\${c.Name}</option>`);
+              });
+
+              MicroModal.show('add_modal');
+            },
+            error: function () {
+              alert("Không thể tải danh sách.");
+            }
+          });
+        }
+      },
+
+    }))
+  })
+
   let stockInDetails = [];
   let setActive = [];
   let action ='';
@@ -527,12 +645,21 @@
     });
   }
   $("#addDetailBtn").on("click", function () {
-    const productId = $("#productId").val();
-    const productText = $("#productId option:selected").text();
+    let productId = $("#productId").val();
+    const productId2=$("#productId3").val();
+    if(productId2!==''){
+      productId=productId2;
+    }
+    let productText = $("#productId option:selected").text();
+    const productText2=$("#productId1").val();
+    if(productText2!==''){
+      productText=productText2;
+    }
     const colorId = $("#colorId").val();
     const colorText = $("#colorId option:selected").text();
     const quantity = parseInt($("#quantity").val(), 10);
-    const unitPrice = parseFloat($("#unitPrice").val());
+    const unitPriceRaw = $("#unitPrice").val().replace(/\./g, '');
+    const unitPrice = parseFloat(unitPriceRaw);
 
     if (!productId || !colorId || !quantity || !unitPrice) {
       alert("Vui lòng nhập đầy đủ.");
@@ -585,6 +712,9 @@
             type: "success",
             message: "Nhập kho thành công",
           });
+          $("#productId1").val('');
+          $("#quantity").val('');
+          $("#unitPrice").val('');
 
         } else {
           table.rows().deselect();

@@ -196,14 +196,12 @@ public class UserDao extends BaseDao {
 
     // Tìm user bằng email
     public User findByEmail(String email) {
-        String cacheKey = "user_email_" + email;
-        return getFromCacheOrCompute(cacheKey, User.class, () ->
-                handle.createQuery("SELECT * FROM users WHERE email = :email AND status=1")
-                        .bind("email", email)
-                        .map(new UserMapper())
-                        .findOne()
-                        .orElse(null)
-        );
+        return  handle.createQuery("SELECT * FROM users WHERE email = :email AND status=1")
+                .bind("email", email)
+                .map(new UserMapper())
+                .findOne()
+                .orElse(null);
+
     }
 
     // Lấy mã khôi phục
