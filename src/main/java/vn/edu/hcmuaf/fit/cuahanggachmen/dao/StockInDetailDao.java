@@ -42,7 +42,6 @@ public class StockInDetailDao extends BaseDao{
                 ))
                 .list();
     }
-
     // Tìm theo ID
     public StockInDetail findById(int id) {
         return handle.createQuery("SELECT * FROM StockInDetail WHERE id = :id")

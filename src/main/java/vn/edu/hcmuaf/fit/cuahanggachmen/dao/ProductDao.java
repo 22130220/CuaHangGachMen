@@ -31,6 +31,16 @@ public class ProductDao extends BaseDao {
 
         );
     }
+    public List<Product> search(String keyword) {
+        String cacheKey = "products_search_" + keyword.toLowerCase();
+
+        return getFromCacheOrCompute(cacheKey, List.class, () -> {
+            return handle.createQuery("SELECT * FROM products WHERE name LIKE :keyword")
+                    .bind("keyword", "%" + keyword + "%")
+                    .mapToBean(Product.class)
+                    .list();
+        });
+    }
 
     // Lấy danh sách URL hình ảnh theo color và product
     public List<String> findImagesByColor(int productId, int colorId) {
