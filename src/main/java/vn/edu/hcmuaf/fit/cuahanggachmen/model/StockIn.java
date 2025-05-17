@@ -9,11 +9,24 @@ public class StockIn {
     private LocalDateTime updateDate;
     private int typeId;
     private boolean isActive;
+    private String userName;
+    private String typeName;
 
     public StockIn() {
     }
 
-    public StockIn(int id, LocalDateTime createDate, int userId, LocalDateTime updateDate,int typeId ,boolean isActive) {
+    public StockIn(int id, LocalDateTime createDate, int userId, LocalDateTime updateDate, int typeId, boolean isActive, String userName, String typeName) {
+        this.id = id;
+        this.createDate = createDate;
+        this.userId = userId;
+        this.updateDate = updateDate;
+        this.typeId = typeId;
+        this.isActive = isActive;
+        this.userName = userName;
+        this.typeName = typeName;
+    }
+
+    public StockIn(int id, LocalDateTime createDate, int userId, LocalDateTime updateDate, int typeId , boolean isActive) {
         this.id = id;
         this.createDate = createDate;
         this.userId = userId;
@@ -69,6 +82,22 @@ public class StockIn {
         isActive = active;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
     @Override
     public String toString() {
         return "StockIn{" +
@@ -78,6 +107,8 @@ public class StockIn {
                 ", updateDate=" + updateDate +
                 ", typeId=" + typeId +
                 ", isActive=" + isActive +
+                ", userName='" + userName + '\'' +
+                ", typeName='" + typeName + '\'' +
                 '}';
     }
 }

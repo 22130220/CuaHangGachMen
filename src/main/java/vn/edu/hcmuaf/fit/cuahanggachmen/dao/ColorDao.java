@@ -4,6 +4,7 @@ import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.result.RowView;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.ColorMapper;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.mapper.ColorNUrlMapper;
 
@@ -39,6 +40,17 @@ public class ColorDao extends BaseDao {
                         .orElse(null)
         );
     }
+    public Color findById1(int id){
+        return handle.createQuery("SELECT * FROM colors WHERE ID = :id")
+                .bind("id",id)
+                .map((rs, ctx) -> new Color(
+                        rs.getInt("ID"),
+                        rs.getString("Name")
+                ))
+                .findOne()
+                .orElse(null);
+    }
+
 
     // Lấy tất cả các color
     public List<Color> getAllColors() {
@@ -132,5 +144,13 @@ public class ColorDao extends BaseDao {
         p.setID(rowView.getColumn("ID", Integer.class));
         p.setName(rowView.getColumn("Name", String.class));
         return p;
+    }
+
+    public static void main(String[] args) {
+        DBConect.mySqlDataSource();
+        Handle handle1=DBConect.get().open();
+        ColorDao cl = new ColorDao(handle1);
+        Color cs= cl.findById(1);
+        System.out.println(cs);
     }
 }

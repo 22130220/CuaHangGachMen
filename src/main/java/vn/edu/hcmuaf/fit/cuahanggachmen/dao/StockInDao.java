@@ -3,8 +3,14 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.StockIn;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.TypeOfReceipt;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StockInDao extends BaseDao{
@@ -27,17 +33,46 @@ public class StockInDao extends BaseDao{
 
     // Lấy tất cả phiếu nhập kho còn hoạt động
     public List<StockIn> findAll() {
-        return handle.createQuery("SELECT * FROM StockIn")
-                .map((rs, ctx) -> new StockIn(
-                        rs.getInt("id"),
-                        rs.getObject("createDate", LocalDateTime.class),
-                        rs.getInt("userId"),
-                        rs.getObject("updatedAt", LocalDateTime.class),
-                        rs.getInt("typeId"),
-                        rs.getBoolean("isActive")
-                ))
-                .list();
+        List<StockIn> stockInList = new ArrayList<>();
+
+        try (Handle handle = DBConect.get().open()) {
+            UserDao userDao = new UserDao(handle);
+            TypeOfReceiptDao typeOfReceiptDao = new TypeOfReceiptDao(handle);
+
+            String sql = "SELECT * FROM StockIn";
+            try (PreparedStatement stmt = handle.getConnection().prepareStatement(sql);
+                 ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    LocalDateTime createDate = rs.getObject("createDate", LocalDateTime.class);
+                    int userId = rs.getInt("userId");
+                    LocalDateTime updatedAt = rs.getObject("updatedAt", LocalDateTime.class);
+                    int typeId = rs.getInt("typeId");
+                    boolean isActive = rs.getBoolean("isActive");
+
+                    // Lấy user và loại phiếu
+                    User user = userDao.getUserByIds(userId);
+                    TypeOfReceipt type = typeOfReceiptDao.findById(typeId);
+
+                    // Tạo đối tượng StockIn
+                    StockIn stockIn = new StockIn(
+                            id, createDate, userId, updatedAt, typeId, isActive,
+                            user != null ? user.getFullname() : null,
+                            type != null ? type.getType() : null
+                    );
+
+                    stockInList.add(stockIn);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // hoặc dùng logger
+        }
+
+        return stockInList;
     }
+
     public List<StockIn> findAllIsActive() {
         return handle.createQuery("SELECT * FROM StockIn WHERE isActive = 1")
                 .map((rs, ctx) -> new StockIn(
@@ -101,8 +136,10 @@ public class StockInDao extends BaseDao{
         DBConect.mySqlDataSource();
         Handle handle1 = DBConect.get().open();
         StockInDao dao = new StockInDao(handle1);
-        StockIn stockIn = dao.findById(1);
-        System.out.println(stockIn);
+        List<StockIn> lst = dao.findAll();
+        for (StockIn stockIn : lst) {
+            System.out.println(stockIn);
+        }
     }
 
 

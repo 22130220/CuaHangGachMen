@@ -321,9 +321,10 @@
           <tr>
             <th>Id</th>
             <th>stockId</th>
-            <th>productId</th>
-            <th>ColorId</th>
+            <th>productName</th>
+            <th>ColorName</th>
             <th>Số lượng</th>
+            <th>Unit price</th>
             <th>tổng tiền</th>
           </tr>
           </thead>
@@ -543,11 +544,8 @@
       },
       {
         targets: 2,
-        data: 'userId',
+        data: 'userName',
         className: 'dt-center',
-        render: function (data, type, row) {
-          return `<div class="btn-detail" onclick="openModal('userNhapModal',\${row.userId})">\${row.userId}</div>`;
-        }
       },
       {
         targets: 3,
@@ -556,11 +554,8 @@
       },
       {
         targets: 4,
-        data: 'typeId',
+        data: 'typeName',
         className: 'dt-center',
-        render: function (data, type, row) {
-          return `<div class="btn-detail" onclick="openModal2('typeModal',\${row.typeId})">\${data}</div>`;
-        }
       },
       {
         targets: 5,
@@ -808,12 +803,12 @@
           },
           {
             targets: 2,
-            data: 'productId',
+            data: 'productName',
             className: 'dt-center',
           },
           {
             targets: 3,
-            data: 'colorId',
+            data: 'colorName',
             className: 'dt-center'
           },
           {

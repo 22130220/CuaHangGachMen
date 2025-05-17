@@ -181,7 +181,17 @@ public class UserDao extends BaseDao {
                         .orElse(null)
         );
     }
+    public User getUserByIds(int id) {
+            return handle.createQuery("SELECT id, fullname FROM users WHERE id = :id")
+                    .bind("id", id)
+                    .map((rs, ctx) -> new User(
+                            rs.getInt("id"),
+                            rs.getString("fullname")
+                    ))
+                    .findOne()
+                    .orElse(null);
 
+    }
     // Lấy một người dùng theo ID (không kiểm tra status)
     public User getUserById1(int id) {
         String cacheKey = "user_" + id;
