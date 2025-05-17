@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import vn.edu.hcmuaf.fit.cuahanggachmen.RequirePermission;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductSpecDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
@@ -17,6 +18,7 @@ import java.sql.SQLException;
 @WebServlet(name = "GetSetDes", value = "/admin/des")
 public class GetSetDes extends HttpServlet {
     @Override
+    @RequirePermission({"7", "6", "5", "4"})
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String pid = request.getParameter("pid");
