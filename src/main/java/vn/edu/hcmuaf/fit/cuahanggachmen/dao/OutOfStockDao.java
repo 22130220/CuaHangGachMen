@@ -1,0 +1,96 @@
+package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
+
+import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+public class OutOfStockDao extends BaseDao {
+
+    public OutOfStockDao(Handle handle) {
+        super(handle, false, 0, 0);
+    }
+
+    public int insert(OutOfStock outOfStock) {
+        return handle.createUpdate("INSERT INTO outofstock (createDate, userId, updatedDate, isActive,typeId) " +
+                        "VALUES (:createDate, :userId, :updateAt, 1,:typeId)")
+                .bind("createDate", outOfStock.getCreatedDate())
+                .bind("userId", outOfStock.getUserId())
+                .bind("updateAt",outOfStock.getUpdatedDate())
+                .bind("typeId", outOfStock.getTypeId())
+                .executeAndReturnGeneratedKeys("id")
+                .mapTo(Integer.class)
+                .one();
+    }
+
+    public List<OutOfStock> findAll() {
+        List<OutOfStock> outOfStockList = new ArrayList<>();
+
+        try (Handle handle = DBConect.get().open()) {
+            UserDao userDao = new UserDao(handle);
+            TypeOutOfStockDao typeDao = new TypeOutOfStockDao(handle);
+
+            String sql = "SELECT * FROM outofstock";
+            try (PreparedStatement stmt = handle.getConnection().prepareStatement(sql);
+                 ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    LocalDateTime createDate = rs.getObject("createDate", LocalDateTime.class);
+                    int userId = rs.getInt("userId");
+                    LocalDateTime updatedAt = rs.getObject("updatedDate", LocalDateTime.class);
+                    boolean isActive = rs.getBoolean("isActive");
+                    int typeId = rs.getInt("typeId");
+                    // Lấy user và loại phiếu
+                    User user = userDao.getUserByIds(userId);
+                    TypeOfOutStock type = typeDao.findById(typeId);
+
+                    // Tạo đối tượng StockIn
+                    OutOfStock outOfStock = new OutOfStock(
+                            id, createDate, userId, updatedAt, isActive,typeId,
+                            user != null ? user.getFullname() : null,
+                            type != null ? type.getName() : null
+                    );
+
+                    outOfStockList.add(outOfStock);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // hoặc dùng logger
+        }
+
+        return outOfStockList;
+    }
+
+    public boolean update(OutOfStock outOfStock) {
+        int rowsAffected = handle.createUpdate(
+                        "UPDATE outofstock SET userId = :userId, updatedDate = :updatedAt,isActive = :isActive, typeId = :typeId  " +
+                                "WHERE id = :id")
+                .bind("userId", outOfStock.getUserId())
+                .bind("updatedAt", outOfStock.getUpdatedDate())
+                .bind("typeId", outOfStock.getTypeId())
+                .bind("isActive", outOfStock.isActive())
+                .bind("id", outOfStock.getId())
+                .execute();
+        return rowsAffected > 0;
+    }
+
+    public int updateActive(int id, boolean active) {
+        return handle.createUpdate("UPDATE outofstock SET isActive = :isActive WHERE id = :id")
+                .bind("id", id)
+                .bind("isActive", active)
+                .execute();
+    }
+
+
+
+
+
+}

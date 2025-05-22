@@ -248,7 +248,10 @@
                 <label>Đơn giá</label>
                 <input x-mask:dynamic="$money($input, ',')"  type="text" id="unitPrice" class="input input-bordered f-s-14" style="width: 100%" />
               </div>
-
+              <div class="fui-basic-input">
+                <label>Thể loại</label>
+                <select id="typeId" class="input input-bordered f-s-14" style="width: 100%"></select>
+              </div>
               <button id="addDetailBtn" type="button" class="button bg_green f-cl-white mt-2">Thêm dòng</button>
 
               <!-- DataTable hiển thị danh sách chi tiết -->
@@ -616,7 +619,7 @@
         success: function (res) {
           const productList = res.productList;
           const colorList = res.colorList;
-
+          const typeList = res.typeList;
           const $select = $("#productId");
           $select.empty().append(`<option value="">-- Chọn sản phẩm --</option>`);
           productList.forEach(t => {
@@ -628,6 +631,16 @@
           colorList.forEach(c => {
             $selectcolor.append(`<option value="\${c.ID}">\${c.Name}</option>`);
           });
+
+
+          const $selecttype = $("#typeId");
+          $selecttype.empty().append(`<option value="">-- Thể loại --</option>`);
+          typeList.forEach(c => {
+            $selecttype.append(`<option value="\${c.id}">\${c.type}</option>`);
+          });
+
+
+
 
           MicroModal.show('add_modal');
         },
@@ -642,13 +655,13 @@
   $("#addDetailBtn").on("click", function () {
     let productId = $("#productId").val();
     const productId2=$("#productId3").val();
-    if(productId2!==''){
-      productId=productId2;
+    if (productId2 !== undefined && productId2 !== "") {
+      productId = productId2;
     }
     let productText = $("#productId option:selected").text();
     const productText2=$("#productId1").val();
-    if(productText2!==''){
-      productText=productText2;
+    if(productText2!=='' && productText2 !== undefined){
+      productText =productText2;
     }
     const colorId = $("#colorId").val();
     const colorText = $("#colorId option:selected").text();
@@ -688,11 +701,15 @@
     console.log(stockInDetails)
   });
   $("#add_btn").on("click", function () {
+    let typeid = document.getElementById('typeId').value;
     $.ajax({
       url: "/AddStockIn",
       method: "POST",
       contentType: "application/json",
-      data: JSON.stringify(stockInDetails),
+      data: JSON.stringify({
+        stockInDetails: stockInDetails,
+        typeid: typeid
+      }),
       success: function (response) {
         table.ajax.reload(null, false);
         stockInDetails = [];

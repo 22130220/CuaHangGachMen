@@ -10,9 +10,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ColorDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.TypeOfReceiptDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.TypeOfReceipt;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.LocalDateTimeAdapter;
 
 import java.io.IOException;
@@ -30,16 +32,19 @@ public class GetListProdudctAndColor extends HttpServlet {
         try (Handle handle = DBConect.get().open()) {
             ProductDao productDao = new ProductDao(handle);
             ColorDao colorDao = new ColorDao(handle);
+            TypeOfReceiptDao typeOfReceiptDao = new TypeOfReceiptDao(handle);
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()) // Hỗ trợ LocalDateTime
                     .setPrettyPrinting()
                     .create();
             List<Product> productList = productDao.findAll();
             List<Color> colorList = colorDao.findAll();
+            List<TypeOfReceipt> typeList = typeOfReceiptDao.findAll();
 
             Map<String, Object> data = new HashMap<>();
             data.put("productList", productList);
             data.put("colorList", colorList);
+            data.put("typeList", typeList);
 
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(gson.toJson(data));
