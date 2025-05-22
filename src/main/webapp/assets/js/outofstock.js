@@ -36,7 +36,7 @@ var table=new DataTable('#outofstock',{
                         });
                         console.log(setActive)
                         action = 'cp';
-                        // MicroModal.show('update_id_modal2');
+                        MicroModal.show('update_id_modal2');
                     },
                     enabled: false
                 }
@@ -117,4 +117,43 @@ table.on('select deselect', function () {
     var selectedRows = table.rows({ selected: true }).count();
     table.button(1).enable(selectedRows === 1);
     table.button(2).enable(selectedRows > 0);
+});
+
+
+
+
+
+
+
+$("#update_id_btn3").on('click', function () {
+    const active = $("#update_active_id").val();
+    console.log(setActive)
+    $.ajax({
+        url: '/GetSetOutOfStock',
+        type: 'POST',
+        traditional: true,
+        data: {
+            id: setActive,
+            active: active,
+            action: action
+
+        },
+        success: function (data) {
+            MicroModal.close('update_id_modal2');
+            const notyf = new Notyf();
+            if(data.success) {
+                notyf.success( " thành công");
+                table.ajax.reload();
+                table.rows().deselect();
+            } else {
+                notyf.error(" thất bại");
+                table.rows().deselect();
+            }
+        },
+        error: function () {
+            MicroModal.close('update_id_modal2');
+            const notyf = new Notyf();
+            notyf.error(" thất bại");
+        }
+    })
 });

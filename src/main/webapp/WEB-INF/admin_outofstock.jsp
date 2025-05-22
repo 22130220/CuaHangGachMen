@@ -119,6 +119,121 @@
       </div>
     </div>
   </div>
+
+
+
+  <div class="modal micromodal-slide" id="add_modal" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+      <div class="modal__container" style="max-width: 900px;" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+        <header class="modal__header">
+          <h2 class="modal__title" id="add_title">
+            Thêm
+          </h2>
+          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+        </header>
+        <div class="modal-content-content">
+          <div class="modal__content">
+            <div class="modal__content" x-data="changeSelectToText">
+              <!-- Nhập từng dòng -->
+              <div class="fui-basic-input">
+                <label>Sản phẩm</label>
+                <template x-if="isInputText === false">
+                  <select  @dblclick="toggleChangeInput" id="productId" class="input input-bordered f-s-14" style="width: 100%"></select>
+                </template>
+                <template x-if="isInputText">
+                  <div>
+                    <input  type="hidden"  x-model="dataInputID"  id="productId3"  />
+                    <input  type="text" @dblclick="toggleChangeInput" x-model="dataInput" @keyup="danhsachsearch" id="productId1" class="input input-bordered f-s-14" style="width: 100%" />
+                    <template x-if="isNhanText===true">
+                      <ul class="custom-option-list">
+                        <template x-for="color in colors" :key="color.id">
+                          <li x-text="color.name" @click="nhanTen(color)"></li>
+                        </template>
+                      </ul>
+                    </template>
+                  </div>
+                </template>
+
+
+
+              </div>
+              <div class="fui-basic-input">
+                <label>Màu</label>
+                <select id="colorId" class="input input-bordered f-s-14" style="width: 100%"></select>
+              </div>
+              <div class="fui-basic-input">
+                <label>Số lượng</label>
+                <input type="number" id="quantity" class="input input-bordered f-s-14" style="width: 100%" />
+              </div>
+              <div class="fui-basic-input">
+                <label>Đơn giá</label>
+                <input x-mask:dynamic="$money($input, ',')"  type="text" id="unitPrice" class="input input-bordered f-s-14" style="width: 100%" />
+              </div>
+              <div class="fui-basic-input">
+                <label>Thể loại</label>
+                <select id="typeId" class="input input-bordered f-s-14" style="width: 100%"></select>
+              </div>
+              <button id="addDetailBtn" type="button" class="button bg_green f-cl-white mt-2">Thêm dòng</button>
+
+              <!-- DataTable hiển thị danh sách chi tiết -->
+              <table id="stockInDetailTable" class="display" style="width:100%; margin-top: 20px">
+                <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Color</th>
+                  <th>Quantity</th>
+                  <th>Unit Price</th>
+                  <th>Xóa</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <footer class="modal__footer">
+            <button class="button bg_green f-cl-white add" id="add_btn">Thêm</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="modal micromodal-slide" id="update_id_modal2" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+        <header class="modal__header">
+          <h2 class="modal__title">
+            Cập nhật trạng thái
+          </h2>
+          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+        </header>
+        <div class="modal-content-content">
+          <div class="modal__content">
+            <div class="fui-basic-input" style="width: 100%">
+              <label for="update_active_id" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+              <select name="update_active_id" id="update_active_id" class="input input-bordered f-s-14" required>
+                <option value="true">Bật</option>
+                <option value="false">Tắt</option>
+              </select>
+            </div>
+          </div>
+          <footer class="modal__footer">
+            <button class="button bg_green f-cl-white" id="update_id_btn3">Cập nhật</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
 </div>
 </body>
 <script src="/assets/js/script.js"></script>
