@@ -136,6 +136,14 @@
                 Quản lý thể loại nhập kho
             </p>
         </a>
+        <a href="/admin/manage-outofstock" class="item5 sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-user-tag"></i>
+            </div>
+            <p class="text">
+                Quản lý Xuất kho
+            </p>
+        </a>
 
         <a href="/admin/manage-banner" class="item5 sidebar-button">
             <div class="sidebar-icon">

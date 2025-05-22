@@ -44,7 +44,7 @@ public class OutOfStockDao extends BaseDao {
                     int id = rs.getInt("id");
                     LocalDateTime createDate = rs.getObject("createDate", LocalDateTime.class);
                     int userId = rs.getInt("userId");
-                    LocalDateTime updatedAt = rs.getObject("updatedDate", LocalDateTime.class);
+                    LocalDateTime updatedAt = rs.getObject("updateDate", LocalDateTime.class);
                     boolean isActive = rs.getBoolean("isActive");
                     int typeId = rs.getInt("typeId");
                     // Lấy user và loại phiếu
@@ -87,6 +87,16 @@ public class OutOfStockDao extends BaseDao {
                 .bind("id", id)
                 .bind("isActive", active)
                 .execute();
+    }
+
+    public static void main(String[] args) {
+        DBConect.mySqlDataSource();
+        Handle handle = DBConect.get().open();
+        OutOfStockDao dao = new OutOfStockDao(handle);
+        List<OutOfStock> outOfStockList = dao.findAll();
+        for (OutOfStock outOfStock : outOfStockList) {
+            System.out.println(outOfStock);
+        }
     }
 
 
