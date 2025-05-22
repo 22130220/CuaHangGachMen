@@ -1,14 +1,14 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.model;
 
-public class TypeOfOutStock {
+public class TypeOutOfStock {
     private int id;
     private String name;
     private boolean isActive;
 
-    public TypeOfOutStock() {}
+    public TypeOutOfStock() {}
 
 
-    public TypeOfOutStock(int id, String name, boolean isActive) {
+    public TypeOutOfStock(int id, String name, boolean isActive) {
         this.id = id;
         this.name = name;
         this.isActive = isActive;

@@ -49,7 +49,7 @@ public class OutOfStockDao extends BaseDao {
                     int typeId = rs.getInt("typeId");
                     // Lấy user và loại phiếu
                     User user = userDao.getUserByIds(userId);
-                    TypeOfOutStock type = typeDao.findById(typeId);
+                    TypeOutOfStock type = typeDao.findById(typeId);
 
                     // Tạo đối tượng StockIn
                     OutOfStock outOfStock = new OutOfStock(
@@ -71,7 +71,7 @@ public class OutOfStockDao extends BaseDao {
 
     public boolean update(OutOfStock outOfStock) {
         int rowsAffected = handle.createUpdate(
-                        "UPDATE outofstock SET userId = :userId, updatedDate = :updatedAt,isActive = :isActive, typeId = :typeId  " +
+                        "UPDATE outofstock SET userId = :userId, updateDate = :updatedAt,isActive = :isActive, typeId = :typeId  " +
                                 "WHERE id = :id")
                 .bind("userId", outOfStock.getUserId())
                 .bind("updatedAt", outOfStock.getUpdatedDate())

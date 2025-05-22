@@ -227,7 +227,52 @@
     </div>
   </div>
 
+  <div class="modal micromodal-slide" id="modifiStockInModal" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+        <header class="modal__header">
+          <h2 class="modal__title">Sửa loại voucher</h2>
+          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+        </header>
+        <form id="OutofStockupdateForm" class="modal__content">
 
+          <div class="fui-basic-input" style="width: 100%">
+            <label for="idmodify" class="f-bold f-s-14 f-cl-black">ID</label>
+            <input type="text" id="idmodify" name="id" class="input input-bordered f-s-14" readonly>
+          </div>
+
+
+          <div class="fui-basic-input" style="width: 100%">
+            <label for="userId" class="f-bold f-s-14 f-cl-black">User ID</label>
+            <input type="number" id="userId" name="userId" class="input input-bordered f-s-14" readonly  required>
+          </div>
+          <div class="fui-basic-input" style="width: 100%">
+            <label for="userName" class="f-bold f-s-14 f-cl-black">Họ tên</label>
+            <input type="text" id="userName" name="userName" class="input input-bordered f-s-14" readonly  required>
+          </div>
+
+          <div class="fui-basic-input" style="width: 100%">
+            <label for="update_active" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+            <select name="update_active" id="update_active" class="input input-bordered f-s-14" required>
+              <option value="true">Bật</option>
+              <option value="false">Tắt</option>
+            </select>
+          </div>
+
+          <!-- Thể loại phiếu nhập -->
+          <div class="fui-basic-input" style="width: 100%">
+            <label for="type" class="f-bold f-s-14 f-cl-black">Thể loại phiếu nhập</label>
+            <select name="type" id="type" class="input input-bordered f-s-14" required>
+            </select>
+          </div>
+
+          <div class="modal__actions">
+            <button type="submit" class="modal__button">Xác nhận</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 
 

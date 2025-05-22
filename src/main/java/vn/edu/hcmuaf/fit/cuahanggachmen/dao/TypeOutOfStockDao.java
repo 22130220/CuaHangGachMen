@@ -1,8 +1,8 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
 import org.jdbi.v3.core.Handle;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.TypeOfOutStock;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.TypeOfReceipt;
+import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.TypeOutOfStock;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class TypeOutOfStockDao extends BaseDao {
     public TypeOutOfStockDao(Handle handle) { super(handle, false, 0, 0);}
 
 
-    public int insert(TypeOfOutStock typeOfOutStock) {
+    public int insert(TypeOutOfStock typeOfOutStock) {
         return handle.createUpdate("INSERT INTO typeoutofstock (name, isActive) VALUES (:type, :isActive)")
                 .bind("type", typeOfOutStock.getName())
                 .bind("isActive", typeOfOutStock.isActive())
@@ -26,10 +26,10 @@ public class TypeOutOfStockDao extends BaseDao {
                 .execute();
     }
 
-    public List<TypeOfOutStock> findAll() {
+    public List<TypeOutOfStock> findAll() {
         return handle.createQuery("SELECT * FROM typeoutofstock")
                 .map((rs, ctx) -> {
-                    TypeOfOutStock receipt = new TypeOfOutStock();
+                    TypeOutOfStock receipt = new TypeOutOfStock();
                     receipt.setId(rs.getInt("id"));
                     receipt.setName(rs.getString("name"));
                     receipt.setActive(rs.getBoolean("isActive"));
@@ -37,11 +37,11 @@ public class TypeOutOfStockDao extends BaseDao {
                 })
                 .list();
     }
-    public TypeOfOutStock findById(int id) {
+    public TypeOutOfStock findById(int id) {
         return handle.createQuery("SELECT * FROM typeoutofstock WHERE id = :id")
                 .bind("id", id)
                 .map((rs, ctx) -> {
-                    TypeOfOutStock receipt = new TypeOfOutStock();
+                    TypeOutOfStock receipt = new TypeOutOfStock();
                     receipt.setId(rs.getInt("id"));
                     receipt.setName(rs.getString("name"));
                     receipt.setActive(rs.getBoolean("isActive"));
@@ -51,5 +51,14 @@ public class TypeOutOfStockDao extends BaseDao {
                 .orElse(null);
     }
 
+    public static void main(String[] args) {
+        DBConect.mySqlDataSource();
+        Handle handle = DBConect.get().open();
+        TypeOutOfStockDao dao = new TypeOutOfStockDao(handle);
+        List<TypeOutOfStock> list = dao.findAll();
+        for (TypeOutOfStock t : list) {
+            System.out.println(t.toString());
+        }
+    }
 
 }

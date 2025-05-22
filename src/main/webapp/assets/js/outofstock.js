@@ -20,7 +20,7 @@ var table=new DataTable('#outofstock',{
                         let data = dt.row({ selected: true }).data();
                         action = 'sửa';
                         vid = data.id;
-                        // openModal3('modifiStockInModal', data.id,data.userId,data.isActive,data.typeId);
+                        openModal3('modifiStockInModal', data.id,data.userId,data.isActive,data.typeId,data.userName);
                     },
                     enabled: false
                 },
@@ -75,7 +75,7 @@ var table=new DataTable('#outofstock',{
             data: 'id',
             className: 'dt-center',
             render:function (data,row){
-                return `<i style="align-items: center" data-target="\${data}" title="Xem chi tiết"  class="fa-solid fa-file" onclick="getModel('phieuChiTietModal',\${data})"></i>`;
+                return `<i style="align-items: center" data-target="${data}" title="Xem chi tiết"  class="fa-solid fa-file" onclick="getModel('phieuChiTietModal',\${data})"></i>`;
             }
         },
         {
@@ -156,4 +156,77 @@ $("#update_id_btn3").on('click', function () {
             notyf.error(" thất bại");
         }
     })
+});
+
+
+function openModal3(modalSelector, id, userId,isActive, typeId,userName ) {
+    $.ajax({
+        url: "/GetAllTypeOutOfStock",
+        method: "GET",
+        success: function (typeList) {
+            const $select = $("#type");
+            $select.empty();
+            $select.append(`<option value="">-- Chọn thể loại --</option>`);
+            typeList.forEach(t => {
+                $select.append(`<option value="${t.id}">${t.name}</option>`); // <-- CHỈ CẦN SỬA LẠI ĐÂY
+            });
+            $("#userName").val(userName);
+            $("#idmodify").val(id);
+            $("#userId").val(userId);
+            $("#update_active").val(isActive ? "true" : "false");
+            $select.val(typeId);
+            MicroModal.show(modalSelector);
+        },
+        error: function () {
+            alert("Không thể tải danh sách thể loại phiếu nhập.");
+        }
+    });
+}
+
+$(document).ready(function () {
+    $('#OutofStockupdateForm').on('submit', function (e) {
+        e.preventDefault();
+
+        let formData = $(this).serializeArray();
+        formData.push({ name: 'action', value: action });
+        $.ajax({
+            url: '/GetSetOutOfStock',
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                MicroModal.close('modifiStockInModal');
+
+                const notyf = new Notyf();
+                if (response.success) {
+                    table.rows().deselect();
+                    notyf.open({
+                        duration: 1000,
+                        position: { x: 'right', y: 'bottom' },
+                        type: "success",
+                        message: "Sửa thành công",
+                    });
+                    table.ajax.reload(null, false);
+                } else {
+                    table.rows().deselect();
+                    notyf.open({
+                        duration: 1000,
+                        position: { x: 'right', y: 'bottom' },
+                        type: "error",
+                        message: "Sửa không thành công",
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Lỗi khi Sửa:', error);
+                const notyf = new Notyf();
+                table.rows().deselect();
+                notyf.open({
+                    duration: 1000,
+                    position: { x: 'right', y: 'bottom' },
+                    type: "error",
+                    message: "Có lỗi xảy ra khi sửa",
+                });
+            }
+        });
+    });
 });
