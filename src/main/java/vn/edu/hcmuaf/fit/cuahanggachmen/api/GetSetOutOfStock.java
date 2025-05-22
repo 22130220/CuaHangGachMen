@@ -56,17 +56,17 @@ public class GetSetOutOfStock extends HttpServlet {
         OutOfStock outOfStock = new OutOfStock();
         AjaxResponse resp = new AjaxResponse();
         if(action.equalsIgnoreCase("sửa")){
-//            String id =request.getParameter("id");
-//            String active = request.getParameter("update_active");
-//            String userId= request.getParameter("userId");
-//            String typeId= request.getParameter("type");
-//            stockIn.setId(Integer.parseInt(id));
-//            stockIn.setUserId(Integer.parseInt(userId));
-//            stockIn.setTypeId(Integer.parseInt(typeId));
-//            stockIn.setActive(Boolean.parseBoolean(active));
-//            stockIn.setUpdateDate(LocalDateTime.now());
-//            boolean check=  stockInDao.update(stockIn);
-//            resp.addBool("success", check);
+            String id =request.getParameter("id");
+            String active = request.getParameter("update_active");
+            String userId= request.getParameter("userId");
+            String typeId= request.getParameter("type");
+            outOfStock.setId(Integer.parseInt(id));
+            outOfStock.setUserId(Integer.parseInt(userId));
+            outOfStock.setTypeId(Integer.parseInt(typeId));
+            outOfStock.setActive(Boolean.parseBoolean(active));
+            outOfStock.setUpdatedDate(LocalDateTime.now());
+            boolean check=  outOfStockDao.update(outOfStock);
+            resp.addBool("success", check);
         }else if(action.equalsIgnoreCase("cp")){
             String[] ids = request.getParameterValues("id");
             String realAcive = request.getParameter("active");
