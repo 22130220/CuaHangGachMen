@@ -20,18 +20,19 @@ public class StockInDao extends BaseDao{
     }
 
     // Thêm mới 1 phiếu nhập kho
-    public int insertNhapMua(StockIn stockIn) {
+    public int insert(StockIn stockIn) {
         return handle.createUpdate("INSERT INTO StockIn (createDate, userId, updatedAt, isActive,typeId) " +
-                        "VALUES (:createDate, :userId, :updateAt, 1,1)")
+                        "VALUES (:createDate, :userId, :updateAt, 1,:typeId)")
                 .bind("createDate", stockIn.getCreateDate())
                 .bind("userId", stockIn.getUserId())
                 .bind("updateAt",stockIn.getCreateDate())
+                .bind("typeId", stockIn.getTypeId())
                 .executeAndReturnGeneratedKeys("id")
                 .mapTo(Integer.class)
                 .one();
     }
 
-    // Lấy tất cả phiếu nhập kho còn hoạt động
+
     public List<StockIn> findAll() {
         List<StockIn> stockInList = new ArrayList<>();
 

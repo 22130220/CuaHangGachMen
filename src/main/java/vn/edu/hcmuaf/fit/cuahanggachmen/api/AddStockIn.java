@@ -16,6 +16,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.StockIn;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.StockInDetail;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.wrapper.StockInRequest;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,8 +47,10 @@ public class AddStockIn extends HttpServlet {
             User user = (User)session.getAttribute("auth");
 
             BufferedReader reader = request.getReader();
-            Type listType = new TypeToken<List<StockInDetail>>() {}.getType();
-            List<StockInDetail> detailList = new Gson().fromJson(reader, listType);
+            StockInRequest stockInRequest = new Gson().fromJson(reader, StockInRequest.class);
+
+            List<StockInDetail> detailList = stockInRequest.getStockInDetails();
+            int typeid = stockInRequest.getTypeid();
 
             Handle handle = DBConect.get().open();
             StockInDao stockInDao = new StockInDao(handle);
@@ -57,8 +60,9 @@ public class AddStockIn extends HttpServlet {
             stockIn.setUserId(user.getId());
             stockIn.setCreateDate(LocalDateTime.now());
             stockIn.setUpdateDate(LocalDateTime.now());
+            stockIn.setTypeId(typeid);
 
-            int stockInId = stockInDao.insertNhapMua(stockIn);
+            int stockInId = stockInDao.insert(stockIn);
             System.out.println("Insert StockIn thành công, ID: " + stockInId);
 
             for (StockInDetail detail : detailList) {
