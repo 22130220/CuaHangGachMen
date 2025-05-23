@@ -78,6 +78,51 @@
 
   <!-- Sweet alert 2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style>
+    div.container {
+      max-width: 1200px;
+    }
+    .modal__field {
+      margin-bottom: 1rem;
+    }
+
+    .modal__input {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 1.1rem; /* tăng cỡ chữ khi nhập */
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .modal__input::placeholder {
+      font-size: 1.1rem; /* tăng cỡ placeholder */
+      color: #aaa;
+    }
+
+    .modal__input:focus {
+      border-color: #3cb371; /* xanh lá nhẹ */
+      box-shadow: 0 0 0 3px rgba(60, 179, 113, 0.2);
+    }
+
+    .modal__button {
+      background-color: #3cb371; /* xanh lá */
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem; /* tăng cỡ chữ nút */
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .modal__button:hover {
+      background-color: #34a863;
+    }
+  </style>
+
 </head>
 <body>
 <div class="admin-container grid-layout">
@@ -131,7 +176,33 @@
     </div>
   </div>
 </div>
-
+<div class="modal micromodal-slide" id="modifiStockinTypeModal" aria-hidden="true">
+  <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+    <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+      <header class="modal__header">
+        <h2 class="modal__title">Sửa thể loại nhập kho</h2>
+        <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+      </header>
+      <form id="modifyForm" class="modal__content">
+        <div class="modal__field">
+          <label for="modalName"><strong>Name:</strong></label>
+          <input type="text" id="modalmodifyName" name="type" class="modal__input" required />
+        </div>
+        <input type="hidden" id="idmodify" name="id">
+        <div class="fui-basic-input" style="width: 100%">
+          <label for="update_active" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
+          <select name="update_active" id="update_active" class="input input-bordered f-s-14" required>
+            <option value="true">Bật</option>
+            <option value="false">Tắt</option>
+          </select>
+        </div>
+        <div class="modal__actions">
+          <button type="submit" class="modal__button">Xác nhận</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 </body>
