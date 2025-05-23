@@ -98,7 +98,40 @@ table.on('select deselect', function () {
 
 
 
+$("#update_id_btn3").on('click', function () {
+    const active = $("#update_active_id").val();
 
+    console.log(setActive)
+    $.ajax({
+        url: '/GetSetTypeOutOfStock',
+        type: 'POST',
+        traditional: true,
+        data: {
+            id: setActive,
+            active: active,
+            action: action
+
+        },
+        success: function (data) {
+            MicroModal.close('update_id_modal2');
+            const notyf = new Notyf();
+            if(data.success) {
+                notyf.success( " thành công");
+                table.ajax.reload();
+                table.rows().deselect();
+            } else {
+                notyf.error(" thất bại");
+                table.rows().deselect();
+            }
+        },
+        error: function () {
+            table.rows().deselect();
+            MicroModal.close('update_id_modal2');
+            const notyf = new Notyf();
+            notyf.error(" thất bại");
+        }
+    })
+});
 
 
 
