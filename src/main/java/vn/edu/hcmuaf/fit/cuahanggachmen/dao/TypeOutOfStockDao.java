@@ -37,6 +37,20 @@ public class TypeOutOfStockDao extends BaseDao {
                 })
                 .list();
     }
+
+    public List<TypeOutOfStock> findAllisActive() {
+        return handle.createQuery("SELECT * FROM typeoutofstock where isActive = 1")
+                .map((rs, ctx) -> {
+                    TypeOutOfStock receipt = new TypeOutOfStock();
+                    receipt.setId(rs.getInt("id"));
+                    receipt.setName(rs.getString("name"));
+                    receipt.setActive(rs.getBoolean("isActive"));
+                    return receipt;
+                })
+                .list();
+    }
+
+
     public TypeOutOfStock findById(int id) {
         return handle.createQuery("SELECT * FROM typeoutofstock WHERE id = :id")
                 .bind("id", id)

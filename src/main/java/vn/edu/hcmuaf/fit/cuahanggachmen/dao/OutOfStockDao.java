@@ -18,7 +18,7 @@ public class OutOfStockDao extends BaseDao {
     }
 
     public int insert(OutOfStock outOfStock) {
-        return handle.createUpdate("INSERT INTO outofstock (createDate, userId, updatedDate, isActive,typeId) " +
+        return handle.createUpdate("INSERT INTO outofstock (createDate, userId, updateDate, isActive,typeId) " +
                         "VALUES (:createDate, :userId, :updateAt, 1,:typeId)")
                 .bind("createDate", outOfStock.getCreatedDate())
                 .bind("userId", outOfStock.getUserId())

@@ -124,6 +124,8 @@ public class CheckoutVNPay extends HttpServlet {
                 }
             }
 
+        }else {
+            request.getRequestDispatcher("/WEB-INF/payment_method.jsp").forward(request, response);
         }
 
 

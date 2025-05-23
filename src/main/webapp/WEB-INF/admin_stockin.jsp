@@ -463,7 +463,7 @@
             success: function (res) {
               const productList = res.productList;
               const colorList = res.colorList;
-
+              const typeList = res.typeList;
               const $select = $("#productId");
               $select.empty().append(`<option value="">-- Chọn sản phẩm --</option>`);
               productList.forEach(t => {
@@ -475,6 +475,14 @@
               colorList.forEach(c => {
                 $selectcolor.append(`<option value="\${c.ID}">\${c.Name}</option>`);
               });
+
+              const $selecttype = $("#typeId");
+              $selecttype.empty().append(`<option value="">-- Thể loại --</option>`);
+              typeList.forEach(c => {
+                $selecttype.append(`<option value="\${c.id}">\${c.type}</option>`);
+              });
+
+
 
               MicroModal.show('add_modal');
             },
@@ -722,7 +730,7 @@
             duration: 1000,
             position: { x: 'right', y: 'bottom' },
             type: "success",
-            message: "Nhập kho thành công",
+            message: "Xuất kho thành công",
           });
           $("#productId1").val('');
           $("#quantity").val('');
@@ -734,7 +742,7 @@
             duration: 1000,
             position: { x: 'right', y: 'bottom' },
             type: "error",
-            message: "Nhập kho không thành công",
+            message: "Xuất kho không thành công",
           });
         }
       },
