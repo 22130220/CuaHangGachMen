@@ -347,7 +347,7 @@
                 type: 'POST',
                 data: formData,
                 success: function (response) {
-                    MicroModal.close('modifiStockinTypeModal');
+                    MicroModal.close('addStockinTypeModal');
                     const notyf = new Notyf();
                     if (response.success) {
                         table.rows().deselect();

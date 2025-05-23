@@ -93,8 +93,59 @@ table.on('select deselect', function () {
     table.button(1).enable(selectedRows === 1);
     table.button(2).enable(selectedRows > 0);
 });
-
-
+const addButton = document.getElementById("add");
+if (addButton) {
+    addButton.addEventListener("click", function () {
+        MicroModal.show('addOutOfStockTypeModal');
+        action='Thêm';
+        console.log(action);
+    });
+}
+$(document).ready(function () {
+    $('#addForm').on('submit', function (e) {
+        e.preventDefault();
+        let formData = $(this).serializeArray(); // Đây là array
+        formData.push({ name: 'action', value: action });
+        $.ajax({
+            url: '/GetSetTypeOutOfStock',
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                MicroModal.close('addOutOfStockTypeModal');
+                const notyf = new Notyf();
+                if (response.success) {
+                    table.rows().deselect();
+                    notyf.open({
+                        duration: 1000,
+                        position: { x: 'right', y: 'bottom' },
+                        type: "success",
+                        message: "Thêm thành công",
+                    });
+                    table.ajax.reload(null, false);
+                } else {
+                    table.rows().deselect();
+                    notyf.open({
+                        duration: 1000,
+                        position: { x: 'right', y: 'bottom' },
+                        type: "error",
+                        message: "Thêm không thành công",
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                table.rows().deselect();
+                console.error('Lỗi khi Thêm:', error);
+                const notyf = new Notyf();
+                notyf.open({
+                    duration: 1000,
+                    position: { x: 'right', y: 'bottom' },
+                    type: "error",
+                    message: "Có lỗi xảy ra khi thêm",
+                });
+            }
+        });
+    });
+});
 
 
 
