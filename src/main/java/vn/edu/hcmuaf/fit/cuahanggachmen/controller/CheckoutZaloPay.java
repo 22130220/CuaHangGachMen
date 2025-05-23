@@ -17,13 +17,12 @@ import java.time.LocalDateTime;
 
 @WebServlet(name = "CheckoutZaloPay", value = "/checkoutzalo")
 public class CheckoutZaloPay extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String status = request.getParameter("status");
         if(status.equals("-49")){
-            request.getRequestDispatcher("/thanhtoan").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/payment_method.jsp").forward(request, response);
         }else if(status.equals("1")){
 
             HttpSession session = request.getSession();
@@ -127,6 +126,8 @@ public class CheckoutZaloPay extends HttpServlet {
             }
 
 
+        }else {
+            request.getRequestDispatcher("/WEB-INF/payment_method.jsp").forward(request, response);
         }
 
 

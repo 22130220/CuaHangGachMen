@@ -11,10 +11,12 @@ import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ColorDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.TypeOfReceiptDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.TypeOutOfStockDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Color;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Product;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.TypeOfReceipt;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.TypeOutOfStock;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.LocalDateTimeAdapter;
 
 import java.io.IOException;
@@ -33,18 +35,20 @@ public class GetListProdudctAndColor extends HttpServlet {
             ProductDao productDao = new ProductDao(handle);
             ColorDao colorDao = new ColorDao(handle);
             TypeOfReceiptDao typeOfReceiptDao = new TypeOfReceiptDao(handle);
+            TypeOutOfStockDao typeOutOfStockDao = new TypeOutOfStockDao(handle);
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter()) // Hỗ trợ LocalDateTime
                     .setPrettyPrinting()
                     .create();
             List<Product> productList = productDao.findAll();
             List<Color> colorList = colorDao.findAll();
-            List<TypeOfReceipt> typeList = typeOfReceiptDao.findAll();
-
+            List<TypeOfReceipt> typeList = typeOfReceiptDao.findAllActive();
+            List<TypeOutOfStock> typeOutOfStockList = typeOutOfStockDao.findAllisActive();
             Map<String, Object> data = new HashMap<>();
             data.put("productList", productList);
             data.put("colorList", colorList);
             data.put("typeList", typeList);
+            data.put("typeoutList", typeOutOfStockList);
 
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().write(gson.toJson(data));

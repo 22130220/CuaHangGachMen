@@ -31,19 +31,9 @@
 
         <section class="section">
             <h2>Phương thức thanh toán</h2>
-            <div class="payment-option">
-                <div>
-                    <input type="checkbox" id="cod" name="payment" >
-                </div>
-                <div>
-                    <img src="https://hstatic.net/0/0/global/design/seller/image/payment/cod.svg?v=6" alt="COD" >
-                </div>
-
-                <div> Thanh toán khi giao hàng (COD) </div>
-            </div>
             <a href="/payment-vnpay">
                 <div class="payment-option">
-                    <div><input type="checkbox" id="chuyenkhoan" name="payment"  ></div>
+
                     <div>
                         <img src="https://hstatic.net/0/0/global/design/seller/image/payment/other.svg?v=6" alt="Ngân hàng">
                     </div>
@@ -87,7 +77,7 @@
         </div>
         <aside class="sidebar">
             <ul class="cart-items">
-            <c:forEach var="item" items="${cart.items}">
+            <c:forEach var="item" items="${sessionScope.cart.items}">
                 <li class="chitietsanphamthanhtoan">
                     <div class="image-wrapper">
                         <img class="img_small" src="${item.productImage}" alt="">

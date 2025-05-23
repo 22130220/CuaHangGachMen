@@ -83,6 +83,85 @@
 
   <!-- Alpine Core -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    .modal__button {
+      background-color: #4fe613; /* màu xanh dương hiện đại */
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.25s ease, transform 0.15s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal__button:hover {
+      background-color: #2563eb; /* xanh đậm hơn khi hover */
+      transform: translateY(-1px);
+    }
+
+    .modal__button:active {
+      background-color: #1d4ed8;
+      transform: translateY(1px);
+    }
+    .btn-detail {
+      cursor: pointer;
+    }
+    #stockInDetailTable {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    #stockInDetailTable th,
+    #stockInDetailTable td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: center;
+    }
+
+    #stockInDetailTable thead {
+      background-color: #f3f4f6; /* xám nhẹ */
+      font-weight: 600;
+    }
+
+    #stockInDetailTable tbody tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    #stockInDetailTable tbody tr:hover {
+      background-color: #e0f2fe; /* xanh nhạt khi hover */
+    }
+
+    ul.custom-option-list {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 0;
+      margin-top: 4px;
+      list-style: none;
+      background-color: white;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    ul.custom-option-list li {
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    ul.custom-option-list li:hover {
+      background-color: #f3f4f6; /* giống hover của option */
+    }
+
+    ul.custom-option-list li:active {
+      background-color: #e5e7eb; /* nhấn giữ */
+    }
+  </style>
 </head>
 <body>
 <div class="admin-container grid-layout">

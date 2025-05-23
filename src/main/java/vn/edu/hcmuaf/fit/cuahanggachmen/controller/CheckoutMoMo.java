@@ -122,11 +122,8 @@ public class CheckoutMoMo extends HttpServlet {
                     response.sendRedirect("/WEB-INF/404.jsp");
                 }
             }
-
-
-
-
-
+        }else{
+            request.getRequestDispatcher("/WEB-INF/payment_method.jsp").forward(request, response);
         }
 
     }

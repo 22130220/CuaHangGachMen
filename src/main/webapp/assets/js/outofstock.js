@@ -1,3 +1,78 @@
+
+document.addEventListener('alpine:init', () => {
+    Alpine.data('changeSelectToText', () => ({
+        isInputText: true,
+        isNhanText: true,
+        colors: [
+        ],
+        dataInput: '',
+        dataInputID: '',
+        danhsachsearch() {
+            if (!this.dataInput || this.dataInput.trim() === '') {
+                this.colors = []; // reset nếu input trống
+                return;
+            }
+            this.isNhanText=true;
+
+            $.ajax({
+                url: `/GetDanhSanPhamSearch?data=${this.dataInput}`,
+                type: 'GET',
+                success: (res) => {
+                    this.colors = res.data;
+                },
+                error: function () {
+                    alert("Không thể tải danh sách.");
+                }
+            });
+        },
+        nhanTen(colorIs){
+            this.dataInput = colorIs.name;
+            this.dataInputID=colorIs.id;
+            this.isNhanText = false;
+        },
+        toggleChangeInput() {
+            this.isInputText = !this.isInputText;
+            if(this.isInputText===false){
+                $.ajax({
+                    url: '/GetListProdudctAndColor',
+                    type: 'GET',
+                    success: function (res) {
+                        const productList = res.productList;
+                        const colorList = res.colorList;
+                        const typeList = res.typeoutList;
+                        const $select = $("#productId");
+                        $select.empty().append(`<option value="">-- Chọn sản phẩm --</option>`);
+                        productList.forEach(t => {
+                            $select.append(`<option value="${t.id}">${t.name}</option>`);
+                        });
+
+                        const $selectcolor = $("#colorId");
+                        $selectcolor.empty().append(`<option value="">-- Chọn màu --</option>`);
+                        colorList.forEach(c => {
+                            $selectcolor.append(`<option value="${c.ID}">${c.Name}</option>`);
+                        });
+
+                        const $selecttype = $("#typeId");
+                        $selecttype.empty().append(`<option value="">-- Thể loại --</option>`);
+                        typeList.forEach(c => {
+                            $selecttype.append(`<option value="${c.id}">${c.name}</option>`);
+                        });
+
+                        MicroModal.show('add_modal');
+                    },
+                    error: function () {
+                        alert("Không thể tải danh sách.");
+                    }
+                });
+            }
+        },
+
+    }))
+})
+
+
+
+
 let outOfStocDetails = [];
 let setActive = [];
 let action ='';
@@ -118,6 +193,160 @@ table.on('select deselect', function () {
     table.button(1).enable(selectedRows === 1);
     table.button(2).enable(selectedRows > 0);
 });
+
+const addButton = document.getElementById("add");
+if (addButton) {
+    addButton.addEventListener("click", function () {
+        $.ajax({
+            url: '/GetListProdudctAndColor',
+            type: 'GET',
+            success: function (res) {
+                const productList = res.productList;
+                const colorList = res.colorList;
+                const typeList = res.typeoutList;
+                const $select = $("#productId");
+                $select.empty().append(`<option value="">-- Chọn sản phẩm --</option>`);
+                productList.forEach(t => {
+                    $select.append(`<option value="${t.id}">${t.name}</option>`);
+                });
+
+                const $selectcolor = $("#colorId");
+                $selectcolor.empty().append(`<option value="">-- Chọn màu --</option>`);
+                colorList.forEach(c => {
+                    $selectcolor.append(`<option value="${c.ID}">${c.Name}</option>`);
+                });
+
+
+                const $selecttype = $("#typeId");
+                $selecttype.empty().append(`<option value="">-- Thể loại --</option>`);
+                typeList.forEach(c => {
+                    $selecttype.append(`<option value="${c.id}">${c.name}</option>`);
+                });
+
+
+
+
+                MicroModal.show('add_modal');
+            },
+            error: function () {
+                alert("Không thể tải danh sách.");
+            }
+        });
+        action='Thêm';
+
+    });
+}
+
+$("#addDetailBtn").on("click", function () {
+    let productId = $("#productId").val();
+    const productId2=$("#productId3").val();
+    if (productId2 !== undefined && productId2 !== "") {
+        productId = productId2;
+    }
+    let productText = $("#productId option:selected").text();
+    const productText2=$("#productId1").val();
+    if(productText2!=='' && productText2 !== undefined){
+        productText =productText2;
+    }
+    const colorId = $("#colorId").val();
+    const colorText = $("#colorId option:selected").text();
+    const quantity = parseInt($("#quantity").val(), 10);
+    const unitPriceRaw = $("#unitPrice").val().replace(/\./g, '');
+    const unitPrice = parseFloat(unitPriceRaw);
+
+    if (!productId || !colorId || !quantity || !unitPrice) {
+        alert("Vui lòng nhập đầy đủ.");
+        return;
+    }
+
+    outOfStocDetails.push({
+        productId: parseInt(productId, 10),
+        colorId: parseInt(colorId, 10),
+        quantity,
+        unitPrice
+    });
+
+    console.log(outOfStocDetails)
+    const rowHtml = `
+    <tr>
+      <td>${productText}</td>
+      <td>${colorText}</td>
+      <td>${quantity}</td>
+      <td>${unitPrice.toFixed(2)}</td>
+      <td><button type="button" class="btn-delete">X</button></td>
+    </tr>
+  `;
+    $("#stockInDetailTable tbody").append(rowHtml);
+});
+
+$("#stockInDetailTable").on("click", ".btn-delete", function () {
+    const rowIndex = $(this).closest("tr").index();
+    outOfStocDetails.splice(rowIndex, 1); // Xóa trong mảng
+    $(this).closest("tr").remove();     // Xóa trong HTML
+    console.log(outOfStocDetails)
+});
+
+$("#add_btn").on("click", function () {
+    let typeid = document.getElementById('typeId').value;
+    $.ajax({
+        url: "/AddOutOfStock",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify({
+            outOfStocDetails: outOfStocDetails,
+            typeid: typeid
+        }),
+        success: function (response) {
+            table.ajax.reload(null, false);
+            outOfStocDetails = [];
+            const notyf = new Notyf();
+            $("#stockInDetailTable tbody").empty();
+            MicroModal.close("add_modal");
+            if (response.success) {
+                table.rows().deselect();
+                notyf.open({
+                    duration: 1000,
+                    position: { x: 'right', y: 'bottom' },
+                    type: "success",
+                    message: "Nhập kho thành công",
+                });
+                $("#productId1").val('');
+                $("#quantity").val('');
+                $("#unitPrice").val('');
+
+            } else {
+                table.rows().deselect();
+                notyf.open({
+                    duration: 1000,
+                    position: { x: 'right', y: 'bottom' },
+                    type: "error",
+                    message: "Nhập kho không thành công",
+                });
+            }
+        },
+        error: function () {
+            alert("Có lỗi khi lưu dữ liệu.");
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
