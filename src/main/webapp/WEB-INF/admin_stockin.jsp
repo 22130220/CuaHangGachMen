@@ -324,8 +324,8 @@
           <tr>
             <th>Id</th>
             <th>stockId</th>
-            <th>productName</th>
-            <th>ColorName</th>
+            <th>Tên sản phẩm</th>
+            <th>Màu</th>
             <th>Số lượng</th>
             <th>Unit price</th>
             <th>tổng tiền</th>
@@ -874,6 +874,7 @@
     }
     MicroModal.show(modalSelector);
   }
+
   function openModal3(modalSelector, id, userId,isActive, typeId ) {
     $.ajax({
       url: "/GetAllTypeOfReceipt",

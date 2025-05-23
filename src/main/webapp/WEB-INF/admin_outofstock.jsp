@@ -354,7 +354,31 @@
   </div>
 
 
-
+  <div class="modal micromodal-slide" id="phieuChiTietModal" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+      <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+        <header class="modal__header">
+          <h2 class="modal__title">Chi tiết của phiếu nhập</h2>
+          <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+        </header>
+        <div class="modal__content">
+          <table id="outofstockdetail" class="display compact" style="width:100%">
+            <thead>
+            <tr>
+              <th>Id</th>
+              <th>stockId</th>
+              <th>Tên sản phẩm</th>
+              <th>Màu</th>
+              <th>Số lượng</th>
+              <th>Unit price</th>
+              <th>tổng tiền</th>
+            </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
