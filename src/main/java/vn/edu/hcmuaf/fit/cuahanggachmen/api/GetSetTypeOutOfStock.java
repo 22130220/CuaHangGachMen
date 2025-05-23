@@ -63,6 +63,13 @@ public class GetSetTypeOutOfStock extends HttpServlet {
             typeOutOfStock.setName(name);
             typeOutOfStock.setActive(isActive);
             so = typeOutOfStockDao.update(typeOutOfStock);
+        }else if (action.equalsIgnoreCase("cp")) {
+            String[] ids = request.getParameterValues("id");
+            String realAcive = request.getParameter("active");
+            Boolean isActive = Boolean.parseBoolean(realAcive);
+            for (String s : ids) {
+                so += typeOutOfStockDao.updateActive(Integer.parseInt(s), isActive);
+            }
         }
 
         resp.addBool("success",so>0);
