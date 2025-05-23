@@ -150,7 +150,7 @@ var table=new DataTable('#outofstock',{
             data: 'id',
             className: 'dt-center',
             render:function (data,row){
-                return `<i style="align-items: center" data-target="${data}" title="Xem chi tiết"  class="fa-solid fa-file" onclick="getModel('phieuChiTietModal',\${data})"></i>`;
+                return `<i style="align-items: center" data-target="${data}" title="Xem chi tiết"  class="fa-solid fa-file" onclick="getModel('phieuChiTietModal',${data})"></i>`;
             }
         },
         {
@@ -459,3 +459,114 @@ $(document).ready(function () {
         });
     });
 });
+
+
+
+
+function getModel(modalSelector,id){
+    const tableId = '#outofstockdetail';
+    const dataUrl = '/GetSetOutOfStockDetail';
+    if ($.fn.DataTable.isDataTable(tableId)) {
+        const table = $(tableId).DataTable();
+        table.ajax.url(dataUrl + '?id=' + id).load();
+    } else {
+        var table=new DataTable('#outofstockdetail',{
+            ajax: {
+                url: dataUrl,
+                data:{id:id},
+                dataSrc: 'data'
+            },
+            fixedHeader: true,
+            layout: {
+                topStart: {
+                    buttons: [
+                        'colvis',
+                    ]
+                },
+            },
+            select: true,
+            columnDefs: [
+                {
+                    targets: 0,
+                    data: 'id',
+                    className: 'dt-center'
+                },
+                {
+                    targets: 1,
+                    data: 'outOfStockId',
+                    className: 'dt-center'
+                },
+                {
+                    targets: 2,
+                    data: 'product',
+                    className: 'dt-center',
+                },
+                {
+                    targets: 3,
+                    data: 'color',
+                    className: 'dt-center'
+                },
+                {
+                    targets: 4,
+                    data: 'quantity',
+                    className: 'dt-center'
+                },
+                {
+                    targets: 5,
+                    data: 'unitPrice',
+                    className: 'dt-center'
+                },
+                {
+                    targets: 6,
+                    data: 'totalPrice',
+                    className: 'dt-center'
+                },
+
+            ],
+            'autoWidth': false,
+            language: {
+                lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
+                zeroRecords: "Không tìm thấy kết quả",
+                info: "Hiển thị trang _PAGE_ của _PAGES_",
+                infoEmpty: "Không có dữ liệu",
+                infoFiltered: "(lọc từ _MAX_ tổng mục)"
+            },
+            createdRow: function (row, data, dataIndex) {
+                // Thêm lớp CSS để căn giữa các ô
+                $('td', row).css({
+                    'text-align': 'center',
+                    'vertical-align': 'middle',
+                    'align-content': 'center',
+                });
+            }
+        });
+
+    }
+    MicroModal.show(modalSelector);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

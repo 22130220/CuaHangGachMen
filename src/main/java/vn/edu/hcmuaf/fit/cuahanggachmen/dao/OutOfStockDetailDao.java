@@ -43,14 +43,14 @@ public class OutOfStockDetailDao extends BaseDao {
             ProductDao productDao = new ProductDao(handle);
             ColorDao colorDao = new ColorDao(handle);
 
-            String sql = "SELECT * FROM StockInDetail WHERE outofstockId = ?";
+            String sql = "SELECT * FROM outofstockdetail  WHERE outofstockId = ?";
             try (PreparedStatement stmt = handle.getConnection().prepareStatement(sql)) {
                 stmt.setInt(1, outOfStockId);  // bind đúng vị trí tham số
 
                 try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) {
                         int id = rs.getInt("id");
-                        int outofstockIdId1 = rs.getInt("outofstockId");
+                        int outofstockId1 = rs.getInt("outofstockId");
                         int productId = rs.getInt("productId");
                         int colorId = rs.getInt("colorId");
                         int quantity = rs.getInt("quantity");
@@ -63,7 +63,7 @@ public class OutOfStockDetailDao extends BaseDao {
 
                         // Tạo đối tượng StockInDetail
                         OutOfStockDetail st = new OutOfStockDetail(
-                               id,outofstockIdId1,productId,colorId,quantity,
+                               id,outofstockId1,productId,colorId,quantity,
                                 unitPrice,totalPrice,pd.getName(),cl.getName()
                         );
                         outOfStockDetails.add(st);
