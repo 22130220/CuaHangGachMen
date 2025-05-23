@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.TypeOfReceipt;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.TypeOutOfStock;
 
 import java.util.List;
@@ -25,7 +26,13 @@ public class TypeOutOfStockDao extends BaseDao {
                 .bind("isActive", active)
                 .execute();
     }
-
+    public int update(TypeOutOfStock type) {
+        return handle.createUpdate("UPDATE typeoutofstock SET name = :type, isActive = :isActive WHERE id = :id")
+                .bind("type", type.getName())
+                .bind("isActive", type.isActive())
+                .bind("id", type.getId())
+                .execute();
+    }
     public List<TypeOutOfStock> findAll() {
         return handle.createQuery("SELECT * FROM typeoutofstock")
                 .map((rs, ctx) -> {
