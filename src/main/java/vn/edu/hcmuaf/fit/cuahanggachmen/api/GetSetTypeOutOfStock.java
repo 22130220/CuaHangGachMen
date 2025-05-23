@@ -50,10 +50,12 @@ public class GetSetTypeOutOfStock extends HttpServlet {
         AjaxResponse resp = new AjaxResponse();
         TypeOutOfStock typeOutOfStock = new TypeOutOfStock();
         TypeOutOfStockDao typeOutOfStockDao = new TypeOutOfStockDao(handle);
-
-
-
-        if(action.equalsIgnoreCase("sửa")) {
+        if(action.equalsIgnoreCase("Thêm")) {
+            String type = request.getParameter("type");
+            typeOutOfStock.setName(type);
+            typeOutOfStock.setActive(true);
+            so = typeOutOfStockDao.insert(typeOutOfStock);
+        }else if(action.equalsIgnoreCase("sửa")) {
             String id = request.getParameter("id");
             String name = request.getParameter("type");
             active = request.getParameter("update_active");
