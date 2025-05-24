@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.RoleDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserRoleDao;
@@ -65,6 +66,12 @@ public class GetSetUserRole extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
+
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("success", false); // Mặc định là false nếu có lỗi
 
@@ -149,6 +156,12 @@ public class GetSetUserRole extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "POST"), request, response)) return;
+
         Map<String, Object> responseData = new HashMap<>();
         responseData.put("success", false); // Mặc định là false nếu có lỗi
 

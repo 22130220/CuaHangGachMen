@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.utils.AjaxResponse;
 
 import java.io.*;
@@ -12,7 +13,11 @@ public class GetSetDes extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
         String pid = request.getParameter("pid");
         String linkDes = request.getParameter("linkDes");
         if(pid == null) {
@@ -27,6 +32,12 @@ public class GetSetDes extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "POST"), request, response)) return;
+
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         String value = request.getParameter("value");

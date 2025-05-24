@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.MaterialDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.SizeDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
@@ -21,6 +22,11 @@ import java.util.List;
 public class GetSetSize extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
         Handle handle = DBConect.get().open();
         SizeDao dao = new SizeDao(handle);
         List<Size> ls = null;
@@ -39,6 +45,12 @@ public class GetSetSize extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "POST"), request, response)) return;
+
         Handle handle = DBConect.get().open();
         String data = request.getParameter("data");
         String action = request.getParameter("action");

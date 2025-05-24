@@ -6,6 +6,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ResourceDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.RoleDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
@@ -22,6 +23,11 @@ import java.util.Map;
 public class GetSetResource extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
         Handle handle = DBConect.get().open();
         List<Resource> ls = new ResourceDao(handle).getAllResources();
         Map<String, List<Resource>> map = new HashMap<>();
@@ -38,6 +44,12 @@ public class GetSetResource extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "POST"), request, response)) return;
+
         String resourceName = request.getParameter("resource_name");
 
         Handle handle = DBConect.get().open();

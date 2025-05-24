@@ -14,11 +14,6 @@ import java.io.OutputStream;
 public class ResourceController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String className = this.getClass().getName();
-        if (className!= null) {
-            className = className.substring(className.lastIndexOf(".") + 1);
-        } else return;
-        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
         // Lấy đường dẫn tệp từ URL
         String resourcePath = request.getPathInfo();
         if (resourcePath == null || resourcePath.isEmpty()) {

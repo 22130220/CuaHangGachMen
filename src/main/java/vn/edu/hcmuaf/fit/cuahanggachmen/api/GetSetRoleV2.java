@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.RoleDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Role;
@@ -23,6 +24,12 @@ import java.util.Map;
 public class GetSetRoleV2 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
+
         Handle handle = DBConect.get().open();
         List<Role> ls = new RoleDao(handle).getAllRoles();
         Map<String, List<Role>> map = new HashMap<>();
@@ -38,6 +45,12 @@ public class GetSetRoleV2 extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "POST"), request, response)) return;
+
         String roleName = request.getParameter("role_name");
         String roleDescription = request.getParameter("role_description");
         boolean status = Boolean.parseBoolean(request.getParameter("status")); // Lấy status từ request
@@ -59,6 +72,12 @@ public class GetSetRoleV2 extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "DELETE"), req, resp)) return;
+
         String id = req.getParameter("id");
 
         int success = 0;
@@ -82,6 +101,12 @@ public class GetSetRoleV2 extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "PUT"), req, resp)) return;
+
         String roleId = req.getParameter("role_id_update");
         String roleName = req.getParameter("role_name_update");
         String roleDescription = req.getParameter("role_description_update");

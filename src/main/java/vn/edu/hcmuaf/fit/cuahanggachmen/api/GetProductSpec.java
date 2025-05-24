@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductSpecDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.SpecTypeDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
@@ -21,8 +22,15 @@ import java.util.List;
 @MultipartConfig
 @WebServlet(name = "GetProductDes", value = "/admin/getspec")
 public class GetProductSpec extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
+
         Handle handle = DBConect.get().open();
         String pid = request.getParameter("pid");
         List<ProductSpec> ls = null;
@@ -60,6 +68,11 @@ public class GetProductSpec extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "POST"), request, response)) return;
         Handle handle = DBConect.get().open();
         String action = request.getParameter("action");
         String value = request.getParameter("value");
