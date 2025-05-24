@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.RoleDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.RoleResourcePermissionDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
@@ -19,6 +20,12 @@ import java.util.List;
 public class RoleController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
+
         try (Handle handle = DBConect.get().open()) {
             RoleDao roleDao = new RoleDao(handle);
             RoleResourcePermissionDao permissionDao = new RoleResourcePermissionDao(handle);

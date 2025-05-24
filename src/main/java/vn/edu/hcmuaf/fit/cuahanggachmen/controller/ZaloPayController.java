@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.json.JSONObject;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.ZaloPayService;
 
 import java.io.IOException;
@@ -22,6 +23,11 @@ public class ZaloPayController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
 //        String appTransId = request.getParameter("appTransId");
 //        if (appTransId != null) {
 //            String result = zalopayService.getOrderStatus(appTransId);
@@ -39,6 +45,11 @@ public class ZaloPayController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "POST"), request, response)) return;
         HttpSession session = request.getSession();
         String tien =(String) session.getAttribute("finalTotal");
 

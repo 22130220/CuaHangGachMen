@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
@@ -20,6 +21,11 @@ import java.util.List;
 public class ProductCrudController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
         String pid = request.getParameter("pid");
         String message = null;
         String operation = null;
@@ -65,6 +71,11 @@ public class ProductCrudController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "POST"), request, response)) return;
         String productName = request.getParameter("name");
         String productSize = request.getParameter("size");
         String productQuantity = request.getParameter("quantity");
