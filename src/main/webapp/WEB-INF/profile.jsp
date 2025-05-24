@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="/assets/css/giohang.css">
     <link rel="stylesheet" href="/assets/css/dropdown_user_menu.css">
     <link rel="stylesheet" href="/assets/css/checkbox.css">
+    <link rel="stylesheet" href="/assets/css/basicinput.css">
+    <link rel="stylesheet" href="/assets/css/InputViaIcon.css">
     <!-- Thêm favicon -->
     <link
             rel="icon"
@@ -45,15 +47,45 @@
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <!--Notyf-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <!-- jQuery Validate -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 
-    <!-- Sweet alert 2 -->
+    <!-- Notyf -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- CKEditor -->
+    <script src="/assets/ckeditor/ckeditor.js"></script>
+
+    <!-- Flmngr -->
+    <script src="https://cdn.skypack.dev/flmngr"></script>
 
     <style>
         .noibatthu3 {
             margin-top: -26px;
+        }
+        .upload-photo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .photo-preview img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .fui-basic-input.input-has-button {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .fui-basic-input.input-has-button input {
+            flex-grow: 1;
         }
     </style>
     <link rel="stylesheet" href="/assets/css/search.css"/>
@@ -72,7 +104,7 @@
             <div class="info">
                 <span class="username">${user.fullname}</span>
                 <a href="#" class="edit-profile">
-                    <span class="edit-icon"></span>
+                    <i class="fa-solid fa-pen-to-square"></i>
                     Sửa Hồ Sơ
                 </a>
             </div>
@@ -135,17 +167,17 @@
             </form>
 
             <!-- Upload Photo Section -->
-            <form method="POST" action="/uploadAvatar" enctype="multipart/form-data">
-                <div class="upload-photo">
-                    <div class="photo-preview">
-                        <img id="preview" src="${user.avatar}" alt="Avatar hiện tại"/>
-                    </div>
-                    <label class="upload-btn">
-                        Đổi Ảnh
-                        <input type="file" id="fileInput" name="avatar" accept="image/*">
-                    </label>
-                    <button type="submit" class="save-btn">Cập nhật ảnh</button>
+            <form id="uploadAvatarForm" class="upload-photo">
+                <div class="photo-preview">
+                    <img id="preview" src="${user.avatar}" alt="Avatar hiện tại"/>
                 </div>
+                <div class="fui-basic-input flex-column gap-6 input-has-button">
+                    <%--                    <label for="avatar_url" class="f-bold f-s-14 f-cl-black">Ảnh đại diện</label>--%>
+                    <input type="text" name="avatar_url" id="avatar_url" placeholder="URL ảnh đại diện" class="input input-bordered f-s-14" readonly>
+                    <button type="button" class="button bg_green f-cl-white button-input" onclick="selectAvatarImage(this, 'avatar_url')">Chọn ảnh</button>
+                </div>
+
+                <button type="button" class="save-btn" id="save-btn">Cập nhật ảnh</button>
             </form>
 
             <!-- Form Đổi Mật Khẩu - Chỉ hiển thị nếu không đăng nhập bằng Facebook -->
@@ -180,35 +212,37 @@
                        class="input-checkbox filter" onchange="checkTotp(this)"
                        <c:if test="${hasTotpToken}">checked</c:if> />
                 <span class="check-icon">
-                                    <i class="fa-solid fa-check"></i>
-                                 </span>
+                    <i class="fa-solid fa-check"></i>
+                </span>
             </div>
             <label class="label s-12 cl-brown" for="price1">Xác thực TOTP</label>
         </div>
     </main>
+</div>
 
-
+<!-- Hidden CKEditor textarea -->
+<div id="editor-container" style="display: none !important;">
+    <textarea id="editor"></textarea>
 </div>
 
 <jsp:include page="../view_shared/header_footer/footer.jsp"/>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-<script src="../assets/js/search.js"></script>
+
+<script src="/assets/js/ckeditorLoadFile.js"></script>
+<script src="/assets/js/profileAvatar.js"></script>
 <script>
     $(document).ready(function () {
-        // Hàm kiểm tra email có đuôi @gmail.com, @yahoo.com hoặc @outlook.com
+        // Validate profile form
         $.validator.addMethod("validEmail", function (value, element) {
             return this.optional(element) || /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com)$/.test(value);
         }, "Email phải thuộc @gmail.com, @yahoo.com hoặc @outlook.com");
 
-        // Hàm kiểm tra số điện thoại có đúng 10 chữ số
         $.validator.addMethod("validPhone", function (value, element) {
             return this.optional(element) || /^[0-9]{10}$/.test(value);
         }, "Số điện thoại phải có đúng 10 chữ số");
 
         $("#validationHoSo").validate({
             onkeyup: function (element) {
-                $(element).valid(); // Kiểm tra lỗi ngay khi nhập
+                $(element).valid();
             },
             rules: {
                 fullname: {
@@ -254,23 +288,9 @@
             }
         });
     });
-</script>
 
-<script>
+    // TOTP handling
     let isVerrified = false;
-    document.getElementById('fileInput').addEventListener('change', function (event) {
-        const file = event.target.files[0];
-        if (file && file.size <= 1048576) { // Kiểm tra kích thước file (1MB)
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById('preview').src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        } else {
-            alert('Vui lòng chọn file dưới 1MB!');
-        }
-    });
-
     function checkTotp(button) {
         if (button.checked) {
             Swal.fire({
@@ -401,6 +421,6 @@
         }
     }
 </script>
-
+<script src="../assets/js/search.js"></script>
 </body>
 </html>
