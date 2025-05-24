@@ -5,6 +5,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.*;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
@@ -20,6 +21,12 @@ import java.util.*;
 public class GetProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
+
         Handle handle = DBConect.get().open();
         ProductDao pDao = new ProductDao(handle);
         CategoryDao cDao = new CategoryDao(handle);
@@ -51,6 +58,11 @@ public class GetProduct extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "POST"), request, response)) return;
         String name = request.getParameter("name");
         String size = request.getParameter("size");
         String quantity = request.getParameter("quantity");
@@ -271,6 +283,11 @@ public class GetProduct extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "PUT"), req, resp)) return;
         String productName = req.getParameter("name");
         String productPrice = req.getParameter("price");
         String size = req.getParameter("size");
@@ -324,6 +341,11 @@ public class GetProduct extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "DELETE"), req, resp)) return;
         String active = req.getParameter("update_active_id");
         boolean realActive = getBoolVal(active);
         String jsonData = readPartToString(req.getPart("setActive"));

@@ -51,7 +51,12 @@ public class GetBanner extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(!PermissionCheck.check("banners", request, response)) return;
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
+
         Handle handle = DBConect.get().open();
         BannerDao bannerDao = new BannerDao(handle);
 
@@ -73,7 +78,12 @@ public class GetBanner extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(!PermissionCheck.check("banners", request, response)) return;
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "PUT"), request, response)) return;
+
         String title = request.getParameter("title");
         String imageUrl = request.getParameter("image_url");
         String link = request.getParameter("link");
@@ -151,7 +161,11 @@ public class GetBanner extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(!PermissionCheck.check("banners", request, response)) return;
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "DELETE"), request, response)) return;
         String active = request.getParameter("update_active_id");
         boolean realActive = getBoolVal(active);
         String jsonData = readPartToString(request.getParameter("setActive"));
