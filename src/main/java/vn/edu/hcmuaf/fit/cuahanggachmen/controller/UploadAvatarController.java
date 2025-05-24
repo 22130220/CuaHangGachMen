@@ -1,6 +1,5 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.controller;
 
-
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -10,41 +9,31 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 
 import java.io.*;
-import java.io.IOException;
-import java.nio.file.Paths;
 
 @WebServlet(name = "uploadAvatar", value = "/uploadAvatar")
-@MultipartConfig
 public class UploadAvatarController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("application/json");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("auth");
 
         if (user == null) {
-            response.sendRedirect("/login.jsp");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("{\"success\": false, \"message\": \"Vui lòng đăng nhập\"}");
             return;
         }
 
-        // Đường dẫn thư mục assets/img
-        String uploadPath = getServletContext().getRealPath("") + "assets" + File.separator + "img";
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) uploadDir.mkdirs();
-
         try {
-            Part filePart = request.getPart("avatar"); // Nhận file từ input
-            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-
-            // Đảm bảo tên file duy nhất
-            String uniqueFileName = System.currentTimeMillis() + "_" + fileName;
-            String filePath = uploadPath + File.separator + uniqueFileName;
-
-            // Lưu file vào thư mục
-            filePart.write(filePath);
+            String avatarUrl = request.getParameter("avatar_url");
+            if (avatarUrl == null || avatarUrl.trim().isEmpty()) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().write("{\"success\": false, \"message\": \"URL ảnh không được để trống\"}");
+                return;
+            }
 
             // Cập nhật thông tin avatar trong database
-            String avatarUrl = "assets/img/" + uniqueFileName; // Đường dẫn dùng để hiển thị
             Handle handle = DBConect.get().open();
             UserDao userDao = new UserDao(handle);
             user.setAvatar(avatarUrl);
@@ -53,13 +42,13 @@ public class UploadAvatarController extends HttpServlet {
             // Cập nhật lại trong session
             session.setAttribute("auth", user);
 
-            response.sendRedirect("/profile?success=1");
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().write("{\"success\": true, \"message\": \"Cập nhật ảnh đại diện thành công\"}");
             handle.close();
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("/profile?error=1");
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("{\"success\": false, \"message\": \"Có lỗi xảy ra khi cập nhật ảnh đại diện\"}");
         }
     }
 }
-
-
