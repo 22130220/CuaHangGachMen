@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.OrderDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.OrderDetailDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherUsageDAO;
@@ -20,6 +21,11 @@ public class CheckoutZaloPay extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
         String status = request.getParameter("status");
         if(status.equals("-49")){
             request.getRequestDispatcher("/WEB-INF/payment_method.jsp").forward(request, response);
@@ -137,6 +143,11 @@ public class CheckoutZaloPay extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "POST"), request, response)) return;
 
     }
 }

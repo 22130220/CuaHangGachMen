@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
+import vn.edu.hcmuaf.fit.cuahanggachmen.config.PermissionBuilder;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.BannerDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Banner;
@@ -49,6 +51,7 @@ public class GetBanner extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(!PermissionCheck.check("banners", request, response)) return;
         Handle handle = DBConect.get().open();
         BannerDao bannerDao = new BannerDao(handle);
 
@@ -70,6 +73,7 @@ public class GetBanner extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(!PermissionCheck.check("banners", request, response)) return;
         String title = request.getParameter("title");
         String imageUrl = request.getParameter("image_url");
         String link = request.getParameter("link");
@@ -147,6 +151,7 @@ public class GetBanner extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if(!PermissionCheck.check("banners", request, response)) return;
         String active = request.getParameter("update_active_id");
         boolean realActive = getBoolVal(active);
         String jsonData = readPartToString(request.getParameter("setActive"));

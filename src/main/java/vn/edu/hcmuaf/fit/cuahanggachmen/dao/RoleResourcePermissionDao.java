@@ -50,6 +50,16 @@ public class RoleResourcePermissionDao extends BaseDao {
         return rowsAffected > 0;
     }
 
+    public List<Integer> getResourcePermissions(String resource) {
+        return handle.createQuery("SELECT DISTINCT rp.permissionId\n" +
+                        "FROM role_resource_permission rp\n" +
+                        "JOIN resource r ON rp.resourceId = r.id\n" +
+                        "WHERE r.name = :resource;")
+                .bind("resource", resource)
+                .mapTo(Integer.class)
+                .list();
+    }
+
     /**
      * Lấy danh sách tất cả RoleResourcePermission
      */
