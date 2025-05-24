@@ -5,6 +5,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.action.Result;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ContactDAO;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
@@ -23,13 +24,12 @@ public class AboutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            request.getRequestDispatcher("/WEB-INF/about.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/about.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String name= request.getParameter("name");
         String email= request.getParameter("email");
         String tieuDe= request.getParameter("subject");
