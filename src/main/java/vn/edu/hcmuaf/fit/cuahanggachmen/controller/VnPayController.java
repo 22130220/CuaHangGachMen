@@ -20,6 +20,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import netscape.javascript.JSObject;
+import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Cart;
 import vn.edu.hcmuaf.fit.cuahanggachmen.service.ConfigVNPay;
 
@@ -38,6 +39,11 @@ public class VnPayController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String className = this.getClass().getName();
+        if (className!= null) {
+            className = className.substring(className.lastIndexOf(".") + 1);
+        } else return;
+        if (!PermissionCheck.check(String.join(".",className, "POST"), req, resp)) return;
         HttpSession session =req.getSession();
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
