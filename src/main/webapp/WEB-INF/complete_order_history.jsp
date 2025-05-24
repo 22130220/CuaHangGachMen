@@ -24,6 +24,38 @@
     <!-- Thêm Notyf -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+    <style>
+        ol {
+            display: flex;
+            padding: 1rem;
+            gap: 1.5rem;
+            min-width: fit-content;
+        }
+        @media (min-width: 640px) {
+            ol {
+                padding: 2.5rem 3.2rem;
+                gap: 1rem;
+            }
+        }
+        li {
+            flex-shrink: 0;
+        }
+        li > span:first-child {
+            margin-right: 1rem;
+        }
+        li > svg {
+            margin-left: 1rem;
+        }
+        @media (min-width: 640px) {
+            li > svg {
+                margin-left: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="../view_shared/header_footer/header.jsp"/>
@@ -41,24 +73,75 @@
     </aside>
 
     <main class="profile">
-        <div class="danhmucdautien">
-            <div class="DH active" onclick="loadOrders('all')">Tất cả</div>
-            <div class="DH" onclick="loadOrders('Processing')">Đang xử lý</div>
-            <div class="DH" onclick="loadOrders('Shipping')">Chờ giao hàng</div>
-            <div class="DH" onclick="loadOrders('Delivered')">Đơn đã giao</div>
-            <div class="DH" onclick="loadOrders('Cancelled')">Đơn đã hủy</div>
-        </div>
+        <ol class="flex items-center w-full px-12 py-10 gap-10 text-center text-gray-500 bg-white border-2 border-gray-200 rounded-lg shadow-md min-w-fit sm:px-20 sm:py-12 sm:gap-12">
+            <li class="DH flex items-center active text-blue-600 shrink-0" onclick="loadOrders('all')">
+        <span class="flex items-center justify-center w-9 h-9 mr-6 text-xl font-semibold border-2 border-blue-600 rounded-full shrink-0">
+            1
+        </span>
+                <span class="text-3xl font-medium">Tất cả</span>
+                <svg class="w-6 h-6 ml-6 sm:ml-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+                </svg>
+            </li>
+            <li class="DH flex items-center shrink-0" onclick="loadOrders('Processing')">
+        <span class="flex items-center justify-center w-9 h-9 mr-6 text-xl font-semibold border-2 border-gray-500 rounded-full shrink-0">
+            2
+        </span>
+                <span class="text-3xl font-medium">Đang xử lý</span>
+                <svg class="w-6 h-6 ml-6 sm:ml-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+                </svg>
+            </li>
+            <li class="DH flex items-center shrink-0" onclick="loadOrders('Shipping')">
+        <span class="flex items-center justify-center w-9 h-9 mr-6 text-xl font-semibold border-2 border-gray-500 rounded-full shrink-0">
+            3
+        </span>
+                <span class="text-3xl font-medium">Chờ giao hàng</span>
+                <svg class="w-6 h-6 ml-6 sm:ml-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+                </svg>
+            </li>
+            <li class="DH flex items-center shrink-0" onclick="loadOrders('Delivered')">
+        <span class="flex items-center justify-center w-9 h-9 mr-6 text-xl font-semibold border-2 border-gray-500 rounded-full shrink-0">
+            4
+        </span>
+                <span class="text-3xl font-medium">Đơn đã giao</span>
+                <svg class="w-6 h-6 ml-6 sm:ml-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
+                </svg>
+            </li>
+            <li class="DH flex items-center shrink-0" onclick="loadOrders('Cancelled')">
+        <span class="flex items-center justify-center w-9 h-9 mr-6 text-xl font-semibold border-2 border-gray-500 rounded-full shrink-0">
+            5
+        </span>
+                <span class="text-3.5xl font-medium">Đơn đã hủy</span>
+            </li>
+        </ol>
+
 
         <div class="noidungcacdonhang" id="orderContent">
             <div class="cacsanpham">
                 <div class="hoanthanh"><b>TẤT CẢ ĐƠN HÀNG</b></div>
                 <!-- Thêm ô tìm kiếm và dropdown sắp xếp -->
-                <div class="sort-container">
-                    <div style="position: relative;">
-                        <input type="text" id="searchKeyword"  placeholder="Tìm kiếm đơn hàng (VD: 27-03-2025, BAMBU, Đang xử lý)" onkeyup="handleSearch(event)">
-                        <div id="suggestions" class="autocomplete-suggestions" style="display: none;"></div>
+                <div class="sort-container flex flex-col sm:flex-row sm:items-center gap-4 p-6 bg-gray-50 rounded-2xl shadow-md">
+                    <div class="relative w-full sm:w-auto">
+                        <input
+                                type="text"
+                                id="searchKeyword"
+                                placeholder="Tìm kiếm đơn hàng (VD: 27-03-2025, BAMBU, Đang xử lý)"
+                                onkeyup="handleSearch(event)"
+                                class="w-full px-5 py-3 text-gray-800 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white shadow-sm transition-all duration-300"
+                        >
+                        <div
+                                id="suggestions"
+                                class="autocomplete-suggestions absolute w-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-lg max-h-60 overflow-y-auto hidden z-10"
+                        ></div>
                     </div>
-                    <select id="sortOption" onchange="loadOrdersWithSortAndSearch()">
+                    <select
+                            id="sortOption"
+                            onchange="loadOrdersWithSortAndSearch()"
+                            class="w-full sm:w-auto px-5 py-3 text-gray-800 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white shadow-sm transition-all duration-300"
+                    >
                         <option value="newest">Mới nhất</option>
                         <option value="oldest">Cũ nhất</option>
                         <option value="totalPriceDesc">Tổng giá: Cao đến thấp</option>
