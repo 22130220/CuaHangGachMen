@@ -97,10 +97,9 @@ public class ZaloLoginServlet extends HttpServlet {
             User newUser = new User();
             newUser.setZaloId(zaloId);
             newUser.setFullname(name);
-            newUser.setEmail(email);
             newUser.setAvatar(picture);
             newUser.setStatus(true);
-            session.setAttribute("tempUser", newUser);
+            session.setAttribute("tempUser", newUser); // Lưu tạm vào session
             response.sendRedirect("/complete-profile");
         }
     }

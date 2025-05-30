@@ -19,7 +19,7 @@ import java.util.Scanner;
 public class FacebookLoginServlet extends HttpServlet {
     private static final String APP_ID = "1294677724960043";
     private static final String APP_SECRET = "f6384e2655c9ada72158424340512e76";
-//    private static final String REDIRECT_URI = "http://localhost:8080/facebooklogin";
+    //    private static final String REDIRECT_URI = "http://localhost:8080/facebooklogin";
     private static final String REDIRECT_URI = "https://webtmdt.site/facebooklogin";
 
     @Override
@@ -57,20 +57,15 @@ public class FacebookLoginServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         if (existingUser != null) {
+            // Người dùng cũ
             session.setAttribute("auth", existingUser);
-
-            // Kiểm tra nếu email đã có -> Không cần nhập lại form
             if (existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
                 session.setAttribute("profileCompleted", true);
                 response.sendRedirect("/");
-                return;
+            } else {
+                response.sendRedirect("/complete-profile");
             }
-
-            response.sendRedirect("/complete-profile");
-        }
-
-
-        if (existingUser == null) {
+        } else {
             // Người dùng mới: Lưu tạm vào session
             User newUser = new User();
             newUser.setFbid(fbId);
@@ -80,19 +75,8 @@ public class FacebookLoginServlet extends HttpServlet {
             newUser.setStatus(true);
             session.setAttribute("tempUser", newUser); // Lưu tạm
             response.sendRedirect("/complete-profile");
-        } else {
-            // Người dùng cũ: Cập nhật thông tin cơ bản và kiểm tra
-            existingUser.setFullname(name);
-            existingUser.setEmail(email);
-            existingUser.setAvatar(picture);
-            session.setAttribute("auth", existingUser);
-            if (existingUser.getEmail() == null || existingUser.getPhone() == null) {
-                response.sendRedirect("/complete-profile");
-            } else {
-                userDao.updateUserFaceBook(existingUser); // Cập nhật ngay nếu đã đủ thông tin
-                response.sendRedirect("/");
-            }
         }
+
     }
 
     private String getAccessToken(String urlString) throws IOException {
