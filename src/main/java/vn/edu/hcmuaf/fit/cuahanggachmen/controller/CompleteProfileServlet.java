@@ -44,7 +44,7 @@ public class CompleteProfileServlet extends HttpServlet {
         User tempUser = (User) session.getAttribute("tempUser");
 
         if (user == null && tempUser == null) {
-            response.sendRedirect("/facebooklogin");
+            response.sendRedirect("/facebooklogin"); // Giữ nguyên
             return;
         }
 
@@ -72,21 +72,17 @@ public class CompleteProfileServlet extends HttpServlet {
         updatedUser.setSex(sex);
         updatedUser.setCreatetime(LocalDateTime.now());
 
-        // Lưu vào cơ sở dữ liệu nếu là người dùng mới
+        // Không lưu vào cơ sở dữ liệu cho người dùng mới (Zalo hoặc Facebook)
         if (tempUser != null) {
-            if (tempUser.getFbid() != null) {
-                userDao.insertFacebookUser(updatedUser);
-            } else if (tempUser.getZaloId() != null) {
-                userDao.insertZaloUser(updatedUser);
-            }
-            session.removeAttribute("tempUser");
-            session.setAttribute("auth", updatedUser);
+            session.setAttribute("tempUser", updatedUser); // Cập nhật tempUser
         } else {
+            // Giữ nguyên logic cho người dùng cũ
             if (user.getFbid() != null) {
                 userDao.updateUserFaceBook(user);
             } else if (user.getZaloId() != null) {
                 userDao.updateUserZalo(user);
             }
+            session.setAttribute("auth", updatedUser);
         }
 
         // Tạo token xác minh

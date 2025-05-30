@@ -93,17 +93,32 @@ public class ProfileEmailVerificationController extends HttpServlet {
 
         // Xử lý cho người dùng mới hoặc cập nhật thông tin
         if (session.getAttribute("tempUser") != null) {
-            // Người dùng mới từ Facebook
-            int userId = userDao.insertFacebookUser(user);
-            user.setId(userId);
-            session.setAttribute("auth", user);
-            session.removeAttribute("tempUser");
-            VerificationTokenStore.removeToken(token);
-            request.setAttribute("message", "Xác thực thành công! Thông tin của bạn đã được cập nhật.");
+            // Người dùng mới
+            if (user.getFbid() != null) {
+                // Người dùng Facebook mới
+                int userId = userDao.insertFacebookUser(user); // Lưu vào cơ sở dữ liệu
+                user.setId(userId);
+                session.setAttribute("auth", user);
+                session.removeAttribute("tempUser");
+                VerificationTokenStore.removeToken(token);
+                request.setAttribute("message", "Xác thực thành công! Tài khoản Facebook của bạn đã được tạo.");
+            } else if (user.getZaloId() != null) {
+                // Người dùng Zalo mới
+                int userId = userDao.insertZaloUser(user); // Lưu vào cơ sở dữ liệu
+                user.setId(userId);
+                session.setAttribute("auth", user);
+                session.removeAttribute("tempUser");
+                VerificationTokenStore.removeToken(token);
+                request.setAttribute("message", "Xác thực thành công! Tài khoản Zalo của bạn đã được tạo.");
+            }
         } else if (authUser != null) {
-            // Người dùng cũ cập nhật thông tin
+            // Người dùng cũ
             user.setId(authUser.getId()); // Đảm bảo ID không thay đổi
-            userDao.updateUserProfile(user);
+            if (user.getFbid() != null) {
+                userDao.updateUserFaceBook(user);
+            } else if (user.getZaloId() != null) {
+                userDao.updateUserZalo(user);
+            }
             session.setAttribute("auth", user);
             VerificationTokenStore.removeToken(token);
             request.setAttribute("message", "Xác thực thành công! Thông tin của bạn đã được cập nhật.");
