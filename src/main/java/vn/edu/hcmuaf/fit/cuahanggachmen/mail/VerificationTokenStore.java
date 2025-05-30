@@ -2,24 +2,52 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.mail;
 
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class VerificationTokenStore {
-    // Map lưu trữ token và người dùng tương ứng
-    private static ConcurrentHashMap<String, User> tokenUserMap = new ConcurrentHashMap<>();
+    private static class TokenData {
+        User user;
+        LocalDateTime expiryTime;
 
-    // Thêm token và người dùng
+        TokenData(User user, LocalDateTime expiryTime) {
+            this.user = user;
+            this.expiryTime = expiryTime;
+        }
+    }
+
+    private static final ConcurrentHashMap<String, TokenData> tokenStore = new ConcurrentHashMap<>();
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+    static {
+        scheduler.scheduleAtFixedRate(VerificationTokenStore::cleanupExpiredTokens, 0, 1, TimeUnit.HOURS);
+    }
+
     public static void addToken(String token, User user) {
-        tokenUserMap.put(token, user);
+        LocalDateTime expiryTime = LocalDateTime.now().plusHours(24);
+        tokenStore.put(token, new TokenData(user, expiryTime));
     }
 
-    // Lấy người dùng theo token
     public static User getUserByToken(String token) {
-        return tokenUserMap.get(token);
+        TokenData data = tokenStore.get(token);
+        if (data == null || data.expiryTime.isBefore(LocalDateTime.now())) {
+            if (data != null) {
+                tokenStore.remove(token);
+            }
+            return null;
+        }
+        return data.user;
     }
 
-    // Xóa token sau khi xác thực
     public static void removeToken(String token) {
-        tokenUserMap.remove(token);
+        tokenStore.remove(token);
+    }
+
+    private static void cleanupExpiredTokens() {
+        LocalDateTime now = LocalDateTime.now();
+        tokenStore.entrySet().removeIf(entry -> entry.getValue().expiryTime.isBefore(now));
     }
 }
