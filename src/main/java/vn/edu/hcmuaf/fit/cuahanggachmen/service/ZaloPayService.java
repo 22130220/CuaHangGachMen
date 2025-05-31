@@ -30,7 +30,8 @@ public class ZaloPayService {
         Random rand = new Random();
         int randomId = rand.nextInt(1000000);
         JSONObject embedData = new JSONObject();
-        embedData.put("redirecturl", "http://localhost:8080/checkoutzalo");
+//        embedData.put("redirecturl", "http://localhost:8080/checkoutzalo");
+        embedData.put("redirecturl", "https://webtmdt.site/checkoutzalo");
         Object amount = tien;
         if (amount == null) {
             return "{\"error\": \"Amount is required\"}";
@@ -46,7 +47,8 @@ public class ZaloPayService {
         order.put("bank_code", "");
         order.put("item", "[{}]");
         order.put("embed_data",embedData.toString());
-        order.put("callback_url","http://localhost:8080/thanhtoan");
+//        order.put("callback_url","http://localhost:8080/thanhtoan");
+        order.put("callback_url","https://webtmdt.site/thanhtoan");
 
         String data = order.get("app_id") + "|" + order.get("app_trans_id") + "|" + order.get("app_user") + "|"
                 + order.get("amount") + "|" + order.get("app_time") + "|" + order.get("embed_data") + "|"
