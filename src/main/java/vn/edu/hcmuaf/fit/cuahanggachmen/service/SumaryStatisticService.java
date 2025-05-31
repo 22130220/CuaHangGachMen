@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.service;
 
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.OrderDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.ProductDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SumaryStatisticService {
-    private static List<String> param = new ArrayList<>(List.of("totalRevenue", "outStock"));
+    private static List<String> param = new ArrayList<>(List.of("totalRevenue", "outStock", "inStock"));
 
     public Map<String, Integer> queryParam(List<String> param) {
         Handle handle = DBConect.get().open();
@@ -23,6 +24,9 @@ public class SumaryStatisticService {
                 case "outStock":
                     map.put("outStock", getSumOfOutProducts(handle));
                     break;
+                    case "inStock":
+                        map.put("innStock", getSumOfIntProducts(handle));
+                        break;
                 default:
                     break;
             }
@@ -39,5 +43,10 @@ public class SumaryStatisticService {
     private int getSumOfOutProducts(Handle handle) {
         OrderDao dao = new OrderDao(handle);
         return (int) dao.transcPerDay();
+    }
+
+    private int getSumOfIntProducts(Handle handle) {
+        ProductDao dao = new ProductDao(handle);
+        return (int) dao.countProduct();
     }
 }
