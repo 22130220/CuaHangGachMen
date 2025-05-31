@@ -111,8 +111,7 @@
                         <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>
                     </div>
                     <div class="content-entry">
-                        <p class="big-title f-cl-black f-bold f-s-30">
-                            24242323
+                        <p class="big-title f-cl-black f-bold f-s-30" x-text="totalRevenue">
                         </p>
                         <p class="less-title f-cl-black f-bold f-s-16">
                             VNĐ
@@ -127,11 +126,10 @@
                         <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>
                     </div>
                     <div class="content-entry">
-                        <p class="big-title f-cl-black f-bold f-s-30">
-                            24242323
+                        <p class="big-title f-cl-black f-bold f-s-30" x-text="outStock">
                         </p>
                         <p class="less-title f-cl-black f-bold f-s-16">
-                            VNĐ
+                            Sản phẩm
                         </p>
                     </div>
 
@@ -229,6 +227,7 @@
                         try {
                             const form = new FormData();
                             form.append('totalRevenue', 'totalRevenue');
+                            form.append('outStock', 'outStock');
                             const response = await fetch("/admin/total-revenue", {
                                 method: "POST",
                                 body: form
@@ -237,9 +236,10 @@
                                 throw new Error("Lỗi từ server: " + response.status);
                             }
 
-                            // // Nhận JSON phản hồi từ Servlet
-                            // const result = await response.json();
-                            // console.log("Phản hồi từ server:", result);
+                            // Nhận JSON phản hồi từ Servlet
+                            const result = await response.json();
+                            this.totalRevenue = result.totalRevenue;
+                            this.outStock = result.outStock;
                         } catch (error) {
                             console.error("Đã xảy ra lỗi:", error);
                         }

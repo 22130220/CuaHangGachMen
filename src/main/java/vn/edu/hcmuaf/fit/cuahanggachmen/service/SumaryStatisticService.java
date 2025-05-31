@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SumaryStatisticService {
-    private static List<String> param = new ArrayList<>(List.of("totalRevenue"));
+    private static List<String> param = new ArrayList<>(List.of("totalRevenue", "outStock"));
 
     public Map<String, Integer> queryParam(List<String> param) {
         Handle handle = DBConect.get().open();
@@ -19,6 +19,11 @@ public class SumaryStatisticService {
             switch (s) {
                 case "totalRevenue":
                     map.put("totalRevenue", getTotalRevenue(handle));
+                    break;
+                case "outStock":
+                    map.put("outStock", getSumOfOutProducts(handle));
+                    break;
+                default:
                     break;
             }
         }
@@ -29,5 +34,10 @@ public class SumaryStatisticService {
     private int getTotalRevenue(Handle handle) {
         OrderDao dao = new OrderDao(handle);
         return (int) dao.sumDoanhThu();
+    }
+
+    private int getSumOfOutProducts(Handle handle) {
+        OrderDao dao = new OrderDao(handle);
+        return (int) dao.transcPerDay();
     }
 }
