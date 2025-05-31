@@ -2,152 +2,139 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hoàn thiện thông tin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Flowbite CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <!-- Font Awesome CDN -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <!-- Google Fonts: Be Vietnam Pro -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet">
+    <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 75vh;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-
-        .container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 11.25px;
-            box-shadow: 0 7.5px 22.5px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 375px;
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 15px;
-            color: #333;
-            font-weight: 600;
-            letter-spacing: 0.75px;
-            font-size: 18px;
-        }
-
-        .error {
-            color: #e74c3c;
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 10.5px;
-        }
-
-        .field-error {
-            color: #e74c3c;
-            font-size: 10.5px;
-            margin-top: 2px;
-            display: none;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        label {
-            font-size: 10.5px;
-            color: #555;
-            font-weight: 500;
-        }
-
-        input[type="email"],
-        input[type="text"],
-        input[type="datetime-local"],
-        input[type="tel"],
-        select {
-            width: 100%;
-            padding: 7px 9px;
-            border: 0.75px solid #ddd;
-            border-radius: 6px;
-            font-size: 10.5px;
-            color: #333;
-            background: #f9f9f9;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        input[type="submit"] {
-            padding: 7px;
-            background: linear-gradient(90deg, #3498db, #2980b9);
-            border: none;
-            border-radius: 6px;
-            color: #fff;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        input[type="submit"]:hover {
-            background: linear-gradient(90deg, #2980b9, #1f6391);
-            transform: translateY(-1.5px);
-        }
-
-        input[type="submit"]:active {
-            transform: translateY(0);
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-                margin: 15px;
-            }
-
-            h2 {
-                font-size: 18px;
-            }
-
-            input[type="submit"] {
-                font-size: 10.5px;
-            }
-        }
-    </style>
 </head>
-<body>
-<div class="container">
-    <h2>Hoàn thiện thông tin cá nhân</h2>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-100 flex items-center justify-center p-4 sm:p-8 font-['Be_Vietnam_Pro']">
+<div class="bg-white rounded-3xl shadow-xl p-6 sm:p-10 max-w-lg w-full">
+    <h2 class="text-2xl sm systematic-text-3xl font-bold text-center text-gray-900 mb-6">Hoàn thiện thông tin cá nhân</h2>
     <c:if test="${not empty error}">
-        <p class="error">${error}</p>
+        <p class="text-red-600 text-center text-sm mb-6 bg-red-50 p-3 rounded-lg">${error}</p>
     </c:if>
-    <form id="profileForm" action="/complete-profile" method="post">
-        <label>Email:</label>
-        <input type="email" name="email" value="${param.email != null ? param.email : user.email}" required>
-        <span class="field-error" id="emailError"></span>
+    <form id="profileForm" action="/complete-profile" method="post" class="space-y-6">
+        <!-- Email -->
+        <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
+            <div class="relative">
+                <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="${param.email != null ? param.email : user.email}"
+                        required
+                        class="block w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg bg-white text-sm text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all duration-300 shadow-sm"
+                        placeholder="Nhập email của bạn"
+                >
+                <i class="fa-solid fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+            <span class="field-error text-red-600 text-xs mt-1.5 hidden" id="emailError"></span>
+        </div>
 
-        <label>Số điện thoại:</label>
-        <input type="tel" name="phone" value="${param.phone != null ? param.phone : user.phone}" required>
-        <span class="field-error" id="phoneError"></span>
+        <!-- Phone -->
+        <div>
+            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1.5">Số điện thoại</label>
+            <div class="relative">
+                <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value="${param.phone != null ? param.phone : user.phone}"
+                        required
+                        class="block w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg bg-white text-sm text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all duration-300 shadow-sm"
+                        placeholder="Nhập số điện thoại"
+                >
+                <i class="fa-solid fa-phone absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+            <span class="field-error text-red-600 text-xs mt-1.5 hidden" id="phoneError"></span>
+        </div>
 
-        <label>Địa chỉ:</label>
-        <input type="text" name="address" value="${param.address != null ? param.address : user.address}" required>
+        <!-- Address -->
+        <div>
+            <label for="address" class="block text-sm font-medium text-gray-700 mb-1.5">Địa chỉ</label>
+            <div class="relative">
+                <input
+                        type="text"
+                        id="address"
+                        name="address"
+                        value="${param.address != null ? param.address : user.address}"
+                        required
+                        class="block w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg bg-white text-sm text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all duration-300 shadow-sm"
+                        placeholder="Nhập địa chỉ"
+                >
+                <i class="fa-solid fa-location-dot absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+        </div>
 
-        <label>Ngày sinh:</label>
-        <input type="datetime-local" name="birthtime" value="${param.birthtime != null ? param.birthtime : (user.birthtime != null ? user.birthtime.toString().substring(0,16) : '')}" required>
+        <!-- Birthtime -->
+        <div>
+            <label for="birthtime" class="block text-sm font-medium text-gray-700 mb-1.5">Ngày sinh</label>
+            <div class="relative">
+                <input
+                        type="datetime-local"
+                        id="birthtime"
+                        name="birthtime"
+                        value="${param.birthtime != null ? param.birthtime : (user.birthtime != null ? user.birthtime.toString().substring(0,16) : '')}"
+                        required
+                        class="block w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg bg-white text-sm text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all duration-300 shadow-sm"
+                >
+                <i class="fa-solid fa-calendar absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+        </div>
 
-        <label>Giới tính:</label>
-        <select name="sex" required>
-            <option value="1" ${param.sex == '1' || user.sex == 1 ? 'selected' : ''}>Nam</option>
-            <option value="2" ${param.sex == '2' || user.sex == 2 ? 'selected' : ''}>Nữ</option>
-            <option value="0" ${param.sex == '0' || user.sex == 0 ? 'selected' : ''}>Khác</option>
-        </select>
+        <!-- Sex -->
+        <div>
+            <label for="sex" class="block text-sm font-medium text-gray-700 mb-1.5">Giới tính</label>
+            <div class="relative">
+                <select
+                        id="sex"
+                        name="sex"
+                        required
+                        class="block w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg bg-white text-sm text-gray-900 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-all duration-300 shadow-sm appearance-none"
+                >
+                    <option value="1" ${param.sex == '1' || user.sex == 1 ? 'selected' : ''}>Nam</option>
+                    <option value="2" ${param.sex == '2' || user.sex == 2 ? 'selected' : ''}>Nữ</option>
+                    <option value="0" ${param.sex == '0' || user.sex == 0 ? 'selected' : ''}>Khác</option>
+                </select>
+                <i class="fa-solid fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            </div>
+        </div>
 
-        <input type="submit" value="Cập nhật">
+        <!-- Submit Button -->
+        <button
+                type="submit"
+                class="w-full py-3.5 bg-gradient-to-r from-blue-200 to-indigo-300 text-black font-semibold rounded-lg hover:from-blue-300 hover:to-indigo-400 transition-all duration-300 transform hover:-translate-y-0.5 shadow-md flex items-center justify-center space-x-2"
+                data-flowbite="button"
+        >
+            <i class="fa-solid fa-check"></i>
+            <span>Cập nhật</span>
+        </button>
+
     </form>
 </div>
+
+<!-- Flowbite JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -223,7 +210,7 @@
                 if (phone.length !== 10) {
                     $("#phoneError").text("Số điện thoại phải có đúng 10 chữ số.").show();
                 } else {
-                    $("#phoneError").text("Số điện thoại không đúng định dạng (phải bắt đầu bằng 0).").show();
+                    $phoneError.text("Số điện thoại không đúng định dạng (phải bắt đầu bằng 0).").show();
                 }
                 hasError = true;
             }

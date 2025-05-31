@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="zalo-platform-site-verification" content="GVFl1RkCEHmw_x4JkF8OJbhudnUsZab8D3aq" />
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Cửa hàng gạch men</title>

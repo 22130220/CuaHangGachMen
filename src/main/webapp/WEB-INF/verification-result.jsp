@@ -3,17 +3,14 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kết Quả Xác Thực</title>
-    <link rel="stylesheet" href="/assets/css/verification.css">
     <link rel="icon" type="image/x-icon" href="../assets/icons/logo2_no_text.svg"/>
-    <!-- Nhúng các nguồn khác như phông chữ và Font Awesome nếu cần -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-            href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-            rel="stylesheet"
-    />
-    <!-- Font Awesome-->
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Flowbite CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <!-- Font Awesome CDN -->
     <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -21,107 +18,32 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
-
-    <style>
-        /* /assets/css/verification.css */
-
-        /* Reset một số kiểu mặc định */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Be Vietnam Pro', sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-        }
-
-        /* Container để căn giữa nội dung */
-        .container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        /* Box nội dung */
-        .content {
-            background: #ffffff;
-            padding: 40px 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-        }
-
-        /* Tiêu đề */
-        .content h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #4caf50;
-        }
-
-        /* Đoạn văn */
-        .content p {
-            font-size: 16px;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        /* Liên kết / Nút */
-        .content a {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #4caf50;
-            color: #ffffff;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        .content a:hover {
-            background-color: #45a049;
-        }
-
-        /* Tùy chọn: Thêm kiểu cho các icon nếu sử dụng Font Awesome */
-        .content .fa {
-            font-size: 40px;
-            color: #4caf50;
-            margin-bottom: 15px;
-        }
-
-        /* Điều chỉnh cho các thiết bị nhỏ */
-        @media (max-width: 600px) {
-            .content {
-                padding: 30px 20px;
-            }
-
-            .content h2 {
-                font-size: 24px;
-            }
-
-            .content p {
-                font-size: 14px;
-            }
-
-            .content a {
-                font-size: 14px;
-                padding: 10px 20px;
-            }
-        }
-
-    </style>
+    <!-- Google Fonts: Be Vietnam Pro -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet">
 </head>
-<body>
-<div class="container">
-    <div class="content">
-        <i class="fa-solid fa-info-circle"></i> <!-- Thêm icon nếu muốn -->
-        <h2>Kết Quả Xác Thực</h2>
-        <p>${message}</p>
-        <a href="/login">Đăng nhập tại đây</a>
-    </div>
+<body class="min-h-screen bg-gray-50 flex items-center justify-center p-4 sm:p-6 font-['Be_Vietnam_Pro']">
+<div class="bg-white rounded-2xl shadow-2xl p-8 sm:p-12 max-w-lg w-full text-center transform transition-all">
+    <!-- Icon -->
+    <i class="fa-solid fa-info-circle text-6xl text-green-500 mb-6"></i>
+    <!-- Title -->
+    <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">Kết Quả Xác Thực</h2>
+    <!-- Message -->
+    <p class="text-gray-600 text-lg sm:text-xl mb-8 leading-relaxed">${message}</p>
+    <!-- Login Button with Flowbite styling -->
+    <a
+            href="/login"
+            class="inline-flex items-center justify-center bg-green-600 text-white font-semibold py-3 px-8 rounded-lg hover:bg-green-700 transition-colors duration-300 ease-in-out text-lg"
+            data-flowbite="button"
+    >
+        <i class="fa-solid fa-right-to-bracket mr-2"></i>
+        Đăng nhập tại đây
+    </a>
 </div>
+<!-- Flowbite JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
 </html>
