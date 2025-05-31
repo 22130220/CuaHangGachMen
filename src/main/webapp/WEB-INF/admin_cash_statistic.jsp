@@ -141,8 +141,8 @@
                         <i class="fa-solid fa-money-bill text_entry_title fa-lg"></i>
                     </div>
                     <div class="content-entry">
-                        <p class="big-title f-cl-black f-bold f-s-30">
-                            24242323
+                        <p class="big-title f-cl-black f-bold f-s-30" x-text="inStock">
+
                         </p>
                         <p class="less-title f-cl-black f-bold f-s-16">
                             VNĐ
@@ -240,6 +240,7 @@
                             const result = await response.json();
                             this.totalRevenue = result.totalRevenue;
                             this.outStock = result.outStock;
+                            this.inStock = result.inStock;
                         } catch (error) {
                             console.error("Đã xảy ra lỗi:", error);
                         }
