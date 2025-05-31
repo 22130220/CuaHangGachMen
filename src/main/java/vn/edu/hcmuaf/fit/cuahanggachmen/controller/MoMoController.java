@@ -10,8 +10,10 @@ import java.io.IOException;
 
 @WebServlet(name = "MoMoController", value = "/MoMoController")
 public class MoMoController extends HttpServlet {
-    private static final String REDIRECT_URL = "http://localhost:8080/CheckoutMoMo";
-    private static final String IPN_URL = "http://localhost:8080/";
+//    private static final String REDIRECT_URL = "http://localhost:8080/CheckoutMoMo";
+//    private static final String IPN_URL = "http://localhost:8080/";
+    private static final String REDIRECT_URL = "https://webtmdt.site/CheckoutMoMo";
+    private static final String IPN_URL = "https://webtmdt.site/";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
