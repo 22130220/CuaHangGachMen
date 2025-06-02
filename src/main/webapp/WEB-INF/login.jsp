@@ -303,8 +303,12 @@
         document.getElementById("zaloConfirmModal").style.display = "none";
     }
 
+    <%--function continueZaloLogin() {--%>
+    <%--    window.location.href = "https://oauth.zaloapp.com/v4/permission?app_id=3385901349907197462&redirect_uri=http://localhost:8080/zalologin&state=<%=state%>&scope=id,name,picture&prompt=consent";--%>
+    <%--}--%>
+
     function continueZaloLogin() {
-        window.location.href = "https://oauth.zaloapp.com/v4/permission?app_id=3385901349907197462&redirect_uri=http://localhost:8080/zalologin&state=<%=state%>&scope=id,name,picture&prompt=consent";
+        window.location.href = "https://oauth.zaloapp.com/v4/permission?app_id=3385901349907197462&redirect_uri=https://webtmdt.site/zalologin&state=<%=state%>&scope=id,name,picture&prompt=consent";
     }
 
     function recaptchaCallback() {
