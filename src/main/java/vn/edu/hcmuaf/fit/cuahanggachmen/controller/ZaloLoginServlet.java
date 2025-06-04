@@ -29,7 +29,6 @@ import java.nio.charset.StandardCharsets;
 public class ZaloLoginServlet extends HttpServlet {
     private static final String APP_ID = "3385901349907197462";
     private static final String APP_SECRET = "REnhg8thdt1411CxOcHL";
-//    private static final String REDIRECT_URI = "http://localhost:8080/zalologin";
     private static final String REDIRECT_URI = "https://webtmdt.site/zalologin";
 
     @Override

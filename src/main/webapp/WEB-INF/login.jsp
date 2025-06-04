@@ -164,7 +164,7 @@
 </header>
 
 <!-- Mục Lục -->
-<nav class="breadcrumb")>
+<nav class="breadcrumb">
 <a href="/">Home</a> > <a href="#!">Đăng nhập</a>
 </nav>
 
@@ -201,8 +201,10 @@
 
     <!-- Tạo state ngẫu nhiên và lưu vào session -->
     <%
-        String state = UUID.randomUUID().toString();
-        session.setAttribute("zaloState", state);
+        if (session.getAttribute("zaloState") == null) {
+            String state = UUID.randomUUID().toString();
+            session.setAttribute("zaloState", state);
+        }
     %>
 
     <!-- Nút đăng nhập qua Google, Facebook và Zalo -->
@@ -214,9 +216,7 @@
 &approval_prompt=force" class="social-button google">
             <i class="fa-brands fa-google"></i> Đăng nhập với Google
         </a>
-<%--        <a href="https://www.facebook.com/v20.0/dialog/oauth?client_id=1294677724960043&redirect_uri=http://localhost:8080/facebooklogin&scope=public_profile" class="social-button facebook">--%>
-<%--            <i class="fa-brands fa-facebook"></i> Đăng nhập với Facebook--%>
-<%--        </a>--%>
+
         <a href="https://www.facebook.com/v20.0/dialog/oauth?client_id=1294677724960043&redirect_uri=https://webtmdt.site/facebooklogin&scope=public_profile" class="social-button facebook">
             <i class="fa-brands fa-facebook"></i> Đăng nhập với Facebook
         </a>
@@ -306,12 +306,9 @@
         document.getElementById("zaloConfirmModal").style.display = "none";
     }
 
-    <%--function continueZaloLogin() {--%>
-    <%--    window.location.href = "https://oauth.zaloapp.com/v4/permission?app_id=3385901349907197462&redirect_uri=http://localhost:8080/zalologin&state=<%=state%>&scope=id,name,picture&prompt=consent";--%>
-    <%--}--%>
-
+    const zaloState = '<%= session.getAttribute("zaloState") %>';
     function continueZaloLogin() {
-        window.location.href = "https://oauth.zaloapp.com/v4/permission?app_id=3385901349907197462&redirect_uri=https://webtmdt.site/zalologin&state=<%=state%>&scope=id,name,picture&prompt=consent";
+        window.location.href = `https://oauth.zaloapp.com/v4/permission?app_id=3385901349907197462&redirect_uri=https://webtmdt.site/zalologin&state=${zaloState}&scope=id,name,picture&prompt=consent`;
     }
 
     function recaptchaCallback() {
