@@ -42,6 +42,11 @@ public class DashboardController extends HttpServlet {
         System.out.println("LowStockProducts size: " + lowStockProducts.size()); // Log để kiểm tra
         request.setAttribute("LowStockProducts", lowStockProducts);
 
+        List<Map<String, Object>> productsToExport = pDao.findProductsToExport(200); // Ngưỡng 200
+        System.out.println("ProductsToExport size in Controller: " + (productsToExport != null ? productsToExport.size() : "null"));
+        System.out.println("ProductsToExport content: " + productsToExport);
+        request.setAttribute("ProductsToExport", productsToExport);
+
         handle.close();
         request.getRequestDispatcher("/WEB-INF/admin_dashboard.jsp").forward(request, response);
     }
