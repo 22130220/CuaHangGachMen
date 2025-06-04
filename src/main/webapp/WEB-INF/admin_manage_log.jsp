@@ -68,6 +68,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"
             integrity="sha384-/RlQG9uf0M2vcTw3CX7fbqgbj/h8wKxw7C3zu9/GxcBPRKOEcESxaxufwRXqzq6n"
             crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/vi.js"></script>
 
     <!-- Jquery UI-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js"
@@ -110,7 +112,7 @@
                         <div class="breadcumb-icon f-s-25">
                             <i class="fa-solid fa-user-shield"></i>
                         </div>
-                        <a href="#" class="f-bold f-s-25 breadcumb-text">Quyền và hạng mục</a>
+                        <a href="#" class="f-bold f-s-25 breadcumb-text">Quản lý log</a>
                     </div>
                 </div>
                 <div class="funcproduct">
@@ -119,13 +121,15 @@
 
             <div class="_4c _6r">
                 <div class="card">
-                    <div class="title-icon">
-                        <p class="text_entry_title">Quyền</p>
-                    </div>
                     <table id="log" class="display" style="width:100%">
                         <thead>
                         <tr>
-
+                            <th> Cấp độ </th>
+                            <th> Id người dùng</th>
+                            <th> Vị trí </th>
+                            <th> Thời gian </th>
+                            <th> Thông điệp </th>
+                            <th> Id yêu cầu </th>
                         </tr>
                         </thead>
                     </table>
@@ -142,6 +146,7 @@
     <script src="/assets/js/accordion.js"></script>
     <script src="/assets/js/exitfFunc.js"></script>
     <script src="/assets/js/adminDatatable.js"></script>
+        <script src="/assets/js/admin_log_datatable.js"></script>
 </body>
 
 </html>

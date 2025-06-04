@@ -57,7 +57,7 @@
         </a>
         <a href="/admin/cash-statistic" class="sidebar-button">
             <div class="sidebar-icon">
-                <i class="fa-solid fa-table-list"></i>
+                <i class="fa-solid fa-chart-simple"></i>
             </div>
             <p class="text">
                 Thống kê mua hàng
@@ -113,7 +113,7 @@
         </a>
         <a href="/admin/manage-log" class="item5 sidebar-button">
             <div class="sidebar-icon">
-                <i class="fa-regular fa-envelope"></i>
+                <i class="fa-solid fa-book-journal-whills"></i>
             </div>
             <p class="text">
                 Quản lý log
@@ -122,7 +122,7 @@
 
         <a href="/admin/manage-voucher" class="item5 sidebar-button">
             <div class="sidebar-icon">
-                <i class="fa-solid fa-user-tag"></i>
+                <<i class="fa-solid fa-ticket"></i>
             </div>
             <p class="text">
                 Quản lý Voucher
@@ -130,7 +130,7 @@
         </a>
         <a href="/admin/manage-vouchertype" class="item5 sidebar-button">
             <div class="sidebar-icon">
-                <i class="fa-solid fa-user-tag"></i>
+                <i class="fa-solid fa-ticket-simple"></i>
             </div>
             <p class="text">
                 Quản lý loại Voucher
@@ -138,7 +138,7 @@
         </a>
         <a href="/admin/manage-stockin" class="item5 sidebar-button">
             <div class="sidebar-icon">
-                <i class="fa-solid fa-user-tag"></i>
+                <i class="fa-solid fa-shop"></i>
             </div>
             <p class="text">
                 Quản lý Nhập kho
@@ -146,7 +146,7 @@
         </a>
         <a href="/admin/manage-Type-stockin" class="item5 sidebar-button">
             <div class="sidebar-icon">
-                <i class="fa-solid fa-user-tag"></i>
+                <i class="fa-solid fa-window-restore"></i>
             </div>
             <p class="text">
                 Quản lý thể loại nhập kho
@@ -154,7 +154,7 @@
         </a>
         <a href="/admin/manage-outofstock" class="item5 sidebar-button">
             <div class="sidebar-icon">
-                <i class="fa-solid fa-user-tag"></i>
+                <i class="fa-solid fa-toilets-portable"></i>
             </div>
             <p class="text">
                 Quản lý Xuất kho
@@ -162,7 +162,7 @@
         </a>
         <a href="/admin/manage-Type-outofstock" class="item5 sidebar-button">
             <div class="sidebar-icon">
-                <i class="fa-solid fa-user-tag"></i>
+                <i class="fa-solid fa-border-none"></i>
             </div>
             <p class="text">
                 Quản lý thể loại xuất kho
@@ -171,7 +171,7 @@
 
         <a href="/admin/manage-banner" class="item5 sidebar-button">
             <div class="sidebar-icon">
-                <i class="fa-solid fa-user-tag"></i>
+                <i class="fa-solid fa-blog"></i>
             </div>
             <p class="text">
                 Quản lý Banner

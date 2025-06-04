@@ -1,7 +1,10 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
+import com.mysql.cj.log.Log;
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.LogModel;
+
+import java.util.List;
 
 public class LogDao extends BaseDao{
     public LogDao(Handle handle) {
@@ -17,5 +20,10 @@ public class LogDao extends BaseDao{
                         .executeAndReturnGeneratedKeys("id") // Lấy ID vừa chèn
                         .mapTo(Integer.class)
                         .one();
+    }
+
+    public List<LogModel> findAllLogs() {
+        return handle.createQuery("SELECT * FROM log ORDER BY time DESC;")
+                .mapToBean(LogModel.class).list();
     }
 }
