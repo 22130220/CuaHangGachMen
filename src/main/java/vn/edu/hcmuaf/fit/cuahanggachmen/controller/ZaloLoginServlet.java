@@ -8,10 +8,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserResourceDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.UserPermission;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -32,11 +35,6 @@ public class ZaloLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String className = this.getClass().getName();
-        if (className!= null) {
-            className = className.substring(className.lastIndexOf(".") + 1);
-        } else return;
-        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
         HttpSession session = request.getSession();
         String expectedState = (String) session.getAttribute("zaloState");
         String receivedState = request.getParameter("state");
@@ -89,13 +87,18 @@ public class ZaloLoginServlet extends HttpServlet {
         String picture = userData.has("picture") && userData.get("picture").has("data") ? userData.get("picture").get("data").get("url").asText() : null;
         String email = null; // Zalo không trả về email
 
-        UserDao userDao = new UserDao(DBConect.get().open());
+        Handle handle = DBConect.get().open();
+        UserDao userDao = new UserDao(handle);
         User existingUser = userDao.findByZaloId(zaloId);
 
         if (existingUser != null) {
             session.setAttribute("auth", existingUser);
             if (existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
                 session.setAttribute("profileCompleted", true);
+                UserResourceDao uDao = new UserResourceDao(handle);
+
+                UserPermission rMap = uDao.getPermission(existingUser.getId());
+                session.setAttribute("userRole", rMap);
                 response.sendRedirect("/");
             } else {
                 response.sendRedirect("/complete-profile");

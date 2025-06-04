@@ -241,8 +241,7 @@ public class ProductDao extends BaseDao {
         );
     }
 
-    public List<Product> findTopSellingProducts(int months, int limit, int amount) {
-        String cacheKey = "products_top_selling_" + months + "_" + limit + "_" + amount;
+    public List<Product> findTopSellingProducts(int months, int limit, int amount) {String cacheKey = "products_top_selling_" + months + "_" + limit + "_" + amount;
         return getFromCacheOrCompute(cacheKey, List.class, () ->
                 handle.createQuery("SELECT p.id, p.name, p.imgThumbnail, p.pricePerBox, p.rating, COUNT(od.productID) AS ProductCount " +
                                 "FROM products p " +
