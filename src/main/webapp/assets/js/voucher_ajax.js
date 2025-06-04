@@ -14,7 +14,7 @@ function isNullOrEmptyOrWhitespace(str) {
 var table = new DataTable('#vouchers', {
     ajax: {
         url: '/admin/voucher',
-        dataSrc: 'vouchers'
+        dataSrc: 'data'
     },
     fixedHeader: true,
     layout: {
@@ -28,7 +28,7 @@ var table = new DataTable('#vouchers', {
                         let data = dt.row({ selected: true }).data();
                         action = updateEle;
                         vid = data.id;
-                        openModal('update_modal', data.code, data.discountValue, data.expireDate, data.isActive);
+                        openModal3('update_modal', data.code, data.discountValue, data.expireDate, data.isActive,data.VoucherType);
 
                     },
                     enabled: false
@@ -78,6 +78,11 @@ var table = new DataTable('#vouchers', {
         },
         {
             targets: 4,
+            data: 'VoucerName',
+            className: 'dt-center'
+        },
+        {
+            targets: 5,
             data: 'isActive',
             width: '15%',
             render: function (data) {
@@ -124,12 +129,38 @@ table.on('select deselect', function () {
 $("#add").on('click', function () {
     action = addEle;
 });
+const addButton = document.getElementById("add");
+if (addButton) {
+    addButton.addEventListener("click", function () {
+        $.ajax({
+            url: '/GetAllTypeVoucher',
+            type: 'GET',
+            success: function (typeList) {
+                const $select = $("#type1");
+                $select.empty();
+                $select.append(`<option value="">-- Chọn thể loại --</option>`);
+                typeList.forEach(t => {
+                    $select.append(`<option value="${t.id}">${t.name}</option>`);
+                });
+            },
+            error: function () {
+                alert("Không thể tải danh sách.");
+            }
+        });
+        action='Thêm';
+
+    });
+}
+
+
+
 
 $("#add_btn").on('click', function () {
     const code = $("#add_code").val();
     const decreasePrice= $("#add_price").val();
     const expireDate = $("#add_expiredate").val();
     const active = $("#add_active").val();
+    const type1=$("#type1").val();
     if((isNullOrEmptyOrWhitespace(code) || isNullOrEmptyOrWhitespace(decreasePrice) || isNullOrEmptyOrWhitespace(expireDate) || isNullOrEmptyOrWhitespace(active))) {
         notyf.error("Cần nhập đủ thông tin");
     } else{
@@ -142,6 +173,7 @@ $("#add_btn").on('click', function () {
                 expireDate: expireDate,
                 active: active,
                 action: action,
+                type1:type1,
                 id: vid
             },
             success: function (data) {
@@ -174,6 +206,7 @@ $("#update_btn").on('click', function () {
     const decreasePrice= $("#update_price").val();
     const expireDate = $("#update_expiredate").val();
     const active = $("#update_active").val();
+    const  type=$("#type").val();
     if((isNullOrEmptyOrWhitespace(code) || isNullOrEmptyOrWhitespace(decreasePrice) || isNullOrEmptyOrWhitespace(expireDate) || isNullOrEmptyOrWhitespace(active))) {
         notyf.error("Cần nhập đủ thông tin");
     } else{
@@ -186,6 +219,7 @@ $("#update_btn").on('click', function () {
                 expireDate: expireDate,
                 active: active,
                 action: action,
+                type:type,
                 id: vid
             },
             success: function (data) {
@@ -244,13 +278,35 @@ $("#update_id_btn").on('click', function () {
     }
 });
 
-function openModal(modalSelector, code, price, expireDate, active) {
-    MicroModal.show(modalSelector);
-    $("#update_code").val(code);
-    $("#update_price").val(price);
-    $("#update_expiredate").val(expireDate);
-    $("#update_active").val(`${active}`);
+// function openModal(modalSelector, code, price, expireDate, active,vouchertypeid) {
+//     MicroModal.show(modalSelector);
+//     $("#update_code").val(code);
+//     $("#update_price").val(price);
+//     $("#update_expiredate").val(expireDate);
+//     $("#update_active").val(`${active}`);
+// }
+function openModal3(modalSelector, code, price,expireDate,isActive, vouchertypeid ) {
+    $.ajax({
+        url: "/GetAllTypeVoucher",
+        method: "GET",
+        success: function (typeList) {
+            const $select = $("#type");
+            $select.empty();
+            $select.append(`<option value="">-- Chọn thể loại --</option>`);
+            typeList.forEach(t => {
+                $select.append(`<option value="${t.id}">${t.name}</option>`); // <-- CHỈ CẦN SỬA LẠI ĐÂY
+            });
+            $("#update_code").val(code);
+            $("#update_price").val(price);
+            $("#update_active").val(isActive ? "true" : "false");
+            $("#update_expiredate").val(expireDate);
+            $select.val(vouchertypeid);
+            MicroModal.show(modalSelector);
+        },
+        error: function () {
+            alert("Không thể tải danh sách thể loại phiếu nhập.");
+        }
+    });
 }
-
 
 

@@ -2,8 +2,10 @@ package vn.edu.hcmuaf.fit.cuahanggachmen.dao;
 
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.StockIn;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.VoucherType;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,6 +62,20 @@ public class VoucherTypeDao extends BaseDao{
         );
 
     }
+    public List<VoucherType> getListActive() {
+        // Sử dụng cache để tăng tốc độ truy vấn
+        String cacheKey = "voucher_types_all";
+        return getFromCacheOrCompute(cacheKey, List.class, () ->
+                handle.createQuery("SELECT * FROM voucher_type where isActive = 1")
+                        .map((rs, ctx) -> new VoucherType(
+                                rs.getInt("ID"),
+                                rs.getBoolean("IsActive"),
+                                rs.getString("Type")
+                        ))
+                        .list()
+        );
+
+    }
 
     // Lấy theo ID
     public Optional<VoucherType> getById(int id) {
@@ -76,6 +92,19 @@ public class VoucherTypeDao extends BaseDao{
                         .findOne().orElse(null)
         ));
     }
+
+    public VoucherType findById(int id) {
+        return handle.createQuery("SELECT * FROM voucher_type WHERE ID = :id")
+                .bind("id", id)
+                .map((rs, ctx) -> new VoucherType(
+                        rs.getInt("ID"),
+                        rs.getBoolean("isActive"),
+                        rs.getString("Type")
+                ))
+                .findOne()
+                .orElse(null);
+    }
+
     public int updateActive(int id, boolean active) {
         // xoá cache khi cập nhật
         invalidateCache("voucher_types_all");
@@ -90,7 +119,7 @@ public class VoucherTypeDao extends BaseDao{
         DBConect.mySqlDataSource();
         Handle handle1 = DBConect.get().open();
         VoucherTypeDao dao = new VoucherTypeDao(handle1);
-        List<VoucherType> list=dao.getList();
+        List<VoucherType> list=dao.getListActive();
         for (VoucherType voucherType : list) {
             System.out.println(voucherType);
         }

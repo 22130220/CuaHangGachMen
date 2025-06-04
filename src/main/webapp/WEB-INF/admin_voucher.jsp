@@ -107,6 +107,7 @@
                         <th>Mã</th>
                         <th>Giá giảm</th>
                         <th>Ngày hết hạn</th>
+                        <th>Thể loại</th>
                         <th>Kích hoạt</th>
                     </tr>
                     </thead>
@@ -135,6 +136,11 @@
                             <div class="fui-basic-input" style="width: 100%">
                                 <label for="add_expiredate" class="f-bold f-s-14 f-cl-black">Ngày hết hạn</label>
                                 <input type="datetime-local" name="add_expiredate" placeholder="" class="input input-bordered f-s-14" style="width: 100%" id="add_expiredate" autocomplete="off" required/>
+                            </div>
+                            <div class="fui-basic-input" style="width: 100%">
+                                <label for="type1" class="f-bold f-s-14 f-cl-black">Thể loại voucher</label>
+                                <select name="type1" id="type1" class="input input-bordered f-s-14" required>
+                                </select>
                             </div>
                             <div class="fui-basic-input" style="width: 100%">
                                 <label for="add_active" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
@@ -176,6 +182,11 @@
                         <div class="fui-basic-input" style="width: 100%">
                             <label for="update_expiredate" class="f-bold f-s-14 f-cl-black">Ngày hết hạn</label>
                             <input type="datetime-local" name="update_expiredate" placeholder="" class="input input-bordered f-s-14" style="width: 100%" id="update_expiredate" autocomplete="off" required/>
+                        </div>
+                        <div class="fui-basic-input" style="width: 100%">
+                            <label for="type" class="f-bold f-s-14 f-cl-black">Thể loại voucher</label>
+                            <select name="type" id="type" class="input input-bordered f-s-14" required>
+                            </select>
                         </div>
                         <div class="fui-basic-input" style="width: 100%">
                             <label for="update_active" class="f-bold f-s-14 f-cl-black">Kích hoạt</label>
