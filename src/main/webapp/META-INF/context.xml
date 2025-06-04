@@ -10,6 +10,6 @@
               minIdle="5"
               maxIdle="10"
               maxTotal="50"
-              maxWaitMillis="10000"
+              maxWaitMillis="100000"
     />
 </Context>

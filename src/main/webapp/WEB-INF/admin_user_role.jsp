@@ -238,6 +238,15 @@
     });
 
     $('#usersTable').on('select.dt', function(e, dt, type, indexes) {
+      Swal.fire({
+        title: 'Đang tải...',
+        html: 'Vui lòng chờ trong giây lát',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
       var rowData = dt.rows(indexes).data().toArray();
       var userEmail = rowData[0][0];
 
@@ -261,14 +270,17 @@
             }
             if (response && response.success) {
               updateRolesUI(response.userRoles, response.users, response.roles);
+              Swal.close()
             } else {
               notyf.error('Không thể tải vai trò: ' + (response.error || 'Không có dữ liệu'));
               $('#roleList').html('<p>Không có vai trò nào cho người dùng này.</p>');
+              Swal.close()
             }
           } catch (e) {
             console.error('Error parsing JSON:', e);
             notyf.error('Lỗi phân tích JSON: ' + e.message);
             $('#roleList').html('<p>Lỗi khi tải dữ liệu vai trò.</p>');
+            Swal.close()
           }
         },
         error: function(xhr, status, error) {
@@ -276,6 +288,7 @@
           console.error('Response text:', xhr.responseText);
           var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
           notyf.error('Lỗi khi tải vai trò của người dùng: ' + errorMessage);
+          Swal.close()
         }
       });
     });
@@ -284,6 +297,7 @@
       var user = users.find(u => u.email === $('#selectedUserEmail').text());
       if (!user) {
         $('#roleList').html('<p>Không tìm thấy người dùng.</p>');
+        Swal.close();
         return;
       }
 
@@ -351,6 +365,15 @@
     }
 
     $('#create_user_role_btn').on('click', function() {
+      Swal.fire({
+        title: 'Đang tải...',
+        html: 'Vui lòng chờ trong giây lát',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
       var userIdStr = $('#user_select').val();
       var userId = parseInt(userIdStr);
 
@@ -434,9 +457,19 @@
     });
 
     $('[data-micromodal-trigger="modify_user_role_modal"]').on('click', function() {
+      Swal.fire({
+        title: 'Đang tải...',
+        html: 'Vui lòng chờ trong giây lát',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
       var selectedRow = $('#usersTable').DataTable().rows({ selected: true }).data();
       if (selectedRow.length === 0) {
         notyf.error('Vui lòng chọn một người dùng để chỉnh sửa');
+        Swal.close();
         return;
       }
 
@@ -450,6 +483,7 @@
 
       if (!userId) {
         notyf.error('Không tìm thấy người dùng');
+        Swal.close();
         return;
       }
 
@@ -505,9 +539,11 @@
             } else {
               notyf.error('Không thể tải vai trò hiện tại: ' + (response.error || 'Không có dữ liệu'));
             }
+            Swal.close();
           } catch (e) {
             console.error('Error parsing JSON:', e);
             notyf.error('Lỗi phân tích JSON: ' + e.message);
+            Swal.close();
           }
         },
         error: function(xhr, status, error) {
@@ -515,11 +551,21 @@
           console.error('Response text:', xhr.responseText);
           var errorMessage = xhr.responseJSON ? xhr.responseJSON.error : error;
           notyf.error('Lỗi khi tải vai trò hiện tại: ' + errorMessage);
+          Swal.close();
         }
       });
     });
 
     function updateModifyRolesModal(allRoles, currentUserRoles, userId) {
+      Swal.fire({
+        title: 'Đang tải...',
+        html: 'Vui lòng chờ trong giây lát',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
       var html = '';
       allRoles.forEach(function(role) {
         var isChecked = currentUserRoles.some(function(currentRole) {
@@ -530,9 +576,19 @@
         html += '</div>';
       });
       $('#modify_roles_list').html(html);
+      Swal.close()
     }
 
     $('#modify_user_role_btn').on('click', function() {
+      Swal.fire({
+        title: 'Đang tải...',
+        html: 'Vui lòng chờ trong giây lát',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
       var userIdStr = $('#modify_user_select').val();
       var userId = parseInt(userIdStr);
 
@@ -555,7 +611,6 @@
       };
 
       console.log('Sending update request:', payload);
-
       $.ajax({
         url: '/admin/user-role/api/update',
         method: 'POST',
@@ -563,7 +618,7 @@
         data: JSON.stringify(payload),
         success: function(response) {
           console.log('Response from /admin/user-role/api/update:', response);
-
+          
           try {
             if (typeof response === 'string') {
               if (response.trim() === '') {

@@ -18,6 +18,8 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.dao.RoleDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserRoleDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.filter.CheckPermissionFilter;
+import vn.edu.hcmuaf.fit.cuahanggachmen.filter.GlobalFilter;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Role;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.UserRole;
@@ -335,11 +337,7 @@ public class GetSetUserRole extends HttpServlet {
                     responseData.put("success", true);
                     responseData.put("message", "Cập nhật vai trò của người dùng thành công");
 
-
-                    // Cập nhật phân quyền
-                    Cache<String, String> cache = Caffeine.newBuilder()
-                            .build();
-                    cache.put(String.valueOf(userId), "true");
+                    CheckPermissionFilter.cache.put(String.valueOf(userId), "true");
                     sendResponse(response, HttpServletResponse.SC_OK, responseData);
 
 

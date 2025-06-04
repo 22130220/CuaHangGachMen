@@ -9,6 +9,7 @@ import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserResourceDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.filter.CheckPermissionFilter;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.UserPermission;
 
@@ -65,6 +66,8 @@ public class FacebookLoginServlet extends HttpServlet {
             session.setAttribute("auth", existingUser);
             if (existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
                 session.setAttribute("profileCompleted", true);
+
+                CheckPermissionFilter.cache.invalidate(String.valueOf(existingUser.getId()));
                 UserResourceDao uDao = new UserResourceDao(handle);
 
                 UserPermission rMap = uDao.getPermission(existingUser.getId());
