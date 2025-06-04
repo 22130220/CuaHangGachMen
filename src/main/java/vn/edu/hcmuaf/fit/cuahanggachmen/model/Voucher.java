@@ -12,9 +12,21 @@ public class Voucher implements Serializable {
     private boolean isActive;
     private LocalDateTime createDate;
     private int VoucherType;
+    private String VoucerName;
 
     public BigDecimal getDiscountValue() {
         return discountValue;
+    }
+
+    public Voucher(int id, String code, BigDecimal discountValue, LocalDateTime expireDate, boolean isActive, LocalDateTime createDate, int voucherType, String voucerName) {
+        this.id = id;
+        this.code = code;
+        this.discountValue = discountValue;
+        this.expireDate = expireDate;
+        this.isActive = isActive;
+        this.createDate = createDate;
+        VoucherType = voucherType;
+        VoucerName = voucerName;
     }
 
     public Voucher(int id, String code, BigDecimal discountValue, LocalDateTime expireDate, boolean isActive, LocalDateTime createDate, int voucherType) {
@@ -92,6 +104,14 @@ public class Voucher implements Serializable {
         VoucherType = voucherType;
     }
 
+    public String getVoucerName() {
+        return VoucerName;
+    }
+
+    public void setVoucerName(String voucerName) {
+        VoucerName = voucerName;
+    }
+
     @Override
     public String toString() {
         return "Voucher{" +
@@ -102,6 +122,7 @@ public class Voucher implements Serializable {
                 ", isActive=" + isActive +
                 ", createDate=" + createDate +
                 ", VoucherType=" + VoucherType +
+                ", VoucerName='" + VoucerName + '\'' +
                 '}';
     }
 }

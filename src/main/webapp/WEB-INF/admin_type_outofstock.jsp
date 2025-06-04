@@ -161,7 +161,7 @@
   <div class="modal__overlay" tabindex="-1" data-micromodal-close>
     <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
       <header class="modal__header">
-        <h2 class="modal__title">Thêm loại nhập kho</h2>
+        <h2 class="modal__title">Thêm loại Xuất kho</h2>
         <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
       </header>
       <form id="addForm" class="modal__content">
@@ -180,7 +180,7 @@
   <div class="modal__overlay" tabindex="-1" data-micromodal-close>
     <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
       <header class="modal__header">
-        <h2 class="modal__title">Sửa thể loại nhập kho</h2>
+        <h2 class="modal__title">Sửa thể loại Xuất kho</h2>
         <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
       </header>
       <form id="modifyForm" class="modal__content">

@@ -5,11 +5,14 @@ import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.statement.Update;
 import org.jdbi.v3.core.result.RowView;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
-import vn.edu.hcmuaf.fit.cuahanggachmen.model.Voucher;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
 
 import java.math.BigDecimal;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -92,6 +95,44 @@ public class VoucherDao extends BaseDao {
                 .map(this::mapRow)
                 .list();
     }
+    public List<Voucher> findAll1() {
+        List<Voucher> voucherList = new ArrayList<>();
+
+        try (Handle handle = DBConect.get().open()) {
+            VoucherTypeDao voucherTypeDao = new VoucherTypeDao(handle);
+
+
+            String sql = "SELECT * FROM vouchers";
+            try (PreparedStatement stmt = handle.getConnection().prepareStatement(sql);
+                 ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+                    int id = rs.getInt("ID");
+                    String code = rs.getString("Code");
+                    BigDecimal DiscouValue = rs.getBigDecimal("DiscountValue");
+                    LocalDateTime expireDate = rs.getObject("ExpireDate", LocalDateTime.class);
+                    boolean isActive = rs.getBoolean("IsActive");
+                    LocalDateTime createDate = rs.getObject("CreateDate", LocalDateTime.class);
+                    int voucherTypeId = rs.getInt("VoucherTypeId");
+
+                    // Lấy user và loại phiếu
+                    VoucherType vn = voucherTypeDao.findById(voucherTypeId);
+                    // Tạo đối tượng StockIn
+                    Voucher voucher = new Voucher(
+                            id, code, DiscouValue, expireDate, isActive, createDate,voucherTypeId,
+                            vn != null ? vn.getName() : null
+                    );
+
+                    voucherList.add(voucher);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // hoặc dùng logger
+        }
+
+        return voucherList;
+    }
 
     public List<Voucher> findByUser(int userId) {
         return handle.createQuery("SELECT v.* FROM vouchers v LEFT JOIN voucherUsage vu ON v.ID = vu.VoucherID AND vu.UserID = :userId WHERE vu.VoucherID IS NULL AND v.IsActive = 1;")
@@ -143,6 +184,10 @@ public class VoucherDao extends BaseDao {
         DBConect.mySqlDataSource();
         Handle handle = DBConect.get().open();
         VoucherDao dao = new VoucherDao(handle);
+        List<Voucher> ls = dao.findAll1();
+        for (Voucher voucher : ls) {
+            System.out.println(voucher);
+        }
 //        Optional<Voucher> vs= dao.findByID("1");
 //        System.out.println(vs);
     }
