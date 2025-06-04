@@ -29,6 +29,27 @@ public class OutOfStockDao extends BaseDao {
                 .one();
     }
 
+    // Tìm bản ghi outofstock dựa trên userId và thời gian gần với orderDate
+    public OutOfStock findByUserIdAndDate(int userId, LocalDateTime orderDate) {
+        return handle.createQuery("SELECT * FROM outofstock WHERE userId = :userId AND typeId = 1 " +
+                        "AND createDate <= :orderDate " +
+                        "ORDER BY ABS(TIMESTAMPDIFF(SECOND, createDate, :orderDate)) ASC LIMIT 1")
+                .bind("userId", userId)
+                .bind("orderDate", orderDate)
+                .map((rs, ctx) -> {
+                    OutOfStock outOfStock = new OutOfStock();
+                    outOfStock.setId(rs.getInt("id"));
+                    outOfStock.setCreatedDate(rs.getObject("createDate", LocalDateTime.class));
+                    outOfStock.setUserId(rs.getInt("userId"));
+                    outOfStock.setUpdatedDate(rs.getObject("updateDate", LocalDateTime.class));
+                    outOfStock.setActive(rs.getBoolean("isActive"));
+                    outOfStock.setTypeId(rs.getInt("typeId"));
+                    return outOfStock;
+                })
+                .findOne()
+                .orElse(null);
+    }
+
     public List<OutOfStock> findAll() {
         List<OutOfStock> outOfStockList = new ArrayList<>();
 
