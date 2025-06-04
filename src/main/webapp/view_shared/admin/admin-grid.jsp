@@ -111,6 +111,14 @@
                 Quản lý Liên hệ
             </p>
         </a>
+        <a href="/admin/manage-log" class="item5 sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-regular fa-envelope"></i>
+            </div>
+            <p class="text">
+                Quản lý log
+            </p>
+        </a>
 
         <a href="/admin/manage-voucher" class="item5 sidebar-button">
             <div class="sidebar-icon">
