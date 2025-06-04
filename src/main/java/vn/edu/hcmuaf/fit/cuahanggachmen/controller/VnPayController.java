@@ -58,6 +58,7 @@ public class VnPayController extends HttpServlet {
         String finalTotal = session.getAttribute("finalTotal").toString();
 //        double shippingFee = cart.getTotal() / 10.0;
         long amount = (long) (Double.valueOf(finalTotal) * 100);
+//        long amount=500000;
 
         System.out.println(cart.getTotal());
         System.out.println(amount);
@@ -86,8 +87,18 @@ public class VnPayController extends HttpServlet {
         vnp_Params.put("vnp_ReturnUrl", ConfigVNPay.vnp_ReturnUrl);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 
-        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+//        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+//        String vnp_CreateDate = formatter.format(cld.getTime());
+//        vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+//
+//        cld.add(Calendar.MINUTE, 15);
+//        String vnp_ExpireDate = formatter.format(cld.getTime());
+//        vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
+        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Asia/Ho_Chi_Minh"));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        formatter.setTimeZone(TimeZone.getTimeZone("Asia/Ho_Chi_Minh")); // Đặt timezone cho formatter luôn!
+
         String vnp_CreateDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
 

@@ -29,6 +29,7 @@ public class EmailService implements IJavaMail {
         props.put("mail.smtp.port", String.valueOf(EmailConfig.getTslPort()));
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        props.put("mail.debug", "true");
 
         this.session = Session.getInstance(props, new Authenticator() {
             @Override

@@ -133,6 +133,26 @@ public class StockInDao extends BaseDao{
         return rowsAffected > 0;
     }
 
+    public int getTotalStockInByMonth(int month, int year) {
+        return handle.createQuery("SELECT SUM(sd.quantity) AS total_imported\n" +
+                "FROM StockIn s\n" +
+                "JOIN StockInDetail sd ON s.id = sd.stockId\n" +
+                "WHERE YEAR(s.createDate) = :year AND MONTH(s.createDate) = :month \n" +
+                "GROUP BY YEAR(s.createDate), MONTH(s.createDate);")
+                .bind("month", month)
+                .bind("year", year)
+                .mapTo(Integer.class)
+                .findFirst().orElse(0);
+    }
+
+//    public int getSumaryStockIn(int date, int month, int year) {
+//        return handle.createQuery("SELECT SUM(sid.quantity) AS total_quantity FROM StockIn si JOIN StockInDetail sid ON si.stockInID = sid.stockInID WHERE MONTH(si.stockInDate) = :month AND YEAR(si.stockInDate) = :year;")
+//                .bind("mouth", month)
+//                .bind("year", year)
+//                .mapTo(Integer.class)
+//                .ex
+//    }
+
     public static void main(String[] args) {
         DBConect.mySqlDataSource();
         Handle handle1 = DBConect.get().open();

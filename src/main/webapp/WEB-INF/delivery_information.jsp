@@ -96,6 +96,11 @@
             cursor: not-allowed;
         }
 
+        .btn-primary:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+
         .discount button:hover:enabled {
             background-color: #388e3c;
         }
@@ -181,7 +186,7 @@
 
 
 
-            <button type="submit" class="btn-primary">Tiếp tục đến phương thức thanh toán</button>
+            <button type="submit" class="btn-primary" id="btn-tt">Tiếp tục đến phương thức thanh toán</button>
 
 
         </form>
@@ -480,9 +485,11 @@
         const hasWard = $('#ward').val();
         if (!hasProvince || !hasDistrict || !hasWard) {
             $('#btn_usage2').prop('disabled', true);
+            $('#btn-tt').prop('disabled', true)
         } else {
             $('#btn_usage2').prop('disabled', false);
             $('#tooltip_warn').hide();
+            $('#btn-tt').prop('disabled', false)
         }
     }
     document.getElementById("btn_usage2").addEventListener("click", function () {

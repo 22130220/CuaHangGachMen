@@ -261,6 +261,20 @@ public class ProductDao extends BaseDao {
         );
     }
 
+    public List<Product> findTopSellingProductsNotLimit(int months) {
+        return handle.createQuery("SELECT p.id, p.name, p.imgThumbnail, p.pricePerBox, p.rating, COUNT(od.productID) AS ProductCount " +
+                                "FROM products p " +
+                                "JOIN orderdetail od ON p.id = od.productID " +
+                                "JOIN orders o ON od.orderID = o.id " +
+                                "WHERE o.status = 'Delivered' " +
+                                "AND TIMESTAMPDIFF(MONTH, o.orderDate, CURDATE()) <= :months " +
+                                "GROUP BY p.id, p.name " +
+                                "ORDER BY ProductCount DESC;")
+                        .bind("months", months)
+                        .mapToBean(Product.class)
+                        .list();
+    }
+
     // Tìm sản phẩm mới nhất
     public List<Product> findLatestProducts() {
         String cacheKey = "products_latest";
