@@ -185,6 +185,48 @@
                     <p class="text_entry_title">Sản phẩm cần xuất kho</p>
                     <i class="fa-solid fa-exclamation-triangle text_entry_title fa-lg"></i>
                 </div>
+                <div class="fui-table-ui-basic-linh table-wrap">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Màu sắc</th>
+                            <th>Danh mục</th>
+                            <th>Tồn kho</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:choose>
+                            <c:when test="${ProductsToExport == null}">
+                                <tr>
+                                    <td colspan="6" style="text-align: center;">Danh sách sản phẩm cần xuất kho bị null.</td>
+                                </tr>
+                            </c:when>
+                            <c:when test="${empty ProductsToExport}">
+                                <tr>
+                                    <td colspan="6" style="text-align: center;">Không có sản phẩm nào cần xuất kho (danh sách rỗng).</td>
+                                </tr>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach var="product" items="${ProductsToExport}">
+                                    <tr>
+                                        <td>${product.productid}</td>
+                                        <td>${product.productname}</td>
+                                        <td>${product.colorname}</td>
+                                        <td>${product.categoryname}</td>
+                                        <td>${product.currentstock}</td>
+                                        <td>
+                                            <a href="/admin/stockout/create?productId=${product.productid}&colorId=${product.colorid}" class="btn-create-stock">Tạo phiếu xuất</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
