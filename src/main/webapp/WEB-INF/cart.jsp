@@ -481,7 +481,7 @@
 
     function triggerUpdate(element) {
         let parentElement = element.closest("div");
-        let inputElement = parentElement.querySelector('#quantity_input');
+        let inputElement = parentElement.querySelector('input[type=number]');
         const quantity = inputElement.value;
         const productId = inputElement.dataset.productid;
         const color = inputElement.dataset.color;

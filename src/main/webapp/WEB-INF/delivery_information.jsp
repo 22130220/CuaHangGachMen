@@ -95,11 +95,11 @@
             background-color: #aaa;
             cursor: not-allowed;
         }
-
-        .btn-primary:disabled {
+        #btn_tt:disabled{
             background-color: #aaa;
             cursor: not-allowed;
         }
+
 
         .discount button:hover:enabled {
             background-color: #388e3c;
@@ -186,7 +186,7 @@
 
 
 
-            <button type="submit" class="btn-primary" id="btn-tt">Tiếp tục đến phương thức thanh toán</button>
+            <button type="submit" class="btn-primary" id="btn_tt">Tiếp tục đến phương thức thanh toán</button>
 
 
         </form>
@@ -211,24 +211,6 @@
             </c:forEach>
         </ul>
         <div class="discount">
-<%--            &lt;%&ndash;            <input type="text" id="discount" placeholder="Nhập mã giảm giá">&ndash;%&gt;--%>
-<%--            <!-- Select: Giảm giá đơn hàng -->--%>
-<%--            <select id="voucherOrder">--%>
-<%--                <option value="">-- Giảm giá đơn hàng --</option>--%>
-<%--                <c:forEach var="voucher" items="${orderVouchers}">--%>
-<%--                    <option value="${voucher.id}">${voucher.code}-${voucher.discountValue}</option>--%>
-<%--                </c:forEach>--%>
-<%--            </select>--%>
-
-<%--            <!-- Select: Giảm giá phí vận chuyển -->--%>
-<%--            <select id="voucherShipping">--%>
-<%--                <option value="">-- Giảm giá phí vận chuyển --</option>--%>
-<%--                <c:forEach var="voucher" items="${shippingVouchers}">--%>
-<%--                    <option value="${voucher.id}">${voucher.code}-${voucher.discountValue}</option>--%>
-<%--                </c:forEach>--%>
-<%--            </select>--%>
-
-            <%--            <input type="text" id="discount" placeholder="Nhập mã giảm giá">--%>
             <button class="btn-secondary" id="btn_usage2" disabled>Sử dụng voucher </button>
         </div>
         <hr>
@@ -485,11 +467,11 @@
         const hasWard = $('#ward').val();
         if (!hasProvince || !hasDistrict || !hasWard) {
             $('#btn_usage2').prop('disabled', true);
-            $('#btn-tt').prop('disabled', true)
+            $('#btn_tt').prop('disabled', true);
         } else {
             $('#btn_usage2').prop('disabled', false);
+            $('#btn_tt').prop('disabled', false);
             $('#tooltip_warn').hide();
-            $('#btn-tt').prop('disabled', false)
         }
     }
     document.getElementById("btn_usage2").addEventListener("click", function () {
