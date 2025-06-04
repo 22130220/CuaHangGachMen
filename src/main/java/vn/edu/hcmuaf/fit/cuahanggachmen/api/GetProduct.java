@@ -71,56 +71,57 @@ public class GetProduct extends HttpServlet {
         String material = request.getParameter("material");
         String manufacturer = request.getParameter("manufacturer");
         String promotion = request.getParameter("price_promotion");
-        Part imgThumbnail = request.getPart("img_thumbnail");
+        String imgThumbnail = request.getParameter("img_thumbnail");
         String[] colorId = request.getParameterValues("color_id");
         String[] specId = request.getParameterValues("spec_id");
         String[] spec = request.getParameterValues("spec");
-        Collection<Part> parts = request.getParts();
-        List<Part> partColor = new ArrayList<Part>();
+        String[] color = request.getParameterValues("color");
+//        Collection<Part> parts = request.getParts();
+//        List<Part> partColor = new ArrayList<Part>();
         String editor = request.getParameter("editor");
 
-        String uploadPath = getServletContext().getRealPath("/upload_image");
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            boolean isCreatedFile = uploadDir.mkdir();
-            if(!isCreatedFile) {
-                JsonObject ob = new JsonObject();
-                ob.addProperty("success", false);
-                ob.addProperty("message", "Không thể tạo đuoc file");
-                response.setStatus(HttpServletResponse.SC_OK);
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                PrintWriter out = response.getWriter();
-                out.print(ob);
-                return;
-            }
-        }
-
-        String filePath = null;
-        String fileContextPath = null;
-
-        if(imgThumbnail.getSize() > 0) {
-            String thumbnailName = imgThumbnail.getSubmittedFileName();
-            if (!thumbnailName.isEmpty() && !thumbnailName.endsWith(".jpg") && !thumbnailName.endsWith(".jpeg") && !thumbnailName.endsWith(".png")) {
-                JsonObject ob = new JsonObject();
-                ob.addProperty("success", false);
-                ob.addProperty("message", "Chỉ hỗ trợ .jpg, .jpeg, .png");
-                response.setStatus(HttpServletResponse.SC_OK);
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                PrintWriter out = response.getWriter();
-                out.print(ob);
-                return;
-            }
-
-            String imgThumbnailNameRand = generateFileName();
-            String thumbnailExtension = getFileExtension(thumbnailName);
-
-            filePath = uploadPath + File.separator + imgThumbnailNameRand + thumbnailExtension;
-            fileContextPath = "/" + "upload_image" + "/" + imgThumbnailNameRand + thumbnailExtension;
-            writeImg(imgThumbnail, filePath);
-        }
-
+//        String uploadPath = getServletContext().getRealPath("/upload_image");
+//        File uploadDir = new File(uploadPath);
+//        if (!uploadDir.exists()) {
+//            boolean isCreatedFile = uploadDir.mkdir();
+//            if(!isCreatedFile) {
+//                JsonObject ob = new JsonObject();
+//                ob.addProperty("success", false);
+//                ob.addProperty("message", "Không thể tạo đuoc file");
+//                response.setStatus(HttpServletResponse.SC_OK);
+//                response.setContentType("application/json");
+//                response.setCharacterEncoding("UTF-8");
+//                PrintWriter out = response.getWriter();
+//                out.print(ob);
+//                return;
+//            }
+//        }
+//
+//        String filePath = null;
+//        String fileContextPath = null;
+//
+//        if(imgThumbnail.getSize() > 0) {
+//            String thumbnailName = imgThumbnail.getSubmittedFileName();
+//            if (!thumbnailName.isEmpty() && !thumbnailName.endsWith(".jpg") && !thumbnailName.endsWith(".jpeg") && !thumbnailName.endsWith(".png")) {
+//                JsonObject ob = new JsonObject();
+//                ob.addProperty("success", false);
+//                ob.addProperty("message", "Chỉ hỗ trợ .jpg, .jpeg, .png");
+//                response.setStatus(HttpServletResponse.SC_OK);
+//                response.setContentType("application/json");
+//                response.setCharacterEncoding("UTF-8");
+//                PrintWriter out = response.getWriter();
+//                out.print(ob);
+//                return;
+//            }
+//
+//            String imgThumbnailNameRand = generateFileName();
+//            String thumbnailExtension = getFileExtension(thumbnailName);
+//
+//            filePath = uploadPath + File.separator + imgThumbnailNameRand + thumbnailExtension;
+//            fileContextPath = "/" + "upload_image" + "/" + imgThumbnailNameRand + thumbnailExtension;
+//            writeImg(imgThumbnail, filePath);
+//        }
+//
         String fileDesName = null;
         String fileDesPath =  null;
 
@@ -172,7 +173,7 @@ public class GetProduct extends HttpServlet {
             c.setPromotionPrice(BigDecimal.valueOf(Double.parseDouble(promotion)));
         }
         c.setQuantityPerBox(Integer.parseInt(quantity.replaceAll("[^0-9]", "")));
-        c.setImgThumbnail(fileContextPath);
+        c.setImgThumbnail(imgThumbnail);
 
        int productRowId = dao.insert(c);
        if (productRowId <= 0) {
@@ -190,41 +191,41 @@ public class GetProduct extends HttpServlet {
        }
         AjaxResponse resp = new AjaxResponse();
 
-        for (Part part : parts) {
-            if (part.getName().equals("color") && part.getSize() > 0) {
-                String fileName = part.getSubmittedFileName();
-                if (checkFileEndPrefix(part)) {
-                    partColor.add(part);
-                } else {
-                    handle.rollback();
-                    handle.close();
-                    JsonObject ob = new JsonObject();
-                    ob.addProperty("success", false);
-                    ob.addProperty("message", "Chỉ hỗ trợ .jpg, .jpeg, .png");
-                    response.setStatus(HttpServletResponse.SC_OK);
-                    response.setContentType("application/json");
-                    response.setCharacterEncoding("UTF-8");
-                    PrintWriter out = response.getWriter();
-                    out.print(ob);
-                    return;
-                }
-            }
-        }
+//        for (Part part : parts) {
+//            if (part.getName().equals("color") && part.getSize() > 0) {
+//                String fileName = part.getSubmittedFileName();
+//                if (checkFileEndPrefix(part)) {
+//                    partColor.add(part);
+//                } else {
+//                    handle.rollback();
+//                    handle.close();
+//                    JsonObject ob = new JsonObject();
+//                    ob.addProperty("success", false);
+//                    ob.addProperty("message", "Chỉ hỗ trợ .jpg, .jpeg, .png");
+//                    response.setStatus(HttpServletResponse.SC_OK);
+//                    response.setContentType("application/json");
+//                    response.setCharacterEncoding("UTF-8");
+//                    PrintWriter out = response.getWriter();
+//                    out.print(ob);
+//                    return;
+//                }
+//            }
+//        }
         if (colorId != null) {
             for (int i = 0; i < colorId.length; i++) {
-                Part part = partColor.get(i);
-                String fileName = part.getSubmittedFileName();
-                String partName = generateFileName();
-                String partExtension = getFileExtension(fileName);
-                String fileColorName = "/" + "upload_image" + "/" + partName + partExtension;
-                String realFilePath = uploadPath + File.separator + partName + partExtension;
+//                Part part = partColor.get(i);
+//                String fileName = part.getSubmittedFileName();
+//                String partName = generateFileName();
+//                String partExtension = getFileExtension(fileName);
+//                String fileColorName = "/" + "upload_image" + "/" + partName + partExtension;
+//                String realFilePath = uploadPath + File.separator + partName + partExtension;
                 ProductColorImg colorImg = new ProductColorImg();
                 colorImg.setColorId(Integer.parseInt(colorId[i]));
-                colorImg.setUrl(fileColorName);
+                colorImg.setUrl(color[i]);
                 colorImg.setProductId(productRowId);
                 int rowId = daoColorImg.insert(colorImg.getColorId(), colorImg.getProductId(), colorImg.getUrl());
                 if (rowId > 0) {
-                    writeImg(part, realFilePath);
+//                    writeImg(part, realFilePath);
                 } else {
                     handle.rollback();
                     handle.close();

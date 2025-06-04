@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
+@MultipartConfig
 @WebServlet(name = "GetSetProductColor", value = "/admin/productColorImg")
 public class GetSetProductColor extends HttpServlet {
     @Override

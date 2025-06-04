@@ -6,6 +6,10 @@ desEditor.on('instanceReady', function () {
     });
 });
 
+function isNullOrEmptyOrWhitespace(str) {
+    return str === null || str === undefined || /^\s*$/.test(str) || str === "";
+}
+
 var specTable = null;
 var colorTable = null;
 var reviewTable = null;
@@ -438,7 +442,7 @@ $("#update_spec_btn").on('click', function () {
 });
 
 function openColorModal(productForColorId) {
-    let pid = productForColorId;
+    pid = productForColorId;
     $("#add_color_type").empty();
     const columns = [
         {
@@ -500,7 +504,7 @@ function openColorModal(productForColorId) {
                 data.each(function(rowData, index) {
                     colorRowIdToDel.push(rowData.id);
                 });
-                action = delEle;
+                action = "Xoá";
                 deleteColor(colorRowIdToDel);
             },
             enabled: false
@@ -752,6 +756,33 @@ function openReviewModal(productId) {
         reviewTable.ajax.reload();
     }
     MicroModal.show('update_review_modal');
+}
+
+function deleteColor(colorIdToDel) {
+    $.ajax({
+        url: '/admin/productColorImg',
+        type: 'POST',
+        data: {
+            action: action,
+            colorIdToDel: JSON.stringify(colorIdToDel),
+        },
+        success: function (data) {
+            if(data.success) {
+                notyf.success(action + " thành công");
+                colorTable.ajax.reload();
+                colorTable.rows().deselect();
+                $("#add_color_type").empty();
+
+            } else {
+                notyf.error(action + " thất bại");
+                colorTable.rows().deselect();
+                $("#add_color_type").empty();
+            }
+        },
+        error: function () {
+            notyf.error(action + " thất bại");
+        }
+    });
 }
 
 
