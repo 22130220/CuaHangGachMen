@@ -57,6 +57,7 @@ let defaultButton = [
     }
 ]
 
+
 function initDataTable(tableId, ajaxUrl, dataSrc, sendData, columns, buttonConfigs, buttonShow, extraOptions = {}) {
     const table = new DataTable(tableId, {
         ajax: {
