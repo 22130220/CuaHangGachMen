@@ -13,6 +13,9 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherUsageDAO;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.mail.EmailService;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LogBuilder;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogLevel;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogType;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -114,6 +117,8 @@ public class CompleteOrderController extends HttpServlet {
                     }
 
                 }
+
+                new LogBuilder().level(LogLevel.INFO).setHeaderRequest(request, response).message("Thanh toán thành công đơn hàng " + lastRowId).location("CompleteOrderController").build(handle);
 
                 // Gửi email xác nhận đơn hàng
                 EmailService emailService = new EmailService();

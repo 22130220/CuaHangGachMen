@@ -110,7 +110,7 @@ public class LoginDeviceBuilder extends LogBuilder{
         LogModel log = getLog();
         LoginDeviceLog loginDeviceLog = getLoginDeviceLog();
 
-        log.setMessage(log.getMessage() + " - " + loginDeviceLog.getDeviceId() + " - " + loginDeviceLog.getDeviceIp());
+        log.setMessage(log.getMessage());
         int logId = new LogDao(handle).insertLog(log);
         new LoginDeviceLogDao(handle).insertLog(loginDeviceLog);
 
