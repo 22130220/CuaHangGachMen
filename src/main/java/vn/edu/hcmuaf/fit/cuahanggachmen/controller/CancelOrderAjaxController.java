@@ -9,8 +9,10 @@ import jakarta.servlet.http.HttpSession;
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.OrderDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.OutOfStockDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.Order;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.OutOfStock;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 
 import java.io.IOException;
@@ -44,26 +46,56 @@ public class CancelOrderAjaxController extends HttpServlet {
         }
 
         Handle handle = DBConect.get().open();
-        OrderDao orderDao = new OrderDao(handle);
+        try {
+            handle.begin(); // Bắt đầu giao dịch
 
-        // Kiểm tra trạng thái đơn hàng trước khi hủy
-        String currentStatus = orderDao.findById(orderId).map(Order::getStatus).orElse(null);
-        if (currentStatus == null || (!"Processing".equals(currentStatus) && !"Shipping".equals(currentStatus))) {
-            out.print("{\"success\": false, \"message\": \"Không thể hủy đơn hàng này.\"}");
+            OrderDao orderDao = new OrderDao(handle);
+            OutOfStockDao outOfStockDao = new OutOfStockDao(handle);
+
+            // Kiểm tra trạng thái đơn hàng trước khi hủy
+            Order order = orderDao.findById(orderId).orElse(null);
+            if (order == null || (!"Processing".equals(order.getStatus()))) {
+                out.print("{\"success\": false, \"message\": \"Không thể hủy đơn hàng này.\"}");
+                out.flush();
+                handle.rollback();
+                return;
+            }
+
+            // Thực hiện hủy đơn hàng
+            int result = orderDao.updateStatus(orderId, "Cancelled");
+
+            // Nếu trạng thái là Processing, cập nhật isActive trong outofstock
+            if ("Processing".equals(order.getStatus())) {
+                OutOfStock outOfStock = outOfStockDao.findByUserIdAndDate(user.getId(), order.getOrderDate());
+                if (outOfStock == null) {
+                    out.print("{\"success\": false, \"message\": \"Không tìm thấy bản ghi kho để cập nhật.\"}");
+                    out.flush();
+                    handle.rollback();
+                    return;
+                }
+                int outOfStockResult = outOfStockDao.updateActive(outOfStock.getId(), false);
+                if (outOfStockResult == 0) {
+                    out.print("{\"success\": false, \"message\": \"Cập nhật kho thất bại.\"}");
+                    out.flush();
+                    handle.rollback();
+                    return;
+                }
+            }
+
+            if (result > 0) {
+                handle.commit(); // Xác nhận giao dịch
+                out.print("{\"success\": true, \"message\": \"Đơn hàng đã được hủy thành công.\"}");
+            } else {
+                handle.rollback();
+                out.print("{\"success\": false, \"message\": \"Có lỗi xảy ra khi hủy đơn hàng.\"}");
+            }
+        } catch (Exception e) {
+            handle.rollback();
+            out.print("{\"success\": false, \"message\": \"Có lỗi xảy ra: " + e.getMessage() + "\"}");
+            e.printStackTrace(); // Thay bằng logger trong môi trường sản xuất
+        } finally {
             out.flush();
             handle.close();
-            return;
         }
-
-        // Thực hiện hủy đơn hàng
-        int result = orderDao.updateStatus(orderId, "Cancelled");
-
-        if (result > 0) {
-            out.print("{\"success\": true, \"message\": \"Đơn hàng đã được hủy thành công.\"}");
-        } else {
-            out.print("{\"success\": false, \"message\": \"Có lỗi xảy ra khi hủy đơn hàng.\"}");
-        }
-        out.flush();
-        handle.close();
     }
 }
