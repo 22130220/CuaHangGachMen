@@ -11,6 +11,8 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.dao.VoucherUsageDAO;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.mail.EmailService;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.*;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.builder.LogBuilder;
+import vn.edu.hcmuaf.fit.cuahanggachmen.utils.log_config.LogLevel;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -101,6 +103,7 @@ public class CheckoutZaloPay extends HttpServlet {
 
                     }
 
+                    new LogBuilder().level(LogLevel.INFO).setHeaderRequest(request, response).message("Thanh toán bằng ZaloPay thành công đơn hàng " + lastRowId).location("CheckoutZaloPay").build(handle);
                     // Gửi email xác nhận đơn hàng
                     EmailService emailService = new EmailService();
                     String emailContent = emailService.buildOrderEmailContent(order, c.getItems());

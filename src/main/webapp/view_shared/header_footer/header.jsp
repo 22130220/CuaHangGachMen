@@ -224,11 +224,7 @@
         </div>
       </c:if>
 
-        <c:choose>
-          <c:when test="${!sessionScope.userRole.havePermission('user.cart', 4)}">
-            <h1>Không có quyền</h1>
-          </c:when>
-          <c:otherwise>
+
             <a href="cart" class="cart-button">
               <svg
                       class="icon"
@@ -262,8 +258,7 @@
         <c:out value="${empty sessionScope.quantity ? 0 : sessionScope.quantity}"/>
     </span>
             </a>
-          </c:otherwise>
-        </c:choose>
+
           <!-- Hiển thị value (List<permissionId>) -->
 <%--          <td>--%>
 <%--            <c:forEach var="permissionId" items="${entry.value}" varStatus="loop">--%>
