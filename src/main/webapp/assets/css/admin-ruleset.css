@@ -13,6 +13,19 @@
     padding: 0.3rem;
     border-radius: 0.3rem;
 }
+.shipping{
+    color: white;
+    background-color: blue;
+    padding: 0.3rem;
+    border-radius: 0.3rem;
+}
+
+.processing{
+    color: white;
+    background-color: orange;
+    padding: 0.3rem;
+    border-radius: 0.3rem;
+}
 
 .deWarn{
     color: white;

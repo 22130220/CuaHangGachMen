@@ -90,6 +90,16 @@ public class ColorDao extends BaseDao {
         );
     }
 
+    public int getColorIdByName(String colorName, List<Color> colors) {
+        for (Color color : colors) {
+            if (color.getName().equalsIgnoreCase(colorName.trim())) {
+                return color.getID();
+            }
+        }
+        return -1; // Hoặc ném exception nếu không tìm thấy
+    }
+
+
     // Tìm danh sách color theo ID sản phẩm
     public List<Color> findColorByIds(int id) {
         String cacheKey = "colors_by_product_" + id;
@@ -144,6 +154,18 @@ public class ColorDao extends BaseDao {
         p.setID(rowView.getColumn("ID", Integer.class));
         p.setName(rowView.getColumn("Name", String.class));
         return p;
+    }
+
+    // Tìm color theo tên
+    public Color findByName(String name) {
+        String cacheKey = "color_name_" + name;
+        return getFromCacheOrCompute(cacheKey, Color.class, () ->
+                handle.createQuery("SELECT * FROM colors WHERE Name = :name")
+                        .bind("name", name)
+                        .mapToBean(Color.class)
+                        .findOne()
+                        .orElse(null)
+        );
     }
 
     public static void main(String[] args) {
