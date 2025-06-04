@@ -125,7 +125,7 @@
                 <i class="fa-solid fa-user-tag"></i>
             </div>
             <p class="text">
-                Quản lý VoucherType
+                Quản lý loại Voucher
             </p>
         </a>
         <a href="/admin/manage-stockin" class="item5 sidebar-button">
@@ -176,7 +176,7 @@
                 <i class="fa-solid fa-users"></i>
             </div>
             <p class="text">
-                Accounts
+                Phân quyền
             </p>
             <div class="toggle-icon">
                 <i class="fa-solid fa-chevron-down"></i>
@@ -188,7 +188,7 @@
                     <i class="fa-solid fa-user"></i>
                 </div>
                 <p class="text">
-                    User Role
+                    Quyền của người dùng
                 </p>
             </a>
             <a href="/admin/role" class="sub-sidebar-button subitem">
@@ -196,7 +196,7 @@
                     <i class="fa-solid fa-user-shield"></i>
                 </div>
                 <p class="text">
-                    Role
+                   Quyền
                 </p>
             </a>
 <%--            <a href="/admin/resource-group" class="sub-sidebar-button subitem">--%>

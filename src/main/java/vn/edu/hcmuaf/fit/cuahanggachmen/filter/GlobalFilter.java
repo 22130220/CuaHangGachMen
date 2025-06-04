@@ -37,10 +37,6 @@ public class GlobalFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        Cache<String, String> cache = Caffeine.newBuilder()
-                .recordStats()
-                .build();
-        cache.put("uid", "hehe");
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
@@ -65,17 +61,6 @@ public class GlobalFilter implements Filter {
                 session.setAttribute("manufacturers", mn);
             }
 
-        }
-
-        User user = (User) session.getAttribute("auth");
-        if (user!=null) {
-            // Cập nhật phân quyền
-            Cache<String, String> cache2 = Caffeine.newBuilder()
-                    .recordStats()
-                    .build();
-            String value = cache2.getIfPresent("uid");
-            System.out.println(user.getId() + " " + value);
-            System.out.println(cache.stats());
         }
         chain.doFilter(request, response);
 

@@ -25,7 +25,7 @@ public class UserRoleController extends HttpServlet {
             className = className.substring(className.lastIndexOf(".") + 1);
         } else return;
         if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
-        try (Handle handle = DBConect.get().open()) {
+        Handle handle = DBConect.get().open();
             UserDao userDao = new UserDao(handle);
             UserRoleDao userRoleDao = new UserRoleDao(handle);
 
@@ -36,10 +36,8 @@ public class UserRoleController extends HttpServlet {
             request.setAttribute("userRoles", userRoles);
 
             request.getRequestDispatcher("/WEB-INF/admin_user_role.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Không thể tải dữ liệu người dùng và vai trò");
-        }
+
+            handle.close();
     }
 
     @Override

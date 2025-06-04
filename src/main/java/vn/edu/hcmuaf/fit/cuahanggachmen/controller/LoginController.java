@@ -7,6 +7,7 @@ import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserResourceDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.filter.CheckPermissionFilter;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.RoleResourcePermission;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.UserPermission;
@@ -81,6 +82,7 @@ public class LoginController extends HttpServlet {
                 }
                 session.setAttribute("auth", user);
 
+                CheckPermissionFilter.cache.invalidate(String.valueOf(user.getId()));
                 new LoginDeviceBuilder()
                         .loginLevel(LoginLevel.LOGIN)
                         .setHeaderRequest(request, response)

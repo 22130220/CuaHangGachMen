@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản lý type stockin</title>
+    <title>Quản lý loại nhập kho</title>
 
     <!-- Reset CSS -->
     <link rel="stylesheet" href="/assets/css/reset.css" />

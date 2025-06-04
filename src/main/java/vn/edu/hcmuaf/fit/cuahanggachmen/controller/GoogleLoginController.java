@@ -8,6 +8,7 @@ import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserResourceDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserRoleDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
+import vn.edu.hcmuaf.fit.cuahanggachmen.filter.CheckPermissionFilter;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.GoogleAccount;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.LogModel;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
@@ -61,7 +62,6 @@ public class GoogleLoginController extends HttpServlet {
             User user = dao.findByEmail(account.getEmail());
             session.setAttribute("auth", user);
 
-
             new GoogleLoginBuilder()
                     .loginLevel(LoginLevel.LOGIN)
                     .setHeaderRequest(request, response)
@@ -69,6 +69,7 @@ public class GoogleLoginController extends HttpServlet {
                     .message("Đăng nhập google thành công")
                     .build(handle);
             url = "/";
+            CheckPermissionFilter.cache.invalidate(String.valueOf(user.getId()));
             UserResourceDao uDao = new UserResourceDao(handle);
 
             UserPermission rMap = uDao.getPermission(user.getId());
@@ -85,6 +86,7 @@ public class GoogleLoginController extends HttpServlet {
                         .location("GoogleLoginController")
                         .message("Đăng ký google thành công")
                         .build(handle);
+                CheckPermissionFilter.cache.invalidate(String.valueOf(id));
                 User user1=dao.findByEmail(account.getEmail());
                 session.setAttribute("auth", user1);
                 UserResourceDao uDao = new UserResourceDao(handle);
