@@ -88,7 +88,7 @@ public class UserVoucherUsage extends HttpServlet {
 
 // Tính tổng giảm giá, kiểm soát không vượt quá phí gốc
         double feevn2 = Math.min(feevn1, discountShip);
-        double feedh2 = Math.min(feedh1, discount);
+        double feedh2 = discount;
         double finalPrice = price2 - feevn2 - feedh2 - discountOther;
         if (finalPrice < 0) finalPrice = 0;
 

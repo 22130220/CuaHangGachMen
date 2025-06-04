@@ -111,6 +111,10 @@
             background-color: #d0d0d0;
             transform: scale(1.05);
         }
+        #login-btn:disabled{
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
 
         @keyframes slideIn {
             from {
@@ -287,11 +291,10 @@
         });
 
         $("#email, #password").on("keyup", function () {
-            if ($("#login-form").valid()) {
-                $("#login-btn").prop("disabled", false);
-            } else {
-                $("#login-btn").prop("disabled", true);
-            }
+            const isFormValid = $("#login-form").valid();
+            const isCaptchaFilled = grecaptcha.getResponse().length > 0;
+
+            $("#login-btn").prop("disabled", !(isFormValid && isCaptchaFilled));
         });
     });
 
