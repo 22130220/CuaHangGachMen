@@ -55,6 +55,14 @@
                 Quản lý sản phẩm
             </p>
         </a>
+        <a href="/admin/cash-statistic" class="sidebar-button">
+            <div class="sidebar-icon">
+                <i class="fa-solid fa-table-list"></i>
+            </div>
+            <p class="text">
+                Thống kê mua hàng
+            </p>
+        </a>
         <a href="/admin/productcrud" class="sidebar-button">
             <div class="sidebar-icon">
                 <i class="fa-regular fa-square-plus"></i>
