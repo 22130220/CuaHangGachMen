@@ -190,8 +190,8 @@
       <div class="search-bar" style="position: relative;">
         <input type="text" id="searchInput"  placeholder="Tìm kiếm sản phẩm..."
                autocomplete="off"/>
-        <i   id="searchIcon"  class="fa-solid fa-magnifying-glass search-icon"  title="Tìm kiếm"
-             style="cursor: pointer !important;"></i>
+<%--        <i   id="searchIcon"  class="fa-solid fa-magnifying-glass search-icon"  title="Tìm kiếm"--%>
+<%--             style="cursor: pointer !important;"></i>--%>
 
         <!-- Hộp lịch sử (history) -->
         <div id="suggestionsBox" class="suggestions-box"></div>
