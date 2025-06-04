@@ -1,3 +1,5 @@
+[x-cloak] { display: none !important; }
+
 .isActive{
     color: white;
     background-color: green;

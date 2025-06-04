@@ -22,11 +22,11 @@ public class CheckoutVNPay extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String className = this.getClass().getName();
-        if (className!= null) {
-            className = className.substring(className.lastIndexOf(".") + 1);
-        } else return;
-        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
+//        String className = this.getClass().getName();
+//        if (className!= null) {
+//            className = className.substring(className.lastIndexOf(".") + 1);
+//        } else return;
+//        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
 
         String status = request.getParameter("vnp_TransactionStatus");
         HttpSession session = request.getSession();
@@ -143,9 +143,9 @@ public class CheckoutVNPay extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String className = this.getClass().getName();
-        if (className!= null) {
-            className = className.substring(className.lastIndexOf(".") + 1);
-        } else return;
-        if (!PermissionCheck.check(String.join(".",className, "POST"), request, response)) return;
+//        String className = this.getClass().getName();
+//        if (className!= null) {
+//            className = className.substring(className.lastIndexOf(".") + 1);
+//        } else return;
+//        if (!PermissionCheck.check(String.join(".",className, "POST"), request, response)) return;
 }}
