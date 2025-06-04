@@ -1,5 +1,7 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
@@ -332,6 +334,15 @@ public class GetSetUserRole extends HttpServlet {
                     handle.commit();
                     responseData.put("success", true);
                     responseData.put("message", "Cập nhật vai trò của người dùng thành công");
+
+
+                    // Cập nhật phân quyền
+                    Cache<String, String> cache = Caffeine.newBuilder()
+                            .build();
+                    cache.put(String.valueOf(userId), "true");
+                    sendResponse(response, HttpServletResponse.SC_OK, responseData);
+
+
                 } catch (IllegalArgumentException e) {
                     handle.rollback();
                     responseData.put("error", "Lỗi khi cập nhật dữ liệu: " + e.getMessage());
