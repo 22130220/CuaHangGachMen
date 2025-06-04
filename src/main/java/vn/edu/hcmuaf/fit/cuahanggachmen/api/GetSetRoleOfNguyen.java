@@ -1,5 +1,7 @@
 package vn.edu.hcmuaf.fit.cuahanggachmen.api;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -335,7 +337,6 @@ public class GetSetRoleOfNguyen extends HttpServlet {
                     handle.commit();
                     responseData.put("success", true);
                     responseData.put("message", "Cập nhật vai trò và tài nguyên thành công");
-                    sendResponse(response, HttpServletResponse.SC_OK, responseData);
                 } catch (IllegalArgumentException e) {
                     // Rollback giao dịch nếu có lỗi
                     handle.rollback();
