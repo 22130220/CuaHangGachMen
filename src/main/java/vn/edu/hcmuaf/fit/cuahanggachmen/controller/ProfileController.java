@@ -6,8 +6,10 @@ import jakarta.servlet.annotation.*;
 import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.PermissionCheck;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserResourceDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.UserPermission;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -18,11 +20,6 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String className = this.getClass().getName();
-        if (className!= null) {
-            className = className.substring(className.lastIndexOf(".") + 1);
-        } else return;
-        if (!PermissionCheck.check(String.join(".",className, "GET"), request, response)) return;
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("auth"); // Lấy thông tin người dùng từ session
@@ -42,8 +39,13 @@ public class ProfileController extends HttpServlet {
             if(fullUserInfo.getBirthtime() != null) {
                 String birthDate = fullUserInfo.getBirthtime().toLocalDate().toString();// Định dạng yyyy-MM-dd
                 request.setAttribute("birthtime", birthDate);
+                UserResourceDao uDao = new UserResourceDao(handle);
+
+                UserPermission rMap = uDao.getPermission(user.getId());
+                session.setAttribute("userRole", rMap);
             }
             handle.close();
+
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("/error.jsp");

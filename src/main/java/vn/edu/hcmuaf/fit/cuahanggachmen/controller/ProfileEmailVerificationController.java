@@ -6,10 +6,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserResourceDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserRoleDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.mail.VerificationTokenStore;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.UserPermission;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -77,8 +81,9 @@ public class ProfileEmailVerificationController extends HttpServlet {
             return;
         }
 
+        Handle handle = DBConect.get().open();
         // Khởi tạo UserDao và HttpSession
-        UserDao userDao = new UserDao(DBConect.get().open());
+        UserDao userDao = new UserDao(handle);
         HttpSession session = request.getSession();
 
         // Kiểm tra xem email đã tồn tại trong database chưa (ngoại trừ chính user hiện tại)
@@ -97,18 +102,31 @@ public class ProfileEmailVerificationController extends HttpServlet {
             if (user.getFbid() != null) {
                 // Người dùng Facebook mới
                 int userId = userDao.insertFacebookUser(user); // Lưu vào cơ sở dữ liệu
+                UserRoleDao userRoleDao = new UserRoleDao(handle);
+                userRoleDao.insertUserRole(userId, 2);
                 user.setId(userId);
                 session.setAttribute("auth", user);
                 session.removeAttribute("tempUser");
                 VerificationTokenStore.removeToken(token);
+                UserResourceDao uDao = new UserResourceDao(handle);
+
+                UserPermission rMap = uDao.getPermission(user.getId());
+                session.setAttribute("userRole", rMap);
                 request.setAttribute("message", "Xác thực thành công! Tài khoản Facebook của bạn đã được tạo.");
+
             } else if (user.getZaloId() != null) {
                 // Người dùng Zalo mới
                 int userId = userDao.insertZaloUser(user); // Lưu vào cơ sở dữ liệu
+                UserRoleDao userRoleDao = new UserRoleDao(handle);
+                userRoleDao.insertUserRole(userId, 2);
                 user.setId(userId);
                 session.setAttribute("auth", user);
                 session.removeAttribute("tempUser");
                 VerificationTokenStore.removeToken(token);
+                UserResourceDao uDao = new UserResourceDao(handle);
+
+                UserPermission rMap = uDao.getPermission(user.getId());
+                session.setAttribute("userRole", rMap);
                 request.setAttribute("message", "Xác thực thành công! Tài khoản Zalo của bạn đã được tạo.");
             }
         } else if (authUser != null) {
@@ -121,13 +139,19 @@ public class ProfileEmailVerificationController extends HttpServlet {
             }
             session.setAttribute("auth", user);
             VerificationTokenStore.removeToken(token);
+            UserResourceDao uDao = new UserResourceDao(handle);
+
+            UserPermission rMap = uDao.getPermission(user.getId());
+            session.setAttribute("userRole", rMap);
             request.setAttribute("message", "Xác thực thành công! Thông tin của bạn đã được cập nhật.");
         } else {
             request.setAttribute("message", "Không tìm thấy thông tin người dùng để cập nhật.");
             request.getRequestDispatcher("/WEB-INF/verification-result.jsp").forward(request, response);
+            handle.close();
             return;
         }
 
+        handle.close();
         // Chuyển hướng đến trang kết quả
         request.getRequestDispatcher("/WEB-INF/verification-result.jsp").forward(request, response);
     }

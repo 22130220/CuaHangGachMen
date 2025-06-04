@@ -5,9 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.jdbi.v3.core.Handle;
 import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserDao;
+import vn.edu.hcmuaf.fit.cuahanggachmen.dao.UserResourceDao;
 import vn.edu.hcmuaf.fit.cuahanggachmen.db.DBConect;
 import vn.edu.hcmuaf.fit.cuahanggachmen.model.User;
+import vn.edu.hcmuaf.fit.cuahanggachmen.model.UserPermission;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,7 +55,8 @@ public class FacebookLoginServlet extends HttpServlet {
         String email = userData.has("email") ? userData.get("email").asText() : null;
         String picture = userData.get("picture").get("data").get("url").asText();
 
-        UserDao userDao = new UserDao(DBConect.get().open());
+        Handle handle = DBConect.get().open();
+        UserDao userDao = new UserDao(handle);
         User existingUser = userDao.findByFacebookId(fbId);
 
         HttpSession session = request.getSession();
@@ -61,7 +65,12 @@ public class FacebookLoginServlet extends HttpServlet {
             session.setAttribute("auth", existingUser);
             if (existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()) {
                 session.setAttribute("profileCompleted", true);
+                UserResourceDao uDao = new UserResourceDao(handle);
+
+                UserPermission rMap = uDao.getPermission(existingUser.getId());
+                session.setAttribute("userRole", rMap);
                 response.sendRedirect("/");
+
             } else {
                 response.sendRedirect("/complete-profile");
             }
@@ -76,6 +85,8 @@ public class FacebookLoginServlet extends HttpServlet {
             session.setAttribute("tempUser", newUser); // Lưu tạm
             response.sendRedirect("/complete-profile");
         }
+
+        handle.close();
 
     }
 
