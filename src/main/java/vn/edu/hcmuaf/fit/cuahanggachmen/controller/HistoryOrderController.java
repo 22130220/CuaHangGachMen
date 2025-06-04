@@ -281,10 +281,10 @@ public class HistoryOrderController extends HttpServlet {
                     out.println("<div class=\"order-group\">");
                     out.println("<div class=\"order-header\">");
                     out.println("<span>Đơn hàng #" + orderId + " - Ngày tạo: " + createDateStr + " - Trạng thái: " + orderStatusDisplay + " - Tổng: ₫" + totalPrice + " - Phương thức thanh toán: " + payment + "</span>");
-                    if ("Processing".equals(orderStatus) || "Shipping".equals(orderStatus)) {
+                    if ("Processing".equals(orderStatus) ) {
                         // Thay liên kết <a> bằng div với sự kiện onclick
                         out.println("<div class=\"mualaine\" onclick=\"confirmCancelOrder(" + orderId + ")\" style=\"display: inline-block; cursor: pointer;\">");
-                        out.println("<div class=\"mualai\">Hủy đơn</div>");
+                        out.println("<div class=\"mualai\">HỦY</div>");
                         out.println("</div>");
                     }
                     out.println("</div>");

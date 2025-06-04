@@ -156,9 +156,9 @@
                             <div class="order-header">
                                 <span>Đơn hàng #${entry.key} - Ngày tạo: ${orderCreateDates[entry.key]} - Trạng thái: ${orderStatusDisplayMap[entry.key]} - Tổng: ₫${orderTotalPrices[entry.key]} - Phương thức thanh toán: ${orderPayments[entry.key]}</span>
                                 <c:set var="orderStatus" value="${orderStatusMap[entry.key]}" />
-                                <c:if test="${orderStatus == 'Processing' || orderStatus == 'Shipping'}">
+                                <c:if test="${orderStatus == 'Processing'}">
                                     <div class="mualaine" onclick="confirmCancelOrder(${entry.key})" style="display: inline-block; cursor: pointer;">
-                                        <div class="mualai">Hủy đơn</div>
+                                        <div class="mualai">HỦY</div>
                                     </div>
                                 </c:if>
                             </div>
@@ -251,7 +251,7 @@
             return;
         }
 
-        hibaiba        $.ajax({
+          $.ajax({
             url: "/completeorderhistory",
             type: "GET",
             data: {
