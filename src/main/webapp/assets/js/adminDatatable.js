@@ -99,8 +99,9 @@ function initDataTable(tableId, ajaxUrl, dataSrc, sendData, columns, buttonConfi
                 title: {
                     _: 'Đã lọc (%d)',
                     0: 'Lọc',
-                }
-            }
+                },
+            },
+            info: ''
         },
     });
     table.on('select deselect', buttonShow);
