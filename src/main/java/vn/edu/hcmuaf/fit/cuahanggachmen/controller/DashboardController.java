@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "admin", value = "/admin")
 public class DashboardController extends HttpServlet {
@@ -35,6 +36,11 @@ public class DashboardController extends HttpServlet {
         request.setAttribute("TongSanPham", pDao.countProduct());
         request.setAttribute("GDMotNgay",orderDao.transcPerDay());
         request.setAttribute("DonHang", orderDao.backToOrder());
+
+        // Lấy danh sách sản phẩm cần nhập kho
+        List<Map<String, Object>> lowStockProducts = pDao.findLowStockProductsWithColor(100); // Giảm ngưỡng xuống 100
+        System.out.println("LowStockProducts size: " + lowStockProducts.size()); // Log để kiểm tra
+        request.setAttribute("LowStockProducts", lowStockProducts);
 
         handle.close();
         request.getRequestDispatcher("/WEB-INF/admin_dashboard.jsp").forward(request, response);

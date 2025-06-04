@@ -349,4 +349,48 @@ public class ProductDao extends BaseDao {
             throw new RuntimeException("Không thể cập nhật đánh giá sản phẩm: " + e.getMessage(), e);
         }
     }
+
+
+    // Tìm sản phẩm cần nhập kho
+    public List<Map<String, Object>> findLowStockProductsWithColor(int threshold) {
+        String cacheKey = "products_low_stock_with_color_" + threshold;
+        return getFromCacheOrCompute(cacheKey, List.class, () -> {
+            String query = "SELECT " +
+                    "p.id as productid, " +
+                    "p.name as productname, " +
+                    "c.ID as colorid, " +
+                    "c.Name as colorname, " +
+                    "p.categoryId as categoryid, " +
+                    "cat.Name as categoryname, " +
+                    "COALESCE(SUM(sid.quantity), 0) as totalin, " +
+                    "COALESCE(SUM(osd.quantity), 0) as totalout, " +
+                    "COALESCE(SUM(od.Quantity), 0) as totalsold, " +
+                    "(COALESCE(SUM(sid.quantity), 0) - COALESCE(SUM(osd.quantity), 0) - COALESCE(SUM(od.Quantity), 0)) as currentstock " +
+                    "FROM products p " +
+                    "INNER JOIN (" +
+                    "SELECT DISTINCT productId, colorId FROM StockInDetail " +
+                    "UNION " +
+                    "SELECT DISTINCT productId, colorId FROM outofstockdetail " +
+                    "UNION " +
+                    "SELECT DISTINCT ProductID, c.ID AS colorId FROM orderdetail od JOIN colors c ON od.Color = c.Name " +
+                    ") AS pc ON p.id = pc.productId " +
+                    "JOIN colors c ON pc.colorId = c.ID " +
+                    "JOIN category cat ON p.categoryId = cat.ID " +
+                    "LEFT JOIN StockInDetail sid ON p.id = sid.productId AND c.ID = sid.colorId " +
+                    "LEFT JOIN outofstockdetail osd ON p.id = osd.productId AND c.ID = sid.colorId " +
+                    "LEFT JOIN orderdetail od ON p.id = od.ProductID AND od.Color = c.Name " +
+                    "LEFT JOIN orders o ON od.OrderID = o.ID " +
+                    "AND (o.Status = 'Processing' OR o.Status = 'Delivered' OR o.Status = 'Shipping') " +
+                    "AND o.OrderDate >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH) " +
+                    "WHERE p.status = 1 " +
+                    "GROUP BY p.id, p.name, c.ID, c.Name, p.categoryId, cat.Name " +
+                    "HAVING currentstock < 0";
+
+            List<Map<String, Object>> result = handle.createQuery(query)
+                    .mapToMap()
+                    .list();
+            System.out.println("LowStockProducts result in ProductDao: " + result);
+            return result;
+        });
+    }
 }
