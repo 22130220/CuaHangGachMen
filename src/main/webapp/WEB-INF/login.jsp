@@ -165,7 +165,7 @@
 
 <!-- Mục Lục -->
 <nav class="breadcrumb">
-<a href="/">Home</a> > <a href="#!">Đăng nhập</a>
+    <a href="/">Home</a> > <a href="#!">Đăng nhập</a>
 </nav>
 
 <div class="login-container">
@@ -236,7 +236,7 @@
 <!-- Zalo Confirmation Modal -->
 <div id="zaloConfirmModal" class="modal">
     <div class="modal-content">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMDg68zSJU2TpKyMFJwkWpuGsXF_FTMJguqA&s" alt="Zalo Logo">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Ffree-icon%2Fzalo_8739499&psig=AOvVaw2X2oYc-1oL7e1I3n4nK3sG&ust=1730987777752000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMiW_5a5y4kDFQAAAAAdAAAAABAE" alt="Zalo Logo">
         <h3>Xác nhận đăng nhập Zalo</h3>
         <p>Bạn đang đăng nhập qua Zalo. Tiếp tục để trải nghiệm dịch vụ tốt hơn!</p>
         <div class="modal-buttons">
@@ -307,8 +307,34 @@
     }
 
     const zaloState = '<%= session.getAttribute("zaloState") %>';
-    function continueZaloLogin() {
-        window.location.href = `https://oauth.zaloapp.com/v4/permission?app_id=3385901349907197462&redirect_uri=https://webtmdt.site/zalologin&state=${zaloState}&scope=id,name,picture&prompt=consent`;
+    const REDIRECT_URI = 'https://webtmdt.site/zalologin';
+
+    function generateCodeVerifier() {
+        const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+        let verifier = '';
+        for (let i = 0; i < 43; i++) {
+            verifier += charset.charAt(Math.floor(Math.random() * charset.length));
+        }
+        return verifier;
+    }
+
+    async function generateCodeChallenge(verifier) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(verifier);
+        const hash = await crypto.subtle.digest('SHA-256', data);
+        const base64 = btoa(String.fromCharCode(...new Uint8Array(hash)))
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_')
+            .replace(/=+$/, '');
+        return base64;
+    }
+
+    async function continueZaloLogin() {
+        const codeVerifier = generateCodeVerifier();
+        const codeChallenge = await generateCodeChallenge(codeVerifier);
+        sessionStorage.setItem('code_verifier', codeVerifier);
+        const redirectUri = encodeURIComponent(REDIRECT_URI);
+        window.location.href = `https://oauth.zaloapp.com/v4/permission?app_id=3385901349907197462&redirect_uri=${redirectUri}&state=${zaloState}&code_challenge=${codeChallenge}&prompt=consent`;
     }
 
     function recaptchaCallback() {

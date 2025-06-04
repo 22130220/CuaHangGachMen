@@ -53,7 +53,8 @@ public class ZaloLoginServlet extends HttpServlet {
         }
 
         // Lấy Access Token
-        String accessToken = getAccessToken(code);
+        String codeVerifier = (String) session.getAttribute("code_verifier");
+        String accessToken = getAccessToken(code, codeVerifier);
         if (accessToken == null) {
             request.setAttribute("error", "Không thể lấy access token từ Zalo. Vui lòng thử lại.");
             request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
@@ -113,17 +114,17 @@ public class ZaloLoginServlet extends HttpServlet {
         }
     }
 
-    private String getAccessToken(String code) throws IOException {
+    private String getAccessToken(String code, String codeVerifier) throws IOException {
         String url = "https://oauth.zaloapp.com/v4/access_token";
         String params = "code=" + URLEncoder.encode(code, StandardCharsets.UTF_8) +
                 "&app_id=" + URLEncoder.encode(APP_ID, StandardCharsets.UTF_8) +
-                "&app_secret=" + URLEncoder.encode(APP_SECRET, StandardCharsets.UTF_8) +
-                "&grant_type=authorization_code";
+                "&grant_type=authorization_code" +
+                (codeVerifier != null ? "&code_verifier=" + URLEncoder.encode(codeVerifier, StandardCharsets.UTF_8) : "");
 
         HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        conn.setRequestProperty("secret_key", APP_SECRET); // Thêm secret_key theo yêu cầu của Zalo
+        conn.setRequestProperty("secret_key", APP_SECRET);
         conn.setDoOutput(true);
 
         // Gửi dữ liệu trong body
@@ -167,7 +168,7 @@ public class ZaloLoginServlet extends HttpServlet {
         // Lấy access token
         if (jsonNode.has("access_token")) {
             String accessToken = jsonNode.get("access_token").asText();
-            System.out.println("Access Token: " + accessToken); // In access token để kiểm tra
+            System.out.println("Access Token: " + accessToken);
             return accessToken;
         } else {
             System.out.println("Zalo Access Token Response does not contain access_token: " + response.toString());
@@ -178,7 +179,6 @@ public class ZaloLoginServlet extends HttpServlet {
     private String getUserInfo(String urlString) throws IOException {
         HttpURLConnection conn = (HttpURLConnection) new URL(urlString).openConnection();
         conn.setRequestMethod("GET");
-        conn.setRequestProperty("access_token", urlString.split("access_token=")[1]);
 
         int responseCode = conn.getResponseCode();
         StringBuilder response = new StringBuilder();
