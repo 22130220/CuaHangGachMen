@@ -6,136 +6,21 @@ let updateEle = 'Cập nhật';
 let delEle = 'Xoá';
 
 let vid;
-
 let setActive = [];
-
 let action;
 
 function isNullOrEmptyOrWhitespace(str) {
     return str === null || str === undefined || /^\s*$/.test(str) || str === "";
 }
 
-// var table = new DataTable('#orders', {
-//     ajax: {
-//         url: '/admin/order',
-//         dataSrc: 'orders'
-//     },
-//     fixedHeader: true,
-//     layout: {
-//         topStart: {
-//             buttons: [
-//                 'colvis',
-//                 {
-//                     text: 'Trạng thái',
-//                     className: 'green',
-//                     action: function (e, dt, node, config) {
-//                         var data = dt.rows({ selected: true }).data();
-//                         setActive = [];
-//                         data.each(function(rowData, index) {
-//                             setActive.push(rowData.id);
-//                         });
-//                         action = delEle;
-//                         MicroModal.show('update_status_modal');
-//                     },
-//                     enabled: false
-//                 }
-//             ]
-//         },
-//     },
-//     select: true,
-//     columnDefs: [
-//         {
-//             targets: 0,
-//             data: 'userId',
-//             className: 'dt-center'
-//         },
-//         {
-//             targets: 1,
-//             data: 'fullName',
-//             className: 'dt-center'
-//         },
-//         {
-//             targets: 2, // Cột giá
-//             data: 'orderDate',
-//             // render: function (data) {
-//             //     return `<td style="color: red;">${data.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>`;
-//             // },
-//             className: 'dt-center  dt-nowrap'
-//         },
-//         {
-//             targets: 3, // Cột số lượng
-//             data: 'address',
-//             // render: function (data) {
-//             //     const style = data === 0 ? 'background-color: #ffe0e0;' : '';
-//             //     return `<td style="${style}">${data}</td>`;
-//             // },
-//             className: 'dt-center'
-//         },
-//         {
-//             targets: 4, // Cột đánh giá
-//             data: 'status',
-//             render: function (data) {
-//                 if(data === 'Delivered') {
-//                     return `<td> <div class="isActive"> Đã Giao </div> </td>`
-//                 } else if(data === 'Cancelled') return `<td> <div class="deActive"> Đã huỷ </div> </td>`
-//                 else return data;
-//             },
-//             className: 'dt-center'
-//         },
-//         {
-//             target: 5,
-//             data: 'totalPrice',
-//             // render: function (data) {
-//             //     return`<div class='table-icon-label'>  <a href="#" onclick="openUpdateProductModal(${data})"><i class="fa-solid fa-note-sticky"></i></a><a href="#" onclick="openSpecModal(${data})"><i class="fa-solid fa-eraser"></i></a> <a href="#" onclick="openColorModal(${data})"><i class="fa-solid fa-eraser"></i></a> </div>`
-//             // },
-//             render: function (data) {
-//                 return `<td style="color: red;">${data.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>`;
-//             },
-//             className: 'dt-center'
-//         },
-//         {
-//             target: 6,
-//             data: 'id',
-//             render: function (data) {
-//                 return`<div class='table-icon-label'>  <a href="#" onclick="openOrderDetailModal(${data})"><i class="fa-solid fa-note-sticky"></i></a> </div>`
-//             },
-//             className: 'dt-center'
-//         }
-//     ],
-//     'autoWidth': false,
-//     language: {
-//         lengthMenu: "Hiển thị _MENU_ mục mỗi trang",
-//         zeroRecords: "Không tìm thấy kết quả",
-//         info: "Hiển thị trang _PAGE_ của _PAGES_",
-//         infoEmpty: "Không có dữ liệu",
-//         infoFiltered: "(lọc từ _MAX_ tổng mục)"
-//     },
-//
-//     createdRow: function (row, data, dataIndex) {
-//         // Thêm lớp CSS để căn giữa các ô
-//         $('td', row).css({
-//             'text-align': 'center',
-//             'vertical-align': 'middle'
-//         });
-//     }
-//
-// });
-//
-// table.on('select deselect', function () {
-//     var selectedRows = table.rows({ selected: true }).count();
-//
-//     table.button(1).enable(selectedRows > 0);
-//     // table.button(3).enable(selectedRows > 0);
-// });
 // Khởi tạo DataTable
-
 const table = initDataTable(
     '#orders', // tableId
     '/admin/order', // ajaxUrl
     'orders', // dataSrc
     {}, // sendData (trống vì không có dữ liệu gửi kèm)
     [ // columns
-        { targets: 0, data: 'userId', className: 'dt-center' },
+        { targets: 0, data: 'id', className: 'dt-center' },
         { targets: 1, data: 'fullName', className: 'dt-center' },
         {
             targets: 2,
@@ -155,8 +40,10 @@ const table = initDataTable(
                     return `<td> <div class="isActive"> Đã Giao </div> </td>`;
                 } else if (data === 'Cancelled') {
                     return `<td> <div class="deActive"> Đã huỷ </div> </td>`;
+                } else if (data === 'Shipping') {
+                    return `<td> <div class="shipping"> Đang vận chuyển </div> </td>`;
                 } else {
-                    return data;
+                    return `<td> <div class="processing"> Đang xử lý </div> </td>`;
                 }
             },
             className: 'dt-center'
@@ -186,10 +73,28 @@ const table = initDataTable(
             action: function (e, dt, node, config) {
                 var data = dt.rows({ selected: true }).data();
                 setActive = [];
+                var selectedStatus = null;
+
+                // Lấy trạng thái của các hàng được chọn
                 data.each(function(rowData, index) {
                     setActive.push(rowData.id);
+                    selectedStatus = rowData.status; // Lấy trạng thái của hàng đầu tiên (giả sử chỉ chọn 1 hàng)
                 });
-                action = delEle;
+
+                // Kiểm tra trạng thái và điều chỉnh modal
+                const statusSelect = $("#update_active_id");
+                statusSelect.empty(); // Xóa các lựa chọn cũ
+
+                if (selectedStatus === 'Processing') {
+                    // Đang xử lý: Cho phép chọn "Đang vận chuyển" hoặc "Đã giao"
+                    statusSelect.append('<option value="Shipping">Đang vận chuyển</option>');
+                    statusSelect.append('<option value="Delivered">Đã giao</option>');
+                } else if (selectedStatus === 'Shipping') {
+                    // Đang vận chuyển: Chỉ cho phép chọn "Đã giao"
+                    statusSelect.append('<option value="Delivered">Đã giao</option>');
+                }
+
+                action = updateEle;
                 MicroModal.show('update_status_modal');
             },
             enabled: false
@@ -204,12 +109,26 @@ const table = initDataTable(
 // Hàm xử lý sự kiện nút button
 function handleButtonShow(e, dt, node, config) {
     var selectedRows = dt.rows({ selected: true }).count();
-    dt.buttons(8).enable(selectedRows > 0); // Kích hoạt nút khi có hàng được chọn
+    var data = dt.rows({ selected: true }).data();
+    var canUpdateStatus = false;
+
+    if (selectedRows > 0) {
+        var selectedStatus = null;
+        data.each(function(rowData, index) {
+            selectedStatus = rowData.status; // Lấy trạng thái của hàng đầu tiên (giả sử chỉ chọn 1 hàng)
+        });
+
+        // Chỉ kích hoạt nút "Trạng thái" nếu trạng thái không phải "Delivered" hoặc "Cancelled"
+        if (selectedStatus !== 'Delivered' && selectedStatus !== 'Cancelled') {
+            canUpdateStatus = true;
+        }
+    }
+
+    dt.buttons(8).enable(canUpdateStatus); // Kích hoạt nút "Trạng thái" nếu hợp lệ
 }
 
 function openOrderDetailModal(orderID) {
-
-    if(orderDetail == null) {
+    if (orderDetail == null) {
         orderDetail = new DataTable('#orderdetail', {
             ajax: {
                 url: '/admin/orderdetail',
@@ -220,13 +139,10 @@ function openOrderDetailModal(orderID) {
                     return json.orderdetail;
                 },
             },
-
             fixedHeader: true,
             layout: {
                 topStart: {
-                    buttons: [
-                        'colvis',
-                    ]
+                    buttons: ['colvis']
                 },
             },
             select: true,
@@ -247,30 +163,20 @@ function openOrderDetailModal(orderID) {
                     className: 'dt-center'
                 },
                 {
-                    targets: 2, // Cột giá
+                    targets: 2,
                     data: 'quantity',
-                    // render: function (data) {
-                    //     return `<td style="color: red;">${data.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>`;
-                    // },
-                    className: 'dt-center  dt-nowrap'
+                    className: 'dt-center dt-nowrap'
                 },
                 {
-                    targets: 3, // Cột số lượng
+                    targets: 3,
                     data: 'price',
-                    // render: function (data) {
-                    //     const style = data === 0 ? 'background-color: #ffe0e0;' : '';
-                    //     return `<td style="${style}">${data}</td>`;
-                    // },
                     className: 'dt-center'
                 },
                 {
-                    targets: 4, // Cột đánh giá
+                    targets: 4,
                     data: 'color',
                     render: function (data) {
-                        if (data === 'Delivered') {
-                            return `<td> <div class="isActive"> Đã Giao </div> </td>`
-                        } else if (data === 'Cancelled') return `<td> <div class="deActive"> Đã huỷ </div> </td>`
-                        else return data;
+                        return data;
                     },
                     className: 'dt-center'
                 },
@@ -283,9 +189,7 @@ function openOrderDetailModal(orderID) {
                 infoEmpty: "Không có dữ liệu",
                 infoFiltered: "(lọc từ _MAX_ tổng mục)"
             },
-
             createdRow: function (row, data, dataIndex) {
-                // Thêm lớp CSS để căn giữa các ô
                 $('td', row).css({
                     'text-align': 'center',
                     'vertical-align': 'middle'
@@ -302,14 +206,13 @@ function openOrderDetailModal(orderID) {
     MicroModal.show('show_detail');
 }
 
-
 $("#update_id_btn").on('click', function () {
     const active = $("#update_active_id").val();
-    if((isNullOrEmptyOrWhitespace(active))) {
+    if (isNullOrEmptyOrWhitespace(active)) {
         notyf.error("Cần nhập đủ thông tin");
-    } else{
+    } else {
         $.ajax({
-            url: '/admin/orderdetail',
+            url: '/admin/order',
             type: 'POST',
             data: {
                 active: active,
@@ -317,7 +220,7 @@ $("#update_id_btn").on('click', function () {
                 id: JSON.stringify(setActive)
             },
             success: function (data) {
-                if(data.success) {
+                if (data.success) {
                     notyf.success(action + " thành công");
                     MicroModal.close('update_status_modal');
                     table.ajax.reload();
@@ -330,7 +233,7 @@ $("#update_id_btn").on('click', function () {
             error: function () {
                 notyf.error(action + " thất bại");
             }
-        })
+        });
     }
 });
 
