@@ -26,6 +26,7 @@ public class PermissionCheck {
                 }
             }
         }
+        handle.close();
 
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         return false;

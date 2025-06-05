@@ -4,7 +4,7 @@
               auth="Container"
               type="javax.sql.DataSource"
               driverClassName="com.mysql.cj.jdbc.Driver"
-              url="jdbc:mysql://103.130.214.142:3307/shopgachmendb"
+              url="jdbc:mysql://mysql:3306/shopgachmendb"
               username="shopgachmen"
               password="@abc123456"
               minIdle="5"
