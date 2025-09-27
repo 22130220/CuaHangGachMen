@@ -220,9 +220,9 @@
         <a href="https://www.facebook.com/v20.0/dialog/oauth?client_id=1294677724960043&redirect_uri=https://webtmdt.site/facebooklogin&scope=public_profile" class="social-button facebook">
             <i class="fa-brands fa-facebook"></i> Đăng nhập với Facebook
         </a>
-        <a href="#" class="social-button zalo" onclick="showZaloConfirmModal()">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMDg68zSJU2TpKyMFJwkWpuGsXF_FTMJguqA&s" alt="Zalo Logo"> Đăng nhập với Zalo
-        </a>
+<%--        <a href="#" class="social-button zalo" onclick="showZaloConfirmModal()">--%>
+<%--            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMDg68zSJU2TpKyMFJwkWpuGsXF_FTMJguqA&s" alt="Zalo Logo"> Đăng nhập với Zalo--%>
+<%--        </a>--%>
     </div>
 
     <div class="separator">
